@@ -72,12 +72,13 @@ def handle_guarded(self, message):
     ...
 ```
 
-The declaration always reaches the wire, but only an engine that implements OVOS-CONTEXT-1
-enforces it: the template engines (Padatious, Padacioso, M2V) gate on it, while Adapt's keyword
-matcher has no context-aware matcher of its own and, per CONTEXT-1 §6, "ignores them and
-matches as if absent." Adapt still keeps its own separate mechanism (`.require()` on a context
-keyword, the TeaSkill example below) for gating today. A future context-aware keyword engine
-could honor the declaration with no skill-side change.
+The declaration reaches every engine, but each engine gates on it independently: the template
+engines (Padatious, Padacioso, M2V) filter candidates against `session.intent_context` at match
+time, and so does Adapt, whose keyword matcher stores each intent's declared
+`requires_context`/`excludes_context` at registration and admits a candidate only when the gate
+is satisfied (OVOS-CONTEXT-1 §6/§6.1). Adapt also keeps its own separate legacy mechanism
+(`.require()` on a context keyword, the TeaSkill example below) for gating today, so a skill can
+use either the declarative kwargs or `.require()`.
 
 !!! danger "A bare-string entry silently never matches a shared entry"
     A bare string like `requires_context=["prev_dialog"]` resolves to **private** scope, keyed
