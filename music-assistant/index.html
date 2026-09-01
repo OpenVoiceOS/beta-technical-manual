@@ -1415,7 +1415,7 @@ single combined install; pick the direction that matches what you want.</p>
 <tr>
 <td><strong>OVOS plays media through MA</strong></td>
 <td>An OVOS assistant searches and plays music/radio/podcasts via a running Music Assistant server</td>
-<td><code>ovos-media-provider-mass</code> public on PyPI; <code>ovos-media-plugin-mass</code> and <code>ovos-skill-music-assistant</code> not yet published (see below)</td>
+<td><code>ovos-media-provider-mass</code> public on PyPI; <code>ovos-media-plugin-mass</code> and <code>ovos-skill-music-assistant</code> are public repos, not yet on PyPI (see below)</td>
 </tr>
 <tr>
 <td><strong>MA loads out-of-tree providers</strong></td>
@@ -1436,16 +1436,19 @@ single combined install; pick the direction that matches what you want.</p>
 <li><strong><a href="https://github.com/OpenVoiceOS/ovos-media-provider-mass"><code>ovos-media-provider-mass</code></a></strong>
   (public, PyPI): the catalog/search half. Registers under <code>opm.media.provider</code> as
   <code>music_assistant</code>, superseding the search half of <code>ovos-skill-music-assistant</code>.</li>
-<li><strong><code>ovos-media-plugin-mass</code></strong>: the playback backend for <a href="../ovos-media/"><code>ovos-media</code></a>.
-  Hands playback off to the MA server itself. Does not implement <code>next()</code>/<code>previous()</code>
-  through the legacy <code>AudioBackend</code> interface, only through the Music Assistant queue
-  API (see <a href="../ovos-media-compat/">Legacy Compatibility</a>).</li>
-<li><strong><code>ovos-skill-music-assistant</code></strong>: the legacy OCP skill both of the above supersede.</li>
+<li><strong><a href="https://github.com/OpenVoiceOS/ovos-media-plugin-mass"><code>ovos-media-plugin-mass</code></a></strong>:
+  the playback backend for <a href="../ovos-media/"><code>ovos-media</code></a>. Hands playback off to the MA
+  server itself. Does not implement <code>next()</code>/<code>previous()</code> through the legacy
+  <code>AudioBackend</code> interface, only through the Music Assistant queue API (see
+  <a href="../ovos-media-compat/">Legacy Compatibility</a>).</li>
+<li><strong><a href="https://github.com/OpenVoiceOS/ovos-skill-music-assistant"><code>ovos-skill-music-assistant</code></a></strong>:
+  the legacy OCP skill both of the above supersede.</li>
 </ul>
-<p><code>ovos-media-plugin-mass</code> and <code>ovos-skill-music-assistant</code> are not yet published (no
-public repo or PyPI package). Only <code>ovos-media-provider-mass</code> is public today, and
-installing it does nothing yet: <code>opm.media.provider</code> in-process loading is not wired
-into <code>ovos-media</code> (see <a href="../ovos-media/#upcoming-mediaprovider-plugins-replace-ocp-skills">ovos-media</a>).</p>
+<p><code>ovos-media-plugin-mass</code> and <code>ovos-skill-music-assistant</code> are public repos, not yet on
+PyPI. Check PyPI before treating either as installable. <code>ovos-media-provider-mass</code> is
+public and on PyPI, but installing it does nothing yet. <code>opm.media.provider</code> in-process
+loading is not wired into <code>ovos-media</code> (see
+<a href="../ovos-media/#upcoming-mediaprovider-plugins-replace-ocp-skills">ovos-media</a>).</p>
 <h2 id="direction-2-music-assistant-loads-out-of-tree-providers">Direction 2: Music Assistant loads out-of-tree providers<a class="headerlink" href="#direction-2-music-assistant-loads-out-of-tree-providers" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/TigreGotico/music-assistant-plugin-manager"><code>music-assistant-plugin-manager</code></a>
 (<code>pip install music-assistant-plugin-manager</code>) is independent of OVOS: it loads
