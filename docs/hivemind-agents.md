@@ -2,10 +2,11 @@
 
 !!! abstract "In a nutshell"
     OpenVoiceOS runs **local-first**. Sometimes you want one capable machine to do the
-    thinking while several small devices ("satellites") listen and speak. Or you want to
-    reach your assistant securely from off-device. **HiveMind** is the companion project
-    that makes this possible. It exposes an OVOS install, or a single persona, over an
-    authenticated, encrypted protocol that satellites and clients connect to.
+    thinking while several small devices ("[satellites](https://jarbashivemind.github.io/HiveMind-community-docs/reference/glossary/)")
+    listen and speak. Or you want to reach your assistant securely from off-device.
+    **HiveMind** is the companion project that makes this possible. It exposes an OVOS
+    install, or a single persona, over an authenticated, encrypted protocol that satellites
+    and clients connect to.
 
 !!! info "A separate project, under its own org"
     HiveMind is maintained in the **[JarbasHiveMind](https://github.com/JarbasHiveMind)**
