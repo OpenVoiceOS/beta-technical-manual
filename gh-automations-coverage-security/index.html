@@ -2013,7 +2013,7 @@
 <td><code>install_extras</code></td>
 <td>string</td>
 <td><code>""</code></td>
-<td>Extra pip install arguments run before tests. Example: '.[dev]' or '-r requirements/test.txt'. If empty, the package itself is installed via 'pip install -e .[dev]' (falling back to bare install).</td>
+<td>Extra dependencies to install before tests. Accepts a bare extras name ('dev'), a bracketed list ('[dev,rl]'), a full target ('.[dev]'), or raw pip arguments ('-r requirements/test.txt'). If empty, the package itself is installed via 'pip install -e .[dev]' (falling back to bare install).</td>
 </tr>
 <tr>
 <td><code>pre_install_pip</code></td>
@@ -2032,6 +2032,12 @@
 <td>string</td>
 <td><code>.</code></td>
 <td>Value of --cov= passed to pytest. Set to your package directory (e.g. 'ovos_core') to measure only your own code rather than the full repo.</td>
+</tr>
+<tr>
+<td><code>pytest_args</code></td>
+<td>string</td>
+<td><code>""</code></td>
+<td>Extra arguments appended to the pytest invocation, e.g. '-n auto' to run tests in parallel via pytest-xdist. Same name and meaning as on build-tests.yml. Empty by default: no change to the command line.</td>
 </tr>
 <tr>
 <td><code>deploy_pages</code></td>
@@ -2220,7 +2226,7 @@
 <td><code>install_extras</code></td>
 <td>string</td>
 <td><code>""</code></td>
-<td>Extra pip install arguments run before tests. Example: '.[dev]' or '-r requirements/test.txt'. If empty, the package itself is installed via 'pip install -e .[dev]' (falling back to bare install).</td>
+<td>Extra dependencies to install before tests. Accepts a bare extras name ('dev'), a bracketed list ('[dev,rl]'), a full target ('.[dev]'), or raw pip arguments ('-r requirements/test.txt'). If empty, the package itself is installed via 'pip install -e .[dev]' (falling back to bare install).</td>
 </tr>
 <tr>
 <td><code>test_path</code></td>
@@ -2337,7 +2343,7 @@
 <td><code>install_extras</code></td>
 <td>string</td>
 <td><code>""</code></td>
-<td>pip extras to install, e.g. '[extras]'</td>
+<td>Extra dependencies to install. Accepts a bare extras name ('dev'), a bracketed list ('[dev,rl]'), a full target ('.[dev]'), or raw pip arguments ('-r requirements/test.txt').</td>
 </tr>
 <tr>
 <td><code>system_deps</code></td>

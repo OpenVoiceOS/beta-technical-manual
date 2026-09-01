@@ -1952,7 +1952,7 @@
 <td><code>install_extras</code></td>
 <td>string</td>
 <td><code>""</code></td>
-<td>pip extras appended to the install command, e.g. 'test' or 'dev,test'.</td>
+<td>Extra dependencies to install. Accepts a bare extras name ('dev'), a bracketed list ('[dev,test]'), a full target ('.[dev]'), or raw pip arguments ('-r requirements/test.txt').</td>
 </tr>
 <tr>
 <td><code>plugin_type</code></td>
@@ -2145,7 +2145,7 @@
 <td><code>install_extras</code></td>
 <td>string</td>
 <td><code>""</code></td>
-<td>pip extras to install, e.g. '[extras,linux]'</td>
+<td>Extra dependencies to install. Accepts a bare extras name ('dev'), a bracketed list ('[dev,linux]'), a full target ('.[dev]'), or raw pip arguments ('-r requirements/test.txt').</td>
 </tr>
 <tr>
 <td><code>system_deps</code></td>

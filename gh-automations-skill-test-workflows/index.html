@@ -1904,7 +1904,7 @@
 <td><code>install_extras</code></td>
 <td>string</td>
 <td><code>test</code></td>
-<td>pip extras used when installing the package, e.g. 'test' or 'dev,test'. The extras must pull in ovoscope (e.g. ovoscope&gt;=0.7.0 in [test]).</td>
+<td>Extra dependencies used when installing the package; the extras must pull in ovoscope (e.g. ovoscope&gt;=0.7.0 in [test]). Accepts a bare extras name ('test'), a bracketed list ('[dev,test]'), a full target ('.[test]'), or raw pip arguments ('-r requirements/test.txt').</td>
 </tr>
 <tr>
 <td><code>pre_install_pip</code></td>
@@ -2144,7 +2144,7 @@
 <td><code>install_extras</code></td>
 <td>string</td>
 <td><code>test</code></td>
-<td>pip extras used when installing the package; must pull in ovoscope.</td>
+<td>Extra dependencies used when installing the package; must pull in ovoscope. Accepts a bare extras name ('test'), a bracketed list ('[dev,test]'), a full target ('.[test]'), or raw pip arguments ('-r requirements/test.txt').</td>
 </tr>
 <tr>
 <td><code>test_path</code></td>
@@ -2267,7 +2267,7 @@
 <td><code>install_extras</code></td>
 <td>string</td>
 <td><code>test</code></td>
-<td>pip extras used when installing the package, e.g. 'test' or 'dev,test'. The extras should pull in ovoscope[tts].</td>
+<td>Extra dependencies used when installing the package; the extras should pull in ovoscope[tts]. Accepts a bare extras name ('test'), a bracketed list ('[dev,test]'), a full target ('.[test]'), or raw pip arguments ('-r requirements/test.txt').</td>
 </tr>
 <tr>
 <td><code>test_path</code></td>
