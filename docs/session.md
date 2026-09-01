@@ -203,13 +203,16 @@ one, falling back to Configuration otherwise.
 
 ```
 
-!!! note "Two different ways a session gets updated"
-    An inbound client message **merges** field-by-field onto the stored
-    `"default"` session. A field the client omits is left alone, so a
-    client can never delete a stored field just by not sending it. A
-    pipeline plugin's `Match.updated_session`, by contrast, is a **complete
-    snapshot**: whatever it doesn't include is treated as deleted. Deletion
-    by omission exists on that one pathway only.
+!!! note "A session update is always a full snapshot, never a field merge"
+    Both an inbound client message and a pipeline plugin's
+    `Match.updated_session` fold onto the stored session the same way:
+    `Session.update_from` round-trips the incoming state through
+    `serialize`/`deserialize`, so a field present on the wire overrides the
+    stored value and a field the sender omits resets to the spec default,
+    not "left alone." This applies uniformly to every `session_id`,
+    including `"default"`. There is no field-by-field merge path anywhere
+    in `ovos-core`, which is exactly why the earlier warning on this page
+    insists a client replay the **complete** session on every message.
 
 ## Per User Interactions
 
