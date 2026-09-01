@@ -40,8 +40,11 @@ Network connection information.
 - What's your IP address?
 - What's your network address?
 - Tell me your network address
-- What network are you connected to?
 - Tell me your IP address
+
+!!! note "\"What network are you connected to?\" asks something else"
+    That phrasing answers with the WiFi network **name**, not the IP address — a separate
+    intent, registered only when `iwlist` is installed on the host.
 
 ??? note "Install"
     [:material-github: OpenVoiceOS/ovos-skill-ip](https://github.com/OpenVoiceOS/ovos-skill-ip) · `pip install ovos-skill-ip` · Maturity: Stable
