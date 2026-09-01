@@ -1612,6 +1612,10 @@
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">nice_time</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>   <span class="c1"># &quot;three o&#39;clock&quot;</span>
 </span></code></pre></div>
 <p>Every function takes an explicit <code>lang</code> (BCP-47 code). For <code>extract_datetime</code>, languages without a dedicated implementation fall back to the <a href="https://dateparser.readthedocs.io/en/latest/">dateparser</a> library. The <code>nice_*</code> formatters fall back to a language-agnostic English-style generic implementation when a language-specific one is missing.</p>
+<p><code>ovos-date-parser</code> also re-exports <code>extract_timespan</code> and <code>explain</code> from its <code>chronologia</code>
+dependency, a separate reckoning core (astronomical dates, calendars, eras, cycles). These
+run alongside the existing <code>extract_datetime</code>/<code>nice_*</code> API, which is unchanged and does not
+route through <code>chronologia</code>.</p>
 <h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
