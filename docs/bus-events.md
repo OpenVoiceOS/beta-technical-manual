@@ -200,7 +200,7 @@ status, SEI queries), see
 | `ovos.common_play.repeat.toggle` / `.set` / `.unset` | in | Manage repeat mode |
 | `ovos.common_play.duck` / `.unduck` / `.cork` / `.uncork` | in | Manage playback ducking around TTS/other audio |
 | `ovos.common_play.status` | in | Request a player state sync (also emitted by OCP itself on launch) |
-| `ovos.common_play.status.response` | out | Reply to `.status`, carries current player state |
+| `ovos.common_play.status.response` | out | Reply to `.status`, carries current player state: `{playback_type, media_type, player_state, loop_state, media_state, shuffle, playlist_position, playlist_size, title, artist, image}` |
 | `ovos.common_play.track.state` | out | `{"state": TrackState}` playback state changed (loading, playing audio/video, paused, ended) |
 | `ovos.common_play.media.state` | out | Low-level backend media state changed |
 | `ovos.common_play.home` | in | Request the OCP home/media browser view |
