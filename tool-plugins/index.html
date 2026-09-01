@@ -1824,7 +1824,8 @@ into the <code>ToolBox</code> interface, so a persona can call it like any nativ
 </tr>
 </tbody>
 </table>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-tool-adapters
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-tool-adapters<span class="o">[</span>mcp<span class="o">]</span><span class="w">     </span><span class="c1"># for ovos-mcp-toolbox</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-tool-adapters<span class="o">[</span>utcp<span class="o">]</span><span class="w">    </span><span class="c1"># for ovos-utcp-toolbox</span>
 </span></code></pre></div>
 <p>Each takes its own config section, keyed by plugin name in the persona JSON exactly like a
 handler plugin. For <code>ovos-mcp-toolbox</code>, <code>transport</code> selects the connection kind: <code>stdio</code> needs
