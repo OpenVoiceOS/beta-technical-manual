@@ -166,19 +166,15 @@ Use DuckDuckGo to answer questions.
 
 **Installer default**
 
-Query Wikipedia for answers to all your questions. Get just a summary, or ask for more to get
-in-depth information.
+Query Wikipedia for a summary answer.
 
 **Usage examples:**
 
-- Search for chocolate
-- More information
-- Tell me about beans
-- Tell me More
-- Tell me about the Pembroke Welsh Corgi
-
+- Search wikipedia for chocolate
+- Tell me about beans on wikipedia
 - Check Wikipedia for beans
-- Tell me about Elon Musk
+- What does wikipedia say about the Pembroke Welsh Corgi
+- Tell me about Elon Musk on wiki
 
 ??? note "Install"
     [:material-github: OpenVoiceOS/ovos-skill-wikipedia](https://github.com/OpenVoiceOS/ovos-skill-wikipedia) · `pip install ovos-skill-wikipedia` · Maturity: Mature
