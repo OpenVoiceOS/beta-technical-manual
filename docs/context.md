@@ -59,8 +59,8 @@ The private/shared scoping rules are identical on both sides: a bare key gates p
 against the registering `skill_id`, and reading a shared key needs the explicit
 `{"key": "person", "scope": "shared"}` form.
 
-Since `ovos-workshop` `9.6.0a1`, `@intent_handler` carries the declaration side too, for
-file-registered (Padatious) intents:
+Since `ovos-workshop` `9.6.0a1`, `@intent_handler` carries the declaration side too, on any
+intent, adapt or file-registered:
 
 ```python
 from ovos_workshop.decorators import intent_handler
@@ -72,9 +72,12 @@ def handle_guarded(self, message):
     ...
 ```
 
-Adapt intents keep their own mechanism (`.require()` on a context keyword, the TeaSkill example
-below) and ignore this decorator's `requires_context`/`excludes_context`. Pass them only on
-file-registered intents.
+The declaration always reaches the wire, but only an engine that implements OVOS-CONTEXT-1
+enforces it: the template engines (Padatious, Padacioso, M2V) gate on it, while Adapt's keyword
+matcher has no context-aware matcher of its own and, per CONTEXT-1 §6, "ignores them and
+matches as if absent." Adapt still keeps its own separate mechanism (`.require()` on a context
+keyword, the TeaSkill example below) for gating today. A future context-aware keyword engine
+could honor the declaration with no skill-side change.
 
 !!! danger "A bare-string entry silently never matches a shared entry"
     A bare string like `requires_context=["prev_dialog"]` resolves to **private** scope, keyed
