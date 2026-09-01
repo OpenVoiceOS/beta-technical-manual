@@ -368,6 +368,7 @@ UNSAFE_FOR_HELP_CAPTURE = {
     "ovos-gui-service", "ovos-gui-debug-tui", "ovos-intent-service",
     "ovos-skill-installer", "ovos-ocp-standalone",
     "ovos-listen", "ovos-speak", "ovos-say-to", "ovos-simple-cli",
+    "ovos-busmon",
 }
 
 
