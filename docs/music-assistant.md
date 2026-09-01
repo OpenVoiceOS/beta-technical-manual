@@ -69,7 +69,7 @@ instead of an isolated one translated away from it (see
 [Session isolation between clients](hivemind-agents.md#session-isolation-between-clients)):
 
 ```bash
-hivemind-core add-client --name home-assistant --admin
+hivemind-core add-client --name home-assistant --admin true
 hivemind-core allow-msg "ovos.common_play.play" <NODE_ID>
 hivemind-core allow-msg "ovos.common_play.pause" <NODE_ID>
 hivemind-core allow-msg "ovos.common_play.resume" <NODE_ID>
