@@ -64,7 +64,7 @@ Insert the tier IDs you need into your `mycroft.conf` under the `intents.pipelin
 ```jsonc
 {
   "intents": {
-    "persona": {
+    "ovos-persona-pipeline-plugin": {
       "handle_fallback": true,
       "default_persona": "Remote Llama",
       "min_intent_confidence": 0.6,
@@ -77,7 +77,7 @@ Insert the tier IDs you need into your `mycroft.conf` under the `intents.pipelin
 }
 ```
 
-### `persona` section options:
+### `ovos-persona-pipeline-plugin` section options:
 
 | Key                      | Description                                                                 |
 |--------------------------|-----------------------------------------------------------------------------|
@@ -155,7 +155,7 @@ Only unmatched or low-confidence utterances are routed to the persona.
     ```jsonc
     {
       "intents": {
-        "persona": {
+        "ovos-persona-pipeline-plugin": {
           "handle_fallback": true,
           "default_persona": "Remote Llama"
         },
