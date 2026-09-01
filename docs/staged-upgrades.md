@@ -34,7 +34,7 @@ uv pip freeze > /etc/ovos/known-good-$(date +%F).txt
 uv pip install --upgrade ovos-core[mycroft] \
     -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
 
-# 3. Restart and re-run the readiness probe above before declaring success
+# 3. Restart and re-run the readiness probe (see below) before declaring success
 systemctl --user restart ovos.service
 ```
 
@@ -67,6 +67,8 @@ flowchart LR
 
 *Diagram:* The flow starts at freezing known-good packages and ends at either the fleet rollout or a rollback, and it branches on whether the canary device passes its readiness probe and real voice check.
 
+See [Knowing when the assistant is actually ready](production-operations.md#knowing-when-the-assistant-is-actually-ready) for the readiness probe both recipes on this page reference.
+
 [Release channels](release-channels.md) covers `stable`/`testing`/`alpha` constraints files.
 For a fleet, the same mechanism gives you a controlled, reversible upgrade path:
 
@@ -92,7 +94,7 @@ cp ~/.config/mycroft/mycroft.conf ~/.config/mycroft/mycroft.conf.bak-$(date +%F)
 uv pip install --upgrade ovos-core[mycroft] \
     -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
 
-# 3. Restart and re-run the readiness probe above before declaring success
+# 3. Restart and re-run the readiness probe (see below) before declaring success
 systemctl --user restart ovos.service
 ```
 

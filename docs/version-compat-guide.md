@@ -87,7 +87,7 @@ package that owns the break and branch on them. This needs no extra dependency a
 string parsing.
 
 `ConversationalSkill.can_answer` was renamed to `can_converse` in `ovos-workshop`
-`7.0.0` (`1fdd532`, #348), one day after the `can_answer` name shipped in `5.0.0`.
+`7.0.0` (`1fdd532`, #348), hours after the `can_answer` name shipped in `5.0.0` — both landed 2025-06-07.
 Define both names and delegate one to the other so callers on either generation find
 the method they expect:
 
