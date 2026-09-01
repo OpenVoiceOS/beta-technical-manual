@@ -60,7 +60,7 @@ Suppose a device ships this pipeline config:
 ```json
 {
   "intents": {
-    "ovos_hierarchical_knn_pipeline": {
+    "ovos-hierarchical-knn-pipeline": {
       "hf_repo_id": "fdemelo/ovos-hierarchical-knn-granite-97m-multilingual-r2",
       "conf_high": 0.7,
       "conf_medium": 0.5,
