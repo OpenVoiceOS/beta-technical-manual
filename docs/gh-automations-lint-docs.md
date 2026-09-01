@@ -63,7 +63,7 @@ Runs `mypy` and posts a `Type Check` section. Informational only, never blocks m
 | `mypy_args` | string | `.` | Arguments passed to mypy (e.g. 'my_package' or '. --ignore-missing-imports'). Default checks the entire repository. |
 | `test_extras` | string | `dev` | Name of the pyproject.toml extras key that declares the package's test/typing dependencies. Tried first via 'pip install -e .[<key>]'. |
 | `test_extras_fallback` | string | `test` | Extras key tried if `test_extras` is not declared. Empty to skip. |
-| `install_extras` | string | `""` | Extra pip install arguments appended after the package install (e.g. '-r requirements/typing.txt') |
+| `install_extras` | string | `""` | Extra dependencies to install after the package install. Accepts a bare extras name ('dev'), a bracketed list ('[dev,rl]'), a full target ('.[dev]'), or raw pip arguments ('-r requirements/typing.txt'). |
 | `system_deps` | string | `""` | Extra apt packages to install before type-checking (space-separated) |
 | `fail_on_errors` | boolean | `false` | When true, the job fails if mypy reports any errors. Default is false — type check is informational. |
 | `pr_comment` | boolean | `true` | Post a 🔎 Type Check section in the shared OVOS PR Checks comment. Only runs when the workflow is triggered by a pull_request event. |
