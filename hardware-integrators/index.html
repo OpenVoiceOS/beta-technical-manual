@@ -1672,7 +1672,10 @@ and validator mechanics. This section covers the hardware interface itself.</p>
 <p>For a full, real-hardware reference implementation, see
 <a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-dotstar"><code>ovos-PHAL-plugin-dotstar</code></a>. It wraps
 a DotStar (APA102) LED strip's SPI driver in an <code>AbstractLed</code> subclass, plus the surrounding
-PHAL plugin and validator boilerplate.</p>
+PHAL plugin and validator boilerplate. It still imports <code>AbstractLed</code> from the deprecated
+<code>ovos_plugin_manager.hardware.led</code> compat path (the same class, re-exported) rather than
+<code>ovos_hardware_helpers.led</code> shown above — import from <code>ovos_hardware_helpers.led</code> in new
+drivers to avoid the deprecation warning.</p>
 <p><code>AbstractLed</code> also ships a <code>scale_brightness(color_val, bright_val)</code> static helper for dimming.
 The library's <code>eval_color()</code> helper (in <code>ovos_hardware_helpers.led</code>) turns a color name, hex
 string, or RGB tuple into a normalized color object using
