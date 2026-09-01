@@ -2118,8 +2118,9 @@ and XDG path helpers are covered on the
   <code>get_xdg_config_locations()</code> and the layer paths on <code>Configuration</code>.</p>
 </li>
 <li>
-<p>Use <code>disable_user_config</code> with caution. It silently skips the distribution and assistant
-  layers and runtime patches too, not only the user layer.</p>
+<p>Use <code>disable_user_config</code> with caution. It silently skips the distribution layer and
+  in-memory runtime patches too, not only the user layer. The assistant layer
+  (<code>runtime.conf</code>) is exempt since <code>3.0.1a1</code>.</p>
 </li>
 <li>
 <p>For the package layout, entry points, and other internals, see
