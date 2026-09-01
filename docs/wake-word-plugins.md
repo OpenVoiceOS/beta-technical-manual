@@ -264,6 +264,8 @@ separately-licensed model, that is called out under "model".
 | Plugin | Description | License | Maturity |
 |--------|-------------|---------|----------|
 | [ovos-ww-plugin-precise-lite](#ovos-ww-plugin-precise-lite) | First fallback below the default: a trained Precise wake-word model exported to TFLite. Warning: archived, kept working as installed. `ovos-ww-plugin-precise-onnx` is the maintained successor. | Apache-2.0 | Deprecated |
+| [ovos-ww-plugin-precise](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise) | Classic Precise wake-word plugin, the predecessor to the TFLite/ONNX rewrites. Warning: archived. | Apache-2.0 | Deprecated |
+| [ovos-ww-plugin-pocketsphinx](https://github.com/OpenVoiceOS/ovos-ww-plugin-pocketsphinx) | Wake-word detection using CMU PocketSphinx. Not archived. | Apache-2.0 | Stable |
 | [ovos-ww-plugin-openWakeWord](#ovos-ww-plugin-openwakeword) | Wake-word detection using the open-source openWakeWord neural models. | Apache-2.0 (model: see model card) | Stable |
 | [ovos-ww-plugin-vosk](#ovos-ww-plugin-vosk) | Mycroft wake-word plugin for [Vosk](https://alphacephei.com/vosk/) | Apache-2.0 (model: see model card) | Stable |
 | [ovos-ww-plugin-precise-onnx](#ovos-ww-plugin-precise-onnx) | Default plugin for `hey_mycroft`: a Precise wake-word model exported to ONNX. | Apache-2.0 | Beta |
