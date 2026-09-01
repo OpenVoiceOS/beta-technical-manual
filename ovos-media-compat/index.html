@@ -1249,9 +1249,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#no-nextprev-in-some-backends" class="md-nav__link">
+  <a href="#music-assistant-nextprev-delegate-to-the-queue-api" class="md-nav__link">
     <span class="md-ellipsis">
-      No next/prev in some backends
+      Music Assistant next/prev delegate to the queue API
     </span>
   </a>
   
@@ -1743,9 +1743,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#no-nextprev-in-some-backends" class="md-nav__link">
+  <a href="#music-assistant-nextprev-delegate-to-the-queue-api" class="md-nav__link">
     <span class="md-ellipsis">
-      No next/prev in some backends
+      Music Assistant next/prev delegate to the queue API
     </span>
   </a>
   
@@ -1809,9 +1809,10 @@ now just a back-compat alias for the plain, skill-free catalog object). <code>OC
 <code>ovos-media</code> as a skill on the bus and loads skill infrastructure (settings, locale, etc.). It
 registers <code>@ocp_search()</code> to expose liked songs as a search result. There is no
 <code>@ocp_featured_media()</code> handler.</p>
-<h3 id="no-nextprev-in-some-backends">No next/prev in some backends<a class="headerlink" href="#no-nextprev-in-some-backends" title="Permanent link">&para;</a></h3>
-<p>The Music Assistant audio backend does not implement <code>next()</code> or <code>previous()</code> through the legacy
-<code>AudioBackend</code> interface. Only through the MA queue API.</p>
+<h3 id="music-assistant-nextprev-delegate-to-the-queue-api">Music Assistant next/prev delegate to the queue API<a class="headerlink" href="#music-assistant-nextprev-delegate-to-the-queue-api" title="Permanent link">&para;</a></h3>
+<p>The Music Assistant audio backend's <code>next()</code>/<code>previous()</code> on the legacy <code>AudioBackend</code>
+interface work: they delegate internally to Music Assistant's own queue API
+(<code>next_track()</code>/<code>previous_track()</code>) rather than implementing track skipping themselves.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../ovos-media/#hivemind-multi-session-gating">ovos-media HiveMind: multi-session gating</a>
 <strong>Related:</strong> <a href="../ovos-media/">ovos-media</a> · <a href="../ovos-media-mpris/">ovos-media MPRIS Integration</a> · <a href="../audio-service/">Audio Service</a></p>
