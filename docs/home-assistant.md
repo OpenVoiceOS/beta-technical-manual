@@ -15,6 +15,7 @@ it's easy to conflate them. Pick the one, or both, that matches what you're tryi
 |---|---|---|---|
 | **HA uses OVOS's engines** | Home Assistant's own [Assist](https://www.home-assistant.io/voice_control/) voice pipeline uses an OVOS wake word, speech-to-text, or text-to-speech plugin instead of (or alongside) its built-in ones | A small OVOS-side bridge process, reachable from HA over the network | [Wyoming Bridges](wyoming-bridges.md) |
 | **OVOS controls HA devices** | Your OVOS assistant understands utterances like "turn on the lights" and relays them to your Home Assistant instance | A skill running inside OVOS | See below |
+| **Full OVOS inside HAOS** | OVOS Core and its skills run as Home Assistant Supervisor add-ons and answer through Assist | Add-ons on the HAOS host, installed from the Add-on Store | See below |
 
 ---
 
@@ -105,6 +106,28 @@ API, which handles anything HA itself can parse. Lights, switches, and sensors g
 dedicated intents with barer phrasing.
 
 See [What can I say? — Smart Home](skill-examples.md#smart-home) for the skill's catalog entry.
+
+---
+
+## Direction 3: Full OVOS inside Home Assistant OS
+
+!!! info "Community project, not maintained by OpenVoiceOS"
+    [haos-ovos-addons](https://github.com/andlo/haos-ovos-addons) and its companion
+    [ha-ovos-integration](https://github.com/andlo/ha-ovos-integration) are third-party
+    projects, not part of the `OpenVoiceOS` org. Install-from-store convenience trades off
+    against depending on someone else's packaging; check the repos' own state before relying
+    on them.
+
+`haos-ovos-addons` packages the OVOS Wyoming bridges, `ovos-core`, `ovos-persona`, skill sets,
+and debugging tools (`ovos-busmon`, `ovos-tui`, `ovos-control-panel`) as installable HAOS
+Supervisor add-ons: **Settings → Add-ons → Add-on Store → ⋮ → Repositories**, add the repo URL,
+then install add-ons from the store like any other. No manual config files.
+
+For just better STT/TTS/wake word in Assist, the `ovos-wyoming-*` add-ons alone are enough —
+they're the same bridges described in Direction 1 above, just packaged for one-click install.
+For full OVOS skills running through Assist, add `ovos-core` and `ovos-skills`, then install
+`ha-ovos-integration` via HACS to expose OVOS config and skill settings as HA entities and pick
+**OpenVoiceOS** as the Assist conversation agent.
 
 ---
 
