@@ -19,6 +19,11 @@ nice_time(datetime(2024, 1, 1, 15, 0), lang="en")   # "three o'clock"
 
 Every function takes an explicit `lang` (BCP-47 code). For `extract_datetime`, languages without a dedicated implementation fall back to the [dateparser](https://dateparser.readthedocs.io/en/latest/) library. The `nice_*` formatters fall back to a language-agnostic English-style generic implementation when a language-specific one is missing.
 
+`ovos-date-parser` also re-exports `extract_timespan` and `explain` from its `chronologia`
+dependency, a separate reckoning core (astronomical dates, calendars, eras, cycles). These
+run alongside the existing `extract_datetime`/`nice_*` API, which is unchanged and does not
+route through `chronologia`.
+
 ## Features
 
 - **Date and Time Extraction**: extract specific dates and times from natural language phrases in various languages.
