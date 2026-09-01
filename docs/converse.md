@@ -83,6 +83,9 @@ class IceCreamSkill(ConversationalSkill):
         selection = self.ask_selection(self.flavors, 'what.flavor')
         self.speak_dialog('coming_right_up', {'flavor': selection})
 
+    def can_converse(self, message):
+        return self.voc_match(message.data['utterances'][0], 'Thankyou')
+
     def converse(self, message):
         if self.voc_match(message.data['utterances'][0], 'Thankyou'):
             self.speak_dialog("you-are-welcome")
@@ -98,7 +101,7 @@ In this example:
 2. The skill is added to the system Active Skill list for up to 5 minutes.
 
 
-3. Any utterance OVOS receives triggers this skill's converse system while it is considered active.
+3. Any utterance OVOS receives triggers this skill's converse system while it is considered active — but `can_converse` is the gate that actually gets called first. It is abstract on `ConversationalSkill`, so a subclass that leaves it undefined raises `NotImplementedError` at ping time and `converse()` never fires. Any skill that overrides `converse()` must also override `can_converse`, as this example does.
 
 
 4. If the user follows up with a pleasantry such as "Hey Mycroft, thanks", the converse method matches this vocab against the `Thankyou.voc` file in the skill and speaks the contents of the `you-are-welcome.dialog` file. The method returns `True` and the utterance is consumed, so the intent parsing service never triggers.
@@ -275,7 +278,10 @@ class MyGameSkill(ConversationalSkill):
         
     def handle_deactivate(self, message):
         self.game_over() # user abandoned interaction
-        
+
+    def can_converse(self, message):
+        return self.playing
+
     def converse(self, message):
         if self.playing:
             # do some game stuff with the utterance
