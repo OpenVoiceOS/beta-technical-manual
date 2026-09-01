@@ -1387,8 +1387,8 @@ is a telemetry pipeline you opt into, not an operational metrics/monitoring syst
 </div>
 <p>For day-to-day, per-device debugging, use:</p>
 <ul>
-<li><strong><code>ovos-busmon</code></strong>: a browser-based web UI (FastAPI + WebSocket) that streams the live message traffic on a device's bus in
-  real time. The fastest way to see whether wake word → STT → intent → TTS is actually firing.</li>
+<li><strong><code>ovos-busmon</code></strong>: a browser-based web UI (FastAPI + Server-Sent Events) that streams the live message traffic on a
+  device's bus in real time. The fastest way to see whether wake word → STT → intent → TTS is actually firing.</li>
 <li><strong><code>ovos-logs</code></strong> (see <a href="../production-operations/#log-locations-and-shipping-them-out">Production Operations: log locations</a>) for historical logs.</li>
 <li>The <a href="../production-operations/#knowing-when-the-assistant-is-actually-ready">readiness probe</a> as a synthetic check you
   can run from outside the device (cron, a monitoring agent, a CI job) on a schedule.</li>

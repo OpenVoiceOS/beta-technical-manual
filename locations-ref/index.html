@@ -1736,9 +1736,14 @@ configuration. See the <a href="../glossary/">Glossary</a>.</p>
 <td>XDG user config (primary editable)</td>
 </tr>
 <tr>
+<td><code>ASSISTANT_CONFIG</code></td>
+<td><code>~/.config/mycroft/runtime.conf</code></td>
+<td>OVOS's own runtime-write layer, merged above the user layer</td>
+</tr>
+<tr>
 <td><code>WEB_CONFIG_CACHE</code></td>
 <td><code>~/.config/mycroft/web_cache.json</code></td>
-<td>Cache of the optional remote/backend config layer (env: <code>MYCROFT_WEB_CACHE</code>)</td>
+<td><strong>Deprecated, not merged.</strong> Leftover path for the removed remote-config layer (env: <code>MYCROFT_WEB_CACHE</code>); only <code>RemoteConf</code>, itself a warn-only stub, still reads it</td>
 </tr>
 </tbody>
 </table>
@@ -1794,8 +1799,9 @@ not exist on disk, it falls back to the legacy pre-XDG location <code>~/.mycroft
   looks at it.</li>
 <li><code>/etc/xdg/mycroft/mycroft.conf</code> is <strong>not</strong> in the list, but it is loaded — merged just
   before the user config, so the user's own file wins over it.</li>
-<li>The order differs from the merge: here the remote layer sits fourth (after default, distribution, and system), while
-  <code>load_all_configs()</code> merges it second, just above the bundled default.</li>
+<li>The deprecated web-cache path sits fourth in this list, after default, distribution, and
+  system. <code>load_all_configs()</code> does not merge it at all. <code>ovos-config</code> 3.0.0a1 dropped the
+  remote-config layer as a breaking change.</li>
 <li>The path environment variables below are ignored — the function rebuilds
   <code>/usr/share/&lt;base&gt;/&lt;file&gt;</code> and <code>/etc/&lt;base&gt;/&lt;file&gt;</code> literally.</li>
 </ul>
