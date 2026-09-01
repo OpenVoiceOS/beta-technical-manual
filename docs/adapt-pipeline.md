@@ -105,8 +105,9 @@ Adapt confidence thresholds can be set in `mycroft.conf`:
 ```
 
 > The config section is keyed by the pipeline's plugin id (`intents.<pipeline-id>`), here
-> `ovos-adapt-pipeline-plugin`. The domain/hierarchical variants read
-> `intents.ovos_adapt_domain_pipeline` / `intents.ovos_adapt_hierarchical_pipeline`.
+> `ovos-adapt-pipeline-plugin`. The domain/hierarchical variants are separate `opm.pipeline`
+> entry points, `ovos-adapt-domain-pipeline-plugin` / `ovos-adapt-hierarchical-pipeline-plugin`,
+> and read `intents.ovos-adapt-domain-pipeline-plugin` / `intents.ovos-adapt-hierarchical-pipeline-plugin`.
 
 * These thresholds gate which matcher stage accepts a result. The values shown are the source defaults.
 

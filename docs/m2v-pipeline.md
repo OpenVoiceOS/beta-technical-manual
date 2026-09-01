@@ -114,7 +114,7 @@ The pipeline has a `mode` config key:
 A second entry point, `ovos-m2v-prototype-pipeline`
 (`Model2VecPrototypePipeline`), is the prototype mode exposed as a standalone
 plugin so it can run alongside the classifier one. It reads its config from
-`intents.ovos_m2v_prototype_pipeline`.
+`intents.ovos-m2v-prototype-pipeline`.
 
 ---
 
