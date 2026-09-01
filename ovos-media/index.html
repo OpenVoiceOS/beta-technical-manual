@@ -2510,9 +2510,9 @@ type (<code>opm.media.provider</code> / <code>PluginTypes.MEDIA_PROVIDER</code>)
 <a href="../ocp-skills/">OCP skills</a>. This first ships in <strong><code>ovos-plugin-manager 2.8.0a1</code></strong>
 (Phase 1 of the <code>ovos-media</code> migration). OCP skills remain the way to provide media for now.
 Tracked in <a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/423">ovos-workshop#423</a>.</p>
-<p>A first batch of MediaProvider plugins now has <strong>public repositories</strong>, and nine of the ten
-listed below already ship PyPI alpha releases; only <code>ovos-media-provider-news</code> is repo-only
-so far. Installing them does nothing yet —
+<p>A first batch of MediaProvider plugins now has <strong>public repositories</strong>, and ten of the
+eleven listed below already ship PyPI alpha releases; only <code>ovos-media-provider-local</code> is
+repo-only so far. Installing them does nothing yet —
 the in-process loading is not wired into <code>ovos-media</code> (see below). Each one supersedes
 the catalog/search half of an older OCP skill:</p>
 <table>
@@ -2562,6 +2562,10 @@ the catalog/search half of an older OCP skill:</p>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-spotify"><code>ovos-media-provider-spotify</code></a></td>
 <td><a href="https://github.com/OpenVoiceOS/ovos-skill-spotify">ovos-skill-spotify</a> (playback via the companion <a href="https://github.com/OpenVoiceOS/ovos-media-plugin-spotify">ovos-media-plugin-spotify</a> backend)</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-media-provider-local"><code>ovos-media-provider-local</code></a></td>
+<td>Local file playback; uses <code>tinytag</code> (MIT) rather than <code>mutagen</code> (GPL) for metadata</td>
 </tr>
 </tbody>
 </table>
