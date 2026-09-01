@@ -1621,7 +1621,7 @@ than moved. Every OVOS package ships a <code>version.py</code> module with integ
 package that owns the break and branch on them. This needs no extra dependency and no
 string parsing.</p>
 <p><code>ConversationalSkill.can_answer</code> was renamed to <code>can_converse</code> in <code>ovos-workshop</code>
-<code>7.0.0</code> (<code>1fdd532</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/348" title="GitHub Issue: TigreGotico/ovos-technical-manual #348">#348</a>), one day after the <code>can_answer</code> name shipped in <code>5.0.0</code>.
+<code>7.0.0</code> (<code>1fdd532</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/348" title="GitHub Issue: TigreGotico/ovos-technical-manual #348">#348</a>), hours after the <code>can_answer</code> name shipped in <code>5.0.0</code> — both landed 2025-06-07.
 Define both names and delegate one to the other so callers on either generation find
 the method they expect:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.version</span> <span class="kn">import</span> <span class="n">VERSION_MAJOR</span> <span class="k">as</span> <span class="n">WORKSHOP_MAJOR</span>
