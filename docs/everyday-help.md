@@ -77,8 +77,8 @@ flowchart TD
   the microphone does not silence the speaker, and the reverse is also true.
 - **Say *"volume up"* or *"set volume to 80".*** These are handled by the built-in
   [Volume skill](skill-examples-utilities.md#volume) (`ovos-skill-volume`), which understands phrasing like
-  "volume up", "quieter", "mute", "unmute", "toggle mute", "set volume to 50", and "what's the
-  current volume".
+  "volume up", "quieter volume", "mute", "unmute", "toggle mute", "set volume to 50", and
+  "what's the current volume".
 - **Check the physical connections** if voice control makes no difference at all. Check the speaker cable
   is fully seated, the powered speaker is turned on and its own volume dial is not at zero, and (on a Raspberry
   Pi or similar box) the audio output is routed to the jack, HDMI, or USB device you expect. See

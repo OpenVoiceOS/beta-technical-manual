@@ -44,7 +44,7 @@ Get the current time, date, or information about specific calendar days.
 - Tell me the day of the week
 - What day was July 4th 2020?
 - What's the date?
-- Show me the time
+- What's the time
 
 - How many days until July 4th
 - What time is it in Paris?
