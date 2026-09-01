@@ -19,7 +19,7 @@ The `SkillManager` is a core component of `ovos-core`. It is a daemon `Thread` t
     - `SkillManager.run()`: [`ovos_core/skill_manager.py`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py). This is the main loop. It re-scans for new skills every 30 s via `self._stop_event.wait(30)`.
 
 
-    - `SkillManager.load_plugin_skills()`: [`ovos_core/skill_manager.py`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py). It loads discovered skills via `PluginSkillLoader` (from `ovos_workshop.skill_launcher`). It applies each skill's `RuntimeRequirements` (`network_before_load` / `internet_before_load`) as the connectivity gate.
+    - `SkillManager.load_plugin_skills()`: [`ovos_core/skill_manager.py`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py). It loads discovered skills via `PluginSkillLoader` (from `ovos_workshop.skill_launcher`). It applies each skill's `RuntimeRequirements` (`network_before_load` / `internet_before_load`) as the connectivity gate. A plugin skill that keeps failing to load backs off exponentially (starting at 30 s, doubling up to a 15-minute cap) instead of retrying on every scan, and `loaded_new` only reports skills that actually finished loading.
 
 
     - `SkillManager._sync_skill_loading_state()`: [`ovos_core/skill_manager.py`](https://github.com/OpenVoiceOS/ovos-core/blob/dev/ovos_core/skill_manager.py). It queries connectivity (via `ovos.PHAL.internet_check` / GUI state) and emits `mycroft.network.connected` / `mycroft.internet.connected`. The actual gating happens in `load_plugin_skills()`, and only when `skills.use_deferred_loading` is enabled.
