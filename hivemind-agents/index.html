@@ -1745,10 +1745,12 @@ clients may declare the same <code>session_id</code>. The server translates each
 translates it back on the way out. A client sees a stable id, its own name, never another
 client's, per
 <a href="https://github.com/JarbasHiveMind/architecture/blob/dev/hivemind-bridge-1.md#4-session-fidelity"><code>HIVEMIND-BRIDGE-1 §4</code></a>.</p>
-<p>The spec (§4.1) permits a remote client to declare OVOS's reserved device-local <code>"default"</code>
-too, translated the same way. <code>hivemind-core</code> <code>4.13.15a1</code> does not yet allow this: a non-admin
-client that HELLOs with <code>session_id: "default"</code> is still disconnected
-(<code>SESSION_ID_DEFAULT_FORBIDDEN</code>). Use a distinct <code>session_id</code> for now.</p>
+<p>A non-admin client may also declare OVOS's reserved device-local <code>"default"</code> — it's translated
+the same way as any other name, so it stays isolated and never reaches the orchestrator's actual
+device-local session. An <strong>admin</strong> connection is the one exception: it's exempt from
+translation, so its declared <code>session_id</code>, <code>"default"</code> included, is stamped onto the OVOS bus
+unchanged. Reaching the orchestrator's real sessions by name is what admin standing means here
+(<a href="https://github.com/JarbasHiveMind/architecture/blob/dev/hivemind-bridge-1.md#41-the-reserved-default-session-and-the-translation-exemption"><code>HIVEMIND-BRIDGE-1 §4.1</code></a>).</p>
 <p>A client multiplexing several conversations over one connection (a chat-room or telephony
 bridge) gets each mapped to its own isolated session. Session contents, every field besides
 the id, are adopted as sent, unmodified.</p>
