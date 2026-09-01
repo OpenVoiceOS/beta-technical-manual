@@ -23,6 +23,9 @@ Extends `OVOSSkill` with explicit converse support: `activate()`, `deactivate()`
 from ovos_workshop.skills.converse import ConversationalSkill
 
 class MySkill(ConversationalSkill):
+    def can_converse(self, message):
+        return True
+
     def converse(self, message):
         utterance = message.data["utterances"][0]
         if "help" in utterance:
@@ -31,6 +34,10 @@ class MySkill(ConversationalSkill):
         return False      # pass to next handler
 
 ```
+
+`can_converse` is abstract on `ConversationalSkill` and is what the framework actually
+calls on the ping/pong broadcast that determines active-skill status; leaving it
+unimplemented raises `NotImplementedError` there, so `converse()` is never reached.
 
 Additional bus events registered:
 
@@ -54,6 +61,9 @@ Extends `ConversationalSkill`. Always present in the converse active-skills list
 from ovos_workshop.skills.active import ActiveSkill
 
 class AlwaysListeningSkill(ActiveSkill):
+    def can_converse(self, message):
+        return True
+
     def converse(self, message):
         utterance = message.data["utterances"][0]
         # handle every utterance
@@ -286,6 +296,9 @@ from ovos_workshop.decorators import fallback_handler
 class MyUniversalFallback(UniversalFallback):
     def __init__(self, *args, **kwargs):
         super().__init__(internal_language="en-US", *args, **kwargs)
+
+    def can_answer(self, message):
+        return True
 
     @fallback_handler(priority=75)
     def handle_unknown(self, message) -> bool:
