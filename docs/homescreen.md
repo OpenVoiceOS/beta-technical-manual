@@ -57,12 +57,14 @@ Select a homescreen skill in `mycroft.conf` (or via [ovos-shell](ovos-shell.md))
 
 ```
 
-!!! warning "Not available on the legacy stack"
+!!! warning "Unreleased: not on any published package"
     The `homescreen.data.*` / `homescreen.widget.*` messages below belong to
-    `ovos-legacy-mycroft-gui-plugin` (`ovos_legacy_mycroft_gui/homescreen.py`), the
-    [GUI adapter](gui-adapters.md) that owns homescreen data and widget coordination. They let
-    a display render a live idle screen without a skill polling its own data. The legacy stack
-    described elsewhere on this page does not carry them.
+    `ovos-legacy-mycroft-gui-plugin` (`ovos_legacy_mycroft_gui/homescreen.py`), part of the
+    [GUI adapter](gui-adapters.md) rework described in [GUI Service](gui-service.md). That
+    rework is not yet released and not present on any published package — do not rely on any
+    of this on a stable install. Once shipped, it will let a display render a live idle screen
+    without a skill polling its own data. The legacy stack described elsewhere on this page
+    does not carry it.
 
 
     ### `homescreen.data.*`
