@@ -259,7 +259,8 @@ into the `ToolBox` interface, so a persona can call it like any native toolbox:
 | `ovos-utcp-toolbox` | `ovos-tool-adapters` | A UTCP-manual-advertising HTTP server |
 
 ```bash
-pip install ovos-tool-adapters
+pip install ovos-tool-adapters[mcp]     # for ovos-mcp-toolbox
+pip install ovos-tool-adapters[utcp]    # for ovos-utcp-toolbox
 ```
 
 Each takes its own config section, keyed by plugin name in the persona JSON exactly like a
