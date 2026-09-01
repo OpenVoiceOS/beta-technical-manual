@@ -1779,12 +1779,11 @@
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    }
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>  }
 </span></code></pre></div>
-<p><strong>Pending</strong> <a href="https://github.com/OpenVoiceOS/ovos-audio-transformer-plugin-ggwave/pull/45"><code>ovos-audio-transformer-plugin-ggwave#45</code></a>,
-not yet merged: a <code>listen_timeout</code> key (seconds, default <code>300</code>) will auto-disable the listener
-after it has been enabled over the bus with <code>ovos.ggwave.enable</code>, so a stray or forgotten enable
-does not leave data-over-sound listening on forever. Set it to <code>0</code> or negative to listen
-indefinitely once enabled. It has no effect on <code>start_enabled</code>: enabling the listener via config
-is an explicit operator decision to run always-on, and does not arm the timer.</p>
+<p>A <code>listen_timeout</code> key (seconds, default <code>300</code>) auto-disables the listener after it has
+been enabled over the bus with <code>ovos.ggwave.enable</code>, so a stray or forgotten enable does
+not leave data-over-sound listening on forever. Set it to <code>0</code> or negative to listen
+indefinitely once enabled. It has no effect on <code>start_enabled</code>: enabling the listener via
+config is an explicit operator decision to run always-on, and does not arm the timer.</p>
 <p>For more information, visit the <a href="https://github.com/OpenVoiceOS/ovos-audio-transformer-plugin-ggwave">GitHub repository</a>.</p>
 <h3 id="ovos-speechbrain-language-detection-transformer"><strong>OVOS SpeechBrain Language Detection Transformer</strong><a class="headerlink" href="#ovos-speechbrain-language-detection-transformer" title="Permanent link">&para;</a></h3>
 <ul>
