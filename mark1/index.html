@@ -1531,16 +1531,15 @@ You can also display 32x8 PNG images.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">enclosure</span><span class="o">.</span><span class="n">mouth_display_png</span><span class="p">(</span><span class="s1">&#39;/path/to/image.png&#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">refresh</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title"><code>self.enclosure</code> is leaving the skill base class</p>
-<p><code>self.enclosure</code> will <strong>no longer be a built-in <code>OVOSSkill</code> property</strong>. This is the same
-direction <a href="../skill-gui/"><code>self.gui</code></a> is going. The <code>EnclosureAPI</code> itself is
-<strong>not going away</strong>: it moves into the <strong><a href="https://github.com/OpenVoiceOS/ovos-mark1-utils"><code>ovos-mark1-utils</code></a></strong>
-library, so code that needs it imports it from there rather than reaching for <code>self.enclosure</code>.</p>
-<p>In the <a href="../gui-adapters/">GUI rework</a>, the Mark 1 <strong>faceplate</strong> (LED "mouth" + "eyes") is
-remodelled as <strong>one of the new GUI plugins</strong>: the faceplate's bus <strong>event listeners</strong> move
-into that GUI plugin, which renders the standard display events onto the faceplate. Other
-Mark 1 hardware may be handled by a dedicated <strong>mk1 PHAL plugin</strong> (still being decided). This
-page documents the current API for existing Mark 1 skills.</p>
+<p class="admonition-title"><code>self.enclosure</code> may leave the skill base class</p>
+<p>No tracked issue or PR currently documents a concrete plan for this, unlike the
+<a href="../gui-adapters/">GUI adapter rework</a>, which does have open tracked work. Treat the
+following as a possible future direction, not a scheduled change: <code>self.enclosure</code>
+could stop being a built-in <code>OVOSSkill</code> property, following the same direction
+<a href="../skill-gui/"><code>self.gui</code></a> is going, with the <code>EnclosureAPI</code> moving into the
+<strong><a href="https://github.com/OpenVoiceOS/ovos-mark1-utils"><code>ovos-mark1-utils</code></a></strong> library
+instead. This page documents the current, actually-shipped API for existing Mark 1
+skills.</p>
 </div>
 <hr />
 <h2 id="mark-1-utilities-ovos-mark1-utils">Mark 1 Utilities (<code>ovos-mark1-utils</code>)<a class="headerlink" href="#mark-1-utilities-ovos-mark1-utils" title="Permanent link">&para;</a></h2>
