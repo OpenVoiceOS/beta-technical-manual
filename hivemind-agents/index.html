@@ -1736,6 +1736,10 @@ sentinel.</p>
 <li><strong><a href="https://github.com/JarbasHiveMind/hivemind-audio-binary-protocol"><code>hivemind-audio-binary-protocol</code></a></strong>: the server-side audio entry point that performs wake word/STT/TTS for audio satellites, with binary audio moving over the mesh. Plain <code>hivemind-core</code> does no audio processing without it. (Formerly named <code>hivemind-listener</code>. The old PyPI package name still exists.)</li>
 </ul>
 <p>This split is the real "voice satellite" story: cheap devices listen and speak, and the server thinks.</p>
+<p>HiveMind also ships bridges into existing chat and telephony surfaces.
+Matrix, Mattermost, Telegram, HackChat, and Twitch each have one, and so does VOIP through <a href="https://jarbashivemind.github.io/HiveMind-community-docs/integrations/sip/">HiveMind-baresip-bridge</a>.
+Each bridge is a client like any other, addressing a different end-user surface.
+The community docs list the current <a href="https://jarbashivemind.github.io/HiveMind-community-docs/integrations/">integrations</a>.</p>
 <hr />
 <h2 id="session-isolation-between-clients">Session isolation between clients<a class="headerlink" href="#session-isolation-between-clients" title="Permanent link">&para;</a></h2>
 <p>A <code>session_id</code> (see <a href="../session/">Sessions</a>) names an OVOS-side conversation. HiveMind never
