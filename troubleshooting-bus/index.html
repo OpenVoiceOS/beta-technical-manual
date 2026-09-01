@@ -1540,8 +1540,9 @@ wider, and never port-forward it to the public internet.</p>
 <hr />
 <h2 id="a-concrete-walkthrough">A concrete walkthrough<a class="headerlink" href="#a-concrete-walkthrough" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Start <code>ovos-busmon</code>. It comes up even if the bus is unreachable, but does <strong>not</strong> auto-retry the
-   connection, so start it once the OVOS device is up (or restart busmon after the bus is running).</li>
+<li>Start <code>ovos-busmon</code>. It comes up even if the bus is unreachable: its capture connection
+   auto-reconnects on its own, so you can start it before the OVOS device is up and it
+   begins capturing once the bus becomes reachable, with no restart needed.</li>
 <li>Open <code>http://127.0.0.1:8005</code> in a browser and log in with the configured credentials.</li>
 <li>Speak (or trigger) an utterance on the OVOS device.</li>
 <li>Filter by <code>recognizer_loop:*</code>. The first hit is the raw utterance leaving the listener
