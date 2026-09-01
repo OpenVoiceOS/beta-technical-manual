@@ -1280,6 +1280,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#direction-3-full-ovos-inside-home-assistant-os" class="md-nav__link">
+    <span class="md-ellipsis">
+      Direction 3: Full OVOS inside Home Assistant OS
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1456,6 +1465,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#direction-3-full-ovos-inside-home-assistant-os" class="md-nav__link">
+    <span class="md-ellipsis">
+      Direction 3: Full OVOS inside Home Assistant OS
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1506,6 +1524,12 @@ it's easy to conflate them. Pick the one, or both, that matches what you're tryi
 <td><strong>OVOS controls HA devices</strong></td>
 <td>Your OVOS assistant understands utterances like "turn on the lights" and relays them to your Home Assistant instance</td>
 <td>A skill running inside OVOS</td>
+<td>See below</td>
+</tr>
+<tr>
+<td><strong>Full OVOS inside HAOS</strong></td>
+<td>OVOS Core and its skills run as Home Assistant Supervisor add-ons and answer through Assist</td>
+<td>Add-ons on the HAOS host, installed from the Add-on Store</td>
 <td>See below</td>
 </tr>
 </tbody>
@@ -1592,6 +1616,25 @@ scenes are named inside Home Assistant:</p>
 API, which handles anything HA itself can parse. Lights, switches, and sensors get
 dedicated intents with barer phrasing.</p>
 <p>See <a href="../skill-examples/#smart-home">What can I say? — Smart Home</a> for the skill's catalog entry.</p>
+<hr />
+<h2 id="direction-3-full-ovos-inside-home-assistant-os">Direction 3: Full OVOS inside Home Assistant OS<a class="headerlink" href="#direction-3-full-ovos-inside-home-assistant-os" title="Permanent link">&para;</a></h2>
+<div class="admonition info">
+<p class="admonition-title">Community project, not maintained by OpenVoiceOS</p>
+<p><a href="https://github.com/andlo/haos-ovos-addons">haos-ovos-addons</a> and its companion
+<a href="https://github.com/andlo/ha-ovos-integration">ha-ovos-integration</a> are third-party
+projects, not part of the <code>OpenVoiceOS</code> org. Install-from-store convenience trades off
+against depending on someone else's packaging; check the repos' own state before relying
+on them.</p>
+</div>
+<p><code>haos-ovos-addons</code> packages the OVOS Wyoming bridges, <code>ovos-core</code>, <code>ovos-persona</code>, skill sets,
+and debugging tools (<code>ovos-busmon</code>, <code>ovos-tui</code>, <code>ovos-control-panel</code>) as installable HAOS
+Supervisor add-ons: <strong>Settings → Add-ons → Add-on Store → ⋮ → Repositories</strong>, add the repo URL,
+then install add-ons from the store like any other. No manual config files.</p>
+<p>For just better STT/TTS/wake word in Assist, the <code>ovos-wyoming-*</code> add-ons alone are enough —
+they're the same bridges described in Direction 1 above, just packaged for one-click install.
+For full OVOS skills running through Assist, add <code>ovos-core</code> and <code>ovos-skills</code>, then install
+<code>ha-ovos-integration</code> via HACS to expose OVOS config and skill settings as HA entities and pick
+<strong>OpenVoiceOS</strong> as the Assist conversation agent.</p>
 <hr />
 <hr />
 <p><strong>Read next:</strong> <a href="../wyoming-bridges/">Wyoming Bridges</a>
