@@ -143,7 +143,7 @@ Avoid using Adapt for public-facing or general-purpose assistant skills. Modern 
 "ovos-adapt-hierarchical-pipeline-plugin" = "ovos_adapt.opm:HierarchicalAdaptPipeline"
 ```
 
-`AdaptPipeline` is the flat parser most deployments use. `DomainAdaptPipeline` and `HierarchicalAdaptPipeline` partition intents per skill or domain to cut down on cross-skill keyword collisions. They read extra config under `intents.ovos_adapt_domain_pipeline` and `intents.ovos_adapt_hierarchical_pipeline`. All three subclass `ConfidenceMatcherPipeline` and expose `match_high`/`match_medium`/`match_low`.
+`AdaptPipeline` is the flat parser most deployments use. `DomainAdaptPipeline` and `HierarchicalAdaptPipeline` partition intents per skill or domain to cut down on cross-skill keyword collisions. They read extra config under `intents.ovos-adapt-domain-pipeline-plugin` and `intents.ovos-adapt-hierarchical-pipeline-plugin`. All three subclass `ConfidenceMatcherPipeline` and expose `match_high`/`match_medium`/`match_low`.
 
 **Vocabulary files.** Skills supply keyword lists as `.voc` files (one phrase per line, with `(a|b)` alternatives and `[optional]` words expanded at registration). They supply regular-expression entities as `.rx` files using Python named groups, for example `(?P<Location>.+)`. Registration flows over the bus via `register_vocab` and `register_intent`.
 

@@ -99,11 +99,12 @@ def initialize(self):
 ```
 
 ### Handle missing resources at runtime, not load time
-Do not rely on `RuntimeRequirements` to gate loading. It is a
-[deprecated mechanism](skill-runtime-requirements.md): with default configuration all
-skills load unconditionally, and the declaration only takes effect when
-`skills.use_deferred_loading` is enabled. Instead, check for the network, the GUI, or
-other resources inside your handlers and fail gracefully with a spoken error.
+Do not rely only on `RuntimeRequirements` to gate loading. The declaration is
+[opt-in](skill-runtime-requirements.md): with default configuration all skills load
+unconditionally, and it only gates loading when `skills.use_deferred_loading` is enabled.
+Declare it, but also check for the network, the GUI, or other resources inside your
+handlers and fail gracefully with a spoken error, so the skill behaves correctly whether
+or not deferred loading is on.
 
 ---
 
