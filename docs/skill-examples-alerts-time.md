@@ -21,9 +21,9 @@ external calendar.
 - Schedule a tennis event for 2 PM on friday spanning 2 hours.
 - What did I miss?
 
-- remind me to take out the trash every Thursday and Sunday at 7 PM.
+- remind me to take out the trash weekday mornings at 7.
 - Start a bread timer for 30 minutes.
-- Did I miss anything?
+- Did I miss any alerts?
 - Set an alarm for 8 AM.
 - Set a daily alarm for 8 AM.
 
