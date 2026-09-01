@@ -106,7 +106,7 @@ Returns the list of all enabled language tags (`lang` plus `secondary_langs`). T
 
 ## Multilingual Intent Matching
 
-If `multilingual_matching` is enabled under the `"intents"` section of `mycroft.conf`, the intent pipeline will retry matching the utterance against **all** configured languages when the primary disambiguated language fails to produce a match.
+If `multilingual_matching` is enabled under the `"intents"` section of `mycroft.conf`, the retry is **per pipeline plugin**, not a second whole-pipeline pass. For each plugin in priority order, the orchestrator first tries it in the primary disambiguated language. If that plugin declines, it retries the *same* plugin in every other configured language, and only then advances to the next plugin.
 
 ```json
 {
