@@ -2147,8 +2147,10 @@ messages) has moved to its own page: <strong><a href="../ovos-media-pipeline/">o
 parses <code>--help</code> and <code>--version</code> and exits before starting the daemon or touching any socket.</p>
 <p>Key modules:</p>
 <ul>
+<li><code>ovos_media/player/__init__.py</code>: <code>OCPMediaPlayer</code>, the player state machine (playlist, track history, playback/media/loop state)</li>
+<li><code>ovos_media/catalog/catalog.py</code>: <code>MediaCatalog</code> (aliased <code>OCPMediaCatalog</code> for back-compat, instantiated as the player's <code>self.media</code>) — a plain object with no bus subscriptions of its own, holding only the liked-songs store and search-results playlist</li>
 <li>
-<p><code>ovos_media/player/__init__.py</code>: <code>OCPMediaPlayer</code>, the player state machine (playlist, track history, playback/media/loop state). <code>OCPMediaCatalog</code> (an <code>OVOSCommonPlaybackSkill</code> subclass, instantiated as <code>self.media</code>) manages only the liked-songs store and search-results playlist</p>
+<p><code>ovos_media/skill.py</code>: <code>OCPVoiceSkill</code>, an <code>OVOSCommonPlaybackSkill</code> subclass constructed separately from the player and given a reference to its catalog — the actual voice front-end, registering the now-playing intents and the liked-songs <code>@ocp_search</code></p>
 </li>
 <li>
 <p><code>ovos_media/media_backends/</code>: <code>AudioService</code>, <code>VideoService</code>, <code>WebService</code>. Each manages typed backend plugins</p>
@@ -2267,7 +2269,7 @@ account current player state):</p>
 </li>
 </ul>
 <h3 id="now-playing-intents">Now-Playing Intents<a class="headerlink" href="#now-playing-intents" title="Permanent link">&para;</a></h3>
-<p><code>OCPMediaCatalog</code> (the built-in <code>ovos-media</code> skill described under <a href="#ovos-media-player">ovos-media
+<p><code>OCPVoiceSkill</code> (the built-in <code>ovos-media</code> skill described under <a href="#ovos-media-player">ovos-media
 Player</a>) registers five regular padatious intents (en-us) about the
 currently playing track: <code>WhatSong</code>, <code>WhatArtist</code>, <code>WhatAlbum</code>, <code>ShuffleOn</code>, and <code>ShuffleOff</code>.</p>
 <p><code>WhatSong</code> and <code>WhatArtist</code> answer from the player's global status
@@ -2570,7 +2572,7 @@ the catalog/search half of an older OCP skill:</p>
 <p><code>ovos-media</code>'s pipeline plugin falls back to the classic <code>mycroft.audio.service.*</code> bus messages
 when <code>ovos-media</code> is not running, and bridges old pre-OCP <code>CommonPlaySkill</code> skills via <code>play:query</code>
 / <code>play:start</code>. It also carries some architectural coupling from that history, such as
-<code>OCPMediaCatalog</code> registering itself as a skill and the Music Assistant backend's missing
+<code>OCPVoiceSkill</code> registering itself as a skill and the Music Assistant backend's missing
 <code>next()</code>/<code>previous()</code>. The full detail has moved to its own page:
 <strong><a href="../ovos-media-compat/">ovos-media Legacy Compatibility</a></strong>.</p>
 <hr />

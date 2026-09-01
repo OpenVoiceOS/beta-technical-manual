@@ -1240,9 +1240,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ocpmediacatalog-is-a-skill" class="md-nav__link">
+  <a href="#ocpvoiceskill-is-a-skill" class="md-nav__link">
     <span class="md-ellipsis">
-      OCPMediaCatalog is a skill
+      OCPVoiceSkill is a skill
     </span>
   </a>
   
@@ -1734,9 +1734,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ocpmediacatalog-is-a-skill" class="md-nav__link">
+  <a href="#ocpvoiceskill-is-a-skill" class="md-nav__link">
     <span class="md-ellipsis">
-      OCPMediaCatalog is a skill
+      OCPVoiceSkill is a skill
     </span>
   </a>
   
@@ -1802,8 +1802,10 @@ plugin includes a bridge:</p>
 <p>This bridge is marked for removal in <code>ovos-core 0.1.0</code>.</p>
 <hr />
 <h2 id="known-coupling-issues">Known Coupling Issues<a class="headerlink" href="#known-coupling-issues" title="Permanent link">&para;</a></h2>
-<h3 id="ocpmediacatalog-is-a-skill">OCPMediaCatalog is a skill<a class="headerlink" href="#ocpmediacatalog-is-a-skill" title="Permanent link">&para;</a></h3>
-<p><code>OCPMediaCatalog</code> in <code>ovos_media/player/__init__.py</code> inherits from <code>OVOSCommonPlaybackSkill</code>. This registers
+<h3 id="ocpvoiceskill-is-a-skill">OCPVoiceSkill is a skill<a class="headerlink" href="#ocpvoiceskill-is-a-skill" title="Permanent link">&para;</a></h3>
+<p><code>OCPVoiceSkill</code> in <code>ovos_media/skill.py</code> inherits from <code>OVOSCommonPlaybackSkill</code>, constructed
+separately from the player and given a reference to its <code>MediaCatalog</code> (<code>OCPMediaCatalog</code> is
+now just a back-compat alias for the plain, skill-free catalog object). <code>OCPVoiceSkill</code> registers
 <code>ovos-media</code> as a skill on the bus and loads skill infrastructure (settings, locale, etc.). It
 registers <code>@ocp_search()</code> to expose liked songs as a search result. There is no
 <code>@ocp_featured_media()</code> handler.</p>
