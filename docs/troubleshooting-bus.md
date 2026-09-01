@@ -93,8 +93,9 @@ and sets `OVOS_BUS_HOST=host.docker.internal` so it can reach a bus running on t
 
 ## A concrete walkthrough
 
-1. Start `ovos-busmon`. It comes up even if the bus is unreachable, but does **not** auto-retry the
-   connection, so start it once the OVOS device is up (or restart busmon after the bus is running).
+1. Start `ovos-busmon`. It comes up even if the bus is unreachable: its capture connection
+   auto-reconnects on its own, so you can start it before the OVOS device is up and it
+   begins capturing once the bus becomes reachable, with no restart needed.
 2. Open `http://127.0.0.1:8005` in a browser and log in with the configured credentials.
 3. Speak (or trigger) an utterance on the OVOS device.
 4. Filter by `recognizer_loop:*`. The first hit is the raw utterance leaving the listener
