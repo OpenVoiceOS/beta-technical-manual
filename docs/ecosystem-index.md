@@ -71,25 +71,26 @@ There are roughly **260** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-machine-translations](https://github.com/OpenVoiceOS/ovos-machine-translations) | Temporary machine-translated resource files produced while skills and plugins waited for... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-43) |
     | [ovos-mark1-utils](https://github.com/OpenVoiceOS/ovos-mark1-utils) | small library to interact with a Mycroft Mark1 faceplate via the messagebus. | [Hardware / OS images](#hardware-os-images-10) |
     | [ovos-markov-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-markov-pipeline-plugin) | An intent pipeline plugin that trains one word-level Markov chain per intent and picks... | [Pipeline / Intent plugins](#pipeline-intent-plugins-10) |
-    | [ovos-media](https://github.com/OpenVoiceOS/ovos-media) | **Work in progress** - pre-release software, under active development and not yet... | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-media-classifier](https://github.com/OpenVoiceOS/ovos-media-classifier) | Work in progress, not yet deployed in OVOS - a self-describing, pluggable media-intent... | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-media-plugin-chromecast](https://github.com/OpenVoiceOS/ovos-media-plugin-chromecast) | chromecast plugin for ovos-audio and ovos-media. | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-media-plugin-cli](https://github.com/OpenVoiceOS/ovos-media-plugin-cli) | A generic command-line playback backend: it shells out to any CLI media player, or... | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-media-plugin-ffplay](https://github.com/OpenVoiceOS/ovos-media-plugin-ffplay) | A playback backend plugin wrapping ffplay (the FFmpeg player). Loaded by ovos-media (or... | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-media-plugin-mplayer](https://github.com/OpenVoiceOS/ovos-media-plugin-mplayer) | Mplayer plugin for ovos-media. | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-media-plugin-mpv](https://github.com/OpenVoiceOS/ovos-media-plugin-mpv) | An audio/video backend plugin that drives the MPV media player, with play/pause/stop/seek... | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-media-plugin-spotify](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify) | spotify plugin for ovos-audio and ovos-media. | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-media-plugin-vlc](https://github.com/OpenVoiceOS/ovos-media-plugin-vlc) | vlc plugin for ovos-media. | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | `ovos-media-provider-bandcamp` | OVOS MediaProvider plugin for Bandcamp (replaces ovos-skill-bandcamp). | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | `ovos-media-provider-mass` | OVOS MediaProvider plugin for Music Assistant (replaces ovos-skill-music-assistant). | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | `ovos-media-provider-news` | OVOS MediaProvider plugin for broadcast news feeds (replaces ovos-skill-news). | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | `ovos-media-provider-pyradios` | OVOS MediaProvider plugin for radio-browser/pyradios (replaces ovos-skill-pyradios). | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | `ovos-media-provider-somafm` | OVOS MediaProvider plugin for SomaFM (replaces ovos-skill-somafm). | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | `ovos-media-provider-soundcloud` | OVOS MediaProvider plugin for SoundCloud (replaces ovos-skill-soundcloud). | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | `ovos-media-provider-spotify` | OVOS MediaProvider plugin for Spotify (replaces the search half of ovos-skill-spotify). | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | `ovos-media-provider-tunein` | OVOS MediaProvider plugin for TuneIn (replaces ovos-skill-tunein). | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | `ovos-media-provider-youtube` | OVOS MediaProvider plugin for YouTube (replaces ovos-skill-youtube). | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | `ovos-media-provider-youtube-music` | OVOS MediaProvider plugin for YouTube Music (replaces ovos-skill-youtube-music). | [Media / OCP plugins](#media-ocp-plugins-27) |
+    | [ovos-media](https://github.com/OpenVoiceOS/ovos-media) | **Work in progress** - pre-release software, under active development and not yet... | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-classifier](https://github.com/OpenVoiceOS/ovos-media-classifier) | Work in progress, not yet deployed in OVOS - a self-describing, pluggable media-intent... | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-plugin-chromecast](https://github.com/OpenVoiceOS/ovos-media-plugin-chromecast) | chromecast plugin for ovos-audio and ovos-media. | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-plugin-cli](https://github.com/OpenVoiceOS/ovos-media-plugin-cli) | A generic command-line playback backend: it shells out to any CLI media player, or... | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-plugin-ffplay](https://github.com/OpenVoiceOS/ovos-media-plugin-ffplay) | A playback backend plugin wrapping ffplay (the FFmpeg player). Loaded by ovos-media (or... | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-plugin-mplayer](https://github.com/OpenVoiceOS/ovos-media-plugin-mplayer) | Mplayer plugin for ovos-media. | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-plugin-mpv](https://github.com/OpenVoiceOS/ovos-media-plugin-mpv) | An audio/video backend plugin that drives the MPV media player, with play/pause/stop/seek... | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-plugin-spotify](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify) | spotify plugin for ovos-audio and ovos-media. | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-plugin-vlc](https://github.com/OpenVoiceOS/ovos-media-plugin-vlc) | vlc plugin for ovos-media. | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-provider-bandcamp](https://github.com/OpenVoiceOS/ovos-media-provider-bandcamp) | OVOS MediaProvider plugin for Bandcamp (replaces ovos-skill-bandcamp). | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-provider-local](https://github.com/OpenVoiceOS/ovos-media-provider-local) | OVOS MediaProvider plugin for locally stored media files. | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-provider-mass](https://github.com/OpenVoiceOS/ovos-media-provider-mass) | OVOS MediaProvider plugin for Music Assistant (replaces ovos-skill-music-assistant). | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-provider-news](https://github.com/OpenVoiceOS/ovos-media-provider-news) | OVOS MediaProvider plugin for broadcast news feeds (replaces ovos-skill-news). | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-provider-pyradios](https://github.com/OpenVoiceOS/ovos-media-provider-pyradios) | OVOS MediaProvider plugin for radio-browser/pyradios (replaces ovos-skill-pyradios). | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-provider-somafm](https://github.com/OpenVoiceOS/ovos-media-provider-somafm) | OVOS MediaProvider plugin for SomaFM (replaces ovos-skill-somafm). | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-provider-soundcloud](https://github.com/OpenVoiceOS/ovos-media-provider-soundcloud) | OVOS MediaProvider plugin for SoundCloud (replaces ovos-skill-soundcloud). | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-provider-spotify](https://github.com/OpenVoiceOS/ovos-media-provider-spotify) | OVOS MediaProvider plugin for Spotify (replaces the search half of ovos-skill-spotify). | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-provider-tunein](https://github.com/OpenVoiceOS/ovos-media-provider-tunein) | OVOS MediaProvider plugin for TuneIn (replaces ovos-skill-tunein). | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-provider-youtube](https://github.com/OpenVoiceOS/ovos-media-provider-youtube) | OVOS MediaProvider plugin for YouTube (replaces ovos-skill-youtube). | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-provider-youtube-music](https://github.com/OpenVoiceOS/ovos-media-provider-youtube-music) | OVOS MediaProvider plugin for YouTube Music (replaces ovos-skill-youtube-music). | [Media / OCP plugins](#media-ocp-plugins-28) |
     | [ovos-memory-plugins](https://github.com/OpenVoiceOS/ovos-memory-plugins) | Give your OpenVoiceOS persona a memory. Used by ovos-persona and the Common... | [Agent Engine plugins](#agent-engine-plugins-8) |
     | [ovos-messagebus](https://github.com/OpenVoiceOS/ovos-messagebus) | messagebus service, the nervous system of OpenVoiceOS. Core runtime component of the OVOS... | [Core services & libraries](#core-services-libraries-18) |
     | [ovos-messagebus-chat-plugin](https://github.com/OpenVoiceOS/ovos-messagebus-chat-plugin) | A ChatEngine agent plugin (`opm.agents.chat`) that proxies chat turns through a connected... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-43) |
@@ -98,14 +99,14 @@ There are roughly **260** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-microphone-plugin-pyaudio](https://github.com/OpenVoiceOS/ovos-microphone-plugin-pyaudio) | OpenVoiceOS Microphone plugin. Registers under `opm.microphone`; loaded by... | [Microphone plugins](#microphone-plugins-4) |
     | [ovos-microphone-plugin-sounddevice](https://github.com/OpenVoiceOS/ovos-microphone-plugin-sounddevice) | Open Voice OS microphone plugin for python-sounddevice library. Registers under... | [Microphone plugins](#microphone-plugins-4) |
     | [ovos-number-parser](https://github.com/OpenVoiceOS/ovos-number-parser) | Convert numbers between digits and spoken words, in 40 languages, with one small... | [Core services & libraries](#core-services-libraries-18) |
-    | [ovos-ocp-audio-plugin](https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin) | OVOS Common Play is a full-fledged voice media player packaged as a mycroft audio plugin. | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-ocp-bandcamp-plugin](https://github.com/OpenVoiceOS/ovos-ocp-bandcamp-plugin) | allows OCP to play bandcamp urls, streams will be extracted at playback time. | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-ocp-files-plugin](https://github.com/OpenVoiceOS/ovos-ocp-files-plugin) | Packaging of the audio-metadata library for OVOS, adding MP4 support and a maintained... | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-ocp-m3u-plugin](https://github.com/OpenVoiceOS/ovos-ocp-m3u-plugin) | allows OCP to play .pls and .m3u urls as playlists. | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-ocp-news-plugin](https://github.com/OpenVoiceOS/ovos-ocp-news-plugin) | allows OCP to play urls for some news providers, this plugin will extract the real stream... | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-ocp-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-ocp-pipeline-plugin) | OVOS plugin for specialized media handling. | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-ocp-rss-plugin](https://github.com/OpenVoiceOS/ovos-ocp-rss-plugin) | allows OCP to play rss feeds, the plugin will extract the first playable stream. | [Media / OCP plugins](#media-ocp-plugins-27) |
-    | [ovos-ocp-youtube-plugin](https://github.com/OpenVoiceOS/ovos-ocp-youtube-plugin) | allows OCP to play youtube urls. | [Media / OCP plugins](#media-ocp-plugins-27) |
+    | [ovos-ocp-audio-plugin](https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin) | OVOS Common Play is a full-fledged voice media player packaged as a mycroft audio plugin. | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-ocp-bandcamp-plugin](https://github.com/OpenVoiceOS/ovos-ocp-bandcamp-plugin) | allows OCP to play bandcamp urls, streams will be extracted at playback time. | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-ocp-files-plugin](https://github.com/OpenVoiceOS/ovos-ocp-files-plugin) | Packaging of the audio-metadata library for OVOS, adding MP4 support and a maintained... | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-ocp-m3u-plugin](https://github.com/OpenVoiceOS/ovos-ocp-m3u-plugin) | allows OCP to play .pls and .m3u urls as playlists. | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-ocp-news-plugin](https://github.com/OpenVoiceOS/ovos-ocp-news-plugin) | allows OCP to play urls for some news providers, this plugin will extract the real stream... | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-ocp-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-ocp-pipeline-plugin) | OVOS plugin for specialized media handling. | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-ocp-rss-plugin](https://github.com/OpenVoiceOS/ovos-ocp-rss-plugin) | allows OCP to play rss feeds, the plugin will extract the first playable stream. | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-ocp-youtube-plugin](https://github.com/OpenVoiceOS/ovos-ocp-youtube-plugin) | allows OCP to play youtube urls. | [Media / OCP plugins](#media-ocp-plugins-28) |
     | [ovos-openai-plugin](https://github.com/OpenVoiceOS/ovos-openai-plugin) | Provides OpenAI-Chat-Completions-compatible solver/persona plugins, usable against OpenAI... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-43) |
     | [ovos-opendata-server](https://github.com/OpenVoiceOS/ovos-opendata-server) | A FastAPI service for collecting anonymized OVOS usage metrics and data with an... | [Core services & libraries](#core-services-libraries-18) |
     | [ovos-option-matcher-fuzzy-plugin](https://github.com/OpenVoiceOS/ovos-option-matcher-fuzzy-plugin) | A fuzzy-matching `OptionMatcherEngine` plugin, used to pick the closest matching item... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-43) |
@@ -730,7 +731,7 @@ Each is a PHAL (Platform/Hardware Abstraction Layer) plugin, loaded by ovos-PHAL
 :   Expose sensor data from your OVOS device to various systems.
 
 
-## Media / OCP plugins (27)
+## Media / OCP plugins (28)
 
 Unless noted otherwise, these are part of the OVOS Common Play (OCP) media stack; loaded by ovos-media (or the legacy ovos-audio service) to resolve or play a given media type.
 
@@ -739,40 +740,41 @@ Unless noted otherwise, these are part of the OVOS Common Play (OCP) media stack
 These register under the upcoming `opm.media.provider` plugin type (see [ovos-media](ovos-media.md)). The OCP pipeline calls `search()` on them directly, in-process, taking over the catalog/search half of the older OCP skill each one names.
 
 !!! note "Early days: repos public, loading not wired up yet"
-    The MediaProvider repositories are now public, and four ship PyPI alphas
-    (`ovos-media-provider-spotify`, `-soundcloud`, `-somafm`, `-youtube-music`); the rest
-    are repo-only.
-    Installing one does nothing yet — `ovos-media` does not load `opm.media.provider`
-    plugins in-process yet, so OCP skills remain the way to provide media today.
+    All eleven MediaProvider repositories are now public and ship PyPI alphas. Installing
+    one does nothing yet — `ovos-media` does not load `opm.media.provider` plugins
+    in-process yet, so OCP skills remain the way to provide media today.
 
-**`ovos-media-provider-bandcamp`**
+**[ovos-media-provider-bandcamp](https://github.com/OpenVoiceOS/ovos-media-provider-bandcamp)**
 :   MediaProvider plugin for Bandcamp, replacing [ovos-skill-bandcamp](https://github.com/OpenVoiceOS/ovos-skill-bandcamp).
 
-**`ovos-media-provider-pyradios`**
+**[ovos-media-provider-local](https://github.com/OpenVoiceOS/ovos-media-provider-local)**
+:   MediaProvider plugin for locally stored media files.
+
+**[ovos-media-provider-pyradios](https://github.com/OpenVoiceOS/ovos-media-provider-pyradios)**
 :   MediaProvider plugin for radio-browser/pyradios, replacing [ovos-skill-pyradios](https://github.com/OpenVoiceOS/ovos-skill-pyradios).
 
-**`ovos-media-provider-somafm`**
+**[ovos-media-provider-somafm](https://github.com/OpenVoiceOS/ovos-media-provider-somafm)**
 :   MediaProvider plugin for SomaFM, replacing [ovos-skill-somafm](https://github.com/OpenVoiceOS/ovos-skill-somafm).
 
-**`ovos-media-provider-soundcloud`**
+**[ovos-media-provider-soundcloud](https://github.com/OpenVoiceOS/ovos-media-provider-soundcloud)**
 :   MediaProvider plugin for SoundCloud, replacing [ovos-skill-soundcloud](https://github.com/OpenVoiceOS/ovos-skill-soundcloud).
 
-**`ovos-media-provider-tunein`**
+**[ovos-media-provider-tunein](https://github.com/OpenVoiceOS/ovos-media-provider-tunein)**
 :   MediaProvider plugin for TuneIn, replacing [ovos-skill-tunein](https://github.com/OpenVoiceOS/ovos-skill-tunein).
 
-**`ovos-media-provider-youtube`**
+**[ovos-media-provider-youtube](https://github.com/OpenVoiceOS/ovos-media-provider-youtube)**
 :   MediaProvider plugin for YouTube, replacing [ovos-skill-youtube](https://github.com/OpenVoiceOS/ovos-skill-youtube).
 
-**`ovos-media-provider-youtube-music`**
+**[ovos-media-provider-youtube-music](https://github.com/OpenVoiceOS/ovos-media-provider-youtube-music)**
 :   MediaProvider plugin for YouTube Music, replacing [ovos-skill-youtube-music](https://github.com/OpenVoiceOS/ovos-skill-youtube-music).
 
-**`ovos-media-provider-mass`**
+**[ovos-media-provider-mass](https://github.com/OpenVoiceOS/ovos-media-provider-mass)**
 :   MediaProvider plugin for [Music Assistant](https://www.music-assistant.io), the catalog/search half of the Music Assistant integration; superseding the search half of `ovos-skill-music-assistant`. Playback is handled separately by the companion `ovos-media-plugin-mass` backend.
 
-**`ovos-media-provider-news`**
+**[ovos-media-provider-news](https://github.com/OpenVoiceOS/ovos-media-provider-news)**
 :   MediaProvider plugin for broadcast news feeds, replacing [ovos-skill-news](https://github.com/OpenVoiceOS/ovos-skill-news). Ships its own curated feed catalog and scores each feed against query title, language, and region.
 
-**`ovos-media-provider-spotify`**
+**[ovos-media-provider-spotify](https://github.com/OpenVoiceOS/ovos-media-provider-spotify)**
 :   MediaProvider plugin for [Spotify](https://spotify.com), replacing the search half of [ovos-skill-spotify](https://github.com/OpenVoiceOS/ovos-skill-spotify). Queries the Spotify Web API for tracks, artists, and albums; playback is handled separately by the companion [ovos-media-plugin-spotify](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify) backend.
 
 ### Playback backends and legacy OCP plugins
