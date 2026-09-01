@@ -32,14 +32,11 @@
 
 Conversational context makes voice interactions feel more natural. The assistant keeps track of the subject you are discussing, so you do not have to repeat it.
 
-**What works in a skill today**: gate a follow-up with a blocking prompt, `ask_yesno()` /
-`get_response()` (see [Statements and Prompts](prompts.md)), keep the skill in the
-conversation with [`converse()`](converse.md), or use the Adapt path:
-`self.set_context()` plus `IntentBuilder().require()` (the [TeaSkill example](#using-context-to-enable-intents)
-below). For the declarative spec mechanism described next, `set_context` now writes entries
-the gate can see. But the skill API still has no way to put `requires_context` /
-`excludes_context` declarations on an intent, so end-to-end declarative gating is not
-wired up yet. Details are in the warning under the example.
+**What works in a skill today**: the declarative `requires_context=`/`excludes_context=`
+kwargs on `@intent_handler` (file-registered/Padatious intents, see below), a blocking prompt,
+`ask_yesno()`/`get_response()` (see [Statements and Prompts](prompts.md)), keeping the skill in
+the conversation with [`converse()`](converse.md), or the Adapt path: `self.set_context()` plus
+`IntentBuilder().require()` (the [TeaSkill example](#using-context-to-enable-intents) below).
 
 `requires_context` and `excludes_context` gate matching in both the
 [Adapt](adapt-pipeline.md) and [Padatious](padatious-pipeline.md) pipelines, as CONTEXT-1 §6
@@ -62,17 +59,30 @@ The private/shared scoping rules are identical on both sides: a bare key gates p
 against the registering `skill_id`, and reading a shared key needs the explicit
 `{"key": "person", "scope": "shared"}` form.
 
-!!! warning "Half the skill-facing surface is still missing"
-    Both pipelines evaluate this gate at match time, and the **entry** side now works:
-    `set_context` writes into the session under both the legacy munged spelling and the
-    resolved `<skill_id>:<key>` spelling the gate looks up, each with a decay stamp. What
-    is still missing is the **declaration** side: `@intent_handler` has no
-    `requires_context=` / `excludes_context=` parameters, so a skill cannot put the
-    declarations on its registration payload. **To gate a yes/no follow-up in a skill
-    today**, use a blocking prompt, `ask_yesno()` / `get_response()` (see
-    [Statements and Prompts](prompts.md)), keep the skill in the conversation with
-    [`converse()`](converse.md), or use the Adapt `.require()` keyword path (the TeaSkill
-    example below).
+Since `ovos-workshop` `9.6.0a1`, `@intent_handler` carries the declaration side too, for
+file-registered (Padatious) intents:
+
+```python
+from ovos_workshop.decorators import intent_handler
+
+@intent_handler("guarded.intent",
+                 requires_context=["confirming"],
+                 excludes_context=["muted"])
+def handle_guarded(self, message):
+    ...
+```
+
+Adapt intents keep their own mechanism (`.require()` on a context keyword, the TeaSkill example
+below) and ignore this decorator's `requires_context`/`excludes_context`. Pass them only on
+file-registered intents.
+
+!!! danger "A bare-string entry silently never matches a shared entry"
+    A bare string like `requires_context=["prev_dialog"]` resolves to **private** scope, keyed
+    to the declaring skill (the safe default). If the context entry was stored with
+    `scope: "shared"`, or by a different skill's private key, the gate never sees it. This is
+    not a crash or a warning. The intent just never matches. Use the long form,
+    `requires_context=[{"key": "prev_dialog", "scope": "shared"}]`, to read an entry another
+    skill wrote as shared.
 
 Context lives on the per-conversation [Session](session.md), in `Session.intent_context`. It
 is **session-scoped**, not a single global store, so concurrent users and devices keep
