@@ -47,6 +47,10 @@
 
 ```
 
+`tld` only takes the configured value for languages outside the plugin's internal
+regional table. About 15 common locales (`en-US`, `en-GB`, `fr-FR`, `pt-PT`, `es-ES`, and
+others) always use that table's fixed TLD instead, no matter what `tld` is set to.
+
 ---
 
 ## ovos-tts-plugin-edge-tts
