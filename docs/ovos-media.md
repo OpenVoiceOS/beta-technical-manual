@@ -139,7 +139,7 @@ the player by its entry-point name.
 | [`ovos-media-plugin-spotify`](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify) | audio | Spotify Connect |
 | [`ovos-media-plugin-chromecast`](https://github.com/OpenVoiceOS/ovos-media-plugin-chromecast) | audio, video | Cast to a Chromecast device |
 | [`ovos-media-plugin-qt5`](https://github.com/OpenVoiceOS/ovos-media-plugin-qt5) | audio, video, web | Hand off to the [GUI](gui-service.md) player. **Legacy**, depends on the deprecated [ovos-shell](ovos-shell.md) (see [GUI status](gui-status.md)) |
-| [`ovos-media-plugin-mass`](https://github.com/OpenVoiceOS/ovos-media-plugin-mass) | audio | Public repo, **not yet on PyPI**. Hands playback off to a [Music Assistant](music-assistant.md) server. Does not implement `next()`/`previous()` through the legacy `AudioBackend` interface — only through the Music Assistant queue API (see Known Coupling Issues below) |
+| [`ovos-media-plugin-mass`](https://github.com/OpenVoiceOS/ovos-media-plugin-mass) | audio | Hands playback off to a [Music Assistant](music-assistant.md) server. `next()`/`previous()` on the legacy `AudioBackend` interface delegate to the Music Assistant queue API (see Known Coupling Issues below) |
 | `ovos-media-plugin-mpris` | audio, video | **Not yet published** (no public repo or PyPI package). Drives an external MPRIS player (e.g. an already-running desktop media app) instead of playing the stream itself |
 
 [`music-assistant-plugin-manager`](https://github.com/TigreGotico/music-assistant-plugin-manager)
@@ -459,8 +459,8 @@ listens on (`ovos.common_play.*`, the `ovos.audio.output.*` duck triggers, and c
 `ovos-media`'s pipeline plugin falls back to the classic `mycroft.audio.service.*` bus messages
 when `ovos-media` is not running, and bridges old pre-OCP `CommonPlaySkill` skills via `play:query`
 / `play:start`. It also carries some architectural coupling from that history, such as
-`OCPVoiceSkill` registering itself as a skill and the Music Assistant backend's missing
-`next()`/`previous()`. The full detail has moved to its own page:
+`OCPVoiceSkill` registering itself as a skill and how the Music Assistant backend's
+`next()`/`previous()` delegate to MA's own queue API. The full detail has moved to its own page:
 **[ovos-media Legacy Compatibility](ovos-media-compat.md)**.
 
 ---

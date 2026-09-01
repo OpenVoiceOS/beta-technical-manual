@@ -8,7 +8,7 @@
 
 | Direction | What it does | Status |
 |---|---|---|
-| **OVOS plays media through MA** | An OVOS assistant searches and plays music/radio/podcasts via a running Music Assistant server | `ovos-media-provider-mass` public on PyPI; `ovos-media-plugin-mass` and `ovos-skill-music-assistant` are public repos, not yet on PyPI (see below) |
+| **OVOS plays media through MA** | An OVOS assistant searches and plays music/radio/podcasts via a running Music Assistant server | All three pieces public and on PyPI as alpha releases (see below) |
 | **MA loads out-of-tree providers** | A Music Assistant server loads community-maintained providers not shipped with MA itself | [`music-assistant-plugin-manager`](https://github.com/TigreGotico/music-assistant-plugin-manager), public and on PyPI |
 | **MA streams to an OVOS device** | Music Assistant sees an OVOS-powered device as a playback endpoint, browses its library, and streams to it | Via `hivemind-media-player` + Home Assistant's Music Assistant integration; see below |
 
@@ -23,15 +23,15 @@ Three pieces work together, all named after the [OCP media stack](ovos-media.md)
   `music_assistant`, superseding the search half of `ovos-skill-music-assistant`.
 - **[`ovos-media-plugin-mass`](https://github.com/OpenVoiceOS/ovos-media-plugin-mass)**:
   the playback backend for [`ovos-media`](ovos-media.md). Hands playback off to the MA
-  server itself. Does not implement `next()`/`previous()` through the legacy
-  `AudioBackend` interface, only through the Music Assistant queue API (see
+  server itself. Its `next()`/`previous()` on the legacy `AudioBackend` interface
+  delegate to the Music Assistant queue API (see
   [Legacy Compatibility](ovos-media-compat.md)).
 - **[`ovos-skill-music-assistant`](https://github.com/OpenVoiceOS/ovos-skill-music-assistant)**:
   the legacy OCP skill both of the above supersede.
 
-`ovos-media-plugin-mass` and `ovos-skill-music-assistant` are public repos, not yet on
-PyPI. Check PyPI before treating either as installable. `ovos-media-provider-mass` is
-public and on PyPI, but installing it does nothing yet. `opm.media.provider` in-process
+All three are public repos and published to PyPI as alpha releases (check PyPI for
+current versions, as alpha releases move fast). `ovos-media-provider-mass` installing
+does nothing yet on its own: `opm.media.provider` in-process
 loading is not wired into `ovos-media` (see
 [ovos-media](ovos-media.md#upcoming-mediaprovider-plugins-replace-ocp-skills)).
 
