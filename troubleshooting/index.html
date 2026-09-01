@@ -2188,11 +2188,12 @@ The reliable first-time path is to add the key directly to your user config file
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Once the key exists anywhere in the merged configuration (including after you've added it
-this way once), <code>ovos-config set -k log_level -v DEBUG</code> will find and update it — but see
-the <a href="../config/#usage-guide">known bug</a>: it currently writes to a different file
-(<code>~/.config/mycroft/runtime.conf</code>) than the one above. Since that layer merges above
-<code>mycroft.conf</code>, the value still takes effect; only the file that changed on disk is a
-surprise.</p>
+this way once), <code>ovos-config set -k log_level -v DEBUG</code> will find it — but see the
+<a href="../config/#usage-guide">known bug</a>: it currently writes to a different file
+(<code>~/.config/mycroft/runtime.conf</code>) than the one above. That layer merges <em>before</em>
+<code>mycroft.conf</code>, so if <code>mycroft.conf</code> already defines <code>log_level</code>, the new value <code>set</code>
+just wrote is silently overridden and never takes effect at all. Edit <code>mycroft.conf</code>
+directly instead of relying on <code>set</code> until the bug is fixed.</p>
 </div>
 <p>This applies to every service (they all watch the same configuration and pick up the change
 without a restart). To raise the level for only one service, add the nested <code>"logging"</code> section
