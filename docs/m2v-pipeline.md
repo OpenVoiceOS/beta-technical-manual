@@ -82,6 +82,10 @@ For an utterance it:
 Because matching is restricted to intents that are actually loaded, the model can
 ship knowledge of many skills without firing for skills you do not have installed.
 
+A label registered with `requires_context` or `excludes_context` is gated the same way
+whether it came from a padatious registration or an INTENT-4 template: the pipeline checks
+the declared context before accepting the label as a match, not just the confidence score.
+
 ```mermaid
 flowchart TD
     U[Utterance] --> E[Embed with Model2Vec model]
@@ -106,10 +110,12 @@ The pipeline has a `mode` config key:
   a trained linear classifier head). Scores are softmax probabilities. This is the
   mode used by the published `Jarbas/ovos-model2vec-intents-*` models.
 * **`prototype`**: loads a bare `StaticModel` (embeddings only, no trained head)
-  and builds a prototype store at runtime from the example utterances skills
-  provide when they register Padatious intents. Scores are cosine similarities.
-  Adapt intents (which have no example sentences) are tracked by name but not
-  matched in this mode.
+  and builds a prototype store from the example utterances skills provide when
+  they register Padatious intents. Scores are cosine similarities. Adapt intents
+  (which have no example sentences) are tracked by name but not matched in this
+  mode. An unchanged registration is loaded from an on-disk cache instead of
+  re-encoded on every boot; the cache clears itself when a skill or intent
+  detaches (see `prototype_cache` below).
 
 A second entry point, `ovos-m2v-prototype-pipeline`
 (`Model2VecPrototypePipeline`), is the prototype mode exposed as a standalone
@@ -146,8 +152,8 @@ plugin so it can run alongside the classifier one. It reads its config from
 | `renormalize` | `false` | Classifier mode: renormalize probabilities over the surviving (registered) labels. |
 | `timeout` | `1` | Seconds to wait for the Adapt/Padatious manifest sync at startup. |
 
-Prototype mode adds four more keys controlling how prototype embeddings are
-selected per label:
+Prototype mode adds six more keys controlling how prototype embeddings are
+selected per label and cached on disk:
 
 | Key | Default | Description |
 |-----|---------|-------------|
@@ -155,6 +161,8 @@ selected per label:
 | `prototype_strategy` | `max_over_all` | How utterance embeddings are reduced to per-label prototypes. |
 | `prototype_top_k` | `3` | Number of best prototype matches aggregated per label. |
 | `prototype_tau` | `0.1` | Softmax temperature for prototype score aggregation. |
+| `prototype_cache` | `true` | Cache encoded prototypes on disk per skill, keyed on the registration's example utterances, instead of re-encoding on every boot. |
+| `prototype_cache_dir` | `{XDG_DATA_HOME}/mycroft/m2v_prototypes/` | Where the per-skill cache files live. |
 
 > The model is **pretrained**. It does not learn new skills at runtime. The
 > registered-intent filter just decides which of the model's known labels are
