@@ -1866,15 +1866,15 @@ entry point, and how to test the result without a running OVOS stack.</p>
 <ul>
 <li>It auto-registers a large set of legacy enclosure (<code>enclosure.eyes.*</code>,
   <code>enclosure.mouth.*</code>) and <code>recognizer_loop:*</code> bus handlers. Override the matching
-  <code>on_*</code> methods to react to them.</li>
+  <code>on_*</code> methods to react to them. Call <code>super().shutdown()</code> to unregister them.</li>
 </ul>
-<div class="admonition warning">
-<p class="admonition-title"><code>super().shutdown()</code> does not actually unregister most of these</p>
-<p>A mismatch between the callables passed to <code>bus.on()</code> and <code>bus.remove()</code> in
-<code>ovos-plugin-manager</code>'s <code>PHALPlugin</code> means most <code>enclosure.mouth.*</code>/<code>enclosure.eyes.*</code>
-handlers, and <code>recognizer_loop:audio_output_end</code>, stay registered after <code>shutdown()</code>
-runs — reproduced live against a <code>FakeBus</code>. Known upstream issue, not a manual-only
-quirk; don't rely on clean plugin teardown for these specific handlers.</p>
+<div class="admonition info">
+<p class="admonition-title">Fixed in <code>ovos-plugin-manager</code> 2.11.5a1</p>
+<p>Before <code>2.11.5a1</code>, a callable mismatch between <code>bus.on()</code> and <code>bus.remove()</code> in
+<code>PHALPlugin</code> left most <code>enclosure.mouth.*</code>/<code>enclosure.eyes.*</code> handlers, and
+<code>recognizer_loop:audio_output_end</code>, registered after <code>shutdown()</code> ran (<code>ovos-plugin-manager</code>
+<code>be8d9fa</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/438" title="GitHub Issue: TigreGotico/ovos-technical-manual #438">#438</a>). <code>PHALPlugin</code> now records every <code>(topic, handler)</code> pair it registers and
+<code>shutdown()</code> removes exactly those pairs.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Hardware-interface ABCs live in <code>ovos-hardware-helpers</code></p>
