@@ -352,8 +352,9 @@ ovos-config telemetry --disable   # opt out
   `get_xdg_config_locations()` and the layer paths on `Configuration`.
 
 
-- Use `disable_user_config` with caution. It silently skips the distribution and assistant
-  layers and runtime patches too, not only the user layer.
+- Use `disable_user_config` with caution. It silently skips the distribution layer and
+  in-memory runtime patches too, not only the user layer. The assistant layer
+  (`runtime.conf`) is exempt since `3.0.1a1`.
 
 
 - For the package layout, entry points, and other internals, see

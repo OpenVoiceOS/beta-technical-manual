@@ -427,9 +427,9 @@ listens on (`ovos.common_play.*`, the `ovos.audio.output.*` duck triggers, and c
     (Phase 1 of the `ovos-media` migration). OCP skills remain the way to provide media for now.
     Tracked in [ovos-workshop#423](https://github.com/OpenVoiceOS/ovos-workshop/pull/423).
 
-    A first batch of MediaProvider plugins now has **public repositories**, and four ship
-    PyPI alpha releases already (`ovos-media-provider-spotify`, `-soundcloud`,
-    `-somafm`, `-youtube-music`); the rest are repo-only so far. Installing them does nothing yet —
+    A first batch of MediaProvider plugins now has **public repositories**, and nine of the ten
+    listed below already ship PyPI alpha releases; only `ovos-media-provider-news` is repo-only
+    so far. Installing them does nothing yet —
     the in-process loading is not wired into `ovos-media` (see below). Each one supersedes
     the catalog/search half of an older OCP skill:
 
