@@ -26,7 +26,10 @@ plugin includes a bridge:
 
 - Emits `play:start` to tell the winning skill to handle playback itself
 
-This bridge is marked for removal in `ovos-core 0.1.0`.
+The bridge's own docstring carries a removal note targeting `ovos-core 0.1.0`, a version
+number from before `ovos-core` adopted its current numbering and never reconciled since —
+treat the bridge as legacy-support code with no confirmed removal date, not as scheduled
+for a specific upcoming release.
 
 ---
 
