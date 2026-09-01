@@ -6,14 +6,13 @@
 !!! warning "Project status: stable images paused, development active"
     The last **stable** raspOVOS images date from mid-2025 and are not receiving updates,
     so they are not the recommended install path for a new setup. The repository itself is
-    actively developed — CI work continues and newer **DEV** images are published as git
-    tags such as `raspOVOS-DEV-bookworm-arm64-lite-<date>` (the
-    [releases page](https://github.com/OpenVoiceOS/raspOVOS/releases) itself is empty, so
-    browse [tags](https://github.com/OpenVoiceOS/raspOVOS/tags)) — but DEV images are
-    untested builds toward the refreshed image on the roadmap, not something to hand a
-    newcomer. Check the repository for status before flashing. For a supported setup on a
-    Raspberry Pi, install Raspberry Pi OS and use the [ovos-installer](ovos-installer.md).
-    This guide stays for people running an existing raspOVOS image.
+    actively developed — CI work continues and newer builds tagged `raspOVOS-DEV-*` appear
+    on the [releases page](https://github.com/OpenVoiceOS/raspOVOS/releases) alongside the
+    older stable ones, but DEV images are untested builds toward the refreshed image on the
+    roadmap, not something to hand a newcomer. Check the repository for status before
+    flashing. For a supported setup on a Raspberry Pi, install Raspberry Pi OS and use the
+    [ovos-installer](ovos-installer.md). This guide stays for people running an existing
+    raspOVOS image.
 
 This tutorial is designed for users new to Raspberry Pi and raspOVOS. Follow these steps to set up your device.
 
