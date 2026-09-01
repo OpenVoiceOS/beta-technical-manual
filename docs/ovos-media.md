@@ -142,6 +142,11 @@ the player by its entry-point name.
 | `ovos-media-plugin-mass` | audio | **Not yet published** (no public repo or PyPI package). Hands playback off to a [Music Assistant](https://music-assistant.io/) server. Does not implement `next()`/`previous()` through the legacy `AudioBackend` interface — only through the Music Assistant queue API (see Known Coupling Issues below) |
 | `ovos-media-plugin-mpris` | audio, video | **Not yet published** (no public repo or PyPI package). Drives an external MPRIS player (e.g. an already-running desktop media app) instead of playing the stream itself |
 
+[`music-assistant-plugin-manager`](https://github.com/TigreGotico/music-assistant-plugin-manager)
+(`pip install music-assistant-plugin-manager`) loads out-of-tree Music Assistant providers
+into a Music Assistant server, via its `music-assistant-community` wrapper command. It is
+independent of `ovos-media` and only concerns the Music Assistant server itself, not OCP.
+
 ### Stream Extractor Plugins
 
 OCP supports stream extractor plugins (`opm.ocp.extractor` entry-point group. The older
