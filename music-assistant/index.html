@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/public-server-stack/">
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/music-assistant/">
       
       
-        <link rel="prev" href="../upcoming-changes/">
+        <link rel="prev" href="../wyoming-wakeword-bridge/">
       
       
-        <link rel="next" href="../stt-server/">
+        <link rel="next" href="../reference-overview/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Public Server Stack - OpenVoiceOS Technical Manual</title>
+        <title>Music Assistant - OpenVoiceOS Technical Manual</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#public-server-stack" class="md-skip">
+        <a href="#ovos-music-assistant" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Public Server Stack
+              Music Assistant
             
           </span>
         </div>
@@ -1084,8 +1084,6 @@
                 
   
   
-    
-  
   
   
     
@@ -1095,255 +1093,30 @@
       
     
     
-      
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_12" checked>
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
         
-          
-          <label class="md-nav__link" for="__nav_9_12" id="__nav_9_12_label" tabindex="0">
-            
+  
+  
+    <a href="../public-server-stack/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     Self-hosting Servers
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_12_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_9_12">
-            <span class="md-nav__icon md-icon"></span>
-            Self-hosting Servers
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+        <span class="md-nav__icon md-icon"></span>
       
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Public Server Stack
-  </span>
+    </a>
   
 
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  <span class="md-ellipsis">
-    Public Server Stack
-  </span>
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-three-services" class="md-nav__link">
-    <span class="md-ellipsis">
-      The Three Services
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#machine-shape" class="md-nav__link">
-    <span class="md-ellipsis">
-      Machine Shape
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#persist-the-model-cache" class="md-nav__link">
-    <span class="md-ellipsis">
-      Persist the Model Cache
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#operating-it" class="md-nav__link">
-    <span class="md-ellipsis">
-      Operating It
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#self-hosting-without-the-servers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Self-hosting Without the Servers
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../stt-server/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    STT Server
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tts-server/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    TTS Server
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tts-server-deployment/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    TTS Server Deployment
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../translate-server/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Translate Server
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../server-compat-layers/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Server Compatibility Layers
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
       
     </li>
   
@@ -1418,10 +1191,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../music-assistant/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Music Assistant
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1430,6 +1223,53 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#direction-1-ovos-plays-media-through-music-assistant" class="md-nav__link">
+    <span class="md-ellipsis">
+      Direction 1: OVOS plays media through Music Assistant
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#direction-2-music-assistant-loads-out-of-tree-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Direction 2: Music Assistant loads out-of-tree providers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#direction-3-music-assistant-streams-to-an-ovos-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      Direction 3: Music Assistant streams to an OVOS device
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1511,54 +1351,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-three-services" class="md-nav__link">
+  <a href="#direction-1-ovos-plays-media-through-music-assistant" class="md-nav__link">
     <span class="md-ellipsis">
-      The Three Services
+      Direction 1: OVOS plays media through Music Assistant
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#machine-shape" class="md-nav__link">
+  <a href="#direction-2-music-assistant-loads-out-of-tree-providers" class="md-nav__link">
     <span class="md-ellipsis">
-      Machine Shape
+      Direction 2: Music Assistant loads out-of-tree providers
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#persist-the-model-cache" class="md-nav__link">
+  <a href="#direction-3-music-assistant-streams-to-an-ovos-device" class="md-nav__link">
     <span class="md-ellipsis">
-      Persist the Model Cache
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#operating-it" class="md-nav__link">
-    <span class="md-ellipsis">
-      Operating It
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#self-hosting-without-the-servers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Self-hosting Without the Servers
+      Direction 3: Music Assistant streams to an OVOS device
     </span>
   </a>
   
@@ -1582,144 +1395,92 @@
   
 
 
-<h1 id="public-server-stack">Public Server Stack<a class="headerlink" href="#public-server-stack" title="Permanent link">&para;</a></h1>
+<h1 id="ovos-music-assistant">OVOS &amp; Music Assistant<a class="headerlink" href="#ovos-music-assistant" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page describes how the community's public speech and translation servers
-are put together, so you can build the same thing yourself. Three services,
-text-to-speech, speech-to-text, and translation, each run as a small HTTP
-server in its own container, sharing one machine and one model cache. It is a
-reference deployment, not a product. Everything here is ordinary Docker and
-ordinary OVOS plugins.</p>
+<p>OVOS and <a href="https://music-assistant.io/">Music Assistant</a> (MA) are two different
+open-source projects. OVOS can use an MA server as a media backend, and a HiveMind
+satellite can expose itself as a playback endpoint MA can stream to. There is no
+single combined install; pick the direction that matches what you want.</p>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Community servers are best-effort demos</p>
-<p>The public OVOS servers exist for easy onboarding and demos only. They are best-effort,
-not optimized, carry no uptime guarantees, and may vanish at any time. OVOS will be slow
-and unreliable if you rely on them. The official recommendation is to self-host — or skip
-servers entirely: fully offline plugins exist for everything.</p>
-</div>
-<h2 id="the-three-services">The Three Services<a class="headerlink" href="#the-three-services" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Service</th>
-<th>Server</th>
-<th>Plugin</th>
-<th>Port</th>
+<th>Direction</th>
+<th>What it does</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Text-to-speech</td>
-<td><a href="../tts-server/"><code>ovos-tts-server</code></a></td>
-<td><code>phoonnx</code></td>
-<td><code>9666</code></td>
+<td><strong>OVOS plays media through MA</strong></td>
+<td>An OVOS assistant searches and plays music/radio/podcasts via a running Music Assistant server</td>
+<td><code>ovos-media-provider-mass</code> public on PyPI; <code>ovos-media-plugin-mass</code> and <code>ovos-skill-music-assistant</code> not yet published (see below)</td>
 </tr>
 <tr>
-<td>Speech-to-text</td>
-<td><a href="../stt-server/"><code>ovos-stt-server</code></a></td>
-<td><code>onnx-asr</code></td>
-<td><code>8080</code></td>
+<td><strong>MA loads out-of-tree providers</strong></td>
+<td>A Music Assistant server loads community-maintained providers not shipped with MA itself</td>
+<td><a href="https://github.com/TigreGotico/music-assistant-plugin-manager"><code>music-assistant-plugin-manager</code></a>, public and on PyPI</td>
 </tr>
 <tr>
-<td>Translation &amp; language ID</td>
-<td><a href="../translate-server/"><code>ovos-translate-server</code></a></td>
-<td><a href="../linguonnx-plugins/"><code>linguonnx</code></a></td>
-<td><code>9686</code></td>
+<td><strong>MA streams to an OVOS device</strong></td>
+<td>Music Assistant sees an OVOS-powered device as a playback endpoint, browses its library, and streams to it</td>
+<td>Via <code>hivemind-media-player</code> + Home Assistant's Music Assistant integration; see below</td>
 </tr>
 </tbody>
 </table>
-<p>The pattern is the same in all three: a plugin does the work, a thin FastAPI
-server puts it on HTTP, and a client plugin on the device points at the URL. The
-device-side plugins are <code>ovos-tts-plugin-server</code>, <code>ovos-stt-plugin-server</code>, and
-<code>ovos-translate-server-plugin</code>. Each is pointed at the server with one config key —
-<code>host</code> for the TTS and translate plugins, <code>urls</code> (a list) for the STT plugin — plus a
-few optional plugin-specific keys such as timeouts.</p>
-<p>All three run ONNX models on CPU. There is no GPU in this deployment and none is
-required. The choice of ONNX runtimes throughout is what makes a single
-modest server able to host the set.</p>
-<h2 id="machine-shape">Machine Shape<a class="headerlink" href="#machine-shape" title="Permanent link">&para;</a></h2>
-<p>A host that runs the three services together wants:</p>
+<hr />
+<h2 id="direction-1-ovos-plays-media-through-music-assistant">Direction 1: OVOS plays media through Music Assistant<a class="headerlink" href="#direction-1-ovos-plays-media-through-music-assistant" title="Permanent link">&para;</a></h2>
+<p>Three pieces work together, all named after the <a href="../ovos-media/">OCP media stack</a>:</p>
 <ul>
-<li><strong>Memory.</strong> Translation dominates. Budget 12 GB for the translation container
-  alone, and give each container a hard <code>mem_limit</code> so an overrun restarts one
-  service instead of OOM-killing the host. See
-  <a href="https://github.com/OpenVoiceOS/ovos-plugin-linguonnx/blob/dev/docs/deployment.md"><code>linguonnx</code> deployment</a>
-  for how that number is derived and which settings hold it.</li>
-<li><strong>Disk.</strong> The translation model registry is roughly 109 GB at int8 precision.
-  Speech models are a few GB. Put the cache on a volume that survives container
-  replacement, and do not put it on the same disk you need free.</li>
-<li><strong>CPU.</strong> Threads matter more than clock. <code>OMP_NUM_THREADS</code> bounds each
-  container's ONNX threadpool. Leave headroom so one busy service does not
-  starve the others.</li>
+<li><strong><a href="https://github.com/OpenVoiceOS/ovos-media-provider-mass"><code>ovos-media-provider-mass</code></a></strong>
+  (public, PyPI): the catalog/search half. Registers under <code>opm.media.provider</code> as
+  <code>music_assistant</code>, superseding the search half of <code>ovos-skill-music-assistant</code>.</li>
+<li><strong><code>ovos-media-plugin-mass</code></strong>: the playback backend for <a href="../ovos-media/"><code>ovos-media</code></a>.
+  Hands playback off to the MA server itself. Does not implement <code>next()</code>/<code>previous()</code>
+  through the legacy <code>AudioBackend</code> interface, only through the Music Assistant queue
+  API (see <a href="../ovos-media-compat/">Legacy Compatibility</a>).</li>
+<li><strong><code>ovos-skill-music-assistant</code></strong>: the legacy OCP skill both of the above supersede.</li>
 </ul>
-<h2 id="persist-the-model-cache">Persist the Model Cache<a class="headerlink" href="#persist-the-model-cache" title="Permanent link">&para;</a></h2>
-<p>None of the images bake models in. They download on first use, which means a
-container without a persistent cache re-downloads tens of gigabytes on every
-replacement, and its first request after each restart blocks on a real
-download, several minutes for a large translation model. Mount the whole cache
-directory, not one subdirectory of it:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">volumes</span><span class="p">:</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">linguonnx-cache:/home/ovos/.cache</span>
+<p><code>ovos-media-plugin-mass</code> and <code>ovos-skill-music-assistant</code> are not yet published (no
+public repo or PyPI package). Only <code>ovos-media-provider-mass</code> is public today, and
+installing it does nothing yet: <code>opm.media.provider</code> in-process loading is not wired
+into <code>ovos-media</code> (see <a href="../ovos-media/#upcoming-mediaprovider-plugins-replace-ocp-skills">ovos-media</a>).</p>
+<h2 id="direction-2-music-assistant-loads-out-of-tree-providers">Direction 2: Music Assistant loads out-of-tree providers<a class="headerlink" href="#direction-2-music-assistant-loads-out-of-tree-providers" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/TigreGotico/music-assistant-plugin-manager"><code>music-assistant-plugin-manager</code></a>
+(<code>pip install music-assistant-plugin-manager</code>) is independent of OVOS: it loads
+community-maintained providers into a Music Assistant server via its
+<code>music-assistant-community</code> wrapper command. Use it to run MA providers that aren't
+shipped with MA itself, regardless of whether you also use OVOS.</p>
+<h2 id="direction-3-music-assistant-streams-to-an-ovos-device">Direction 3: Music Assistant streams to an OVOS device<a class="headerlink" href="#direction-3-music-assistant-streams-to-an-ovos-device" title="Permanent link">&para;</a></h2>
+<div class="admonition info">
+<p class="admonition-title">Via Home Assistant, not a direct OVOS↔MA link</p>
+<p>This path goes through Home Assistant: <code>hivemind-media-player</code> exposes an OVOS
+device as an HA media player entity, and Music Assistant then sees that entity as
+a playback endpoint. There is no direct HiveMind↔Music-Assistant protocol.</p>
+</div>
+<p><a href="https://github.com/JarbasHiveMind/hivemind-media-player"><code>hivemind-player-protocol</code></a> is
+a HiveMind agent plugin that runs an OVOS audio backend as a background service,
+controllable over <code>ovos.common_play.*</code> bus topics (<code>play</code>, <code>pause</code>, <code>resume</code>, <code>stop</code>,
+<code>next</code>, <code>previous</code>). It currently embeds the legacy <code>ovos-audio</code> service, not
+<a href="../ovos-media/"><code>ovos-media</code></a>; its status query does not yet report real player state.
+The device this runs on becomes a satellite like any other:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>hivemind-core<span class="w"> </span>add-client<span class="w"> </span>--name<span class="w"> </span>media-player
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>hivemind-core<span class="w"> </span>allow-msg<span class="w"> </span><span class="s2">&quot;ovos.common_play.play&quot;</span><span class="w"> </span>&lt;NODE_ID&gt;
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>hivemind-core<span class="w"> </span>allow-msg<span class="w"> </span><span class="s2">&quot;ovos.common_play.pause&quot;</span><span class="w"> </span>&lt;NODE_ID&gt;
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>hivemind-core<span class="w"> </span>allow-msg<span class="w"> </span><span class="s2">&quot;ovos.common_play.resume&quot;</span><span class="w"> </span>&lt;NODE_ID&gt;
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>hivemind-core<span class="w"> </span>allow-msg<span class="w"> </span><span class="s2">&quot;ovos.common_play.stop&quot;</span><span class="w"> </span>&lt;NODE_ID&gt;
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>hivemind-core<span class="w"> </span>allow-msg<span class="w"> </span><span class="s2">&quot;ovos.common_play.next&quot;</span><span class="w"> </span>&lt;NODE_ID&gt;
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>hivemind-core<span class="w"> </span>allow-msg<span class="w"> </span><span class="s2">&quot;ovos.common_play.previous&quot;</span><span class="w"> </span>&lt;NODE_ID&gt;
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>hivemind-core<span class="w"> </span>allow-msg<span class="w"> </span><span class="s2">&quot;speak&quot;</span><span class="w"> </span>&lt;NODE_ID&gt;
 </span></code></pre></div>
-<p>That covers both <code>~/.cache/huggingface</code> and any plugin-specific store beneath
-it. The images create and <code>chown</code> these paths to the non-root <code>ovos</code> user at
-build time, so a bind mount over an empty host directory does not end up
-root-owned and unwritable.</p>
-<p><strong>Prefetch before serving traffic.</strong> A cold cache is slow, not broken, but on a
-public endpoint the two are indistinguishable to a user. Download the models you
-intend to serve as part of bringing the service up, not as a side effect of the
-first request.</p>
-<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
-<p>The three servers differ in where their plugin settings come from. Check each
-server's own page before assuming <code>mycroft.conf</code> applies:</p>
-<ul>
-<li>
-<p>The <strong>TTS server</strong> reads the <code>tts</code> section of <code>mycroft.conf</code>, keyed by plugin
-  id. Mount the file read-only:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">volumes</span><span class="p">:</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./mycroft.conf:/home/ovos/.config/mycroft/mycroft.conf:ro</span>
-</span></code></pre></div>
-</li>
-<li>
-<p>The <strong>STT server</strong> selects its STT plugin via <code>--engine</code>; the plugin's own
-  settings come from the <code>stt</code> section of <code>mycroft.conf</code> (keyed by plugin id)
-  when no explicit config is passed. Its audio/utterance transformer chains and
-  default <code>lang</code> also come from <code>mycroft.conf</code> (<a href="../stt-server/">STT Server</a>).</p>
-</li>
-<li>The <strong>translate server</strong> likewise selects its engines via CLI flags
-  (<code>--tx-engine</code>/<code>--detect-engine</code>), and each plugin's own settings come from
-  the <code>translation.&lt;plugin&gt;</code> / <code>language_detection.&lt;plugin&gt;</code> sections of
-  <code>mycroft.conf</code> (<a href="../translate-server/">Translate Server</a>).</li>
-</ul>
-<p>A settings block placed in a section a service does not read is ignored
-silently. The service starts, answers requests, and runs on defaults while
-appearing configured. See <a href="../config-all-keys/">All Configuration Keys</a> for the
-section each plugin type reads.</p>
-<p>Verify a config applied by observing behaviour, not by reading the file back.
-Pick a request whose answer differs between your settings and the defaults, and
-watch which one you get. The file being correct and the plugin having read it
-are two different claims.</p>
-<h2 id="operating-it">Operating It<a class="headerlink" href="#operating-it" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Health checks</strong> should hit each server's status endpoint, which answers
-  without loading a model. A real request is the wrong health check: it can
-  block on a cold download and mark a healthy instance as failed.</li>
-<li><strong>Upgrades</strong> replace one container at a time. With the cache on a volume, a
-  replaced container is warm immediately.</li>
-<li><strong>Announce what you run.</strong> A public endpoint carries no warranty and no uptime
-  guarantee. Say so where the URL is published, and expect people to self-host
-  once they depend on it.</li>
-</ul>
-<h2 id="self-hosting-without-the-servers">Self-hosting Without the Servers<a class="headerlink" href="#self-hosting-without-the-servers" title="Permanent link">&para;</a></h2>
-<p>Running these services is one option, not a requirement. Every capability here
-also exists as a plugin that runs directly on the device with no network at all:
-<code>phoonnx</code> for TTS, <code>onnx-asr</code> for STT, and <code>linguonnx</code> for translation are the
-same code the servers wrap. A server is worth running when several devices
-should share one machine's CPU and one copy of the models, not by default.</p>
-<p><strong>Read next:</strong> <a href="../server-compat-layers/">Server Compatibility Layers</a></p>
-<p><strong>Related:</strong> <a href="../stt-server/">STT Server</a> · <a href="../tts-server/">TTS Server</a> · <a href="../translate-server/">Translate Server</a> · <a href="../production-overview/">Production Overview</a></p>
+<p><a href="https://github.com/JarbasHiveMind/hivemind-homeassistant"><code>hivemind-homeassistant</code></a>
+discovers the device and exposes it as a Home Assistant <code>media_player</code> entity, plus a
+<code>notify</code> entity for TTS. Once that entity exists, Music Assistant (running as its own
+Home Assistant integration) treats it like any other media player: it can browse your
+library and stream to the device without further OVOS-side configuration.</p>
+<hr />
+<p><strong>Related:</strong> <a href="../ovos-media/">ovos-media</a> · <a href="../hivemind-agents/">HiveMind</a> · <a href="../home-assistant/">Home Assistant</a></p>
 
 
 
