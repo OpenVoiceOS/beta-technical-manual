@@ -191,6 +191,11 @@ A server is only useful once something connects to it. On the client side:
 
 This split is the real "voice satellite" story: cheap devices listen and speak, and the server thinks.
 
+HiveMind also ships bridges into existing chat and telephony surfaces.
+Matrix, Mattermost, Telegram, HackChat, and Twitch each have one, and so does VOIP through [HiveMind-baresip-bridge](https://jarbashivemind.github.io/HiveMind-community-docs/integrations/sip/).
+Each bridge is a client like any other, addressing a different end-user surface.
+The community docs list the current [integrations](https://jarbashivemind.github.io/HiveMind-community-docs/integrations/).
+
 ---
 
 ## Session isolation between clients
