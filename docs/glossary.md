@@ -133,7 +133,7 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
 ## M
 
 **[Mark 1](mark1.md) / [Mark 2](mark2.md)**
-:   Mycroft's reference hardware devices. The Mark 1 is a faceplate-only speaker; the Mark 2 is a Raspberry Pi 4 device with a touchscreen. Both are discontinued, best-effort legacy hardware — see [Mark 1](mark1.md) / [Mark 2](mark2.md) for current status.
+:   Mycroft's reference hardware devices. The Mark 1 is a faceplate-only speaker, fully supported; the Mark 2 is a Raspberry Pi 4 device with a touchscreen, discontinued and best-effort. See [Mark 1](mark1.md) / [Mark 2](mark2.md) for current status.
 
 **Match Contract**
 :   The single method every **pipeline plugin** exposes: `match(utterances, lang, session) → Match \| None`. It is the "system-call ABI" of the voice OS: the orchestrator knows nothing about a plugin except this signature. Returning a `Match` claims the utterance. Returning `None` declines it. [OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md).
