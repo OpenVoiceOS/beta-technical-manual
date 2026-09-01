@@ -22,7 +22,8 @@ All paths respect the `OVOS_CONFIG_BASE_FOLDER` environment variable (default: `
 | `DISTRIBUTION_CONFIG` | `/usr/share/mycroft/mycroft.conf` | Distribution-level override (env: `OVOS_DISTRIBUTION_CONFIG`) |
 | `SYSTEM_CONFIG` | `/etc/mycroft/mycroft.conf` | System-level config (env: `MYCROFT_SYSTEM_CONFIG`) |
 | `USER_CONFIG` | `~/.config/mycroft/mycroft.conf` | XDG user config (primary editable) |
-| `WEB_CONFIG_CACHE` | `~/.config/mycroft/web_cache.json` | Cache of the optional remote/backend config layer (env: `MYCROFT_WEB_CACHE`) |
+| `ASSISTANT_CONFIG` | `~/.config/mycroft/runtime.conf` | OVOS's own runtime-write layer, merged above the user layer |
+| `WEB_CONFIG_CACHE` | `~/.config/mycroft/web_cache.json` | **Deprecated, not merged.** Leftover path for the removed remote-config layer (env: `MYCROFT_WEB_CACHE`); only `RemoteConf`, itself a warn-only stub, still reads it |
 
 In addition to `USER_CONFIG`, every XDG config dir is scanned, so a system-wide
 `/etc/xdg/mycroft/mycroft.conf` is also merged at the user layer, below your `~/.config`
@@ -104,8 +105,9 @@ Returns a list of well-known config paths. Treat it as a rough guide, not as the
   looks at it.
 - `/etc/xdg/mycroft/mycroft.conf` is **not** in the list, but it is loaded — merged just
   before the user config, so the user's own file wins over it.
-- The order differs from the merge: here the remote layer sits fourth (after default, distribution, and system), while
-  `load_all_configs()` merges it second, just above the bundled default.
+- The deprecated web-cache path sits fourth in this list, after default, distribution, and
+  system. `load_all_configs()` does not merge it at all. `ovos-config` 3.0.0a1 dropped the
+  remote-config layer as a breaking change.
 - The path environment variables below are ignored — the function rebuilds
   `/usr/share/<base>/<file>` and `/etc/<base>/<file>` literally.
 

@@ -17,8 +17,8 @@
 
 For day-to-day, per-device debugging, use:
 
-- **`ovos-busmon`**: a browser-based web UI (FastAPI + WebSocket) that streams the live message traffic on a device's bus in
-  real time. The fastest way to see whether wake word → STT → intent → TTS is actually firing.
+- **`ovos-busmon`**: a browser-based web UI (FastAPI + Server-Sent Events) that streams the live message traffic on a
+  device's bus in real time. The fastest way to see whether wake word → STT → intent → TTS is actually firing.
 - **`ovos-logs`** (see [Production Operations: log locations](production-operations.md#log-locations-and-shipping-them-out)) for historical logs.
 - The [readiness probe](production-operations.md#knowing-when-the-assistant-is-actually-ready) as a synthetic check you
   can run from outside the device (cron, a monitoring agent, a CI job) on a schedule.
