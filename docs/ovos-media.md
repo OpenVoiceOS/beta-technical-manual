@@ -107,7 +107,9 @@ parses `--help` and `--version` and exits before starting the daemon or touching
 
 Key modules:
 
-- `ovos_media/player/__init__.py`: `OCPMediaPlayer`, the player state machine (playlist, track history, playback/media/loop state). `OCPMediaCatalog` (an `OVOSCommonPlaybackSkill` subclass, instantiated as `self.media`) manages only the liked-songs store and search-results playlist
+- `ovos_media/player/__init__.py`: `OCPMediaPlayer`, the player state machine (playlist, track history, playback/media/loop state)
+- `ovos_media/catalog/catalog.py`: `MediaCatalog` (aliased `OCPMediaCatalog` for back-compat, instantiated as the player's `self.media`) — a plain object with no bus subscriptions of its own, holding only the liked-songs store and search-results playlist
+- `ovos_media/skill.py`: `OCPVoiceSkill`, an `OVOSCommonPlaybackSkill` subclass constructed separately from the player and given a reference to its catalog — the actual voice front-end, registering the now-playing intents and the liked-songs `@ocp_search`
 
 
 - `ovos_media/media_backends/`: `AudioService`, `VideoService`, `WebService`. Each manages typed backend plugins
@@ -188,7 +190,7 @@ account current player state):
 
 ### Now-Playing Intents
 
-`OCPMediaCatalog` (the built-in `ovos-media` skill described under [ovos-media
+`OCPVoiceSkill` (the built-in `ovos-media` skill described under [ovos-media
 Player](#ovos-media-player)) registers five regular padatious intents (en-us) about the
 currently playing track: `WhatSong`, `WhatArtist`, `WhatAlbum`, `ShuffleOn`, and `ShuffleOff`.
 
@@ -452,7 +454,7 @@ listens on (`ovos.common_play.*`, the `ovos.audio.output.*` duck triggers, and c
 `ovos-media`'s pipeline plugin falls back to the classic `mycroft.audio.service.*` bus messages
 when `ovos-media` is not running, and bridges old pre-OCP `CommonPlaySkill` skills via `play:query`
 / `play:start`. It also carries some architectural coupling from that history, such as
-`OCPMediaCatalog` registering itself as a skill and the Music Assistant backend's missing
+`OCPVoiceSkill` registering itself as a skill and the Music Assistant backend's missing
 `next()`/`previous()`. The full detail has moved to its own page:
 **[ovos-media Legacy Compatibility](ovos-media-compat.md)**.
 

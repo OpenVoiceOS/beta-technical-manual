@@ -32,9 +32,11 @@ This bridge is marked for removal in `ovos-core 0.1.0`.
 
 ## Known Coupling Issues
 
-### OCPMediaCatalog is a skill
+### OCPVoiceSkill is a skill
 
-`OCPMediaCatalog` in `ovos_media/player/__init__.py` inherits from `OVOSCommonPlaybackSkill`. This registers
+`OCPVoiceSkill` in `ovos_media/skill.py` inherits from `OVOSCommonPlaybackSkill`, constructed
+separately from the player and given a reference to its `MediaCatalog` (`OCPMediaCatalog` is
+now just a back-compat alias for the plain, skill-free catalog object). `OCPVoiceSkill` registers
 `ovos-media` as a skill on the bus and loads skill infrastructure (settings, locale, etc.). It
 registers `@ocp_search()` to expose liked songs as a search result. There is no
 `@ocp_featured_media()` handler.
