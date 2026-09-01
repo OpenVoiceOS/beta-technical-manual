@@ -136,7 +136,7 @@ def pronounce_number(number: Union[int, float], lang: str, places: int = 3, shor
 
 ```
 
-> The `digits` and `gender` arguments (`DigitPronunciation`/`GrammaticalGender`, importable from `ovos_number_parser.util`) currently only affect Portuguese (`pt`) and Mirandese (`mwl`). `scale` (`Scale`, same module) is different: every dispatch function except `pronounce_fraction` resolves it to an effective short/long scale and threads it into the majority of language backends (English, German, Dutch, the Nordic and Slavic families, and more); only backends that take no scale parameter at all ignore it, and that set differs per function. `pronounce_fraction` passes `scale` through unresolved to the backends that accept it.
+> The `digits` and `gender` arguments (`DigitPronunciation`/`GrammaticalGender`, importable from `ovos_number_parser.util`) affect every language backend built on the shared `NumberVocabulary` base class: Catalan (`ca`), Asturian (`ast`), Occitan (`oc`), Aragonese (`an`), Galician (`gl`), Spanish (`es`), French (`fr`), Portuguese (`pt`), Mirandese (`mwl`), and Romanian (`ro`). `scale` (`Scale`, same module) is different: every dispatch function except `pronounce_fraction` resolves it to an effective short/long scale and threads it into the majority of language backends (English, German, Dutch, the Nordic and Slavic families, and more); only backends that take no scale parameter at all ignore it, and that set differs per function. `pronounce_fraction` passes `scale` through unresolved to the backends that accept it.
 
 > `pronounce_number` also accepts a Python `complex` value and speaks it in rectangular `a+bi` form, e.g. `pronounce_number(complex(3, 2), "en")` → `"three plus two i"`. The number itself is composed from the per-language cardinal pronunciation. Only the "plus"/"minus"/"i" connectives are language-specific (English used as the default).
 
@@ -302,7 +302,7 @@ numbers_to_digits("set a timer for twenty five minutes", "en")
 def numbers_to_digits(utterance: str, lang: str, scale: Optional[Scale] = None) -> str: ...
 ```
 
-`scale` (`Scale.LONG` / `Scale.SHORT`, from `ovos_number_parser.util`) only matters for languages that distinguish short/long scale (e.g. `pt`/`mwl`). Hand-written rewriting is dispatched for `en`, `kab`, `ast`, `oc`, `an`, `fy`, `gl`, `de`, `pt`, `mwl`, `ro`, `bg`, `hr`, `ru`, `sk`, `id`, `ms`, `tr`, and `uk`. Every other language gets a generic word-span replacement instead. It works but is less precise about compound numerals than a hand-written implementation. No language ever raises here. One that has no parser at all is simply left unchanged.
+`scale` (`Scale.LONG` / `Scale.SHORT`, from `ovos_number_parser.util`) only matters for languages that distinguish short/long scale (e.g. `pt`/`mwl`). Hand-written rewriting is dispatched for `en`, `ar`, `kab`, `ast`, `oc`, `an`, `fy`, `gl`, `de`, `pt`, `mwl`, `ro`, `bg`, `hr`, `ru`, `sk`, `id`, `ms`, `tr`, and `uk`. Every other language gets a generic word-span replacement instead. It works but is less precise about compound numerals than a hand-written implementation. No language ever raises here. One that has no parser at all is simply left unchanged.
 
 !!! note
     Kabyle (`kab`) has two coexisting numeral systems: everyday loan-word counting (Arabic-derived above ten, e.g. `waḥed u ɛecrin` = 21) used for pronunciation, and a formalized pan-Amazigh proposal (invariable tens, descending magnitudes, no connectors) that extraction also recognizes. `kab` counts only up to 9999 and has no scale or fraction vocabulary.
