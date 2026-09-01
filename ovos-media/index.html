@@ -2212,7 +2212,7 @@ the player by its entry-point name.</p>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-media-plugin-mass"><code>ovos-media-plugin-mass</code></a></td>
 <td>audio</td>
-<td>Public repo, <strong>not yet on PyPI</strong>. Hands playback off to a <a href="../music-assistant/">Music Assistant</a> server. Does not implement <code>next()</code>/<code>previous()</code> through the legacy <code>AudioBackend</code> interface — only through the Music Assistant queue API (see Known Coupling Issues below)</td>
+<td>Hands playback off to a <a href="../music-assistant/">Music Assistant</a> server. <code>next()</code>/<code>previous()</code> on the legacy <code>AudioBackend</code> interface delegate to the Music Assistant queue API (see Known Coupling Issues below)</td>
 </tr>
 <tr>
 <td><code>ovos-media-plugin-mpris</code></td>
@@ -2579,8 +2579,8 @@ the catalog/search half of an older OCP skill:</p>
 <p><code>ovos-media</code>'s pipeline plugin falls back to the classic <code>mycroft.audio.service.*</code> bus messages
 when <code>ovos-media</code> is not running, and bridges old pre-OCP <code>CommonPlaySkill</code> skills via <code>play:query</code>
 / <code>play:start</code>. It also carries some architectural coupling from that history, such as
-<code>OCPVoiceSkill</code> registering itself as a skill and the Music Assistant backend's missing
-<code>next()</code>/<code>previous()</code>. The full detail has moved to its own page:
+<code>OCPVoiceSkill</code> registering itself as a skill and how the Music Assistant backend's
+<code>next()</code>/<code>previous()</code> delegate to MA's own queue API. The full detail has moved to its own page:
 <strong><a href="../ovos-media-compat/">ovos-media Legacy Compatibility</a></strong>.</p>
 <hr />
 <h2 id="hivemind-multi-session-gating">HiveMind: multi-session gating<a class="headerlink" href="#hivemind-multi-session-gating" title="Permanent link">&para;</a></h2>
