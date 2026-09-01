@@ -1566,6 +1566,9 @@ become the pipeline matcher IDs <code>ovos-m2v-pipeline-high</code> / <code>-med
 </ol>
 <p>Because matching is restricted to intents that are actually loaded, the model can
 ship knowledge of many skills without firing for skills you do not have installed.</p>
+<p>A label registered with <code>requires_context</code> or <code>excludes_context</code> is gated the same way
+whether it came from a padatious registration or an INTENT-4 template: the pipeline checks
+the declared context before accepting the label as a match, not just the confidence score.</p>
 <pre class="mermaid"><code>flowchart TD
     U[Utterance] --&gt; E[Embed with Model2Vec model]
     R[Registered Adapt/Padatious\nintent labels] --&gt; F
@@ -1584,10 +1587,12 @@ ship knowledge of many skills without firing for skills you do not have installe
   a trained linear classifier head). Scores are softmax probabilities. This is the
   mode used by the published <code>Jarbas/ovos-model2vec-intents-*</code> models.</li>
 <li><strong><code>prototype</code></strong>: loads a bare <code>StaticModel</code> (embeddings only, no trained head)
-  and builds a prototype store at runtime from the example utterances skills
-  provide when they register Padatious intents. Scores are cosine similarities.
-  Adapt intents (which have no example sentences) are tracked by name but not
-  matched in this mode.</li>
+  and builds a prototype store from the example utterances skills provide when
+  they register Padatious intents. Scores are cosine similarities. Adapt intents
+  (which have no example sentences) are tracked by name but not matched in this
+  mode. An unchanged registration is loaded from an on-disk cache instead of
+  re-encoded on every boot; the cache clears itself when a skill or intent
+  detaches (see <code>prototype_cache</code> below).</li>
 </ul>
 <p>A second entry point, <code>ovos-m2v-prototype-pipeline</code>
 (<code>Model2VecPrototypePipeline</code>), is the prototype mode exposed as a standalone
@@ -1659,8 +1664,8 @@ plugin so it can run alongside the classifier one. It reads its config from
 </tr>
 </tbody>
 </table>
-<p>Prototype mode adds four more keys controlling how prototype embeddings are
-selected per label:</p>
+<p>Prototype mode adds six more keys controlling how prototype embeddings are
+selected per label and cached on disk:</p>
 <table>
 <thead>
 <tr>
@@ -1689,6 +1694,16 @@ selected per label:</p>
 <td><code>prototype_tau</code></td>
 <td><code>0.1</code></td>
 <td>Softmax temperature for prototype score aggregation.</td>
+</tr>
+<tr>
+<td><code>prototype_cache</code></td>
+<td><code>true</code></td>
+<td>Cache encoded prototypes on disk per skill, keyed on the registration's example utterances, instead of re-encoding on every boot.</td>
+</tr>
+<tr>
+<td><code>prototype_cache_dir</code></td>
+<td><code>{XDG_DATA_HOME}/mycroft/m2v_prototypes/</code></td>
+<td>Where the per-skill cache files live.</td>
 </tr>
 </tbody>
 </table>
