@@ -1723,7 +1723,7 @@ value by 1000). This conversion is internal to the MPRIS exporter; nothing else 
 </div>
 <hr />
 <h2 id="external-player-reflection-takeover">External Player Reflection &amp; Takeover<a class="headerlink" href="#external-player-reflection-takeover" title="Permanent link">&para;</a></h2>
-<p><code>OcpMprisExporter</code> (<code>ovos_media/mpris.py</code>) has two roles, referred to as <strong>Role A</strong> and
+<p><code>OcpMprisExporter</code> (<code>ovos_media/mpris/__init__.py</code>) has two roles, referred to as <strong>Role A</strong> and
 <strong>Role B</strong>. Role A is registering OCP itself on the D-Bus session bus (above), always active
 once <code>enable_mpris</code> is set, and it is what lets an MPRIS client like <code>playerctl</code> control OCP:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>playerctl<span class="w"> </span>--player<span class="o">=</span>org.mpris.MediaPlayer2.OCP<span class="w"> </span>play-pause
