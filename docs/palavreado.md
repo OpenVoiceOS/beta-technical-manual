@@ -75,7 +75,7 @@ Set `conf_high`, `conf_med`, `conf_low`, and `max_words` under `mycroft.conf`'s 
 (the intent label's `<skill_id>:<intent>` prefix). A top-level classifier picks the domain
 first, and only that domain's sub-container resolves the intent — an utterance matching no
 domain is rejected before any sub-container runs. It accepts every key the flat plugin does,
-but reads them from `intents.ovos-palavreado-hierarchical-pipeline` so both variants can run side by side.
+but reads them from `intents.palavreado_hierarchical` so both variants can run side by side.
 This mirrors [ovos-hierarchical-knn-pipeline](knn-pipeline.md)'s relationship to a flat KNN
 pipeline.
 
