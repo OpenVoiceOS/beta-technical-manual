@@ -184,13 +184,10 @@ detections and transcribed utterances — but only to **local disk**, gated by t
 `listener.record_wake_words` and `listener.save_utterances` config keys (both
 off by default). No upload path exists: nothing recorded ever leaves the device.
 
-!!! note "Upcoming"
-    An opt-in donation mechanism that uploads captured samples to an
-    [ovos-opendata-server](https://github.com/OpenVoiceOS/ovos-opendata-server)
-    instance (config keys `open_data.ww_urls` / `open_data.stt_urls`, no default
-    server) is proposed in
-    [ovos-config#278](https://github.com/OpenVoiceOS/ovos-config/pull/278) but
-    not yet merged. See [Upcoming Changes](upcoming-changes.md).
+An opt-in donation mechanism that would have uploaded captured samples to an
+[ovos-opendata-server](https://github.com/OpenVoiceOS/ovos-opendata-server) instance
+was proposed in [ovos-config#278](https://github.com/OpenVoiceOS/ovos-config/pull/278)
+and closed without merging. No upload mechanism exists or is pending.
 
 ---
 
