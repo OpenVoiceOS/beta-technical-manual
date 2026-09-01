@@ -195,7 +195,9 @@ See the **Secrets and permissions** warning above. `ovos-config set` does not re
     `ovos-config set` writes to `~/.config/mycroft/runtime.conf` (the Assistant layer),
     not `~/.config/mycroft/mycroft.conf` (the User layer) as intended. `ovos-config show
     -u` and `ovos-config show -a` are swapped the same way. Check `runtime.conf` if a
-    `set` value doesn't show up where expected.
+    `set` value doesn't show up where expected. Fix drafted in
+    [`ovos-config#305`](https://github.com/OpenVoiceOS/ovos-config/pull/305), not yet
+    merged.
 
 **Restart and verify**
 
