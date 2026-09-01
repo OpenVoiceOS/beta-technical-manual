@@ -257,8 +257,8 @@ the same way as the [Matcher taxonomy](#matcher-taxonomy) above:
 |--------|-------------|----------|-------------|
 | `ovos-padatious-pipeline-plugin` | Neural network intent-matching pipeline plugin | Yes | [Padatious Pipeline](padatious-pipeline.md) |
 | `ovos-m2v-pipeline` | Intent matching powered by the Model2Vec model | Yes | [M2V Pipeline](m2v-pipeline.md) |
-| `padacioso` | Literal template matcher, no training | No | [Padacioso](padacioso.md) |
-| `nebulento` | Fuzzy / typo-tolerant template matcher | No | [Nebulento](nebulento.md) |
+| `ovos-padacioso-pipeline-plugin` | Literal template matcher, no training | No | [Padacioso](padacioso.md) |
+| `ovos-nebulento-pipeline-plugin` | Fuzzy / typo-tolerant template matcher | No | [Nebulento](nebulento.md) |
 | `ovos-hierarchical-knn-pipeline` | Embedding-based two-stage k-NN matcher | No | [Hierarchical KNN Pipeline](knn-pipeline.md) |
 
 ### Specialized Matchers
