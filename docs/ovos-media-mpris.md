@@ -54,7 +54,7 @@ dbus-send --session --dest=org.freedesktop.DBus --type=method_call --print-reply
 
 ## External Player Reflection & Takeover
 
-`OcpMprisExporter` (`ovos_media/mpris.py`) has two roles, referred to as **Role A** and
+`OcpMprisExporter` (`ovos_media/mpris/__init__.py`) has two roles, referred to as **Role A** and
 **Role B**. Role A is registering OCP itself on the D-Bus session bus (above), always active
 once `enable_mpris` is set, and it is what lets an MPRIS client like `playerctl` control OCP:
 
