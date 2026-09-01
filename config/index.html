@@ -1965,7 +1965,9 @@ for the full guidance.</p>
 <code>ovos-config set</code> writes to <code>~/.config/mycroft/runtime.conf</code> (the Assistant layer),
 not <code>~/.config/mycroft/mycroft.conf</code> (the User layer) as intended. <code>ovos-config show
 -u</code> and <code>ovos-config show -a</code> are swapped the same way. Check <code>runtime.conf</code> if a
-<code>set</code> value doesn't show up where expected.</p>
+<code>set</code> value doesn't show up where expected. Fix drafted in
+<a href="https://github.com/OpenVoiceOS/ovos-config/pull/305"><code>ovos-config#305</code></a>, not yet
+merged.</p>
 </div>
 <p><strong>Restart and verify</strong></p>
 <p><code>ovos-config set</code> writes the change to disk. It does not restart the running services. They
