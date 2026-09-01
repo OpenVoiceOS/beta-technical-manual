@@ -41,6 +41,9 @@ class TableBookingSkill(ConversationalSkill):
         self.activate()
         self.speak_dialog("confirm_booking", self._pending_booking)
 
+    def can_converse(self, message):
+        return self._pending_booking is not None
+
     def converse(self, message):
         if self._pending_booking is None:
             return False  # not our turn, let normal intent matching happen
