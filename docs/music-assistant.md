@@ -46,13 +46,15 @@ shipped with MA itself, regardless of whether you also use OVOS.
 ## Direction 3: Music Assistant streams to an OVOS device
 
 !!! info "Via Home Assistant, not a direct OVOS↔MA link"
-    This path goes through Home Assistant: any [HiveMind](hivemind-agents.md) node
-    that answers `ovos.common_play.*` bus messages can be exposed as an HA media
-    player entity, and Music Assistant then sees that entity as a playback endpoint.
-    There is no direct HiveMind↔Music-Assistant protocol.
+    This path goes through Home Assistant: **Home Assistant is the HiveMind client**,
+    not the OVOS device. It connects to whatever runs `hivemind-core` on the OVOS side
+    and drives it as an admin, so it can trigger playback on the device's real
+    `"default"` session rather than an isolated one. Music Assistant then sees the
+    resulting HA entity as a playback endpoint. There is no direct
+    HiveMind↔Music-Assistant protocol.
 
-Any `hivemind-core` node speaking the OVOS bus can be the target, since it's the same
-`ovos.common_play.*` messages regardless of what runs behind it. Two options:
+The OVOS side runs `hivemind-core` plus whatever agent answers `ovos.common_play.*`,
+since it's the same bus messages regardless of what runs behind it. Two options:
 
 - A full **[`hivemind-ovos-agent-plugin`](hivemind-agents.md)** node: a complete
   `ovos-core` install exposed over HiveMind. Heavier, but you get the whole assistant,
@@ -62,10 +64,12 @@ Any `hivemind-core` node speaking the OVOS bus can be the target, since it's the
   full `ovos-core`. It currently embeds the legacy `ovos-audio` service, not
   [`ovos-media`](ovos-media.md); its status query does not yet report real player state.
 
-Either way, the device becomes a satellite like any other:
+Home Assistant needs an **admin** client to reach the device's real `"default"` session
+instead of an isolated one translated away from it (see
+[Session isolation between clients](hivemind-agents.md#session-isolation-between-clients)):
 
 ```bash
-hivemind-core add-client --name my-player-node
+hivemind-core add-client --name home-assistant --admin
 hivemind-core allow-msg "ovos.common_play.play" <NODE_ID>
 hivemind-core allow-msg "ovos.common_play.pause" <NODE_ID>
 hivemind-core allow-msg "ovos.common_play.resume" <NODE_ID>
@@ -76,9 +80,9 @@ hivemind-core allow-msg "speak" <NODE_ID>
 ```
 
 [`hivemind-homeassistant`](https://github.com/JarbasHiveMind/hivemind-homeassistant)
-connects to the node and, once you pick "Media Player" as its device type in the HA
-config flow, exposes it as a `media_player` entity plus a `notify` entity for TTS. Once
-that entity exists, Music Assistant (running as its own
+connects to `hivemind-core` with those credentials and, once you pick "Media Player" as
+the device type in the HA config flow, exposes it as a `media_player` entity plus a
+`notify` entity for TTS. Once that entity exists, Music Assistant (running as its own
 Home Assistant integration) treats it like any other media player: it can browse your
 library and stream to the device without further OVOS-side configuration.
 
