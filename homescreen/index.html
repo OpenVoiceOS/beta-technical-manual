@@ -1475,12 +1475,14 @@ computes whatever data it wants to show on its own.</p>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">}</span>
 </span></code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title">Not available on the legacy stack</p>
+<p class="admonition-title">Unreleased: not on any published package</p>
 <p>The <code>homescreen.data.*</code> / <code>homescreen.widget.*</code> messages below belong to
-<code>ovos-legacy-mycroft-gui-plugin</code> (<code>ovos_legacy_mycroft_gui/homescreen.py</code>), the
-<a href="../gui-adapters/">GUI adapter</a> that owns homescreen data and widget coordination. They let
-a display render a live idle screen without a skill polling its own data. The legacy stack
-described elsewhere on this page does not carry them.</p>
+<code>ovos-legacy-mycroft-gui-plugin</code> (<code>ovos_legacy_mycroft_gui/homescreen.py</code>), part of the
+<a href="../gui-adapters/">GUI adapter</a> rework described in <a href="../gui-service/">GUI Service</a>. That
+rework is not yet released and not present on any published package — do not rely on any
+of this on a stable install. Once shipped, it will let a display render a live idle screen
+without a skill polling its own data. The legacy stack described elsewhere on this page
+does not carry it.</p>
 <h3 id="homescreendata"><code>homescreen.data.*</code><a class="headerlink" href="#homescreendata" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
