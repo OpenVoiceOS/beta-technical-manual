@@ -1751,9 +1751,12 @@ device-local session. An <strong>admin</strong> connection is the one exception:
 translation, so its declared <code>session_id</code>, <code>"default"</code> included, is stamped onto the OVOS bus
 unchanged. Reaching the orchestrator's real sessions by name is what admin standing means here
 (<a href="https://github.com/JarbasHiveMind/architecture/blob/dev/hivemind-bridge-1.md#41-the-reserved-default-session-and-the-translation-exemption"><code>HIVEMIND-BRIDGE-1 §4.1</code></a>).</p>
-<p>A client multiplexing several conversations over one connection (a chat-room or telephony
-bridge) gets each mapped to its own isolated session. Session contents, every field besides
-the id, are adopted as sent, unmodified.</p>
+<p>A client multiplexes several conversations over one connection by declaring a distinct
+<code>session_id</code> per message. A chat-room or telephony bridge does this per end-user
+conversation. Each declared name maps to its own isolated session. This needs
+<code>hivemind-bus-client &gt;= 1.0.16a1</code>; older clients overwrite a per-message <code>session_id</code> with
+the connection-level one. Session contents merge over the established baseline, so a
+bridged peer that omits a field keeps its own last value, never the orchestrator's default.</p>
 <hr />
 <h2 id="permissions-access-control">Permissions &amp; access control<a class="headerlink" href="#permissions-access-control" title="Permanent link">&para;</a></h2>
 <p>HiveMind is <strong>deny-by-default</strong>: a client may only do what it has been explicitly granted,
