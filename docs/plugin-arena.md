@@ -3,7 +3,7 @@
 !!! abstract "In a nutshell"
     OVOS lets you swap in different plugins for jobs like understanding speech or recognizing commands. Which one is best? The Plugin Arena answers that by comparing them two ways: objective scores measured against test data, and a "which sounds better?" vote where people blindly pick between two plugins' results, scored a bit like chess rankings. It is purely a scoreboard for comparing plugins. It never installs or runs them itself. See the [Glossary](glossary.md) for unfamiliar terms.
 
-The arena runs live at [openvoiceos.github.io/ovos-plugin-arena](https://openvoiceos.github.io/ovos-plugin-arena), with source and battle definitions at [OpenVoiceOS/ovos-plugin-arena](https://github.com/OpenVoiceOS/ovos-plugin-arena). The **intent**, **STT**, **wake word** and **VAD** leagues carry live battles and ELO standings. The **TTS** league lists its competitors at the seed ELO, awaiting battles.
+The arena runs live at [openvoiceos.github.io/ovos-plugin-arena](https://openvoiceos.github.io/ovos-plugin-arena), with source and battle definitions at [OpenVoiceOS/ovos-plugin-arena](https://github.com/OpenVoiceOS/ovos-plugin-arena). The **intent**, **STT**, **wake word**, **VAD**, and **TTS** leagues all carry live battles and ELO standings, seeded from automated A/B votes; human votes further refine the ratings as they come in.
 
 **What this is:** a way to answer *"which OVOS plugin should I use?"* It compares plugins on two signals:
 
@@ -137,7 +137,7 @@ Modality-specific fields (kept inline or in `extras`):
 | STT | Live (`benchmarks/stt_minds14.py`, multiple languages) |
 | VAD | Live (`benchmarks/vad_speech.py`, many languages) |
 | Wake word | Live (`benchmarks/ww_hey_jarvis.py`, `ww_hey_mycroft.py`, `ww_computer.py`) |
-| TTS | Registered, not yet benchmarked — competitors are declared but have no predictions or battles yet, so every entry sits at the seed ELO (human-vote-only boards planned, no auto metric or ELO seed) |
+| TTS | Live, automated blind A/B battles between synthesized clips (no objective accuracy metric, so ELO is seeded and moved entirely by votes); human votes are still pending and will refine the ratings further |
 
 ---
 
