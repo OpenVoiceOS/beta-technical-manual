@@ -210,9 +210,12 @@ translation, so its declared `session_id`, `"default"` included, is stamped onto
 unchanged. Reaching the orchestrator's real sessions by name is what admin standing means here
 ([`HIVEMIND-BRIDGE-1 §4.1`](https://github.com/JarbasHiveMind/architecture/blob/dev/hivemind-bridge-1.md#41-the-reserved-default-session-and-the-translation-exemption)).
 
-A client multiplexing several conversations over one connection (a chat-room or telephony
-bridge) gets each mapped to its own isolated session. Session contents, every field besides
-the id, are adopted as sent, unmodified.
+A client multiplexes several conversations over one connection by declaring a distinct
+`session_id` per message. A chat-room or telephony bridge does this per end-user
+conversation. Each declared name maps to its own isolated session. This needs
+`hivemind-bus-client >= 1.0.16a1`; older clients overwrite a per-message `session_id` with
+the connection-level one. Session contents merge over the established baseline, so a
+bridged peer that omits a field keeps its own last value, never the orchestrator's default.
 
 ---
 
