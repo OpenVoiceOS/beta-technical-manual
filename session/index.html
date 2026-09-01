@@ -1866,13 +1866,16 @@ one, falling back to Configuration otherwise.</p>
 </span><span id="__span-1-43"><a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="sd">        &quot;&quot;&quot;</span>
 </span></code></pre></div>
 <div class="admonition note">
-<p class="admonition-title">Two different ways a session gets updated</p>
-<p>An inbound client message <strong>merges</strong> field-by-field onto the stored
-<code>"default"</code> session. A field the client omits is left alone, so a
-client can never delete a stored field just by not sending it. A
-pipeline plugin's <code>Match.updated_session</code>, by contrast, is a <strong>complete
-snapshot</strong>: whatever it doesn't include is treated as deleted. Deletion
-by omission exists on that one pathway only.</p>
+<p class="admonition-title">A session update is always a full snapshot, never a field merge</p>
+<p>Both an inbound client message and a pipeline plugin's
+<code>Match.updated_session</code> fold onto the stored session the same way:
+<code>Session.update_from</code> round-trips the incoming state through
+<code>serialize</code>/<code>deserialize</code>, so a field present on the wire overrides the
+stored value and a field the sender omits resets to the spec default,
+not "left alone." This applies uniformly to every <code>session_id</code>,
+including <code>"default"</code>. There is no field-by-field merge path anywhere
+in <code>ovos-core</code>, which is exactly why the earlier warning on this page
+insists a client replay the <strong>complete</strong> session on every message.</p>
 </div>
 <h2 id="per-user-interactions">Per User Interactions<a class="headerlink" href="#per-user-interactions" title="Permanent link">&para;</a></h2>
 <p>Let's consider a skill that keeps track of a chat history, how would such a skill keep track of <code>Sessions</code>?</p>
