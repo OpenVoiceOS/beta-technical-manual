@@ -172,7 +172,7 @@ service from an editable checkout of its own repo while fixing a bug in it, see
     ╭─ Options ────────────────────────────────────────────────────────────────────╮
     │ --help  Show this message and exit.                                          │
     ╰──────────────────────────────────────────────────────────────────────────────╯
-    ╭─ Show configuration tables (Joined/User/System/Remote) ──────────────────────╮
+    ╭─ Show configuration tables (Joined/User/System/Assistant) ───────────────────╮
     │ show    By ommiting a specific configuration a joined configuration table is │
     │         shown. (which is the one ultimately gets loaded by ovos)             │
     │         Based on this consideration you can further trim the table by        │

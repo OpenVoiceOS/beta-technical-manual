@@ -21,7 +21,7 @@ stt.module: Stock default is `ovos-stt-plugin-server`, which routes voice audio 
   public community server for speech-to-text. See [Privacy & Security](privacy-security.md).
 tts.module: Stock default is `ovos-tts-plugin-server`, which routes text to a public
   community server for text-to-speech. See [Privacy & Security](privacy-security.md).
-listener.fake_barge_in: Mute output during recording.
+listener.fake_barge_in: Lower playback volume during recording, restored afterward. It does not mute.
 listener.recording_timeout: Max seconds for a single recording.
 listener.remove_silence: Strip leading/trailing silence before sending audio to STT.
 listener.sample_rate: Audio sampling rate in Hz.

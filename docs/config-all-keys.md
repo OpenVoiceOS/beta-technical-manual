@@ -152,6 +152,7 @@
 |---|---|---|
 | `system.disable_user_config` | `false` |  |
 | `system.protected_keys.user` | `[]` |  |
+| `system.protected_keys.assistant` | `[]` |  |
 
 ### `websocket`
 
