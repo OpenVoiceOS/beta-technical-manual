@@ -1837,6 +1837,9 @@ these" — write them as inline alternation instead of a slot: <code>(red | gree
 rather than <code>{type}</code>. Reserve <code>{slot}</code> for values you intend to <em>read</em> out of
 <code>message.data</code> in the handler; if the handler never consumes the captured value, it
 should probably not be a slot at all.</p>
+<p>An inline alternation group over 64 branches is dropped from padaos entirely for that
+line: the engine logs a warning naming the intent and branch count, and that line falls
+back to neural-only matching. Past 64 options, use a slot with an <code>.entity</code> file instead.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Out-of-list matches land in the medium stage</p>
