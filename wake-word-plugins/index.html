@@ -2054,7 +2054,12 @@ the other.</p>
   ecosystem's own training framework, in prerelease. Train a detector from a single typed
   phrase (synthetic data, no recording campaign) and run the exported two-file model with
   <code>ovos-ww-plugin-wakeforge</code> (alpha, on PyPI). The intended long-term replacement for the
-  Precise training path; expect rough edges while it is alpha.</li>
+  Precise training path; expect rough edges while it is alpha. The repo's <code>notebooks/</code>
+  folder has worked Kaggle/Colab notebooks for hyperparameter search, tiered-scale
+  training (micro/embedded/GPU), HuBERT distillation, and voice-conversion dataset
+  bootstrapping. Dataset generation and augmentation for wake-word training also has a
+  dedicated notebook, <a href="https://github.com/TigreGotico/ml-notebooks"><code>ww/tts2ww.ipynb</code></a> in
+  <code>TigreGotico/ml-notebooks</code>.</li>
 <li><strong>Vosk</strong> (<a href="https://alphacephei.com/vosk/">project page</a>): general ASR repurposed for
   keyword matching. Zero training for an arbitrary phrase, but heavier and worse at
   false-accept suppression than the dedicated nets; it ignores <code>sensitivity</code> entirely.</li>
