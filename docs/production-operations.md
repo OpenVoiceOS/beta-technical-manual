@@ -64,23 +64,18 @@ Restart=on-failure
 WantedBy=ovos.service
 ```
 
-```ini title="~/.config/systemd/user/ovos-skills.service"
+```ini title="~/.config/systemd/user/ovos-core.service"
 [Unit]
-Description=OVOS Skills
+Description=Open Voice OS - Core (skills)
 PartOf=ovos.service
-After=ovos.service
-After=ovos-messagebus.service
+Requires=ovos.service ovos-messagebus.service ovos-phal.service ovos-audio.service
 
 [Service]
-Type=notify
-Group=ovos
-UMask=002
-ExecStart=%h/.venvs/ovos/bin/python /usr/libexec/ovos-systemd-skills
-TimeoutStartSec=10m
-TimeoutStopSec=1m
+WorkingDirectory=%h/.venvs/ovos
+ExecStart=%h/.venvs/ovos/bin/ovos-core
+ExecReload=/usr/bin/kill -s HUP $MAINPID
 Restart=on-failure
-StartLimitInterval=5min
-StartLimitBurst=4
+RestartSec=5s
 
 [Install]
 WantedBy=ovos.service
@@ -105,8 +100,8 @@ You do not need to also restart every dependent service).
 ```bash
 systemctl --user daemon-reload
 systemctl --user enable --now ovos.service
-systemctl --user status ovos-skills.service
-journalctl --user -u ovos-skills.service -f
+systemctl --user status ovos-core.service
+journalctl --user -u ovos-core.service -f
 ```
 
 !!! note "System vs user units"

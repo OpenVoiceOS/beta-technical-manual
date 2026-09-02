@@ -177,7 +177,7 @@ footprint on your own target hardware instead of relying on an unverified number
 ps -u ovos -o rss,comm --sort=-rss | grep -E 'ovos|mycroft'
 
 # Or per systemd unit, if using the units above
-systemctl --user status ovos-skills.service | grep Memory
+systemctl --user status ovos-core.service | grep Memory
 
 # CPU, live, while you talk to it
 top -b -n 1 -u ovos
