@@ -1373,7 +1373,7 @@ Back</a> below), or, if you didn't freeze one, from <code>uv pip show
 ovos-stt-plugin-whisper</code> run <em>before</em> you upgraded.</p>
 <p>Pinning the package alone isn't enough. The process that already loaded the old, broken
 version keeps running it in memory until it restarts. Restart whichever service loads that
-package (e.g. <code>systemctl --user restart ovos-dinkum-listener.service</code> for an STT plugin)
+package (e.g. <code>systemctl --user restart ovos-listener.service</code> for an STT plugin)
 before you consider the rollback complete.</p>
 <div class="admonition note">
 <p class="admonition-title">A release channel isn't a maturity guarantee</p>
