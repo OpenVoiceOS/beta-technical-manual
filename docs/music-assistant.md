@@ -38,7 +38,8 @@ loading is not wired into `ovos-media` (see
 ## Direction 2: Music Assistant loads out-of-tree providers
 
 [`music-assistant-plugin-manager`](https://github.com/TigreGotico/music-assistant-plugin-manager)
-(`pip install music-assistant-plugin-manager`) is independent of OVOS: it loads
+(`pip install --pre music-assistant-plugin-manager`, since every release is a
+prerelease) is independent of OVOS: it loads
 community-maintained providers into a Music Assistant server via its
 `music-assistant-community` wrapper command. Use it to run MA providers that aren't
 shipped with MA itself, regardless of whether you also use OVOS.

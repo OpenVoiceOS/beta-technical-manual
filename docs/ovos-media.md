@@ -143,7 +143,8 @@ the player by its entry-point name.
 | `ovos-media-plugin-mpris` | audio, video | **Not yet published** (no public repo or PyPI package). Drives an external MPRIS player (e.g. an already-running desktop media app) instead of playing the stream itself |
 
 [`music-assistant-plugin-manager`](https://github.com/TigreGotico/music-assistant-plugin-manager)
-(`pip install music-assistant-plugin-manager`) loads out-of-tree Music Assistant providers
+(`pip install --pre music-assistant-plugin-manager`, since every release is a
+prerelease) loads out-of-tree Music Assistant providers
 into a Music Assistant server, via its `music-assistant-community` wrapper command. It is
 independent of `ovos-media` and only concerns the Music Assistant server itself, not OCP.
 
