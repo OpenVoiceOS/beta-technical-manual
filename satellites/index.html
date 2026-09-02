@@ -1671,8 +1671,10 @@ separate project with its own protocol and docs.</p>
 <li>Provision each satellite with its own access key: <code>hivemind-core add-client</code>.</li>
 <li>
 <p>On each satellite, install the client and store the key. The distribution is
-    <code>hivemind-bus-client</code>. The repository is <code>hivemind-websocket-client</code>.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>hivemind-bus-client
+    <code>hivemind-bus-client</code>. The repository is <code>hivemind-websocket-client</code>. The
+    plain PyPI "stable" release (<code>0.4.4</code>) predates the current protocol, so <code>--pre</code>
+    is required.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>hivemind-bus-client
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>hivemind-client<span class="w"> </span>set-identity<span class="w"> </span>--key<span class="w"> </span>&lt;access_key&gt;<span class="w"> </span>--password<span class="w"> </span>&lt;password&gt;<span class="w"> </span>--host<span class="w"> </span>&lt;server&gt;
 </span></code></pre></div>
 <p><code>set-identity</code> with no arguments raises: it needs at least one of <code>--key</code>, <code>--password</code>
