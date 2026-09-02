@@ -76,8 +76,9 @@ The layered configuration system (defaults → system → user → runtime). Cov
 [Configuration](config.md).
 
 - Source: [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config)
-- API docs: unlike the libraries above, `ovos-config` has no separate `docs/` folder. Its
-  [`README`](https://github.com/OpenVoiceOS/ovos-config/blob/dev/README.md) is the API reference.
+- API docs: `ovos-config`'s `docs/` folder holds only a `prerelease-quirks.md` changelog, not
+  an API reference. Its [`README`](https://github.com/OpenVoiceOS/ovos-config/blob/dev/README.md)
+  remains the API reference.
 - License: Apache-2.0
 
 ## `kw-template-matcher`
