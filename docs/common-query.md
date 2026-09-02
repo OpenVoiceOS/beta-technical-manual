@@ -34,7 +34,7 @@ The handler contract:
 
 - **Input:** `phrase` (the question string) and `lang` (a BCP-47 code).
 - **Output:** a `(answer: str, confidence: float)` tuple, or `None`.
-- **Confidence** is a float between `0.0` and `1.0`. The pipeline ignores answers with confidence below `0.5`. The highest-confidence answer across all skills is the one spoken to the user.
+- **Confidence** is a float between `0.0` and `1.0`. The pipeline ignores answers with confidence below `0.5`. The highest-confidence answer across all skills is the one spoken to the user when no re-ranker plugin is installed; otherwise the re-ranker's pick wins (see the note above).
 
 > The classic `CommonQuerySkill` / `UniversalCommonQuerySkill` base classes and the `CQS_match_query_phrase()` / `CQSMatchLevel` API have been **removed**. Use the `@common_query` decorator on a plain `OVOSSkill` instead. The pipeline still selects a single best answer the same way. Only the skill-side API changed.
 
@@ -101,7 +101,7 @@ Several toolkits can parse the question itself, including [Adapt](https://pypi.o
 
 Confidence is a single float in `[0.0, 1.0]`. Use a higher value when you are more certain you have the exact answer the user wants. Use a lower value when your skill is a general fallback for a category of questions. In the example above, an explicit "monty python" mention bumps confidence to `1.0`, making this skill very likely to be chosen.
 
-Only answers with confidence `>= 0.5` are considered. The pipeline collects all qualifying answers and speaks the single highest-confidence one.
+Only answers with confidence `>= 0.5` are considered. The pipeline collects all qualifying answers and speaks the single highest-confidence one when no re-ranker plugin is installed; otherwise the re-ranker's pick wins (see the note above).
 
 ## Selection Callback
 
