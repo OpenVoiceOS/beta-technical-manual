@@ -54,11 +54,14 @@ stateDiagram-v2
 ## Installation
 
 ```bash
-pip install ovos-agentic-loop
+pip install --pre ovos-agentic-loop
 
 # Optional: web search support
-pip install 'ovos-agentic-loop[web]'
+pip install --pre 'ovos-agentic-loop[web]'
 ```
+
+The stable `0.1.0` release ships only seven of the eight loops below — `ovos-native-toolcall-loop`
+needs `>=0.2.0a1`. Use `--pre` to get all eight.
 
 ---
 
