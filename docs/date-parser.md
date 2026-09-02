@@ -193,15 +193,15 @@ from ovos_date_parser import extract_duration
 
 duration, remainder = extract_duration("It will take about 2 hours and 30 minutes", lang="en")
 print(duration)   # timedelta(hours=2, minutes=30)
-print(remainder)  # "It will take about and"
+print(remainder)  # "It will take about"
 
 ```
 
 !!! note
-    The remainder keeps whatever surrounds the extracted duration phrase verbatim. That
-    includes a connective word ("and" in English, "y" in Spanish) or comma left stranded between two
-    consumed number groups, as the example above shows (`"It will take about and"`). Clean up
-    the remainder yourself before you display or re-parse it.
+    The remainder keeps whatever surrounds the extracted duration phrase verbatim. A
+    connective word ("and" in English, "y" in Spanish) or comma left stranded between two
+    separately-consumed number groups can end up in the remainder too. Clean up the
+    remainder yourself before you display or re-parse it.
 
 `extract_duration` also accepts two keyword-only arguments, but only for languages on the shared lexicon engine (the yes `extract_duration` rows above except the standalone `ar`, `ast`, `kab`, `fa`, `sv` extractors). Passing them for any other language raises `NotImplementedError`:
 
