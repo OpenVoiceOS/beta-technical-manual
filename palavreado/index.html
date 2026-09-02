@@ -886,15 +886,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#hierarchical-variant" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hierarchical variant
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1353,15 +1344,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#hierarchical-variant" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hierarchical variant
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1457,15 +1439,6 @@ check this before swapping it in for a skill that uses <code>at_least_one</code>
 Adapt's full rule engine. For example-based (whole-sentence) matching, use
 <a href="../padatious-pipeline/">Padatious</a> or <a href="../nebulento/">Nebulento</a> instead.</p>
 </div>
-<h2 id="hierarchical-variant">Hierarchical variant<a class="headerlink" href="#hierarchical-variant" title="Permanent link">&para;</a></h2>
-<p><code>ovos-palavreado-hierarchical-pipeline</code> (same package, entry point
-<code>palavreado.opm:HierarchicalPalavreadoPipeline</code>) files each registered intent under a domain
-(the intent label's <code>&lt;skill_id&gt;:&lt;intent&gt;</code> prefix). A top-level classifier picks the domain
-first, and only that domain's sub-container resolves the intent — an utterance matching no
-domain is rejected before any sub-container runs. It accepts every key the flat plugin does,
-but reads them from <code>intents.palavreado_hierarchical</code> so both variants can run side by side.
-This mirrors <a href="../knn-pipeline/">ovos-hierarchical-knn-pipeline</a>'s relationship to a flat KNN
-pipeline.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../padatious-pipeline/">Padatious Pipeline</a>
 <strong>Related:</strong> <a href="../nebulento/">Nebulento</a> · <a href="../padacioso/">Padacioso</a> · <a href="../adapt-pipeline/">Adapt Pipeline</a></p>
