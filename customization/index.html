@@ -1785,17 +1785,10 @@ does not exist. You do not need to fork a skill to change what it says or what l
 speaks.</p>
 <hr />
 <h3 id="customizing-dialogs">Customizing Dialogs<a class="headerlink" href="#customizing-dialogs" title="Permanent link">&para;</a></h3>
-<div class="admonition warning">
-<p class="admonition-title"><code>.dialog</code> user overrides are not honored yet</p>
-<p>The user-resources override tier currently works for <code>.intent</code>, <code>.voc</code>, <code>.entity</code> and
-<code>.rx</code> (regex) files, but the dialog renderer in <code>ovos-workshop</code> still loads <code>.dialog</code> files
-only from the skill's own directory (a known gap; the dialog-renderer code path is pending a
-deliberate migration in the source — see <a href="../lang-customization/">Customizing Language Resources</a>). Until that
-lands, the override procedure below will <strong>not</strong> change what you hear; to reword a
-reply today, edit the <code>.dialog</code> file inside the skill's own <code>locale/</code> directory
-instead. The steps stay documented because they are the intended mechanism once the
-gap closes, and they already work for the other resource types.</p>
-</div>
+<p><code>.dialog</code> user overrides are honored since <code>ovos-workshop</code> <code>9.5.3a1</code> — the dialog renderer
+checks the user override directory first, then falls back to the skill's own <code>locale/</code>
+directory. The override only takes effect if that directory already exists when the skill
+loads; create it before starting/restarting the skill, not after.</p>
 <p>Replace one dialog file of an installed <a href="../skill-design-guidelines/">skill</a> with your own
 wording. This example replaces <code>time.current.dialog</code> in <code>ovos-skill-date-time.openvoiceos</code>.</p>
 <ol>
