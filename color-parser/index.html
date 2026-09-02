@@ -1874,7 +1874,7 @@
 <p><strong>Adjective adjustment</strong>: reads <code>color_descriptors.json</code> for the language and applies saturation, brightness, opacity, and temperature modifiers to the averaged candidate color.</p>
 </li>
 </ol>
-<p>Weighted circular-mean hue averaging (<code>average_colors()</code>) prevents wrap-around errors for hues near 0°/360°.</p>
+<p>Weighted linear-light blending (<code>average_colors()</code>) avoids the darkening/desaturation artefact of averaging directly in gamma-encoded HLS space.</p>
 <hr />
 <h2 id="api-reference">API reference<a class="headerlink" href="#api-reference" title="Permanent link">&para;</a></h2>
 <p><strong>Importable from the top-level <code>ovos_color_parser</code>:</strong> <code>color_from_description</code>, <code>color_distance</code>, <code>closest_color</code>, <code>average_colors</code>, <code>convert_K_to_RGB</code>, <code>get_contrasting_black_or_white</code>, <code>ColorMatcher</code>, <code>palette_from_description</code>, <code>lookup_name</code>, <code>rgb_to_cmyk</code>, <code>cmyk_to_rgb</code>, <code>is_hex_code_valid</code>, <code>srgb8_distance</code>, <code>load_palettes</code>, <code>load_locale_palettes</code>, <code>load_shared_palettes</code>, <code>palette_names</code>, the gamut
@@ -2046,7 +2046,7 @@ helpers <code>GamutPolicy</code>, <code>in_gamut</code>, <code>fit_to_gamut</cod
 <td><code>average_colors</code></td>
 <td><code>(colors: List[Color], weights: Optional[List[float]] = None) -&gt; HLSColor</code></td>
 <td><code>HLSColor</code></td>
-<td>Weighted average of a list of colors. Hue is averaged using circular mean (atan2) to avoid wrap-around errors. Returns an <code>HLSColor</code>.</td>
+<td>Weighted average of a list of colors, blended in linear-light sRGB space (converted to/from linear light) rather than in gamma-encoded HLS, avoiding the darkening/desaturation artefact of a naive HLS average. Returns an <code>HLSColor</code>.</td>
 </tr>
 <tr>
 <td><code>convert_K_to_RGB</code></td>
