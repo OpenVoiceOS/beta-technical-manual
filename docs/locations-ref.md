@@ -22,7 +22,7 @@ All paths respect the `OVOS_CONFIG_BASE_FOLDER` environment variable (default: `
 | `DISTRIBUTION_CONFIG` | `/usr/share/mycroft/mycroft.conf` | Distribution-level override (env: `OVOS_DISTRIBUTION_CONFIG`) |
 | `SYSTEM_CONFIG` | `/etc/mycroft/mycroft.conf` | System-level config (env: `MYCROFT_SYSTEM_CONFIG`) |
 | `USER_CONFIG` | `~/.config/mycroft/mycroft.conf` | XDG user config (primary editable) |
-| `ASSISTANT_CONFIG` | `~/.config/mycroft/runtime.conf` | OVOS's own runtime-write layer, merged above the user layer |
+| `ASSISTANT_CONFIG` | `~/.config/mycroft/runtime.conf` | OVOS's own runtime-write layer, merged below the user layer (the user config overrides it) |
 | `WEB_CONFIG_CACHE` | `~/.config/mycroft/web_cache.json` | **Deprecated, not merged.** Leftover path for the removed remote-config layer (env: `MYCROFT_WEB_CACHE`); only `RemoteConf`, itself a warn-only stub, still reads it |
 
 In addition to `USER_CONFIG`, every XDG config dir is scanned, so a system-wide
