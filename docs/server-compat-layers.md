@@ -34,7 +34,7 @@ All compat routers are always loaded. No feature flag is needed.
 
 ## STT Server Compat Routes
 
-`pip install ovos-stt-http-server`. Routers are implemented in `ovos_stt_http_server.routers`.
+`pip install --pre "ovos-stt-http-server>=0.25.1a3"`. Routers are implemented in `ovos_stt_http_server.routers`.
 
 | Prefix | Vendor |
 |--------|--------|
