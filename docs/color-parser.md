@@ -19,7 +19,7 @@ print(color.hex_str, color.r, color.g, color.b)   # an sRGBAColor, or None if no
 
 ## Why it exists
 
-Voice assistants frequently need to interpret color commands: "change the lamp to moss green", "make it darker", "a bit more saturated". Standard CSS/X11 color name lookups only cover exact matches. `ovos-color-parser` layers on top of a multilingual color-name database (nearly 6 000 English name-to-hex mappings) and a language-keyed adjective/modifier system. This resolves fuzzy descriptions and modifier words ("bright", "warm", "muted") to a real sRGB value.
+Voice assistants frequently need to interpret color commands: "change the lamp to moss green", "make it darker", "a bit more saturated". Standard CSS/X11 color name lookups only cover exact matches. `ovos-color-parser` layers on top of a multilingual color-name database (nearly 15,000 English name-to-hex mappings across its bundled catalogs) and a language-keyed adjective/modifier system. This resolves fuzzy descriptions and modifier words ("bright", "warm", "muted") to a real sRGB value.
 
 A secondary use case is scientific. The library supports the full electromagnetic spectrum (including UV, IR, microwaves, and radio waves), mapped through spectral color palettes. Physicists who say "set the lamp to 520 nanometres" are handled without special-casing in skills.
 
