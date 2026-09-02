@@ -44,7 +44,7 @@ ovos-stt-plugin-whisper` run *before* you upgraded.
 
 Pinning the package alone isn't enough. The process that already loaded the old, broken
 version keeps running it in memory until it restarts. Restart whichever service loads that
-package (e.g. `systemctl --user restart ovos-dinkum-listener.service` for an STT plugin)
+package (e.g. `systemctl --user restart ovos-listener.service` for an STT plugin)
 before you consider the rollback complete.
 
 !!! note "A release channel isn't a maturity guarantee"
