@@ -56,6 +56,12 @@ Model loading happens in `GGUFChatEngine`, which the other engines delegate to.
 A `model` value that is an existing file path is loaded with `Llama(model_path=...)`. Otherwise
 it is treated as a Hub repo id and loaded with `Llama.from_pretrained(repo_id=..., filename=...)`.
 
+!!! note "Translation and language detection override two defaults"
+    `ovos-translate-gguf-plugin` and `ovos-lang-detect-gguf-plugin` set `n_gpu_layers` to
+    `-1` (full GPU offload) instead of `0`. The translator also ships a working default
+    `model`, `TheBloke/TowerInstruct-7B-v0.1-GGUF`, so `model` is not required there — only
+    the language detector still requires it explicitly.
+
 ### Minimal configuration (Hub model)
 
 ```json
