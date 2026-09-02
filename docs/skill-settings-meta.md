@@ -91,7 +91,7 @@ Each section must contain a `name` attribute that is used as the heading for tha
 
 #### Fields
 
-Each section has one or more `fields`. Each field is a setting available to the user. Each field takes four properties:
+Each section has one or more `fields`. Each field is a setting available to the user. Each field takes four common properties, plus one more (`options`) that only a `select` field uses:
 
 *   `name` (String)
 
@@ -129,6 +129,10 @@ Each section has one or more `fields`. Each field is a setting available to the 
 *   `value` (String)
 
     The initial value of the field.
+
+*   `options` (String, `select` fields only)
+
+    Semicolon-separated `Label|value` pairs, e.g. `Option 1|option_one;Option 2|option_two`.
 
 Examples for each type of field are provided in JSON and YAML at the end of this page.
 
