@@ -1879,7 +1879,7 @@ community settings editor like the one above, which then presents the described 
 <p>The simple example above has just one section. A skill that needs more configuration might use several. For example, one section for account authentication and a separate section for playback preferences.</p>
 <p>Each section must contain a <code>name</code> attribute that is used as the heading for that section, and an Array of <code>fields</code>.</p>
 <h4 id="fields">Fields<a class="headerlink" href="#fields" title="Permanent link">&para;</a></h4>
-<p>Each section has one or more <code>fields</code>. Each field is a setting available to the user. Each field takes four properties:</p>
+<p>Each section has one or more <code>fields</code>. Each field is a setting available to the user. Each field takes four common properties, plus one more (<code>options</code>) that only a <code>select</code> field uses:</p>
 <ul>
 <li>
 <p><code>name</code> (String)</p>
@@ -1919,6 +1919,10 @@ community settings editor like the one above, which then presents the described 
 <li>
 <p><code>value</code> (String)</p>
 <p>The initial value of the field.</p>
+</li>
+<li>
+<p><code>options</code> (String, <code>select</code> fields only)</p>
+<p>Semicolon-separated <code>Label|value</code> pairs, e.g. <code>Option 1|option_one;Option 2|option_two</code>.</p>
 </li>
 </ul>
 <p>Examples for each type of field are provided in JSON and YAML at the end of this page.</p>
