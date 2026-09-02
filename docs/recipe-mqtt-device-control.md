@@ -17,7 +17,8 @@ from ovos_workshop.decorators import intent_handler
 BROKER_HOST = "192.168.1.50"
 BROKER_PORT = 1883
 TOPIC = "home/office/plug1/set"
-CONNECT_TIMEOUT = 5
+KEEPALIVE = 60
+PUBLISH_TIMEOUT = 5
 
 
 class MqttPlugSkill(OVOSSkill):
@@ -25,7 +26,7 @@ class MqttPlugSkill(OVOSSkill):
         self.client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2,
                                   client_id="ovos-mqtt-plug-skill")
         try:
-            self.client.connect(BROKER_HOST, BROKER_PORT, keepalive=CONNECT_TIMEOUT)
+            self.client.connect(BROKER_HOST, BROKER_PORT, keepalive=KEEPALIVE)
             self.client.loop_start()
         except (OSError, TimeoutError) as e:
             self.log.warning(f"MQTT broker unreachable at init: {e}")
@@ -41,7 +42,7 @@ class MqttPlugSkill(OVOSSkill):
     def _publish(self, payload, ok_dialog, fail_dialog):
         try:
             info = self.client.publish(TOPIC, payload, qos=1)
-            info.wait_for_publish(timeout=CONNECT_TIMEOUT)
+            info.wait_for_publish(timeout=PUBLISH_TIMEOUT)
             if not info.is_published():
                 raise TimeoutError("publish did not confirm in time")
         except (OSError, TimeoutError, ValueError, RuntimeError) as e:
@@ -58,7 +59,7 @@ class MqttPlugSkill(OVOSSkill):
 ### Moving parts
 
 - `mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=...)` is the current, non-deprecated way to construct a client. Give each device a unique `client_id`, or the broker drops the duplicate session.
-- `connect(host, port, keepalive=...)` is a blocking call. Wrap it, and any other use of the client, in a `try`/`except` for `OSError` and `TimeoutError`. Speak a dialog instead of letting the exception surface. This is the same safety pattern as [Calling an external API safely](recipe-safe-api-call.md).
+- `connect(host, port, keepalive=...)` is a blocking call with no connect-timeout parameter of its own; `keepalive` is unrelated — it sets the MQTT ping interval used *after* the connection succeeds, not how long `connect()` waits to establish one. Wrap the call, and any other use of the client, in a `try`/`except` for `OSError` and `TimeoutError`. Speak a dialog instead of letting the exception surface. This is the same safety pattern as [Calling an external API safely](recipe-safe-api-call.md).
 - `loop_start()` runs the client's network loop on a background thread so `publish()` calls don't block waiting on broker I/O. Call `loop_stop()` in `shutdown()` to clean it up.
 - `publish(topic, payload, qos=...)` returns an `MQTTMessageInfo`. `wait_for_publish(timeout=...)` blocks until the broker acknowledges it, or the timeout elapses. `is_published()` confirms it went through, so a network drop mid-call is caught instead of silently swallowed.
 - `disconnect()` closes the connection cleanly. Pair it with `loop_stop()` in `shutdown()` so the skill doesn't leave a background thread or an open socket behind when unloaded.
