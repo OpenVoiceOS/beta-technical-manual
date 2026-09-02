@@ -28,7 +28,7 @@ pip install ovos-openai-plugin
 Optional extras: `rag` (file/vector-store endpoints), `mcp` (pulls in `fastmcp>=3,<4` to
 serve the `/mcp` endpoint below), and `a2a` (Agent-to-Agent endpoint). The stable PyPI
 release predates both extras — use `--pre` and a floor pin, e.g.
-`pip install --pre 'ovos-persona-server[a2a]>=0.5.2a1'`.
+`pip install --pre 'ovos-persona-server[a2a]>=0.17.2a1'`.
 
 !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
     The extra is still called `mcp`, so `pip install --pre 'ovos-persona-server[mcp]'` is unchanged,
@@ -55,7 +55,7 @@ ovos-persona-server --persona my_persona.json --host 0.0.0.0 --port 8337
 | `--host` | `0.0.0.0` | Host to bind |
 | `--port` | `8337` | TCP port |
 | `--mcp` | off | Mount the MCP endpoint at `/mcp` (requires the `mcp` extra; the extra alone does not expose it) |
-| `--a2a-base-url` | `None` | Mounts an [A2A](https://a2aproject.github.io/A2A/)-compatible endpoint at `/a2a`, using this URL as the public base URL in the Agent Card (e.g. `http://myhost:8337/a2a`). Requires the `a2a` extra (`pip install --pre 'ovos-persona-server[a2a]>=0.5.2a1'`) |
+| `--a2a-base-url` | `None` | Mounts an [A2A](https://a2aproject.github.io/A2A/)-compatible endpoint at `/a2a`, using this URL as the public base URL in the Agent Card (e.g. `http://myhost:8337/a2a`). Requires the `a2a` extra (`pip install --pre 'ovos-persona-server[a2a]>=0.17.2a1'`) |
 
 The console script is `ovos-persona-server` (module `ovos_persona_server.__main__:main`).
 

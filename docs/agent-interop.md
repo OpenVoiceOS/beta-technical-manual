@@ -99,7 +99,7 @@ curl -s 'http://localhost:9666/v2/synthesize?utterance=hello%20world' -o out.wav
 ### Translate Server
 
 ```bash
-pip install --pre "ovos-translate-server[mcp]"
+pip install --pre "ovos-translate-server[mcp]>=0.10.0a1"
 python -m ovos_translate_server --tx-engine ovos-google-translate-plugin --port 9686 --mcp
 ```
 
@@ -139,7 +139,7 @@ A2A is the [Google A2A open protocol](https://a2aproject.github.io/A2A/). An A2A
 ### Persona Server as A2A Server
 
 ```bash
-pip install --pre "ovos-persona-server[a2a]"
+pip install --pre "ovos-persona-server[a2a]>=0.17.2a1"
 ovos-persona-server --persona my_persona.json
 ```
 
