@@ -200,14 +200,14 @@
 - Oct 2022 - [ovos-backend-client](https://github.com/OpenVoiceOS/ovos-backend-client) adopted by `ovos-core`, selectable backend support added (offline, personal, selene)
 - Oct 2022 - [ovos-tts-plugin-mimic3-server](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic3-server) released
 - Oct 2022 - [mycroft.blue-systems.com](http://mycroft.blue-systems.com) mimic 3 public server added
-- Oct 2022 - [mimic3.ziggyai.online](https://mimic3.ziggyai.online) mimic 3 public server added
+- Oct 2022 - mimic3.ziggyai.online (dead) mimic 3 public server added
 - Oct 2022 - @aix talks about [OVOS in KDE Akademy](https://www.youtube.com/watch?v=hCwdtZu7WqA)
 - Oct 2022 - [skill-ovos-soundcloud](https://github.com/OpenVoiceOS/skill-ovos-soundcloud) transferred from @JarbasAl to OVOS
 - Oct 2022 - [skill-ovos-youtube](https://github.com/OpenVoiceOS/skill-ovos-youtube) transferred from @JarbasAl to OVOS
 - Nov 2022 - `ovos-core` version **0.0.5** released
 - Nov 2022 - MycroftAI staff lay off, only a skeleton crew remaining
 - Nov 2022 - [ovos-bus-client](https://github.com/OpenVoiceOS/ovos-bus-client) forked from Mycroft
-- Nov 2022 - [tts.smartgic.io/mimic3](https://tts.smartgic.io/mimic3) public Mimic3 server added
+- Nov 2022 - tts.smartgic.io/mimic3 (dead) public Mimic3 server added
 - Dec 2022 - [Home Assistant PHAL](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-homeassistant) plugin initial release by @AIX , exposes HA devices to the messagebus
 - Dec 2022 - [skill-ovos-youtube-music](https://github.com/OpenVoiceOS/skill-ovos-youtube-music) transferred from @JarbasAl to OVOS
 - Dec 2022 - [skill-ovos-bandcamp](https://github.com/OpenVoiceOS/skill-ovos-bandcamp) transferred from @JarbasAl to OVOS
@@ -251,7 +251,7 @@
 - Apr 2023 - [jurebes](https://github.com/OpenVoiceOS/jurebes) intent parser released
 - May 2023 - [skill-ovos-local-media](https://github.com/OpenVoiceOS/skill-ovos-local-media) released
 - May 2023 - `mycroft` import deprecated in favor of `ovos_core` module for skills service
-- May 2023 - [stt.openvoiceos.org](https://stt.openvoiceos.org) moves to whisper (small, cpu only)
+- May 2023 - stt.openvoiceos.org (dead) moves to whisper (small, cpu only)
 - May 2023 - OpenVoiceOS TTS/STT [status page](http://openvoiceos.github.io/status/) released, maintained by community member @goldyfruit
 - May 2023 - First successful run of OpenVoiceOS on Mac OS using containers with [ovos-docker](https://github.com/openvoiceos/ovos-docker)
 - May 2023 - [ovos-docker-stt](https://github.com/openvoiceos/ovos-docker-stt) STT containers released, maintained by community member @goldyfruit
@@ -264,7 +264,7 @@
 - Jun 2023 - Home Assistant plugin starts being maintained by community member @mikejgray
 - Jun 2023 - [quebra_frases](https://github.com/OpenVoiceOS/quebra_frases) transferred from @JarbasAl to OVOS
 - Jun 2023 - [ovos-translate-plugin-nllb](https://github.com/OpenVoiceOS/ovos-translate-plugin-nllb) released
-- Jun 2023 - [fasterwhisper.ziggyai.online](https://fasterwhisper.ziggyai.online/stt) public STT server added (large, GPU)
+- Jun 2023 - fasterwhisper.ziggyai.online (dead) public STT server added (large, GPU)
 - Jun 2023 - [Home Assistant Notify](https://blog.graywind.org/posts/ovos-homeassistant-notify-integration/) integration released by community member @mikejgray
 - Jun 2023 - First (and second!) successful run of OpenVoiceOS on Windows, using WSL2 and [ovos-docker](https://github.com/openvoiceos/ovos-docker)
 - Jun 2023 - [ovos-docker-tts](https://github.com/OpenVoiceOS/ovos-docker-tts) TTS containers released, maintained by community member @goldyfruit
@@ -272,13 +272,13 @@
 - Jun 2023 - [ovos-utterance-corrections-plugin](https://github.com/OpenVoiceOS/ovos-utterance-corrections-plugin) released
 - Jul 2023 - [mycroft-gui-qt6](https://github.com/OpenVoiceOS/mycroft-gui-qt6) forked from mycroft-gui at last commit supporting QT6 before license change to GPL (reverted shortly after)
 - Jul 2023 - [mycroft-gui-qt5](https://github.com/OpenVoiceOS/mycroft-gui-qt5) forked from mycroft-gui at last commit supporting QT5
-- Jul 2023 - [pipertts.ziggyai.online](https://pipertts.ziggyai.online) public TTS server added
+- Jul 2023 - pipertts.ziggyai.online (dead) public TTS server added
 - Jul 2023 - [tts.smartgic.io/piper](https://tts.smartgic.io/piper) public TTS server added
 - Jul 2023 - piper TTS public servers become default OVOS voice (alan pope)
 - Jul 2023 - [skill-ovos-spotify](https://github.com/OpenVoiceOS/skill-ovos-spotify) port of the mycroft-spotify skill by community member and original author @forslund
 - Aug 2023 - [ovos-translate-server-plugin](https://github.com/OpenVoiceOS/ovos-translate-server-plugin) released
 - Aug 2023 - [ovos-docker-tx](https://github.com/OpenVoiceOS/ovos-docker-tx) translation containers released, maintained by community member @goldyfruit
-- Aug 2023 - [nllb.openvoiceos.org](https://nllb.openvoiceos.org) public translation server added
+- Aug 2023 - nllb.openvoiceos.org (dead) public translation server added
 - Aug 2023 - [translator.smartgic.io/nllb](https://translator.smartgic.io/nllb) public translation server added
 - Aug 2023 - adopt NLLB public servers as default translation plugin
 - Aug 2023 - [skill-ovos-wolfie](https://github.com/OpenVoiceOS/skill-ovos-wolfie) transferred from @JarbasAl to OVOS
@@ -290,7 +290,7 @@
 - Sep 2023 - GUI fully functional with [ovos-docker](https://github.com/openvoiceos/ovos-docker) containers
 - Sep 2023 - [persona-server](https://github.com/OpenVoiceOS/ovos-persona-server) alpha version released
 - Sep 2023 - [ovos-audio-transformer-plugin-ggwave](https://github.com/OpenVoiceOS/ovos-audio-transformer-plugin-ggwave) released
-- Oct 2023 - [ovosnllb.ziggyai.online](https://ovosnllb.ziggyai.online)  public translation server added
+- Oct 2023 - ovosnllb.ziggyai.online  (dead) public translation server added
 - Oct 2023 - [ovos-tts-plugin-mimic3-server](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic3-server) deprecated
 - Oct 2023 - [ovos-PHAL-sensors](https://github.com/OpenVoiceOS/ovos-PHAL-sensors) released, exposing OVOS sensors in Home Assistant
 - Oct 2023 - [ovos-bidirectional-translation-plugin](https://github.com/OpenVoiceOS/ovos-bidirectional-translation-plugin) released
