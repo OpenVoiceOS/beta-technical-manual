@@ -229,6 +229,12 @@ path to the saved pipeline directory once you are happy with it. See the
 `ovos-m2v-pipeline` repository's own `docs/training.md` and `docs/labels.md`
 for the full dataset schema, label scheme, and script options.
 
+A separate, exploratory notebook trio covers the same ground interactively —
+benchmarking, monolingual, and multilingual classifier training — in
+[`m2v/`](https://github.com/TigreGotico/ml-notebooks) under `TigreGotico/ml-notebooks`.
+It is not the canonical `train/` toolchain above; use it for experimentation, not
+for producing the published `Jarbas/ovos-model2vec-intents-*` models.
+
 ---
 
 ## Gotcha: ordering against the deterministic engines
