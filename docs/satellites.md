@@ -177,7 +177,7 @@ separate project with its own protocol and docs.
 One firewall note for the OVOS host: by default `hivemind-core listen` starts **two**
 listeners on `0.0.0.0` — websocket on `5678` and HTTP on `5679` — so a firewall rule that
 only covers 5678 leaves the second one open. The mDNS/UPnP presence announcements need the
-optional extra (`pip install "hivemind-core[presence]"`); with the plain install above, the
+optional extra (`pip install --pre "hivemind-core[presence]>=4.8.0a1"`); with the plain install above, the
 server silently makes no announcements. Changing hosts, ports, or those presence
 announcements is HiveMind server configuration, covered by the upstream
 [HiveMind community docs](https://jarbashivemind.github.io/HiveMind-community-docs/), along

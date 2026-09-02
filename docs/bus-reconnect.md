@@ -64,7 +64,7 @@ this interacts with `systemd`'s own `Restart=`/`After=` ordering across the OVOS
 
     If `ssl` is on but no cert/key are configured, the bus generates a self-signed pair on first
     start (under `$XDG_DATA_HOME/OpenVoiceOS/ovos-messagebus/certs/`). This path needs the `ssl`
-    extra (`pip install "ovos-messagebus[ssl]"`), and the bus refuses to start rather than fall
+    extra (`pip install --pre "ovos-messagebus[ssl]>=0.1.0a1"`), and the bus refuses to start rather than fall
     back to plaintext if it's missing. Clients built on `ovos-bus-client` reach a `wss://` bus by
     setting the same `websocket.ssl: true`. [HiveMind](hivemind-agents.md) is the other route to
     encrypted transport across hosts. (The alternative `webrockets` backend does not terminate TLS

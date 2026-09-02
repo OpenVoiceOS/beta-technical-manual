@@ -16,7 +16,7 @@ Not in the default pipeline. Add its stage IDs to `intents.pipeline` explicitly 
 
 ```bash
 pip install palavreado            # the library
-pip install "palavreado[ovos]"    # + the OVOS pipeline plugin
+pip install --pre "palavreado[ovos]>=1.0.0a1"    # + the OVOS pipeline plugin
 ```
 
 ## Usage

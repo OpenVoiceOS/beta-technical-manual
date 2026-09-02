@@ -368,7 +368,7 @@ A separate, drop-in Rust implementation exists as its own project for deployment
     (Python), installed as an extra and run in place of the Tornado server:
 
     ```bash
-    pip install "ovos-messagebus[webrockets]"
+    pip install --pre "ovos-messagebus[webrockets]>=0.1.0a1"
     python -m ovos_messagebus.backends.webrockets_backend
     ```
 

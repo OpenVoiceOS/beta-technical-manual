@@ -22,7 +22,7 @@ hundreds of training sentences per intent).
 
 ```bash
 pip install nebulento            # the library
-pip install "nebulento[ovos]"    # + the OVOS pipeline plugin
+pip install --pre "nebulento[ovos]>=0.2.1a1"    # + the OVOS pipeline plugin
 ```
 
 ## Usage
