@@ -72,7 +72,7 @@ The `HueRange` dataclass bridges the hue angle (0-360°) to the physical wavelen
 
 4. **Adjective adjustment**: reads `color_descriptors.json` for the language and applies saturation, brightness, opacity, and temperature modifiers to the averaged candidate color.
 
-Weighted circular-mean hue averaging (`average_colors()`) prevents wrap-around errors for hues near 0°/360°.
+Weighted linear-light blending (`average_colors()`) avoids the darkening/desaturation artefact of averaging directly in gamma-encoded HLS space.
 
 ---
 
@@ -127,7 +127,7 @@ Type aliases exported from `models.py`:
 | `color_from_description` | `(description: str, lang: str = "en", strategy: MatchStrategy = DAMERAU_LEVENSHTEIN_SIMILARITY, cast_to_palette: bool = False, fuzzy: bool = True, gamut: GamutPolicy = GamutPolicy.CLAMP) -> Optional[sRGBAColor]` | `sRGBAColor` or `None` | Main entry point. Resolves a natural-language description to an RGB color. Returns `None` if no color candidates are found. When `cast_to_palette=True`, snaps the result to the nearest matched candidate instead of returning an averaged value. `gamut` picks how out-of-sRGB results (extreme color temperatures, pure spectral wavelengths) are resolved: `CLAMP` clips per channel, `MAP` fits perceptually, `REJECT` refuses (`ovos_color_parser/core/gamut.py`). |
 | `color_distance` | `(color_a: Color, color_b: Color) -> float` | `float` | CIEDE2000 perceptual distance between two colors in sRGB-255 space. Lower is more similar. Computed by the in-house `srgb8_distance`/`delta_e_cie2000` implementation in `ovos_color_parser/core/distance.py`, with no `colorspacious` dependency. |
 | `closest_color` | `(color: Color, color_opts: List[Color]) -> Color` | `Color` | Returns the element of `color_opts` with the smallest `color_distance` to `color`. |
-| `average_colors` | `(colors: List[Color], weights: Optional[List[float]] = None) -> HLSColor` | `HLSColor` | Weighted average of a list of colors. Hue is averaged using circular mean (atan2) to avoid wrap-around errors. Returns an `HLSColor`. |
+| `average_colors` | `(colors: List[Color], weights: Optional[List[float]] = None) -> HLSColor` | `HLSColor` | Weighted average of a list of colors, blended in linear-light sRGB space (converted to/from linear light) rather than in gamma-encoded HLS, avoiding the darkening/desaturation artefact of a naive HLS average. Returns an `HLSColor`. |
 | `convert_K_to_RGB` | `(colour_temperature: int) -> sRGBAColor` | `sRGBAColor` | Converts a color temperature in Kelvin (1 000-40 000 K) to an sRGB color. Algorithm by Tanner Helland. Raises `ValueError` for temperatures outside the 1 000-40 000 K range, so callers should guard input. |
 | `get_contrasting_black_or_white` | `(hex_code: str) -> sRGBAColor` | `sRGBAColor` | Returns black or white, whichever provides the best contrast against the input hex color, using the YIQ luma formula. |
 | `palette_from_description` | `(description: str, lang: str = "en", strategy: MatchStrategy = ...) -> sRGBAColorPalette` | `sRGBAColorPalette` | Returns all candidate colors matched from a description (fuzzy, no adjective adjustment). Useful for UI palette suggestions. |
