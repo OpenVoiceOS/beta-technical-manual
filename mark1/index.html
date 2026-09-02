@@ -1572,12 +1572,13 @@ three layers:</p>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">bus</span> <span class="o">=</span> <span class="n">get_mycroft_bus</span><span class="p">()</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">eyes</span> <span class="o">=</span> <span class="n">Eyes</span><span class="p">(</span><span class="n">bus</span><span class="p">)</span>
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">eyes</span><span class="o">.</span><span class="n">change_color</span><span class="p">(</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>  <span class="c1"># named colour</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">eyes</span><span class="o">.</span><span class="n">blink</span><span class="p">()</span>               <span class="c1"># blink both eyes</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">eyes</span><span class="o">.</span><span class="n">hue_spin</span><span class="p">()</span>            <span class="c1"># cycle the hue</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">eyes</span><span class="o">.</span><span class="n">on</span><span class="p">();</span> <span class="n">eyes</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>      <span class="c1"># raw on / off</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">eyes</span><span class="o">.</span><span class="n">on</span><span class="p">();</span> <span class="n">eyes</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>      <span class="c1"># raw on / off</span>
 </span></code></pre></div>
-<p>The <code>Eyes</code> API also exposes <code>set_hue</code> and <code>set_brightness(level)</code> (level <code>1</code>-<code>30</code>, bigger is
-brighter), plus the animated <code>hue_spin</code> / <code>saturation_spin</code> / <code>luminance_spin</code> variants.</p>
+<p><code>blink()</code> and the <code>hue_spin</code> / <code>saturation_spin</code> / <code>luminance_spin</code> animations each run an
+unconditional <code>while True:</code> loop with no return — call them in their own thread (or as a
+skill's background task), never inline in a sequential script, since they never hand
+control back. The <code>Eyes</code> API also exposes <code>set_hue</code> and <code>set_brightness(level)</code> (level
+<code>1</code>-<code>30</code>, bigger is brighter).</p>
 <h3 id="faceplate-icons">Faceplate Icons<a class="headerlink" href="#faceplate-icons" title="Permanent link">&para;</a></h3>
 <p>You can define icons using a simple string grid:</p>
 <p>Each icon is 32 columns wide by 8 rows tall. <code>X</code> is a lit pixel, space is unlit:</p>
