@@ -141,10 +141,12 @@ separate project with its own protocol and docs.
     By default it bridges to a local `ovos-core` through `hivemind-ovos-agent-plugin`.
 2. Provision each satellite with its own access key: `hivemind-core add-client`.
 3. On each satellite, install the client and store the key. The distribution is
-    `hivemind-bus-client`. The repository is `hivemind-websocket-client`.
+    `hivemind-bus-client`. The repository is `hivemind-websocket-client`. The
+    plain PyPI "stable" release (`0.4.4`) predates the current protocol, so `--pre`
+    is required.
 
     ```bash
-    pip install hivemind-bus-client
+    pip install --pre hivemind-bus-client
     hivemind-client set-identity --key <access_key> --password <password> --host <server>
     ```
 

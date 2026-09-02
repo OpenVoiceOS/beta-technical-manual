@@ -97,7 +97,8 @@ By default it serves the local `ovos-core` via `hivemind-ovos-agent-plugin` (con
 issued in step 1. This step makes everything else work:
 
 ```bash
-pip install hivemind-bus-client   # repo name is hivemind-websocket-client
+pip install --pre hivemind-bus-client   # repo name is hivemind-websocket-client;
+# the plain PyPI "stable" (0.4.4) predates the current protocol -- --pre is required
 hivemind-client set-identity --key <access_key> --password <password> --host <server>
 ```
 
