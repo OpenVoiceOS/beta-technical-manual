@@ -1498,7 +1498,7 @@ and <code>websocket.ssl_key</code>:</p>
 </span></code></pre></div>
 <p>If <code>ssl</code> is on but no cert/key are configured, the bus generates a self-signed pair on first
 start (under <code>$XDG_DATA_HOME/OpenVoiceOS/ovos-messagebus/certs/</code>). This path needs the <code>ssl</code>
-extra (<code>pip install "ovos-messagebus[ssl]"</code>), and the bus refuses to start rather than fall
+extra (<code>pip install --pre "ovos-messagebus[ssl]&gt;=0.1.0a1"</code>), and the bus refuses to start rather than fall
 back to plaintext if it's missing. Clients built on <code>ovos-bus-client</code> reach a <code>wss://</code> bus by
 setting the same <code>websocket.ssl: true</code>. <a href="../hivemind-agents/">HiveMind</a> is the other route to
 encrypted transport across hosts. (The alternative <code>webrockets</code> backend does not terminate TLS

@@ -2309,7 +2309,7 @@ the bus over TLS.</p>
 <p class="admonition-title">Optional <code>webrockets</code> backend</p>
 <p><code>ovos-messagebus</code> also bundles an optional, higher-throughput <strong>webrockets</strong> backend
 (Python), installed as an extra and run in place of the Tornado server:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;ovos-messagebus[webrockets]&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s2">&quot;ovos-messagebus[webrockets]&gt;=0.1.0a1&quot;</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>python<span class="w"> </span>-m<span class="w"> </span>ovos_messagebus.backends.webrockets_backend
 </span></code></pre></div>
 <p>It is early/alpha and not the default: it does <strong>not</strong> terminate TLS and does not honour
