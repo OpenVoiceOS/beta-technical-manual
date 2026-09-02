@@ -116,10 +116,14 @@ Any other name is treated generically: the skill waits for a `mycroft.<name>.is_
 
 `ovos-core`'s `SkillManager` can defer loading a skill until its declared requirements are
 met. A skill with `internet_before_load=True` is not instantiated until the internet
-connection event fires, and likewise for `network_before_load` and `gui_before_load`. This
-gating is **opt-in**: it only applies when `skills.use_deferred_loading` is set to `true` in
-config. With the default configuration (`use_deferred_loading` unset/`false`), all installed
-skills load unconditionally at startup regardless of their declared requirements.
+connection event fires, and likewise for `network_before_load`. This gating is **opt-in**:
+it only applies when `skills.use_deferred_loading` is set to `true` in config. With the
+default configuration (`use_deferred_loading` unset/`false`), all installed skills load
+unconditionally at startup regardless of their declared requirements.
+
+`gui_before_load` exists on the same dataclass but is declared-only: no consumer in
+`ovos-core` currently reads it, so setting it has no effect. A GUI connecting triggers a
+load sweep for all pending skills, not a per-skill gate.
 
 ```json
 {
@@ -162,7 +166,7 @@ The `RuntimeRequirements` class property lets a skill declare its connectivity/G
 | `no_internet_fallback` | Declares the skill can keep working without internet |
 | `network_before_load`  | Wait for network before loading (requires `skills.use_deferred_loading: true`) |
 | `requires_network`     | Declares the skill needs network to work |
-| `gui_before_load`      | Wait for GUI before loading (requires `skills.use_deferred_loading: true`) |
+| `gui_before_load`      | Declared, but not currently read by any consumer in `ovos-core` — setting it has no effect |
 | `requires_gui`         | Declares the skill needs a GUI to work |
 | `no_gui_fallback`      | Declares the skill can keep working without a GUI |
 
@@ -274,7 +278,8 @@ With `skills.use_deferred_loading: true`, loads once the local network is connec
 Consider a skill with both graphical user interface (GUI) and internet dependencies.
 
 The skill declares both GUI and internet requirements. With `skills.use_deferred_loading: true`,
-loading waits until both are available.
+loading waits until internet is available. `gui_before_load` has no effect (see the note
+above); GUI-readiness gating isn't currently possible this way.
 
 If the user asks "show me the picture of the day" and we have both internet and a GUI, our skill will match the intent. If we do not have internet but have a GUI, the skill can still operate using a cached picture. That is what `no_internet_fallback=True` documents.
 
@@ -289,7 +294,6 @@ class MyGUIAndInternetSkill(OVOSSkill):
     @classproperty
     def runtime_requirements(self):
         return RuntimeRequirements(
-            gui_before_load=True,  # only load if GUI is available (needs deferred loading)
             requires_gui=True,  # documents the skill needs a GUI to work
             internet_before_load=True,  # only load if internet is available (needs deferred loading)
             requires_internet=True,  # documents the skill needs internet to work
@@ -301,7 +305,7 @@ class MyGUIAndInternetSkill(OVOSSkill):
         ...  # do something that requires both GUI and internet connectivity
 
 ```
-With `skills.use_deferred_loading: true`, requires both GUI and internet to load.
+With `skills.use_deferred_loading: true`, requires internet to load.
 
 ---
 
