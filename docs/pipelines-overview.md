@@ -176,7 +176,9 @@ Below is a list of available pipeline components, grouped by confidence level. T
 ### Other available matchers (not enabled by default)
 
 These are additional OVOS-org intent-matcher pipeline plugins you can install and add to the
-pipeline. They expose the same high/medium/low confidence tiers as Adapt/Padatious:
+pipeline. Most expose the same high/medium/low confidence tiers as Adapt/Padatious;
+`ovos-hivemind-pipeline-plugin` is a single-tier catch-all instead (see the entry-point note
+above):
 
 | Plugin | Description |
 |---|---|
