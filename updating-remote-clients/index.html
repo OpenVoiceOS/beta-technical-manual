@@ -1755,7 +1755,7 @@ upstream <code>mycroft-bus-client</code> package to <code>ovos-bus-client</code>
 Python import change, not a wire change: listed here because it is the
 package-level ancestor of the topic-level migration above.</p>
 <ul>
-<li>Migration: <code>pip install ovos-bus-client</code>. <code>from mycroft_bus_client
+<li>Migration: <code>pip install --pre ovos-bus-client</code> (the plain PyPI stable, <code>1.5.0</code>, predates the dual-emit bridge this page documents; <code>--pre</code> is required). <code>from mycroft_bus_client
   import Message</code> → <code>from ovos_bus_client.message import Message</code> (or
   <code>from ovos_bus_client import MessageBusClient</code>).
 Lifecycle:</li>
