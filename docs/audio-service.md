@@ -161,7 +161,7 @@ deprecated media path. See the **Two independent subsystems** note above.
   "tts": {
     "module": "ovos-tts-plugin-server",
     "ovos-tts-plugin-server": {
-      "host": "https://pipertts.ziggyai.online"
+      "host": "https://tts.openvoiceos.pt"
     }
   },
   "Audio": {
