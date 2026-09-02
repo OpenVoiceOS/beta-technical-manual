@@ -1603,6 +1603,13 @@ implementation ships yet, see <a href="../agent-plugins/">Agent Plugins</a>).</p
 </table>
 <p>A <code>model</code> value that is an existing file path is loaded with <code>Llama(model_path=...)</code>. Otherwise
 it is treated as a Hub repo id and loaded with <code>Llama.from_pretrained(repo_id=..., filename=...)</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Translation and language detection override two defaults</p>
+<p><code>ovos-translate-gguf-plugin</code> and <code>ovos-lang-detect-gguf-plugin</code> set <code>n_gpu_layers</code> to
+<code>-1</code> (full GPU offload) instead of <code>0</code>. The translator also ships a working default
+<code>model</code>, <code>TheBloke/TowerInstruct-7B-v0.1-GGUF</code>, so <code>model</code> is not required there — only
+the language detector still requires it explicitly.</p>
+</div>
 <h3 id="minimal-configuration-hub-model">Minimal configuration (Hub model)<a class="headerlink" href="#minimal-configuration-hub-model" title="Permanent link">&para;</a></h3>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microsoft/Phi-3-mini-4k-instruct-gguf&quot;</span><span class="p">,</span>
