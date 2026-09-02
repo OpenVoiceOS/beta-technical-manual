@@ -1712,7 +1712,7 @@ See <a href="../stt-plugins/">STT plugins</a> and the <a href="../glossary/">Glo
 <hr />
 <h2 id="usage-guide">Usage Guide<a class="headerlink" href="#usage-guide" title="Permanent link">&para;</a></h2>
 <p><strong>Install the server</strong> </p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-stt-http-server
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s2">&quot;ovos-stt-http-server&gt;=0.25.1a3&quot;</span>
 </span></code></pre></div>
 <p><strong>Choose your STT plugin</strong></p>
 <p>You name the plugin to serve with the <code>--engine</code> flag (below). When no explicit config is
@@ -1778,7 +1778,7 @@ defaults.</p>
 </li>
 <li>
 <p><strong>Compatibility routers</strong><br />
-  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (<code>POST /wit/speech</code>, override the SDK host with the <code>WIT_URL</code> env var) and Chromium speech-api (<code>POST /speech-api/v2/recognize</code>). The app also routes for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See <code>/docs</code> for the authoritative set. A <code>GET /utcp</code> manual advertises the endpoints to UTCP agents. An MCP endpoint mounts at <code>/mcp</code> on the same port when the server is started with <code>--mcp</code> (requires <code>pip install 'ovos-stt-http-server[mcp]'</code>). The extra alone no longer auto-mounts it.</p>
+  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (<code>POST /wit/speech</code>, override the SDK host with the <code>WIT_URL</code> env var) and Chromium speech-api (<code>POST /speech-api/v2/recognize</code>). The app also routes for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See <code>/docs</code> for the authoritative set. A <code>GET /utcp</code> manual advertises the endpoints to UTCP agents. An MCP endpoint mounts at <code>/mcp</code> on the same port when the server is started with <code>--mcp</code> (requires <code>pip install --pre 'ovos-stt-http-server[mcp]&gt;=0.25.1a3'</code>). The extra alone no longer auto-mounts it.</p>
 <div class="admonition note">
 <p class="admonition-title">The <code>mcp</code> extra installs <code>fastmcp</code>, not the <code>mcp</code> SDK</p>
 <p>The extra keeps the name <code>mcp</code>, but it resolves the third-party <code>fastmcp&gt;=3,&lt;4</code> package,
@@ -1995,7 +1995,7 @@ server-backed engine as the fallback for when the light one comes back empty.</p
 <h2 id="docker-deployment">Docker Deployment<a class="headerlink" href="#docker-deployment" title="Permanent link">&para;</a></h2>
 <p><strong>Create a Dockerfile</strong></p>
 <div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11-slim</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-stt-http-server
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s2">&quot;ovos-stt-http-server&gt;=0.25.1a3&quot;</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="o">{</span>YOUR_STT_PLUGIN<span class="o">}</span>
 </span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="k">ENTRYPOINT</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-stt-server&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--engine&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;{YOUR_STT_PLUGIN}&quot;</span><span class="p">]</span>
 </span></code></pre></div>
@@ -2015,7 +2015,7 @@ server-backed engine as the fallback for when the light one comes back empty.</p
 <p><strong>Audio Formats</strong>: the native <code>/stt</code> endpoint takes raw PCM/WAV bytes. The
   vendor-compatible multipart routers (OpenAI, ElevenLabs, Groq, and the rest) accept
   other container formats only when <code>pydub</code> is installed, which the base install omits:
-  <code>pip install 'ovos-stt-http-server[audio]'</code>. Without that extra, uploading anything
+  <code>pip install --pre 'ovos-stt-http-server[audio]&gt;=0.25.1a3'</code>. Without that extra, uploading anything
   other than WAV through those routers returns HTTP <strong>501</strong> naming the missing format
   support.</p>
 </li>
