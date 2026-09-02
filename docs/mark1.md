@@ -94,13 +94,14 @@ from ovos_bus_client.util import get_mycroft_bus
 bus = get_mycroft_bus()
 eyes = Eyes(bus)
 eyes.change_color("blue")  # named colour
-eyes.blink()               # blink both eyes
-eyes.hue_spin()            # cycle the hue
 eyes.on(); eyes.off()      # raw on / off
 ```
 
-The `Eyes` API also exposes `set_hue` and `set_brightness(level)` (level `1`-`30`, bigger is
-brighter), plus the animated `hue_spin` / `saturation_spin` / `luminance_spin` variants.
+`blink()` and the `hue_spin` / `saturation_spin` / `luminance_spin` animations each run an
+unconditional `while True:` loop with no return — call them in their own thread (or as a
+skill's background task), never inline in a sequential script, since they never hand
+control back. The `Eyes` API also exposes `set_hue` and `set_brightness(level)` (level
+`1`-`30`, bigger is brighter).
 
 ### Faceplate Icons
 
