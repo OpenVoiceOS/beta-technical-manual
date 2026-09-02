@@ -1452,7 +1452,7 @@
 <ul>
 <li><strong>Input:</strong> <code>phrase</code> (the question string) and <code>lang</code> (a BCP-47 code).</li>
 <li><strong>Output:</strong> a <code>(answer: str, confidence: float)</code> tuple, or <code>None</code>.</li>
-<li><strong>Confidence</strong> is a float between <code>0.0</code> and <code>1.0</code>. The pipeline ignores answers with confidence below <code>0.5</code>. The highest-confidence answer across all skills is the one spoken to the user.</li>
+<li><strong>Confidence</strong> is a float between <code>0.0</code> and <code>1.0</code>. The pipeline ignores answers with confidence below <code>0.5</code>. The highest-confidence answer across all skills is the one spoken to the user when no re-ranker plugin is installed; otherwise the re-ranker's pick wins (see the note above).</li>
 </ul>
 <blockquote>
 <p>The classic <code>CommonQuerySkill</code> / <code>UniversalCommonQuerySkill</code> base classes and the <code>CQS_match_query_phrase()</code> / <code>CQSMatchLevel</code> API have been <strong>removed</strong>. Use the <code>@common_query</code> decorator on a plain <code>OVOSSkill</code> instead. The pipeline still selects a single best answer the same way. Only the skill-side API changed.</p>
@@ -1511,7 +1511,7 @@
 <p>Several toolkits can parse the question itself, including <a href="https://pypi.org/project/adapt-parser/">Adapt</a>, <a href="https://pypi.org/project/little-questions/">little questions</a>, and <a href="https://pypi.org/project/padaos/">padaos</a>. In most cases, <code>self.voc_match</code> against a <code>.voc</code> file is enough.</p>
 <h2 id="match-confidence">Match Confidence<a class="headerlink" href="#match-confidence" title="Permanent link">&para;</a></h2>
 <p>Confidence is a single float in <code>[0.0, 1.0]</code>. Use a higher value when you are more certain you have the exact answer the user wants. Use a lower value when your skill is a general fallback for a category of questions. In the example above, an explicit "monty python" mention bumps confidence to <code>1.0</code>, making this skill very likely to be chosen.</p>
-<p>Only answers with confidence <code>&gt;= 0.5</code> are considered. The pipeline collects all qualifying answers and speaks the single highest-confidence one.</p>
+<p>Only answers with confidence <code>&gt;= 0.5</code> are considered. The pipeline collects all qualifying answers and speaks the single highest-confidence one when no re-ranker plugin is installed; otherwise the re-ranker's pick wins (see the note above).</p>
 <h2 id="selection-callback">Selection Callback<a class="headerlink" href="#selection-callback" title="Permanent link">&para;</a></h2>
 <p>In some cases the skill should do extra work only when its answer was the one selected and spoken, for example preparing for follow-up questions or showing an image. Pass a callback to the decorator. It runs after your answer is spoken.</p>
 <p>The callback signature is <code>(phrase, answer, lang)</code> for a plain function, or <code>(self, phrase, answer, lang)</code> for an instance method. The framework inspects the signature and passes <code>self</code> only when the first parameter is named <code>self</code>.</p>
