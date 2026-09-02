@@ -45,7 +45,7 @@ flowchart TD
 ### STT Server
 
 ```bash
-pip install "ovos-stt-http-server[mcp]"
+pip install --pre "ovos-stt-http-server[mcp]"
 ovos-stt-server --engine ovos-stt-plugin-whisper --port 8080
 ```
 
@@ -99,7 +99,7 @@ curl -s 'http://localhost:9666/v2/synthesize?utterance=hello%20world' -o out.wav
 ### Translate Server
 
 ```bash
-pip install "ovos-translate-server[mcp]"
+pip install --pre "ovos-translate-server[mcp]"
 python -m ovos_translate_server --tx-engine ovos-google-translate-plugin --port 9686 --mcp
 ```
 
@@ -119,7 +119,7 @@ MCP tools: `translate` (params: `text`, `target_lang`, optional `source_lang`), 
 The persona server surfaces every installed OPM `ToolBox` plugin as both a UTCP tool and an MCP tool.
 
 ```bash
-pip install "ovos-persona-server[mcp]"
+pip install --pre "ovos-persona-server[mcp]"
 ovos-persona-server --persona my_persona.json
 ```
 
@@ -139,7 +139,7 @@ A2A is the [Google A2A open protocol](https://a2aproject.github.io/A2A/). An A2A
 ### Persona Server as A2A Server
 
 ```bash
-pip install "ovos-persona-server[a2a]"
+pip install --pre "ovos-persona-server[a2a]"
 ovos-persona-server --persona my_persona.json
 ```
 
