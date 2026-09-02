@@ -33,15 +33,10 @@ speaks.
 
 ### Customizing Dialogs
 
-!!! warning "`.dialog` user overrides are not honored yet"
-    The user-resources override tier currently works for `.intent`, `.voc`, `.entity` and
-    `.rx` (regex) files, but the dialog renderer in `ovos-workshop` still loads `.dialog` files
-    only from the skill's own directory (a known gap; the dialog-renderer code path is pending a
-    deliberate migration in the source — see [Customizing Language Resources](lang-customization.md)). Until that
-    lands, the override procedure below will **not** change what you hear; to reword a
-    reply today, edit the `.dialog` file inside the skill's own `locale/` directory
-    instead. The steps stay documented because they are the intended mechanism once the
-    gap closes, and they already work for the other resource types.
+`.dialog` user overrides are honored since `ovos-workshop` `9.5.3a1` — the dialog renderer
+checks the user override directory first, then falls back to the skill's own `locale/`
+directory. The override only takes effect if that directory already exists when the skill
+loads; create it before starting/restarting the skill, not after.
 
 Replace one dialog file of an installed [skill](skill-design-guidelines.md) with your own
 wording. This example replaces `time.current.dialog` in `ovos-skill-date-time.openvoiceos`.
