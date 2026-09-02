@@ -1968,10 +1968,13 @@ never emit <code>mycroft.ready</code>.</p>
 <h2 id="deferred-loading-before-load-gating-only">Deferred Loading (before-load gating only)<a class="headerlink" href="#deferred-loading-before-load-gating-only" title="Permanent link">&para;</a></h2>
 <p><code>ovos-core</code>'s <code>SkillManager</code> can defer loading a skill until its declared requirements are
 met. A skill with <code>internet_before_load=True</code> is not instantiated until the internet
-connection event fires, and likewise for <code>network_before_load</code> and <code>gui_before_load</code>. This
-gating is <strong>opt-in</strong>: it only applies when <code>skills.use_deferred_loading</code> is set to <code>true</code> in
-config. With the default configuration (<code>use_deferred_loading</code> unset/<code>false</code>), all installed
-skills load unconditionally at startup regardless of their declared requirements.</p>
+connection event fires, and likewise for <code>network_before_load</code>. This gating is <strong>opt-in</strong>:
+it only applies when <code>skills.use_deferred_loading</code> is set to <code>true</code> in config. With the
+default configuration (<code>use_deferred_loading</code> unset/<code>false</code>), all installed skills load
+unconditionally at startup regardless of their declared requirements.</p>
+<p><code>gui_before_load</code> exists on the same dataclass but is declared-only: no consumer in
+<code>ovos-core</code> currently reads it, so setting it has no effect. A GUI connecting triggers a
+load sweep for all pending skills, not a per-skill gate.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;skills&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&quot;use_deferred_loading&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
@@ -2031,7 +2034,7 @@ when a required resource disappears. Only the before-load gate above is active.<
 </tr>
 <tr>
 <td><code>gui_before_load</code></td>
-<td>Wait for GUI before loading (requires <code>skills.use_deferred_loading: true</code>)</td>
+<td>Declared, but not currently read by any consumer in <code>ovos-core</code> — setting it has no effect</td>
 </tr>
 <tr>
 <td><code>requires_gui</code></td>
@@ -2126,7 +2129,8 @@ With <code>skills.use_deferred_loading: true</code>, loads once the local networ
 <h3 id="4-gui-internet-skill">4. GUI + Internet Skill<a class="headerlink" href="#4-gui-internet-skill" title="Permanent link">&para;</a></h3>
 <p>Consider a skill with both graphical user interface (GUI) and internet dependencies.</p>
 <p>The skill declares both GUI and internet requirements. With <code>skills.use_deferred_loading: true</code>,
-loading waits until both are available.</p>
+loading waits until internet is available. <code>gui_before_load</code> has no effect (see the note
+above); GUI-readiness gating isn't currently possible this way.</p>
 <p>If the user asks "show me the picture of the day" and we have both internet and a GUI, our skill will match the intent. If we do not have internet but have a GUI, the skill can still operate using a cached picture. That is what <code>no_internet_fallback=True</code> documents.</p>
 <p><div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_utils</span> <span class="kn">import</span> <span class="n">classproperty</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
@@ -2138,18 +2142,17 @@ loading waits until both are available.</p>
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="nd">@classproperty</span>
 </span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    <span class="k">def</span> <span class="nf">runtime_requirements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>        <span class="k">return</span> <span class="n">RuntimeRequirements</span><span class="p">(</span>
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>            <span class="n">gui_before_load</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># only load if GUI is available (needs deferred loading)</span>
-</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>            <span class="n">requires_gui</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># documents the skill needs a GUI to work</span>
-</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>            <span class="n">internet_before_load</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># only load if internet is available (needs deferred loading)</span>
-</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>            <span class="n">requires_internet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># documents the skill needs internet to work</span>
-</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>            <span class="n">no_gui_fallback</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># documents that no fallback exists without a GUI</span>
-</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>            <span class="n">no_internet_fallback</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># documents that a cached fallback exists without internet</span>
-</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>        <span class="p">)</span>
-</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
-</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>        <span class="o">...</span>  <span class="c1"># do something that requires both GUI and internet connectivity</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>            <span class="n">requires_gui</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># documents the skill needs a GUI to work</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>            <span class="n">internet_before_load</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># only load if internet is available (needs deferred loading)</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>            <span class="n">requires_internet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># documents the skill needs internet to work</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>            <span class="n">no_gui_fallback</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># documents that no fallback exists without a GUI</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>            <span class="n">no_internet_fallback</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># documents that a cached fallback exists without internet</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>        <span class="p">)</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>        <span class="o">...</span>  <span class="c1"># do something that requires both GUI and internet connectivity</span>
 </span></code></pre></div>
-With <code>skills.use_deferred_loading: true</code>, requires both GUI and internet to load.</p>
+With <code>skills.use_deferred_loading: true</code>, requires internet to load.</p>
 <hr />
 <h2 id="tips-and-caveats">Tips and Caveats<a class="headerlink" href="#tips-and-caveats" title="Permanent link">&para;</a></h2>
 <ul>
