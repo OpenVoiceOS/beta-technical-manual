@@ -358,6 +358,8 @@ The rest are registered by `OCPMediaPlayer`:
 | `ovos.common_play.cork` / `.uncork` | Pause/resume playback for a competing sound, without ducking |
 | `ovos.common_play.like` / `.unlike` | Mark or unmark the current track as a liked song |
 | `ovos.common_play.status` | Report full current player status |
+| `ovos.common_play.disambiguation` | Report the candidate set from the last playback request, reply `{"entries": [...]}` |
+| `ovos.common_play.likes` | Report the liked-songs store, reply `{"entries": [...]}` |
 | `ovos.common_play.SEI.get` | Report the stream extractor identifiers `ovos-media` supports |
 
 Ducking binds to ovos-audio's spec topics (`ovos.audio.output.started` / `.ended` trigger
