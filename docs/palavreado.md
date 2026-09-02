@@ -68,17 +68,6 @@ Set `conf_high`, `conf_med`, `conf_low`, and `max_words` under `mycroft.conf`'s 
     Adapt's full rule engine. For example-based (whole-sentence) matching, use
     [Padatious](padatious-pipeline.md) or [Nebulento](nebulento.md) instead.
 
-## Hierarchical variant
-
-`ovos-palavreado-hierarchical-pipeline` (same package, entry point
-`palavreado.opm:HierarchicalPalavreadoPipeline`) files each registered intent under a domain
-(the intent label's `<skill_id>:<intent>` prefix). A top-level classifier picks the domain
-first, and only that domain's sub-container resolves the intent — an utterance matching no
-domain is rejected before any sub-container runs. It accepts every key the flat plugin does,
-but reads them from `intents.palavreado_hierarchical` so both variants can run side by side.
-This mirrors [ovos-hierarchical-knn-pipeline](knn-pipeline.md)'s relationship to a flat KNN
-pipeline.
-
 ---
 **Read next:** [Padatious Pipeline](padatious-pipeline.md)
 **Related:** [Nebulento](nebulento.md) · [Padacioso](padacioso.md) · [Adapt Pipeline](adapt-pipeline.md)
