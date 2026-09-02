@@ -269,12 +269,6 @@ def get_date_strings(dt, lang, date_format=None, time_format="full"): ...
 (for GUIs) rather than speakable prose. Per-language support for these is the
 `nice_date` family column in the tables above.
 
-!!! note "Upcoming"
-    Span extraction (`DateSpan`) and astronomical or era-based dates are in
-    development. This work lives on feature branches of
-    [OpenVoiceOS/ovos-date-parser](https://github.com/OpenVoiceOS/ovos-date-parser)
-    and is not part of the released API yet.
-
 ---
 **Read next:** [Colors](color-parser.md)
 **Related:** [Numbers](number-parser.md) · [Language Names](lang-parser.md) · [Quebra Frases](quebra-frases.md)
