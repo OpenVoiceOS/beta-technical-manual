@@ -143,7 +143,8 @@ plugin so it can run alongside the classifier one. It reads its config from
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `model` | `Jarbas/ovos-model2vec-intents-distiluse-base-multilingual-cased-v2` | Local path or Hugging Face repo of the Model2Vec model. |
+| `model` | `OpenVoiceOS/ovos-m2v-intents-multilingual` (`DEFAULT_MULTILINGUAL`, used when no `models` entry matches the language) | Local path or Hugging Face repo of the Model2Vec model; an explicit value always wins over any per-language default. See `models` below for a per-language override map. |
+| `models` | *(unset)* | `{locale_or_lang: repo_id}` map, matched first against the full locale (`"pt-BR"`), then against the primary subtag (`"pt"`); case-insensitive. Falls back to a built-in per-language default table, then to `model`/`DEFAULT_MULTILINGUAL` if no entry matches. |
 | `mode` | `classifier` | `classifier` (trained head, softmax) or `prototype` (runtime prototypes, cosine). |
 | `conf_high` | `0.7` | Threshold for `match_high`. |
 | `conf_medium` | `0.5` | Threshold for `match_medium`. |
@@ -190,33 +191,43 @@ utterances, music-query templates, and per-language skill intents.
 
 ## Training your own model
 
+!!! warning "Training is currently on hold"
+    Upstream `.intent`-scheme refactors (renamed/merged intents across the
+    default skills) mean a classifier's frozen label head goes stale the day
+    those land. Build the dataset and read the manifest freely; run `train.py`
+    only once the refactors are merged and `sources.yaml`'s pins are
+    regenerated against them.
+
 The published `Jarbas/ovos-model2vec-intents-*` models are built from a
 `train/` toolchain shipped inside the `ovos-m2v-pipeline` source repository
-(it is not part of the installed pip package). The pipeline is:
+(it is not part of the installed pip package):
 
-1. **Gather a dataset**: `gather_dataset.py` (multilingual) or
-   `gather_dataset_en.py` (English-only) downloads and merges intent examples
-   from `Jarbas/ovos_intent_examples` and `Jarbas/music_queries_templates` on
-   Hugging Face, plus per-language intent CSVs from the OpenVoiceOS
-   [lang-support-tracker](https://github.com/OpenVoiceOS/lang-support-tracker).
-   The output is a CSV with columns `lang`, `label`, `sentence`, where `label`
-   follows the `<skill_id>:<intent_name>` format.
-2. **Train**: `train_multilingual.py` fine-tunes a classifier head on top of
-   `minishlab/M2V_multilingual_output`. `train_en.py` trains one per English
-   Potion base model (`minishlab/potion-base-{2M,4M,8M,32M}`,
-   `minishlab/potion-retrieval-32M`). Each run saves a `StaticModelPipeline`
-   directory plus a metrics report.
-3. **Optional distillation**: `distill.py` calls `model2vec.distill.distill()`
-   to turn a Sentence Transformer that has no Model2Vec distillate yet into a
-   usable base model.
-4. **Smoke-test**: load the saved directory with
-   `StaticModelPipeline.from_pretrained(...)` and call `.predict()` /
-   `.predict_proba()` on a few example sentences before publishing.
+```
+train/
+├── sources.yaml        # every source, pinned to an immutable revision
+├── build_dataset.py    # resolve, normalise, dedup, split, write the manifest
+├── train.py            # fit a classifier on the built corpus
+├── distill.py          # distill a Sentence Transformer into a Model2Vec base
+└── predict.py           # inference smoke test
+```
+
+1. **Build the dataset**: `python train/build_dataset.py --workspace <repos> --out train/dataset`
+   resolves every pinned source in `sources.yaml`, deduplicates rows, and
+   writes `train.parquet`/`test.parquet` (plus JSONL twins), `labels.json`,
+   and `manifest.json`. Labels are `<skill_id>:<intent_name>`, exactly as the
+   pipeline registers them at runtime. A pinned revision that has moved fails
+   the build rather than quietly changing the corpus.
+2. **Train**: `python train/train.py --dataset train/dataset --base-model <model>`
+   fits a classifier on the built corpus.
+3. **Optional distillation**: `distill.py` turns a Sentence Transformer that
+   has no Model2Vec distillate yet into a usable base model.
+4. **Smoke-test**: `predict.py` runs inference against a saved model before
+   publishing it.
 
 Point the plugin's `model` config key at your own Hugging Face repo or a local
 path to the saved pipeline directory once you are happy with it. See the
-`ovos-m2v-pipeline` repository's own training documentation for the full
-dataset schema and script options.
+`ovos-m2v-pipeline` repository's own `docs/training.md` and `docs/labels.md`
+for the full dataset schema, label scheme, and script options.
 
 ---
 
