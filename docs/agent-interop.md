@@ -45,7 +45,7 @@ flowchart TD
 ### STT Server
 
 ```bash
-pip install --pre "ovos-stt-http-server[mcp]>=0.25.1a3"
+pip install --pre "ovos-stt-http-server[mcp]>=0.26.0a1"
 ovos-stt-server --engine ovos-stt-plugin-whisper --port 8080
 ```
 
