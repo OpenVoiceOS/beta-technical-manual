@@ -1541,7 +1541,7 @@ endpoints, a UTCP tool surface, and vendor-compatible routers for <strong>Anthro
 <p>Optional extras: <code>rag</code> (file/vector-store endpoints), <code>mcp</code> (pulls in <code>fastmcp&gt;=3,&lt;4</code> to
 serve the <code>/mcp</code> endpoint below), and <code>a2a</code> (Agent-to-Agent endpoint). The stable PyPI
 release predates both extras — use <code>--pre</code> and a floor pin, e.g.
-<code>pip install --pre 'ovos-persona-server[a2a]&gt;=0.5.2a1'</code>.</p>
+<code>pip install --pre 'ovos-persona-server[a2a]&gt;=0.17.2a1'</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">The <code>mcp</code> extra installs <code>fastmcp</code>, not the <code>mcp</code> SDK</p>
 <p>The extra is still called <code>mcp</code>, so <code>pip install --pre 'ovos-persona-server[mcp]'</code> is unchanged,
@@ -1598,7 +1598,7 @@ consuming another MCP server (like <a href="../tool-plugins/"><code>ovos-mcp-too
 <tr>
 <td><code>--a2a-base-url</code></td>
 <td><code>None</code></td>
-<td>Mounts an <a href="https://a2aproject.github.io/A2A/">A2A</a>-compatible endpoint at <code>/a2a</code>, using this URL as the public base URL in the Agent Card (e.g. <code>http://myhost:8337/a2a</code>). Requires the <code>a2a</code> extra (<code>pip install --pre 'ovos-persona-server[a2a]&gt;=0.5.2a1'</code>)</td>
+<td>Mounts an <a href="https://a2aproject.github.io/A2A/">A2A</a>-compatible endpoint at <code>/a2a</code>, using this URL as the public base URL in the Agent Card (e.g. <code>http://myhost:8337/a2a</code>). Requires the <code>a2a</code> extra (<code>pip install --pre 'ovos-persona-server[a2a]&gt;=0.17.2a1'</code>)</td>
 </tr>
 </tbody>
 </table>
