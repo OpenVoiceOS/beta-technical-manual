@@ -1083,6 +1083,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#minicroft-training-timeouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      MiniCroft training timeouts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#running-in-ci" class="md-nav__link">
     <span class="md-ellipsis">
       Running in CI
@@ -1353,6 +1362,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#minicroft-training-timeouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      MiniCroft training timeouts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#running-in-ci" class="md-nav__link">
     <span class="md-ellipsis">
       Running in CI
@@ -1552,6 +1570,18 @@ harness), not <code>ovoscope</code>.</p>
 </tbody>
 </table>
 <p>The low-level <code>FakeBus</code> it builds on lives in <code>ovos-utils</code> (<code>ovos_utils.fakebus</code>).</p>
+<hr />
+<h2 id="minicroft-training-timeouts"><code>MiniCroft</code> training timeouts<a class="headerlink" href="#minicroft-training-timeouts" title="Permanent link">&para;</a></h2>
+<p><code>get_minicroft()</code> waits for <code>mycroft.skills.trained</code> to go quiet before returning. If training
+never completes within <code>OVOSCOPE_TRAINED_TIMEOUT</code> seconds, it raises <code>RuntimeError</code>. That
+timeout defaults to <strong>180s</strong> when the <code>CI</code> environment variable is set, <strong>5s</strong> otherwise
+(override either with the env var) — fleet CI runs under coverage instrumentation on throttled
+2-core runners, and a large single-skill intent set was seen to exceed 60s in the field.</p>
+<p>Any test suite using <code>get_minicroft</code> must set <code>pytest-timeout</code> to at least the trained-wait
+ceiling <strong>+ 120s</strong>: for single-language suites on the 180s CI default, use 300s or more; for
+multilingual suites, <code>pytest-timeout ≥ max_wait + 120s</code>. A <code>pytest-timeout</code> at or below the
+ceiling kills setup mid-wait and the failure masquerades as a boot failure rather than a
+timeout. Full detail: <a href="https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/minicroft.md">minicroft.md</a>.</p>
 <hr />
 <h2 id="running-in-ci">Running in CI<a class="headerlink" href="#running-in-ci" title="Permanent link">&para;</a></h2>
 <p>Add the shared <code>ovoscope</code> workflow to your skill repo so the tests run on every pull request — see
