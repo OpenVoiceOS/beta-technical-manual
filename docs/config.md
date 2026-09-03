@@ -190,14 +190,11 @@ ovos-config set -k /tts/module -v ovos-tts-plugin-phoonnx
 
 See the **Secrets and permissions** warning above. `ovos-config set` does not restrict the file's permissions itself.
 
-!!! warning "Known bug: `ovos-config set` writes to the wrong file"
-    `ovos-config` mis-indexed its config-layer table after the AssistantConfig rewrite:
-    `ovos-config set` writes to `~/.config/mycroft/runtime.conf` (the Assistant layer),
-    not `~/.config/mycroft/mycroft.conf` (the User layer) as intended. `ovos-config show
-    -u` and `ovos-config show -a` are swapped the same way. Check `runtime.conf` if a
-    `set` value doesn't show up where expected. Fix drafted in
-    [`ovos-config#305`](https://github.com/OpenVoiceOS/ovos-config/pull/305), not yet
-    merged.
+`ovos-config set` writes to `~/.config/mycroft/mycroft.conf` (the User layer), and
+`ovos-config show -u`/`show -a` read the User/Assistant layers respectively. A mis-indexed
+config-layer table swapped these before `ovos-config` `3.1.1a1`
+([`ovos-config#305`](https://github.com/OpenVoiceOS/ovos-config/pull/305)); update if
+you're on an older release.
 
 **Restart and verify**
 
