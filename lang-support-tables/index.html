@@ -1194,9 +1194,9 @@ language, wherever one is known. A single-speaker Facebook MMS voice counts as m
 A language without one is STT-only until such a voice appears. You can still point
 <code>ovos-tts-plugin-phoonnx</code> at any voice ID yourself, but it won't be auto-selected.</p>
 </div>
-<p>Several regional variants still have gaps. <strong>EN-GB</strong>, <strong>PT-BR</strong>, and the three ungapped
-Catalan variants (<strong>CA-BA</strong>, <strong>CA-NW</strong>, <strong>CA-VA</strong>, alongside the already-covered <strong>CA-ES</strong>)
-ship a TTS voice but no bundled offline STT recommendation. Configure a multilingual model by
+<p>Several regional variants still have gaps. <strong>EN-GB</strong>, <strong>PT-BR</strong>, <strong>AR-SA</strong>, and the four
+Catalan variants (<strong>CA-BA</strong>, <strong>CA-NW</strong>, <strong>CA-VA</strong>, plus the already-covered <strong>CA-ES</strong>) ship a
+TTS voice but no bundled offline STT recommendation. Configure a multilingual model by
 hand until a dedicated recommendation lands: the practical picks are
 <a href="../stt-plugins-reference/#ovos-stt-plugin-fasterwhisper"><code>ovos-stt-plugin-fasterwhisper</code></a>
 (Whisper handles Catalan) locally, or
@@ -1213,7 +1213,7 @@ hand until a dedicated recommendation lands: the practical picks are
 <tbody>
 <tr>
 <td><strong>AR-SA</strong></td>
-<td><code>OpenVoiceOS/stt_ar_fastconformer_hybrid_large_pcd_v1.0_onnx</code></td>
+<td>—</td>
 <td style="text-align: center;">yes</td>
 </tr>
 <tr>
@@ -1302,10 +1302,9 @@ hand until a dedicated recommendation lands: the practical picks are
 <p class="admonition-title">Note</p>
 <p>Where the STT column shows "—", the bundled recommendations don't cover offline speech
 recognition for that language yet. <code>autoconfigure</code> will skip that part of the
-configuration and tell you so. Use an online STT plugin instead. This table covers only
-the flagship set with a GPU tier; dozens more languages have a bundled offline STT and/or
-TTS recommendation without one — check the <code>recommends/</code> directories in your installed
-<code>ovos-config</code> for the current full list before relying on <code>autoconfigure</code>.</p>
+configuration and tell you so. Use an online STT plugin instead. Every other language has
+no bundled offline STT or TTS recommendation at all yet: check the <code>recommends/</code> directories
+in your installed <code>ovos-config</code> for the current list before relying on <code>autoconfigure</code>.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Some TTS recommends cover only one gender</p>
@@ -1315,9 +1314,9 @@ per language. Every other language listed here has both genders bundled.</p>
 </div>
 <p>A language that does not appear in this table has no bundled STT/TTS recommendation yet.
 This is not a deliberate exclusion. It just means nobody has added a <code>recommends/*.conf</code> file for it
-so far. Thai is a widely requested example. <code>ovos-config</code> currently ships no <code>th-th</code> (or any other
-<code>th-*</code>) recommends file, so <code>autoconfigure -l th-th</code> has nothing to select
-and Thai support must be configured by hand until a recommendation is contributed.</p>
+so far. Japanese is a widely requested example. <code>ovos-config</code> currently ships no <code>ja-jp</code> (or any other
+<code>ja-*</code>) recommends file, so <code>autoconfigure -l ja-jp</code> has nothing to select
+and Japanese support must be configured by hand until a recommendation is contributed.</p>
 <hr />
 <h2 id="per-language-status-matrix">Per-language status matrix<a class="headerlink" href="#per-language-status-matrix" title="Permanent link">&para;</a></h2>
 <p>STT/TTS columns summarize the auto-configuration table above (yes = a bundled offline
