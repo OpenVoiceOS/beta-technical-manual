@@ -2007,6 +2007,15 @@ reading it back from context. A flag-style call with no explicit value,
 message stores the keyword name itself as the value (<code>{"value": word or context}</code>), not
 an empty or null value.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Set context before speaking, not after</p>
+<p>A context write only reaches anyone else once the handler emits a Message derived
+from the mutated session, <code>self.speak()</code>, <code>self.speak_dialog()</code>, or any other emit.
+Write the context first, then speak. A handler that speaks and only afterward writes
+context has nothing left to carry that write: on a named (remote) session, where the
+orchestrator holds no state between utterances, a write with no following emit is
+invisible to the next turn.</p>
+</div>
 <p>The decorators are equivalent to calling these methods:</p>
 <ul>
 <li><code>@adds_context('MilkContext')</code> calls <code>set_context('MilkContext')</code> after the handler runs.</li>
