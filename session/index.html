@@ -1820,11 +1820,16 @@ All four are optional. An absence falls back to the deployment default,
 and <code>location</code> is what backs the <code>location</code> / <code>location_pretty</code> /
 <code>location_timezone</code> magic properties below.</p>
 <div class="admonition note">
-<p class="admonition-title"><code>location</code> and <code>timezone</code> are an <code>ovos-bus-client</code> implementation detail, not (yet) SESSION-1</p>
-<p>The wire carries <code>location</code> on every session, but the OVOS-SESSION-1 field registry does
-not list it, or the derived <code>timezone</code>. Both fields are real, and deployments depend on them.
-<code>ovos-bus-client</code>'s <code>Session</code> subclass implements them. This page documents them as
-implementation behavior, pending a SESSION-1 amendment to register them formally.</p>
+<p class="admonition-title">The spec's <code>location</code> shape and <code>ovos-bus-client</code>'s implementation do not match yet</p>
+<p>OVOS-SESSION-1 §3.5 registers <code>location</code> as exactly three optional keys: <code>lat</code> and <code>lon</code>
+(decimal degrees, WGS84), and <code>tz</code> (an IANA zone name). Everything else, city, country,
+offsets, daylight-saving state, is derived out of band and has no wire shape. The only
+normative consumer rule: when <code>location.tz</code> is present, a consumer must use it to resolve
+wall-clock time for that session, and fall back to the deployment timezone otherwise.</p>
+<p><code>ovos-bus-client</code>'s <code>Session</code> subclass does not implement this shape yet. Its <code>location</code>
+field is a richer city/coordinate/timezone object, populated from <code>Configuration()</code>'s
+<code>location</code> section. This page documents the deployed behavior. Expect it to converge on
+the spec's three-key shape once the implementation catches up.</p>
 </div>
 <h2 id="magic-properties">Magic Properties<a class="headerlink" href="#magic-properties" title="Permanent link">&para;</a></h2>
 <p>Skills have some "magic properties." These reflect the current <code>Session</code>'s value when it has
