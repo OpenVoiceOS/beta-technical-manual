@@ -1569,6 +1569,16 @@ ship knowledge of many skills without firing for skills you do not have installe
 <p>A label registered with <code>requires_context</code> or <code>excludes_context</code> is gated the same way
 whether it came from a padatious registration or an INTENT-4 template: the pipeline checks
 the declared context before accepting the label as a match, not just the confidence score.</p>
+<div class="admonition note">
+<p class="admonition-title">Model2Vec classifies; it does not extract <code>{slot}</code> values from the utterance</p>
+<p>A <code>.intent</code> sample can declare <code>{slot}</code> placeholders, but Model2Vec never parses them out
+of the spoken utterance the way Padatious/Padacioso do. It only fills a label's declared
+<code>{slot}</code> placeholders from whatever is already sitting in <code>session.intent_context</code>
+(OVOS-CONTEXT-1 §7). Skills whose <code>.intent</code> files rely on <code>{slot}</code> extraction from the
+utterance itself still need Padatious or Padacioso in the pipeline ahead of Model2Vec to
+populate those values — Model2Vec alone will match the intent but leave any unfilled
+placeholder as a literal <code>{slot}</code> string.</p>
+</div>
 <pre class="mermaid"><code>flowchart TD
     U[Utterance] --&gt; E[Embed with Model2Vec model]
     R[Registered Adapt/Padatious\nintent labels] --&gt; F
@@ -1782,6 +1792,11 @@ precise parser would have nailed. The usual setup is to place
 confidence) so exact matches win first and Model2Vec catches the paraphrases the
 others miss. Tune <code>conf_high</code>/<code>conf_medium</code>/<code>conf_low</code> to control how aggressive it
 is.</p>
+<p>Do not copy Padatious's confidence thresholds over verbatim: the two engines score
+completely differently, and the two Model2Vec modes score differently from each other
+too. <code>classifier</code> mode's scores are softmax probabilities out of a trained head;
+<code>prototype</code> mode's are raw cosine similarities against stored example embeddings. Retune
+<code>conf_high</code>/<code>conf_medium</code>/<code>conf_low</code> for whichever mode you actually run.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../padacioso/">Padacioso</a>
 <strong>Related:</strong> <a href="../padatious-pipeline/">Padatious Pipeline</a> · <a href="../adapt-pipeline/">Adapt Pipeline</a> · <a href="../transformer-plugins/">Transformers Overview</a></p>
