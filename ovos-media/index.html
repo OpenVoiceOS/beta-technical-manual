@@ -1260,9 +1260,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#upcoming-mediaprovider-plugins-replace-ocp-skills" class="md-nav__link">
+  <a href="#mediaprovider-plugins-replace-ocp-skills" class="md-nav__link">
     <span class="md-ellipsis">
-      Upcoming: MediaProvider plugins replace OCP skills
+      MediaProvider plugins replace OCP skills
     </span>
   </a>
   
@@ -1946,9 +1946,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#upcoming-mediaprovider-plugins-replace-ocp-skills" class="md-nav__link">
+  <a href="#mediaprovider-plugins-replace-ocp-skills" class="md-nav__link">
     <span class="md-ellipsis">
-      Upcoming: MediaProvider plugins replace OCP skills
+      MediaProvider plugins replace OCP skills
     </span>
   </a>
   
@@ -2514,24 +2514,18 @@ playing. A shut-down player also stops reacting to duck/unduck/cork on every spe
 listens on (<code>ovos.common_play.*</code>, the <code>ovos.audio.output.*</code> duck triggers, and cork's
 <code>recognizer_loop:record_*</code>), so a dead daemon no longer adjusts system volume.</p>
 <hr />
-<h2 id="upcoming-mediaprovider-plugins-replace-ocp-skills">Upcoming: MediaProvider plugins replace OCP skills<a class="headerlink" href="#upcoming-mediaprovider-plugins-replace-ocp-skills" title="Permanent link">&para;</a></h2>
-<div class="admonition info">
-<p class="admonition-title">What changes, and when</p>
-<p>Media catalogs are moving <strong>out of skills and into plugins</strong>. A new <strong>MediaProvider</strong> plugin
-type (<code>opm.media.provider</code> / <code>PluginTypes.MEDIA_PROVIDER</code>) that the OCP pipeline loads
-<strong>in-process</strong> and calls <code>search()</code> on directly, in place of today's
-<a href="../ocp-skills/">OCP skills</a>. This first ships in <strong><code>ovos-plugin-manager 2.8.0a1</code></strong>
-(Phase 1 of the <code>ovos-media</code> migration). OCP skills remain the way to provide media for now.
-Tracked in <a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/423">ovos-workshop#423</a>.</p>
-<p>A first batch of MediaProvider plugins now has <strong>public repositories</strong>, and all eleven
-listed below ship PyPI alpha releases. Installing them does nothing yet —
-the in-process loading is not wired into <code>ovos-media</code> (see below). Each one supersedes
-the catalog/search half of an older OCP skill:</p>
+<h2 id="mediaprovider-plugins-replace-ocp-skills">MediaProvider plugins replace OCP skills<a class="headerlink" href="#mediaprovider-plugins-replace-ocp-skills" title="Permanent link">&para;</a></h2>
+<p>Media catalogs moved <strong>out of skills and into plugins</strong>. The <strong>MediaProvider</strong> plugin type
+(<code>opm.media.provider</code> / <code>PluginTypes.MEDIA_PROVIDER</code>) is what the <a href="../ocp-pipeline/#mediaprovider-plugins">OCP pipeline</a>
+loads in-process and calls <code>search()</code> on. See that page for the loading mechanism, the
+<code>media_providers</code> config key, and how results merge with the legacy bus <code>@ocp_search</code> path.</p>
+<p>The corresponding OCP skills for the eleven media sources below are <strong>archived</strong>. Install
+the MediaProvider plugin instead:</p>
 <table>
 <thead>
 <tr>
 <th>MediaProvider plugin</th>
-<th>Supersedes</th>
+<th>Replaces (archived)</th>
 </tr>
 </thead>
 <tbody>
@@ -2581,9 +2575,9 @@ the catalog/search half of an older OCP skill:</p>
 </tr>
 </tbody>
 </table>
-<p>The old OCP skills keep working; a MediaProvider plugin only takes over once the
-<code>opm.media.provider</code> plugin type ships on a released <code>ovos-plugin-manager</code>.</p>
-</div>
+<p>An OCP skill that is not in this table is unaffected. MediaProvider plugins only replace
+the eleven catalogs above. Skill-based media search remains a supported way to provide
+media for anything else.</p>
 <h2 id="legacy-compatibility-known-coupling-issues">Legacy Compatibility &amp; Known Coupling Issues<a class="headerlink" href="#legacy-compatibility-known-coupling-issues" title="Permanent link">&para;</a></h2>
 <p><code>ovos-media</code>'s pipeline plugin falls back to the classic <code>mycroft.audio.service.*</code> bus messages
 when <code>ovos-media</code> is not running, and bridges old pre-OCP <code>CommonPlaySkill</code> skills via <code>play:query</code>

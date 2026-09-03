@@ -1691,8 +1691,8 @@ ovos-ocp-pipeline-plugin</code>) and in your <code>intents.pipeline</code>, the 
 <li><a href="../ocp-skills/">OCP Skills</a> also documents <code>self.extend_timeout()</code> (ask OCP to wait longer for a slow search). It notes that new integrations not needing the full skill lifecycle may prefer a <code>MediaProvider</code> plugin instead. See that page's opening warning.</li>
 </ul>
 <div class="admonition tip">
-<p class="admonition-title">Full production example</p>
-<p><a href="https://github.com/OpenVoiceOS/ovos-skill-somafm"><code>ovos-skill-somafm</code></a> is a full modern OCP skill: <code>@ocp_search</code>, <code>@ocp_featured_media</code>, <code>register_ocp_keyword</code>, and results built as <code>Playlist</code>/<code>MediaEntry</code> objects instead of plain dicts. <a href="https://github.com/OpenVoiceOS/ovos-skill-news"><code>ovos-skill-news</code></a> applies the same pattern for <code>MediaType.NEWS</code>.</p>
+<p class="admonition-title">Full production example (archived, source only)</p>
+<p><a href="https://github.com/OpenVoiceOS/ovos-skill-somafm"><code>ovos-skill-somafm</code></a> is a full modern OCP skill: <code>@ocp_search</code>, <code>@ocp_featured_media</code>, <code>register_ocp_keyword</code>, and results built as <code>Playlist</code>/<code>MediaEntry</code> objects instead of plain dicts. <a href="https://github.com/OpenVoiceOS/ovos-skill-news"><code>ovos-skill-news</code></a> applies the same pattern for <code>MediaType.NEWS</code>. Both repos are archived. Their MediaProvider plugin replacements are what a new deployment should install; see <a href="../skill-examples-media/">Music &amp; Radio</a>.</p>
 </div>
 <hr />
 <p><strong>Read next:</strong> <a href="../skill-cookbook/">Skill Cookbook</a>

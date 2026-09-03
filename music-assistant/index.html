@@ -1434,21 +1434,18 @@ single combined install; pick the direction that matches what you want.</p>
 <p>Three pieces work together, all named after the <a href="../ovos-media/">OCP media stack</a>:</p>
 <ul>
 <li><strong><a href="https://github.com/OpenVoiceOS/ovos-media-provider-mass"><code>ovos-media-provider-mass</code></a></strong>
-  (public, PyPI): the catalog/search half. Registers under <code>opm.media.provider</code> as
-  <code>music_assistant</code>, superseding the search half of <code>ovos-skill-music-assistant</code>.</li>
+  (public, PyPI): the catalog/search half, loaded by the <a href="../ocp-pipeline/#mediaprovider-plugins">OCP pipeline</a>.
+  Registers under <code>opm.media.provider</code> as <code>music_assistant</code>.</li>
 <li><strong><a href="https://github.com/OpenVoiceOS/ovos-media-plugin-mass"><code>ovos-media-plugin-mass</code></a></strong>:
   the playback backend for <a href="../ovos-media/"><code>ovos-media</code></a>. Hands playback off to the MA
   server itself. Its <code>next()</code>/<code>previous()</code> on the legacy <code>AudioBackend</code> interface
   delegate to the Music Assistant queue API (see
   <a href="../ovos-media-compat/">Legacy Compatibility</a>).</li>
-<li><strong><a href="https://github.com/OpenVoiceOS/ovos-skill-music-assistant"><code>ovos-skill-music-assistant</code></a></strong>:
-  the legacy OCP skill both of the above supersede.</li>
 </ul>
-<p>All three are public repos and published to PyPI as alpha releases (check PyPI for
-current versions, as alpha releases move fast). <code>ovos-media-provider-mass</code> installing
-does nothing yet on its own: <code>opm.media.provider</code> in-process
-loading is not wired into <code>ovos-media</code> (see
-<a href="../ovos-media/#upcoming-mediaprovider-plugins-replace-ocp-skills">ovos-media</a>).</p>
+<p><code>ovos-skill-music-assistant</code>, the OCP skill both of the above replace, is <strong>archived</strong>.
+Install <code>ovos-media-provider-mass</code> and <code>ovos-media-plugin-mass</code> instead. See
+<a href="../ovos-media/#mediaprovider-plugins-replace-ocp-skills">MediaProvider plugins</a> for the
+full replacement table.</p>
 <h2 id="direction-2-music-assistant-loads-out-of-tree-providers">Direction 2: Music Assistant loads out-of-tree providers<a class="headerlink" href="#direction-2-music-assistant-loads-out-of-tree-providers" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/TigreGotico/music-assistant-plugin-manager"><code>music-assistant-plugin-manager</code></a>
 (<code>pip install --pre music-assistant-plugin-manager</code>, since every release is a

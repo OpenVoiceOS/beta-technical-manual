@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#music-radio-skills" class="md-skip">
+        <a href="#music-radio" class="md-skip">
           Skip to content
         </a>
       
@@ -860,16 +860,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#music-radio" class="md-nav__link">
-    <span class="md-ellipsis">
-      Music &amp; Radio
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Music & Radio">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#pyradios" class="md-nav__link">
     <span class="md-ellipsis">
       PyRadios
@@ -877,8 +867,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#somafm" class="md-nav__link">
     <span class="md-ellipsis">
       SomaFM
@@ -886,8 +876,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#news" class="md-nav__link">
     <span class="md-ellipsis">
       News
@@ -895,18 +885,13 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#local-media" class="md-nav__link">
     <span class="md-ellipsis">
       Local Media
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1445,16 +1430,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#music-radio" class="md-nav__link">
-    <span class="md-ellipsis">
-      Music &amp; Radio
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Music & Radio">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#pyradios" class="md-nav__link">
     <span class="md-ellipsis">
       PyRadios
@@ -1462,8 +1437,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#somafm" class="md-nav__link">
     <span class="md-ellipsis">
       SomaFM
@@ -1471,8 +1446,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#news" class="md-nav__link">
     <span class="md-ellipsis">
       News
@@ -1480,18 +1455,13 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#local-media" class="md-nav__link">
     <span class="md-ellipsis">
       Local Media
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1513,14 +1483,20 @@
   
 
 
-<h1 id="music-radio-skills">Music &amp; Radio Skills<a class="headerlink" href="#music-radio-skills" title="Permanent link">&para;</a></h1>
+<h1 id="music-radio">Music &amp; Radio<a class="headerlink" href="#music-radio" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>These skills play internet radio, streamed news, and local audio/video files.</p>
+<p>OVOS plays internet radio, streamed news, and local audio/video files through
+<strong>MediaProvider plugins</strong>, not skills. Install a provider, and the <a href="../ocp-pipeline/">OCP pipeline</a>
+picks it up automatically for any "play ..." request. See <a href="../ocp-pipeline/#mediaprovider-plugins">MediaProvider plugins</a>
+for how the mechanism works.</p>
 </div>
-<h2 id="music-radio">Music &amp; Radio<a class="headerlink" href="#music-radio" title="Permanent link">&para;</a></h2>
-<h3 id="pyradios">PyRadios<a class="headerlink" href="#pyradios" title="Permanent link">&para;</a></h3>
-<p><strong>Installer optional</strong> (<code>extra-skills</code> feature)</p>
+<div class="admonition warning">
+<p class="admonition-title">The old OCP media skills are archived</p>
+<p><code>ovos-skill-pyradios</code>, <code>ovos-skill-somafm</code>, <code>ovos-skill-news</code>, and <code>ovos-skill-local-media</code>
+are archived. Their MediaProvider plugin replacements below are what to install today.</p>
+</div>
+<h2 id="pyradios">PyRadios<a class="headerlink" href="#pyradios" title="Permanent link">&para;</a></h2>
 <p>A client for the Radio Browser API, a large, community-maintained directory of internet radio
 stations.</p>
 <p><strong>Usage examples:</strong></p>
@@ -1528,12 +1504,10 @@ stations.</p>
 <li>play tsf jazz on pyradios</li>
 <li>play tsf jazz radio</li>
 </ul>
-<details class="note">
-<summary>Install</summary>
-<p><a href="https://github.com/OpenVoiceOS/ovos-skill-pyradios"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-pyradios</a> · <code>pip install ovos-skill-pyradios</code> · Maturity: Stable</p>
-</details>
-<h3 id="somafm">SomaFM<a class="headerlink" href="#somafm" title="Permanent link">&para;</a></h3>
-<p><strong>Installer optional</strong> (<code>extra-skills</code> feature)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-media-provider-pyradios
+</span></code></pre></div>
+<p><a href="https://github.com/OpenVoiceOS/ovos-media-provider-pyradios"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-media-provider-pyradios</a></p>
+<h2 id="somafm">SomaFM<a class="headerlink" href="#somafm" title="Permanent link">&para;</a></h2>
 <p>Listen to a variety of commercial-free internet radio stations from SomaFM.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -1541,12 +1515,10 @@ stations.</p>
 <li>play metal detector</li>
 <li>play secret agent</li>
 </ul>
-<details class="note">
-<summary>Install</summary>
-<p><a href="https://github.com/OpenVoiceOS/ovos-skill-somafm"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-somafm</a> · <code>pip install ovos-skill-somafm</code> · Maturity: Stable</p>
-</details>
-<h3 id="news">News<a class="headerlink" href="#news" title="Permanent link">&para;</a></h3>
-<p><strong>Installer optional</strong> (<code>extra-skills</code> feature)</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-media-provider-somafm
+</span></code></pre></div>
+<p><a href="https://github.com/OpenVoiceOS/ovos-media-provider-somafm"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-media-provider-somafm</a></p>
+<h2 id="news">News<a class="headerlink" href="#news" title="Permanent link">&para;</a></h2>
 <p>News streams from around the globe.</p>
 <p><strong>Usage examples:</strong></p>
 <ul>
@@ -1555,49 +1527,25 @@ stations.</p>
 <li>play the news</li>
 <li>play portuguese news</li>
 </ul>
-<p>Naming a specific feed by station name ("play euronews") or asking for Catalan news does not
-reliably surface the right feed: the skill's language matcher does not cover Catalan and its
-default-feed bonus can outrank a literal station-name match. Stick to the default feed or the
-language phrasings above until that is fixed upstream.</p>
-<details class="note">
-<summary>Install</summary>
-<p><a href="https://github.com/OpenVoiceOS/ovos-skill-news"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-news</a> · <code>pip install ovos-skill-news</code> · Maturity: Stable</p>
-</details>
-<h3 id="local-media">Local Media<a class="headerlink" href="#local-media" title="Permanent link">&para;</a></h3>
-<p><strong>Installer optional</strong> (<code>extra-skills</code> feature)</p>
-<p>Local media file browser for OpenVoiceOS. Browse and play audio/video files from a USB drive or
-local folder.</p>
-<p><strong>Usage examples:</strong></p>
-<ul>
-<li>open my file browser</li>
-<li>show my file browser</li>
-<li>show my usb drive</li>
-<li>start usb browser app</li>
-<li>
-<p>show my usb</p>
-</li>
-<li>
-<p>show file browser app</p>
-</li>
-<li>show file browser</li>
-<li>open usb</li>
-<li>start usb browser</li>
-<li>open my usb</li>
-</ul>
-<details class="note">
-<summary>Install</summary>
-<p><a href="https://github.com/OpenVoiceOS/ovos-skill-local-media"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-skill-local-media</a> · <code>pip install ovos-skill-local-media</code> · Maturity: Mature</p>
-</details>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-media-provider-news
+</span></code></pre></div>
+<p><a href="https://github.com/OpenVoiceOS/ovos-media-provider-news"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-media-provider-news</a></p>
+<h2 id="local-media">Local Media<a class="headerlink" href="#local-media" title="Permanent link">&para;</a></h2>
+<p>Browse and play audio/video files from a USB drive or local folder. Uses <code>tinytag</code> for metadata
+rather than the GPL-licensed <code>mutagen</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-media-provider-local
+</span></code></pre></div>
+<p><a href="https://github.com/OpenVoiceOS/ovos-media-provider-local"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> OpenVoiceOS/ovos-media-provider-local</a></p>
 <div class="admonition note">
 <p class="admonition-title">Playing your own music or a streaming service</p>
 <p>Out of the box, OVOS plays internet radio (PyRadios, SomaFM) and local files. It does not
-include Spotify or another streaming-service player by default. See
+include Spotify or another streaming-service provider by default. See
 <a href="../showcase/">Cool Things You Can Do</a> and <a href="../media-plugins/">Media Plugins</a> for what's
 available to add.</p>
 </div>
 <hr />
 <p><strong>Read next:</strong> <a href="../skill-examples/">Skill Examples</a>
-<strong>Related:</strong> <a href="../ocp-skills/">OCP media skills</a> · <a href="../media-plugins/">Media Plugins</a> · <a href="../showcase/">Cool Things You Can Do</a></p>
+<strong>Related:</strong> <a href="../ocp-pipeline/">OCP Pipeline</a> · <a href="../media-plugins/">Media Plugins</a> · <a href="../showcase/">Cool Things You Can Do</a></p>
 
 
 
