@@ -133,15 +133,16 @@ The low-level `FakeBus` it builds on lives in `ovos-utils` (`ovos_utils.fakebus`
 
 `get_minicroft()` waits for `mycroft.skills.trained` to go quiet before returning. If training
 never completes within `OVOSCOPE_TRAINED_TIMEOUT` seconds, it raises `RuntimeError`. That
-timeout defaults to **180s** when the `CI` environment variable is set, **5s** otherwise
-(override either with the env var) — fleet CI runs under coverage instrumentation on throttled
-2-core runners, and a large single-skill intent set was seen to exceed 60s in the field.
+timeout defaults to **180s** when the `CI` environment variable is set, and **5s** otherwise.
+Override either default with the env var. Fleet CI runs under coverage instrumentation on
+throttled 2-core runners, and a large single-skill intent set has exceeded 60s in the field.
 
-Any test suite using `get_minicroft` must set `pytest-timeout` to at least the trained-wait
-ceiling **+ 120s**: for single-language suites on the 180s CI default, use 300s or more; for
-multilingual suites, `pytest-timeout ≥ max_wait + 120s`. A `pytest-timeout` at or below the
-ceiling kills setup mid-wait and the failure masquerades as a boot failure rather than a
-timeout. Full detail: [minicroft.md](https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/minicroft.md).
+Set `pytest-timeout` to at least the trained-wait ceiling plus 120s on any test suite that
+uses `get_minicroft`. For single-language suites on the 180s CI default, use 300s or more.
+For multilingual suites, set `pytest-timeout` to at least `max_wait + 120s`. A `pytest-timeout`
+at or below the ceiling kills setup mid-wait, and the failure looks like a boot failure
+instead of a timeout. Full detail:
+[minicroft.md](https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/minicroft.md).
 
 ---
 

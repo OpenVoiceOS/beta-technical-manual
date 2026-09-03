@@ -49,7 +49,7 @@ class MySkill(OVOSSkill):
 
 If the message originated in the device itself, the `session_id` is always equal to the reserved value `"default"`. If it comes from an external client, it will be a unique uuid. The `"default"` session is special: it is the device-local session whose state the orchestrator holds and persists in-process, rather than receiving it from a client on every message (OVOS-SESSION-2 §5).
 
-`SessionManager.get(message)` is a pure read — it never writes the store. The default session is folded into the store exactly once per utterance, at intake (`SessionManager.fold_inbound`), before any handler runs; `SessionManager.get` afterward just returns the live object for that call. Call it anywhere in a component without worrying about re-triggering a write.
+`SessionManager.get(message)` is a pure read. It never writes the store. The default session is folded into the store exactly once per utterance, at intake, by `SessionManager.fold_inbound`. This happens before any handler runs. `SessionManager.get` only returns the live object; it never re-triggers a write. Call it anywhere in a component.
 
 !!! info "One microphone, one conversation"
     Because everything the on-device microphone hears lands in the single `"default"`
@@ -155,9 +155,9 @@ and `location` is what backs the `location` / `location_pretty` /
 
 !!! note "`location` and `timezone` are an `ovos-bus-client` implementation detail, not (yet) SESSION-1"
     The wire carries `location` on every session, but the OVOS-SESSION-1 field registry does
-    not currently list it (or the derived `timezone`). These fields are real and load-bearing
-    today — implemented on `ovos-bus-client`'s `Session` subclass — but they are documented
-    here as implementation behavior pending a SESSION-1 amendment to register them formally.
+    not list it, or the derived `timezone`. Both fields are real, and deployments depend on them.
+    `ovos-bus-client`'s `Session` subclass implements them. This page documents them as
+    implementation behavior, pending a SESSION-1 amendment to register them formally.
 
 ## Magic Properties
 
@@ -212,18 +212,18 @@ one, falling back to Configuration otherwise.
 ```
 
 !!! note "The default session merges field by field; a named session does not"
-    The inbound fold onto the `"default"` session (`SessionManager.fold_inbound`)
-    is a field-by-field merge: a field the message carries replaces the stored
-    value, a field it omits leaves the stored value standing. This is why a
-    device that only declares `intent_context` on one turn keeps its other
-    fields — `blacklisted_skills`, presentation preferences, and the rest —
-    across turns instead of losing them the moment any message omits them.
-    A named `session_id` gets no such treatment: the orchestrator holds no
-    state for it between utterances (OVOS-SESSION-2 §2.2), so its session is
-    built fresh from whatever that one message's carrier contains. That
-    asymmetry is exactly why the earlier warning on this page insists a
-    client replay the **complete** session on every message for a named
-    session — there is nothing stored to fill in what it omits.
+    The inbound fold onto the `"default"` session, `SessionManager.fold_inbound`, is a
+    field-by-field merge. A field the message carries replaces the stored value. A field
+    it omits leaves the stored value standing. This is why a device that only declares
+    `intent_context` on one turn keeps its other fields, such as `blacklisted_skills` and
+    presentation preferences, across turns instead of losing them the moment any message
+    omits them.
+
+    A named `session_id` gets no such treatment. The orchestrator holds no state for it
+    between utterances (OVOS-SESSION-2 §2.2). Its session is built fresh from whatever
+    that one message's carrier contains. This is why the earlier warning on this page
+    insists a client replay the **complete** session on every message for a named
+    session: there is nothing stored to fill in what it omits.
 
 ## Per User Interactions
 

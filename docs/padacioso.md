@@ -60,17 +60,18 @@ no wildcard penalty. An entity whose name was never registered with `add_entity`
 matches, at a small `0.04` penalty (e.g. `0.96`). A registered entity whose parsed value is
 not among the registered samples is penalized `0.1`.
 
-!!! warning "Bracket/alternation expansion is capped per intent — keep high-cardinality lines narrow"
+!!! warning "Bracket/alternation expansion is capped per intent: keep high-cardinality lines narrow"
     Each `add_intent()` call bracket-expands every line (`(a|b|c)` alternation, `[optional]`
-    words) and shares a fixed total sample budget (2000) across all of that intent's lines.
-    A single line whose alternation product is large — e.g.
+    words). All of an intent's lines share one fixed sample budget: 2000 total. A single line
+    with a large alternation product, for example
     `(what is|what's) the (low|lowest|...) temp (mon|tue|...|sun) (morning|afternoon|...|night)`,
-    which can run into the hundreds of combinations — can consume most or all of that
-    budget on its own. When a line's own expansion exceeds its even share of the budget,
-    padacioso logs a warning and keeps a deterministic, uniformly-sampled subset of that
-    line's combinations rather than silently keeping only the first N — but a subset is
-    still a subset, so specific phrasings can come back unmatched. Split an overflowing
-    line into several narrower lines instead of relying on the sampler to cover it.
+    can run into the hundreds of combinations and consume most or all of that budget alone.
+
+    When a line's own expansion exceeds its even share of the budget, padacioso logs a
+    warning and keeps a deterministic, uniformly-sampled subset of that line's combinations.
+    It does not just keep the first N. Even so, a subset is still a subset, so specific
+    phrasings can come back unmatched. Split an overflowing line into several narrower lines
+    instead of relying on the sampler to cover it.
 
 ## Context and keyword gating
 

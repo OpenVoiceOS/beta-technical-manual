@@ -59,15 +59,17 @@ To enable or disable specific transformers, modify your `mycroft.conf`:
 ```
 
 Use the plugin's **entry-point name** (the left column above) as the key under
-`intent_transformers` — that's what `IntentTransformersService` (the canonical loader
-shared by `ovos-core`, `ovos-audio`, `ovos-dinkum-listener` and the HiveMind agent
-plugins) both gates loading on and passes as that plugin's own `config`. Loading is
-opt-in: a transformer whose entry-point name is absent from `intent_transformers`
-entirely is never loaded, regardless of what it calls itself internally.
-`ovos-keyword-template-matcher` happens to register itself under the shorter name
-`keyword-templates` (`super().__init__("keyword-templates", 1, config)`) — that name
-only matters to the plugin's own internals if it's ever instantiated with no config
-passed in at all; the deployer-facing config key is still the entry-point name.
+`intent_transformers`. `IntentTransformersService` is the canonical loader shared by
+`ovos-core`, `ovos-audio`, `ovos-dinkum-listener`, and the HiveMind agent plugins. It
+checks that name to decide whether to load the plugin, and passes it back as that
+plugin's own `config`. Loading is opt-in. A transformer whose entry-point name is
+absent from `intent_transformers` is never loaded, no matter what it calls itself
+internally.
+
+`ovos-keyword-template-matcher` registers itself under the shorter name
+`keyword-templates` (`super().__init__("keyword-templates", 1, config)`). That
+internal name only matters when the plugin is instantiated with no config passed
+in at all. The deployer-facing config key is still the entry-point name.
 
 
 ---

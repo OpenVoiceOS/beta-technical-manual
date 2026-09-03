@@ -95,7 +95,7 @@ are independent keywords with no aliasing between them, so write alternatives on
 want them collapsed into a single canonical form plus aliases:
 
 !!! warning "A bare `a|b` is not alternation"
-    The parentheses are load-bearing. A `|` outside a `(...)` group is not split at all — it is
+    The parentheses are required. A `|` outside a `(...)` group is not split at all. It is
     kept as a literal character in a single keyword line, almost never what you want. Either
     wrap it, `(a|b)`, or drop the `|` and put each alternative on its own line.
 
