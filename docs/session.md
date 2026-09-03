@@ -153,11 +153,17 @@ All four are optional. An absence falls back to the deployment default,
 and `location` is what backs the `location` / `location_pretty` /
 `location_timezone` magic properties below.
 
-!!! note "`location` and `timezone` are an `ovos-bus-client` implementation detail, not (yet) SESSION-1"
-    The wire carries `location` on every session, but the OVOS-SESSION-1 field registry does
-    not list it, or the derived `timezone`. Both fields are real, and deployments depend on them.
-    `ovos-bus-client`'s `Session` subclass implements them. This page documents them as
-    implementation behavior, pending a SESSION-1 amendment to register them formally.
+!!! note "The spec's `location` shape and `ovos-bus-client`'s implementation do not match yet"
+    OVOS-SESSION-1 §3.5 registers `location` as exactly three optional keys: `lat` and `lon`
+    (decimal degrees, WGS84), and `tz` (an IANA zone name). Everything else, city, country,
+    offsets, daylight-saving state, is derived out of band and has no wire shape. The only
+    normative consumer rule: when `location.tz` is present, a consumer must use it to resolve
+    wall-clock time for that session, and fall back to the deployment timezone otherwise.
+
+    `ovos-bus-client`'s `Session` subclass does not implement this shape yet. Its `location`
+    field is a richer city/coordinate/timezone object, populated from `Configuration()`'s
+    `location` section. This page documents the deployed behavior. Expect it to converge on
+    the spec's three-key shape once the implementation catches up.
 
 ## Magic Properties
 
