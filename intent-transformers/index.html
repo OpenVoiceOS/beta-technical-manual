@@ -1740,12 +1740,17 @@
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>}
 </span></code></pre></div>
 <p>Use the plugin's <strong>entry-point name</strong> (the left column above) as the key under
-<code>intent_transformers</code>. <code>IntentTransformersService</code> is the canonical loader shared by
-<code>ovos-core</code>, <code>ovos-audio</code>, <code>ovos-dinkum-listener</code>, and the HiveMind agent plugins. It
-checks that name to decide whether to load the plugin, and passes it back as that
-plugin's own <code>config</code>. Loading is opt-in. A transformer whose entry-point name is
-absent from <code>intent_transformers</code> is never loaded, no matter what it calls itself
-internally.</p>
+<code>intent_transformers</code>. <code>IntentTransformersService</code> (<code>ovos-core</code>, in
+<code>ovos_core/transformers.py</code>) is what loads intent transformers specifically. It shares
+its <code>TransformersService</code> base and <code>load_plugins()</code> gating mechanism with the sibling
+loaders other repos use for their own transformer chains, <code>ovos-audio</code>'s
+<code>DialogTransformersService</code>/<code>TTSTransformersService</code>, <code>ovos-dinkum-listener</code>'s
+<code>AudioTransformersService</code>, and so on, but each of those is its own service instance for
+its own chain. <code>IntentTransformersService</code> itself is intent-chain-specific to
+<code>ovos-core</code>. Every one of these services checks the entry-point name against its own
+config section to decide whether to load a plugin, and passes it back as that plugin's
+own <code>config</code>. Loading is opt-in. A transformer whose entry-point name is absent from its
+config section is never loaded, no matter what it calls itself internally.</p>
 <p><code>ovos-keyword-template-matcher</code> registers itself under the shorter name
 <code>keyword-templates</code> (<code>super().__init__("keyword-templates", 1, config)</code>). That
 internal name only matters when the plugin is instantiated with no config passed
