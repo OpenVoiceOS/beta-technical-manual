@@ -129,6 +129,22 @@ The low-level `FakeBus` it builds on lives in `ovos-utils` (`ovos_utils.fakebus`
 
 ---
 
+## `MiniCroft` training timeouts
+
+`get_minicroft()` waits for `mycroft.skills.trained` to go quiet before returning. If training
+never completes within `OVOSCOPE_TRAINED_TIMEOUT` seconds, it raises `RuntimeError`. That
+timeout defaults to **180s** when the `CI` environment variable is set, **5s** otherwise
+(override either with the env var) — fleet CI runs under coverage instrumentation on throttled
+2-core runners, and a large single-skill intent set was seen to exceed 60s in the field.
+
+Any test suite using `get_minicroft` must set `pytest-timeout` to at least the trained-wait
+ceiling **+ 120s**: for single-language suites on the 180s CI default, use 300s or more; for
+multilingual suites, `pytest-timeout ≥ max_wait + 120s`. A `pytest-timeout` at or below the
+ceiling kills setup mid-wait and the failure masquerades as a boot failure rather than a
+timeout. Full detail: [minicroft.md](https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/minicroft.md).
+
+---
+
 ## Running in CI
 
 Add the shared `ovoscope` workflow to your skill repo so the tests run on every pull request — see
