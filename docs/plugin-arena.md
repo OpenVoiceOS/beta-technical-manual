@@ -3,7 +3,7 @@
 !!! abstract "In a nutshell"
     OVOS lets you swap in different plugins for jobs like understanding speech or recognizing commands. Which one is best? The Plugin Arena answers that by comparing them two ways: objective scores measured against test data, and a "which sounds better?" vote where people blindly pick between two plugins' results, scored a bit like chess rankings. It is purely a scoreboard for comparing plugins. It never installs or runs them itself. See the [Glossary](glossary.md) for unfamiliar terms.
 
-The arena runs live at [openvoiceos.github.io/ovos-plugin-arena](https://openvoiceos.github.io/ovos-plugin-arena), with source and battle definitions at [OpenVoiceOS/ovos-plugin-arena](https://github.com/OpenVoiceOS/ovos-plugin-arena). The **intent**, **STT**, **VAD**, and **TTS** leagues carry live battles and ELO standings, seeded from automated A/B votes; human votes further refine the ratings as they come in. The **wake word** league's benchmarks are defined and live, but no battles have run yet, so every competitor still sits at the seed ELO.
+The arena runs live at [openvoiceos.github.io/ovos-plugin-arena](https://openvoiceos.github.io/ovos-plugin-arena), with source and battle definitions at [OpenVoiceOS/ovos-plugin-arena](https://github.com/OpenVoiceOS/ovos-plugin-arena). The **intent**, **STT**, **VAD**, **TTS**, and **wake word** leagues all carry live automated A/B battles and ELO standings, seeded from benchmarks; human votes have not yet been cast for every league and further refine the ratings as they come in.
 
 **What this is:** a way to answer *"which OVOS plugin should I use?"* It compares plugins on two signals:
 
