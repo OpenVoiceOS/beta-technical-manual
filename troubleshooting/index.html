@@ -2191,7 +2191,7 @@ The reliable first-time path is to add the key directly to your user config file
 this way once), <code>ovos-config set -k log_level -v DEBUG</code> will find it and write it to
 <code>mycroft.conf</code> (the User layer). If <code>mycroft.conf</code> was already showing the wrong value
 before running <code>set</code>, on an <code>ovos-config</code> release before <code>3.1.1a1</code>, <code>set</code> wrote to the
-Assistant layer (<code>runtime.conf</code>) instead — see <a href="../config/#the-layers">Configuration</a> —
+Assistant layer (<code>runtime.conf</code>) instead — see <a href="../config/#config-layer-stack">Configuration</a> —
 and the User layer's stale value silently won.</p>
 </div>
 <p>This applies to every service (they all watch the same configuration and pick up the change
