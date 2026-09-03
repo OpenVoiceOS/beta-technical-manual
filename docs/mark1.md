@@ -166,5 +166,23 @@ for grid in a:
     still open, so the mixin does not exist in any released version yet.
 
 ---
+
+## Faceplate page in the control panel
+
+The [OVOS Control Panel](https://github.com/OpenVoiceOS/ovos-control-panel) has a Mark 1 faceplate page that draws the same
+32x8 mouth grid and two twelve-LED eye rings as the real hardware — every LED is drawn
+whether lit or not, matching the plastic faceplate rather than a simplified sketch. It works
+as a simulator in the browser with no plugin installed; with `ovos-PHAL-plugin-mk1` running
+on the device, the page can also mirror the live face and send designs to it.
+
+![The Mark 1 faceplate page in the control panel](img/mark1-wide.png)
+
+![The same page on a phone](img/mark1-mobile.png)
+
+The device shown in these screenshots is a stand-in: the page could not confirm a connected
+Mark 1 when the screenshots were taken, so they show the browser simulator, not a live
+faceplate.
+
+---
 **Read next:** [Mark 2 Hardware](mark2.md)
 **Related:** [i2c Sound & Audio Setup](i2c-sound.md) · [Hardware Integrators](hardware-integrators.md) · [PHAL](phal.md)
