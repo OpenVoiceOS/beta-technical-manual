@@ -141,7 +141,9 @@ Set `pytest-timeout` to at least the trained-wait ceiling plus 120s on any test 
 uses `get_minicroft`. For single-language suites on the 180s CI default, use 300s or more.
 For multilingual suites, set `pytest-timeout` to at least `max_wait + 120s`. A `pytest-timeout`
 at or below the ceiling kills setup mid-wait, and the failure looks like a boot failure
-instead of a timeout. Full detail:
+instead of a timeout. This applies to the **global** timeout in `pytest.ini` or `pyproject.toml`
+too, not just a per-test `@pytest.mark.timeout`: a low global floor kills `setUpClass` before
+`get_minicroft` even returns, regardless of any per-test marker. Full detail:
 [minicroft.md](https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/minicroft.md).
 
 ---
