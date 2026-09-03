@@ -31,7 +31,7 @@ A single package may ship one or both. In `mycroft.conf` you select them under t
 | `ovos-translate-plugin-nllb` ([repo](https://github.com/OpenVoiceOS/ovos-translate-plugin-nllb)) | no | yes | FOSS (Offline) | Apache-2.0 | NLLB-200 via CTranslate2. Downloads a model the first time. | Stable |
 | `ovos-lang-detector-fasttext-plugin` ([repo](https://github.com/OpenVoiceOS/ovos-lang-detector-fasttext-plugin)) | yes | no | FOSS (Offline) | Apache-2.0 | fastText language identification. | Stable |
 | `ovos-lang-detector-plugin-voter` ([repo](https://github.com/OpenVoiceOS/ovos-lang-detector-classics-plugin)) | yes | no | FOSS (Offline) | no license file | A *voter* that averages classic detectors. By default it uses cld2, langdetect and fastlang. Package name is `ovos-lang-detector-classics-plugin`; `ovos-lang-detector-plugin-cld3` is also available as a separate sub-plugin from the same package. | Stable |
-| `ovos-translate-plugin-linguonnx` ([repo](https://github.com/OpenVoiceOS/ovos-plugin-linguonnx)) | no | yes | FOSS (Offline) | Apache-2.0 | ONNX routing over a graph of translation models, no torch. Reaches 586 languages. See [linguonnx Language Plugins](linguonnx-plugins.md). | Alpha |
+| `ovos-translate-plugin-linguonnx` ([repo](https://github.com/OpenVoiceOS/ovos-plugin-linguonnx)) | no | yes | FOSS (Offline) | Apache-2.0 | ONNX routing over a graph of translation models, no torch. Reaches 593 languages. See [linguonnx Language Plugins](linguonnx-plugins.md). | Alpha |
 | `ovos-lang-detect-plugin-linguonnx` ([repo](https://github.com/OpenVoiceOS/ovos-plugin-linguonnx)) | yes | no | FOSS (Offline) | Apache-2.0 | GlotLID on ONNX. Same package as `ovos-translate-plugin-linguonnx`. See [linguonnx Language Plugins](linguonnx-plugins.md). | Alpha |
 | `ovos-google-translate-plugin` ([repo](https://github.com/OpenVoiceOS/ovos-google-translate-plugin)) | yes | yes | API (free) | Apache-2.0 (cloud service, separate Google terms) | Translate (`ovos-google-translate-plugin`) and detect (`ovos-google-lang-detector-plugin`) are separate entry-points. | Stable |
 
@@ -78,7 +78,7 @@ If you don't set anything, the client shuffles through its built-in public-serve
   ["No Language Left Behind"](https://arxiv.org/abs/2207.04672) program (200 languages,
   mined low-resource data). Large; the trade-off is RAM and download size.
 - **linguonnx** ([TigreGotico/linguonnx](https://github.com/TigreGotico/linguonnx)):
-  torch-free ONNX routing across Marian, M2M100, NLLB, and MADLAD models, reaching 586
+  torch-free ONNX routing across Marian, M2M100, NLLB, and MADLAD models, reaching 593
   languages by pivoting; broadest coverage, alpha maturity, and a routing graph to reason
   about. Its detection side runs [GlotLID](https://arxiv.org/abs/2310.16248), a language
   identifier purpose-built for low-resource languages (1,665 languages).

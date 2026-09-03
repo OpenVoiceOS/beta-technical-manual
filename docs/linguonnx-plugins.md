@@ -1,7 +1,7 @@
 # linguonnx Language Plugins
 
 !!! abstract "In a nutshell"
-    One package gives OVOS offline language detection and offline translation. It runs the models on your own machine, so text never leaves the device. It reaches 586 languages by routing a translation through one or two models instead of holding a single large one. This page shows how to install it, how to configure it, and which settings bound the memory it uses. See [Translation Plugins](translation-plugins.md) and the [Glossary](glossary.md).
+    One package gives OVOS offline language detection and offline translation. It runs the models on your own machine, so text never leaves the device. It reaches 593 languages by routing a translation through one or two models instead of holding a single large one. This page shows how to install it, how to configure it, and which settings bound the memory it uses. See [Translation Plugins](translation-plugins.md) and the [Glossary](glossary.md).
 
 `ovos-plugin-linguonnx` ships two plugins in one package:
 
@@ -72,7 +72,7 @@ Set `oversize_fallback: true` to make the cap a preference instead. Every pair a
 With `max_model_mb: 500` and `count_cached_as_free: false`, `en -> ca` routes through a 157 MB `opus-mt` model instead of a 1.7 GB multilingual one. `en -> cv` (Chuvash) has no model under 500 MB at all, so the fallback escalates to the smallest model that covers it.
 
 !!! warning "`LINGUONNX_MAX_DOWNLOAD_MB` ceilings the escalation"
-    `LINGUONNX_MAX_DOWNLOAD_MB` is an environment variable, not a config key. It defaults to `8192` (MB) and caps how large a model the escalation may fetch. Set it at or near your `max_model_mb` value and the escalation collapses: routable languages on the default graph drop from 586 to 249, the same result as no fallback at all. Leave it at the default unless you deliberately want to bound the fallback.
+    `LINGUONNX_MAX_DOWNLOAD_MB` is an environment variable, not a config key. It defaults to `8192` (MB) and caps how large a model the escalation may fetch. Set it at or near your `max_model_mb` value and the escalation collapses: routable languages on a 500 MB budget drop from 593 (with `oversize_fallback` escalating past the cap) to 251, the same result as no fallback at all. Leave it at the default unless you deliberately want to bound the fallback.
 
 ### Bounding memory
 
