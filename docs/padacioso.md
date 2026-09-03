@@ -41,15 +41,16 @@ container.calc_intent('say something, whatever')
 # {'name': 'say', 'entities': {}, 'conf': 0.85}
 ```
 
-`padacioso.IntentContainer.add_intent()`, called directly as above, honors `simplematch`'s
-colon-typed slot syntax (`{number:int}`) with real type coercion. An unparseable value fails to
-match. It does not crash.
+Both `padacioso.IntentContainer.add_intent()`, called directly as above, and the OVOS
+pipeline's `.intent`-file path share the same `ovos-spec-tools` slot-name validator, which
+enforces the OVOS grammar (`{lowercase_with_underscores}`) — `simplematch`'s colon-typed
+slot syntax (`{number:int}`) is **not** supported by either path, and fails with
+`MalformedTemplate`.
 
-The OVOS pipeline's `.intent`-file path differs. `ovos-spec-tools` validates slot names against
-the OVOS grammar (`{lowercase_with_underscores}`) first, and a colon-typed name fails that check
-with `MalformedTemplate`. The pipeline plugin catches it per sample rather than propagating a
-crash: the malformed line is skipped with a `LOG.warning`, and registration only fails outright
-if every sample in the file was malformed.
+The two paths differ only in how they handle that failure. Calling `add_intent()` directly
+propagates the exception — it crashes. The pipeline plugin catches it per sample instead:
+the malformed line is skipped with a `LOG.warning`, and registration only fails outright if
+every sample in the file was malformed.
 
 A wildcard (`*`) carries a confidence penalty proportional to how much of the template it
 covers: `0.05 + 0.20 × (wildcard tokens / total tokens)`, so any wildcard costs between
