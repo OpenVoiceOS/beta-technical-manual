@@ -92,7 +92,7 @@ Other useful config keys read by the plugin:
 |---|---|---|
 | `cast_to_ascii` | `false` | Strip accents before matching |
 | `stem` | `false` | Apply Snowball stemming to examples and utterances |
-| `disable_padaos` | `false` | Disable the bundled regex fast-path and use only the neural matcher |
+| `disable_padaos` | `false` | Disable the bundled regex fast-path and use only the neural matcher. **Load-bearing for tier routing**: an exact trained utterance scores `conf=1.0` with padaos enabled but only ~0.67-0.69 from the neural matcher alone — below the medium-confidence threshold — so disabling padaos silently pushes exact matches out of the high-confidence tier and into a lower one. |
 | `intent_cache` | XDG data dir | Where trained intent models are cached |
 | `domain_engine` | `false` | Train a separate model per skill domain instead of one flat model |
 | `instant_train` | `false` | Retrain synchronously on every registration instead of batching |
