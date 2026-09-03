@@ -368,14 +368,6 @@ CONTEXT-1's declarative `requires_context` / `excludes_context` gate (above) exp
     message stores the keyword name itself as the value (`{"value": word or context}`), not
     an empty or null value.
 
-!!! note "Set context before speaking, not after"
-    A context write only reaches anyone else once the handler emits a Message derived
-    from the mutated session, `self.speak()`, `self.speak_dialog()`, or any other emit.
-    Write the context first, then speak. A handler that speaks and only afterward writes
-    context has nothing left to carry that write: on a named (remote) session, where the
-    orchestrator holds no state between utterances, a write with no following emit is
-    invisible to the next turn.
-
 The decorators are equivalent to calling these methods:
 
 - `@adds_context('MilkContext')` calls `set_context('MilkContext')` after the handler runs.
