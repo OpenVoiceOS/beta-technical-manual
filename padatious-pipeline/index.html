@@ -1626,7 +1626,7 @@
 <tr>
 <td><code>disable_padaos</code></td>
 <td><code>false</code></td>
-<td>Disable the bundled regex fast-path and use only the neural matcher. <strong>Load-bearing for tier routing</strong>: an exact trained utterance scores <code>conf=1.0</code> with padaos enabled but only ~0.67-0.69 from the neural matcher alone — below the medium-confidence threshold — so disabling padaos silently pushes exact matches out of the high-confidence tier and into a lower one.</td>
+<td>Disable the bundled regex fast-path and use only the neural matcher. <strong>Affects tier placement</strong>: an exact trained utterance scores <code>conf=1.0</code> with padaos enabled, but only ~0.67-0.69 from the neural matcher alone, below the medium-confidence threshold. Disabling padaos pushes exact matches out of the high-confidence tier and into a lower one.</td>
 </tr>
 <tr>
 <td><code>intent_cache</code></td>

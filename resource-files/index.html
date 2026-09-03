@@ -1822,7 +1822,7 @@ are independent keywords with no aliasing between them, so write alternatives on
 want them collapsed into a single canonical form plus aliases:</p>
 <div class="admonition warning">
 <p class="admonition-title">A bare <code>a|b</code> is not alternation</p>
-<p>The parentheses are load-bearing. A <code>|</code> outside a <code>(...)</code> group is not split at all — it is
+<p>The parentheses are required. A <code>|</code> outside a <code>(...)</code> group is not split at all. It is
 kept as a literal character in a single keyword line, almost never what you want. Either
 wrap it, <code>(a|b)</code>, or drop the <code>|</code> and put each alternative on its own line.</p>
 </div>

@@ -1740,15 +1740,16 @@
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>}
 </span></code></pre></div>
 <p>Use the plugin's <strong>entry-point name</strong> (the left column above) as the key under
-<code>intent_transformers</code> — that's what <code>IntentTransformersService</code> (the canonical loader
-shared by <code>ovos-core</code>, <code>ovos-audio</code>, <code>ovos-dinkum-listener</code> and the HiveMind agent
-plugins) both gates loading on and passes as that plugin's own <code>config</code>. Loading is
-opt-in: a transformer whose entry-point name is absent from <code>intent_transformers</code>
-entirely is never loaded, regardless of what it calls itself internally.
-<code>ovos-keyword-template-matcher</code> happens to register itself under the shorter name
-<code>keyword-templates</code> (<code>super().__init__("keyword-templates", 1, config)</code>) — that name
-only matters to the plugin's own internals if it's ever instantiated with no config
-passed in at all; the deployer-facing config key is still the entry-point name.</p>
+<code>intent_transformers</code>. <code>IntentTransformersService</code> is the canonical loader shared by
+<code>ovos-core</code>, <code>ovos-audio</code>, <code>ovos-dinkum-listener</code>, and the HiveMind agent plugins. It
+checks that name to decide whether to load the plugin, and passes it back as that
+plugin's own <code>config</code>. Loading is opt-in. A transformer whose entry-point name is
+absent from <code>intent_transformers</code> is never loaded, no matter what it calls itself
+internally.</p>
+<p><code>ovos-keyword-template-matcher</code> registers itself under the shorter name
+<code>keyword-templates</code> (<code>super().__init__("keyword-templates", 1, config)</code>). That
+internal name only matters when the plugin is instantiated with no config passed
+in at all. The deployer-facing config key is still the entry-point name.</p>
 <hr />
 <h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
 <h3 id="example-workflow">Example Workflow<a class="headerlink" href="#example-workflow" title="Permanent link">&para;</a></h3>

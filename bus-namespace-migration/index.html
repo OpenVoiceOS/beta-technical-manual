@@ -1579,7 +1579,7 @@ process from locally delivering the counterpart to its own handlers. A deploymen
 components all speak <code>ovos.*</code> can set <code>emit_legacy=false</code> once no local handler still needs
 the legacy delivery, and disable <code>modernize</code> once no legacy producers remain.</p>
 <div class="admonition warning">
-<p class="admonition-title"><code>modernize</code> is load-bearing, not cosmetic, on a canonical-only skill container</p>
+<p class="admonition-title"><code>modernize</code> is required, not cosmetic, on a canonical-only skill container</p>
 <p>A skill container that only registers <code>ovos.*</code> handlers is not automatically safe from an
 older producer still emitting legacy topics. The wire frame it receives may be legacy-only.
 That skill hears it at all <em>because</em> its own <code>MessageBusClient</code> (any <code>ovos-bus-client</code>
