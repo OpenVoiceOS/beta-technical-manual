@@ -74,7 +74,7 @@ time expressions.
 | cs       | yes                  | yes                  |
 | da       | yes                  | yes                  |
 | de       | yes                  | yes                  |
-| el       | yes                 | yes                  |
+| el       | no                  | yes                  |
 | en       | yes                  | yes                  |
 | es       | yes                  | yes                  |
 | et       | yes                  | yes                  |
@@ -84,13 +84,13 @@ time expressions.
 | fr       | yes                  | yes                  |
 | fy       | yes                  | yes                  |
 | gl       | yes                  | yes                  |
-| he       | yes                 | yes                  |
+| he       | no                  | yes                  |
 | hr       | yes                  | yes                  |
 | hu       | yes                  | yes                  |
-| id       | yes                 | yes                  |
+| id       | no                  | yes                  |
 | it       | yes                  | yes                  |
 | kab      | yes                  | yes                  |
-| ms       | yes                 | yes                  |
+| ms       | no                  | yes                  |
 | nb/no    | yes                  | yes                  |
 | nl       | yes                  | yes                  |
 | nn       | yes                  | yes                  |
@@ -102,7 +102,7 @@ time expressions.
 | sk       | yes                  | yes                  |
 | sl       | yes                  | yes                  |
 | sv       | yes                  | yes                  |
-| tr       | yes                 | yes                  |
+| tr       | no                  | yes                  |
 | uk       | yes                  | yes                  |
 
 
