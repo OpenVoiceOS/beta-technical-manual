@@ -49,7 +49,11 @@ class MySkill(OVOSSkill):
 
 If the message originated in the device itself, the `session_id` is always equal to the reserved value `"default"`. If it comes from an external client, it will be a unique uuid. The `"default"` session is special: it is the device-local session whose state the orchestrator holds and persists in-process, rather than receiving it from a client on every message (OVOS-SESSION-2 §5).
 
+A `session_id` that cannot serve as an identity, absent, `null`, empty, or any non-string value, resolves to `"default"` rather than minting a fresh session. This applies uniformly wherever a session carrier is read.
+
 `SessionManager.get(message)` is a pure read. It never writes the store. The default session is folded into the store exactly once per utterance, at intake, by `SessionManager.fold_inbound`. This happens before any handler runs. `SessionManager.get` only returns the live object; it never re-triggers a write. Call it anywhere in a component.
+
+For a named session, repeated calls to `SessionManager.get(message)` for the same message return the same bound `Session` object. A message derived from it, `message.forward(...)`, `message.reply(...)`, or a bus response, carries that bound object's current state, not a stale copy of the carrier the original message arrived with. Mutate the `Session` object `get` returned. Do not edit `message.context["session"]` directly after calling `get`: the bound object wins when a derived message is stamped.
 
 !!! info "One microphone, one conversation"
     Because everything the on-device microphone hears lands in the single `"default"`
