@@ -1446,10 +1446,43 @@ add no new methods. They only change load order.</p>
 <code>track_info()</code>, and <code>shutdown()</code> are implemented by the base class and normally left
 alone. <code>load_track</code> only records the URI and metadata and emits <code>LOADED_MEDIA</code>. It does
 <strong>not</strong> start playback. Playback itself is driven by <code>ocp_start()</code> / <code>ocp_pause()</code> /
-<code>ocp_resume()</code> / <code>ocp_stop()</code>, which the base class also implements: each one emits the
-matching <code>ovos.common_play.player.state</code> / <code>.media.state</code> / <code>.track.state</code> bus events and
-then calls your <code>play()</code> / <code>pause()</code> / <code>resume()</code> / <code>stop()</code>. Implement the plain methods,
-not the <code>ocp_*</code> wrappers.</p>
+<code>ocp_resume()</code> / <code>ocp_stop()</code>, which the base class also implements — each emits a
+different subset of the <code>ovos.common_play.player.state</code> / <code>.media.state</code> / <code>.track.state</code>
+bus events before calling your plain method:</p>
+<table>
+<thead>
+<tr>
+<th>Wrapper</th>
+<th>Emits</th>
+<th>Then calls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ocp_start()</code></td>
+<td><code>player.state</code> + <code>media.state</code></td>
+<td><code>play()</code></td>
+</tr>
+<tr>
+<td><code>ocp_pause()</code></td>
+<td><code>player.state</code> only</td>
+<td><code>pause()</code></td>
+</tr>
+<tr>
+<td><code>ocp_resume()</code></td>
+<td><code>player.state</code> + <code>track.state</code></td>
+<td><code>resume()</code></td>
+</tr>
+<tr>
+<td><code>ocp_stop()</code></td>
+<td><code>player.state</code> + <code>media.state</code></td>
+<td><code>stop()</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>ocp_pause()</code>, <code>ocp_resume()</code>, and <code>ocp_stop()</code> are no-ops (they neither emit nor call your
+method) when no track is currently loaded. Implement the plain methods, not the <code>ocp_*</code>
+wrappers.</p>
 <p>Two constructor arguments matter: <code>config</code> (your plugin's settings dict) and <code>bus</code> (the
 <code>MessageBusClient</code> OCP passes in). <code>bus</code> falls back to a <code>FakeBus()</code> when unset, which is
 what makes the plugin importable and testable outside a running OVOS stack.</p>
