@@ -1838,12 +1838,23 @@ fleets no longer run legacy-namespace consumers.</p>
 <td>Yes</td>
 <td>1.0.0</td>
 </tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/320">ovos-bus-client#320</a></td>
+<td>Serializes <code>session.location</code> as OVOS-SESSION-1 §3.5's three keys (<code>lat</code>/<code>lon</code>/<code>tz</code>); still accepts the legacy nested <code>mycroft.conf</code>-style <code>location</code> object on ingest, normalizing it with a deprecation warning</td>
+<td>skill/plugin authors reading <code>session.location</code> or <code>Session.location_preferences</code></td>
+<td>No (compat window)</td>
+<td>2.11.3a1 (merged, on <code>dev</code>)</td>
+</tr>
 </tbody>
 </table>
 <p>The four kill-switch PRs above (<code>ovos-bus-client#272</code>, <code>ovos-core#837</code>,
 <code>ovos-workshop#501</code>, <code>ovos-utils#412</code>) must merge together. <code>ovos-bus-client#272</code>
 is explicit: "do not merge until then." <code>ovos-utils#412</code> would also be that
 package's first stable 1.0 release.</p>
+<p><code>ovos-bus-client#320</code>'s compat window runs until <code>ovos-bus-client</code> 3.0.0, when the legacy
+nested <code>location</code> ingest path is removed. <code>Session.location_preferences</code> is a deprecated
+read/write compatibility view over the three-key shape; ovos-workshop's location
+properties and <code>ovos-skill-weather</code> still read it.</p>
 <h2 id="other-changes-by-repository">Other changes by repository<a class="headerlink" href="#other-changes-by-repository" title="Permanent link">&para;</a></h2>
 <p>Entries here are PRs that change behavior but don't fit the three
 headline efforts above. Most are still open; rows marked <strong>merged</strong> have
