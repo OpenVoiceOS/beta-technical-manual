@@ -1959,16 +1959,11 @@ for the full guidance.</p>
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># if the key is a secret (llm.key, tokens), afterward: chmod 600 ~/.config/mycroft/mycroft.conf</span>
 </span></code></pre></div>
 <p>See the <strong>Secrets and permissions</strong> warning above. <code>ovos-config set</code> does not restrict the file's permissions itself.</p>
-<div class="admonition warning">
-<p class="admonition-title">Known bug: <code>ovos-config set</code> writes to the wrong file</p>
-<p><code>ovos-config</code> mis-indexed its config-layer table after the AssistantConfig rewrite:
-<code>ovos-config set</code> writes to <code>~/.config/mycroft/runtime.conf</code> (the Assistant layer),
-not <code>~/.config/mycroft/mycroft.conf</code> (the User layer) as intended. <code>ovos-config show
--u</code> and <code>ovos-config show -a</code> are swapped the same way. Check <code>runtime.conf</code> if a
-<code>set</code> value doesn't show up where expected. Fix drafted in
-<a href="https://github.com/OpenVoiceOS/ovos-config/pull/305"><code>ovos-config#305</code></a>, not yet
-merged.</p>
-</div>
+<p><code>ovos-config set</code> writes to <code>~/.config/mycroft/mycroft.conf</code> (the User layer), and
+<code>ovos-config show -u</code>/<code>show -a</code> read the User/Assistant layers respectively. A mis-indexed
+config-layer table swapped these before <code>ovos-config</code> <code>3.1.1a1</code>
+(<a href="https://github.com/OpenVoiceOS/ovos-config/pull/305"><code>ovos-config#305</code></a>); update if
+you're on an older release.</p>
 <p><strong>Restart and verify</strong></p>
 <p><code>ovos-config set</code> writes the change to disk. It does not restart the running services. They
 keep using the old value until you restart them:</p>
