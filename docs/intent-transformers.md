@@ -48,7 +48,7 @@ To enable or disable specific transformers, modify your `mycroft.conf`:
 
 ```jsonc
 "intent_transformers": {
-  "keyword-templates": {
+  "ovos-keyword-template-matcher": {
     "active": true
   },
   "ovos-ahocorasick-ner-plugin": {
@@ -58,10 +58,16 @@ To enable or disable specific transformers, modify your `mycroft.conf`:
 
 ```
 
-Note: `ovos-keyword-template-matcher` is the plugin's entry-point name, used for
-installation and discovery. `keyword-templates` is the config key the plugin
-registers itself under (`super().__init__("keyword-templates", 1, config)`), and
-is the key `intent_transformers` must use.
+Use the plugin's **entry-point name** (the left column above) as the key under
+`intent_transformers` — that's what `IntentTransformersService` (the canonical loader
+shared by `ovos-core`, `ovos-audio`, `ovos-dinkum-listener` and the HiveMind agent
+plugins) both gates loading on and passes as that plugin's own `config`. Loading is
+opt-in: a transformer whose entry-point name is absent from `intent_transformers`
+entirely is never loaded, regardless of what it calls itself internally.
+`ovos-keyword-template-matcher` happens to register itself under the shorter name
+`keyword-templates` (`super().__init__("keyword-templates", 1, config)`) — that name
+only matters to the plugin's own internals if it's ever instantiated with no config
+passed in at all; the deployer-facing config key is still the entry-point name.
 
 
 ---
