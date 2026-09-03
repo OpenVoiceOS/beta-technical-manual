@@ -1590,11 +1590,11 @@ both families. See the table below for what each currently supports.</p>
 <td>Stable</td>
 </tr>
 <tr>
-<td>ovos-media-plugin-mass</td>
+<td><a href="#ovos-media-plugin-mass">ovos-media-plugin-mass</a></td>
 <td>Music Assistant server (audio)</td>
-<td>ovos-media only</td>
-<td>—</td>
-<td>Not yet published</td>
+<td>yes: both (old audio service + ovos-media)</td>
+<td>Apache-2.0</td>
+<td>Alpha</td>
 </tr>
 <tr>
 <td>ovos-media-plugin-mpris</td>
@@ -1771,13 +1771,15 @@ a specific CLI player. See <a href="../ovos-media/">Media playback: legacy vs. o
 <hr />
 <h2 id="ovos-media-plugin-mass">ovos-media-plugin-mass<a class="headerlink" href="#ovos-media-plugin-mass" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Status</strong>: not yet published — no public repository or PyPI package exists, so it cannot be
-  installed today.</li>
+<li><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-media-plugin-mass">ovos-media-plugin-mass</a></li>
 <li><strong>Description</strong>: Hands playback off to a <a href="https://music-assistant.io/">Music Assistant</a> server
-  instead of playing the stream directly. <code>opm.media.audio</code> only, <code>ovos-media</code> only — there is
-  no old-audio-service equivalent. Does not implement <code>next()</code>/<code>previous()</code> through the legacy
-  <code>AudioBackend</code> interface; skipping/previous only work through the Music Assistant queue API.</li>
+  instead of playing the stream directly. It registers under both <code>opm.media.audio</code>
+  (<code>ovos-media</code>) and the legacy <code>mycroft.plugin.audioservice</code> group (old <code>ovos-audio</code>), each
+  wrapping the same Music Assistant client — <code>next()</code>/<code>previous()</code>, play/pause, and seeking all
+  go through the Music Assistant queue API rather than a locally decoded stream.</li>
 </ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-media-plugin-mass
+</span></code></pre></div>
 <p>Then select it in your <code>media.audio_players</code> config. See <a href="../ovos-media/">Media playback: legacy vs.
 ovos-media</a>.</p>
 <hr />
@@ -1809,10 +1811,10 @@ ovos-media</a>.</p>
   only touched when actually used.</p>
 </li>
 </ul>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-media-classifier<span class="w">          </span><span class="c1"># keyword backend only</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-media-classifier<span class="o">[</span>ner<span class="o">]</span><span class="w">     </span><span class="c1"># adds the Aho-Corasick NER backend</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-media-classifier<span class="w">          </span><span class="c1"># keyword backend only</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-media-classifier<span class="o">[</span>ner<span class="o">]</span><span class="w">     </span><span class="c1"># adds the Aho-Corasick NER backend</span>
 </span></code></pre></div>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span> <span class="nn">ovos_media_classifier</span> <span class="kn">import</span> <span class="n">KeywordMediaClassifier</span><span class="p">,</span> <span class="n">load_media_classifier</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span> <span class="nn">ovos_media_classifier</span> <span class="kn">import</span> <span class="n">KeywordMediaClassifier</span><span class="p">,</span> <span class="n">load_media_classifier</span>
 </span></code></pre></div>
 <p>The <code>[ner]</code> extra adds <code>AhocorasickMediaClassifier</code> (in <code>ovos_media_classifier.ahocorasick</code>), a gazetteer/entity-list backend built on Aho-Corasick matching.</p>
 <div class="admonition note">
