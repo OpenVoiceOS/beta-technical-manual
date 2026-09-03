@@ -177,12 +177,13 @@ back as `AudioStart` + `AudioChunk`* + `AudioStop`.
 |---|---|
 | `Describe` | Send `Info` advertising the loaded plugin as a TTS voice |
 | `Synthesize` | Call the plugin's synth, then stream the WAV back as `AudioChunk`s (1024 samples per chunk, fixed) |
+| `SynthesizeStart`/`SynthesizeChunk`/`SynthesizeStop` | Stream text sentence by sentence via a sentence-boundary detector; each sentence gets its own `AudioStart`/`AudioChunk`/`AudioStop` group, ending in `SynthesizeStopped` |
 
-!!! note "Whole-utterance synthesis only"
-    `wyoming-ovos-tts` handles the plain `Synthesize` event only: the full text is
-    synthesized in one call and the resulting WAV is chunked back over the wire.
-    Wyoming's streaming-synthesis protocol
-    (`SynthesizeStart`/`SynthesizeChunk`/`SynthesizeStop`) is not implemented.
+!!! note "Streaming is the default; `--no-streaming` reverts to whole-utterance synthesis"
+    A client that opens `SynthesizeStart`/`SynthesizeChunk`/`SynthesizeStop` gets audio streamed
+    back sentence by sentence as text arrives. A plain `Synthesize` event is still handled the
+    old way: the full text is synthesized in one call and the resulting WAV is chunked back over
+    the wire. Pass `--no-streaming` to disable the streaming path entirely.
 
 ### Running
 
@@ -195,6 +196,8 @@ wyoming-ovos-tts --plugin-name <ovos-tts-plugin-name> --uri tcp://0.0.0.0:7892
 |---|---|---|---|
 | `--plugin-name` | Yes | (none) | OVOS TTS plugin module name (e.g. `ovos-tts-plugin-piper`) |
 | `--uri` | No | `stdio://` | `tcp://HOST:PORT` or `unix:///path/to/socket` |
+| `--no-streaming` | No | `False` | Disable `SynthesizeStart`/`SynthesizeChunk`/`SynthesizeStop` handling, forcing whole-utterance synthesis for every request |
+| `--samples-per-chunk` | No | `1024` | Samples per `AudioChunk` |
 | `--debug` | No | `False` | Enable DEBUG log level |
 
 Examples:

@@ -176,7 +176,7 @@ Settings live under `intents.ovos-hierarchical-knn-pipeline` in `mycroft.conf`:
 | `conf_medium` | `0.5` | Minimum confidence for a `match_medium` result. |
 | `conf_low` | `0.15` | Minimum confidence for a `match_low` result. |
 | `renormalize` | `false` | Re-scale surviving probabilities to sum to 1 before threshold checks. Off by default: the classifier already renormalizes internally, so turning this on re-scales a second time over only the registered intents and loses information about how confident the classifier was overall. |
-| `timeout` | `1` | Seconds to wait for the classifier before giving up on a match. |
+| `timeout` | `1` | Seconds to wait for the Adapt/Padatious intent-manifest bus response when (re)syncing the registered-intent allowlist. Matching itself is a synchronous local call with no timeout. |
 
 See [Pipelines Overview](pipelines-overview.md) for how to place it in your pipeline and how
 matchers are ordered. For lighter alternatives see [Padacioso](padacioso.md) (literal),
