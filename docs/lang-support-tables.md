@@ -30,9 +30,9 @@ CPU recommendation.
     A language without one is STT-only until such a voice appears. You can still point
     `ovos-tts-plugin-phoonnx` at any voice ID yourself, but it won't be auto-selected.
 
-Several regional variants still have gaps. **EN-GB**, **PT-BR**, **AR-SA**, and the four
-Catalan variants (**CA-BA**, **CA-NW**, **CA-VA**, plus the already-covered **CA-ES**) ship a
-TTS voice but no bundled offline STT recommendation. Configure a multilingual model by
+Several regional variants still have gaps. **EN-GB**, **PT-BR**, and the three ungapped
+Catalan variants (**CA-BA**, **CA-NW**, **CA-VA**, alongside the already-covered **CA-ES**)
+ship a TTS voice but no bundled offline STT recommendation. Configure a multilingual model by
 hand until a dedicated recommendation lands: the practical picks are
 [`ovos-stt-plugin-fasterwhisper`](stt-plugins-reference.md#ovos-stt-plugin-fasterwhisper)
 (Whisper handles Catalan) locally, or
@@ -41,7 +41,7 @@ hand until a dedicated recommendation lands: the practical picks are
 
 | Language | Offline STT model | Offline TTS |
 |----------|--------------------|:---:|
-| **AR-SA** | — | yes |
+| **AR-SA** | `OpenVoiceOS/stt_ar_fastconformer_hybrid_large_pcd_v1.0_onnx` | yes |
 | **CA-BA** | — | yes |
 | **CA-ES** | `OpenVoiceOS/stt-ca-es-conformer-transducer-large-onnx` | yes |
 | **CA-NW** | — | yes |
@@ -62,9 +62,10 @@ hand until a dedicated recommendation lands: the practical picks are
 !!! note
     Where the STT column shows "—", the bundled recommendations don't cover offline speech
     recognition for that language yet. `autoconfigure` will skip that part of the
-    configuration and tell you so. Use an online STT plugin instead. Every other language has
-    no bundled offline STT or TTS recommendation at all yet: check the `recommends/` directories
-    in your installed `ovos-config` for the current list before relying on `autoconfigure`.
+    configuration and tell you so. Use an online STT plugin instead. This table covers only
+    the flagship set with a GPU tier; dozens more languages have a bundled offline STT and/or
+    TTS recommendation without one — check the `recommends/` directories in your installed
+    `ovos-config` for the current full list before relying on `autoconfigure`.
 
 !!! note "Some TTS recommends cover only one gender"
     **DA-DK** ships only a male voice. The female slot falls back to no TTS configuration
@@ -73,9 +74,9 @@ hand until a dedicated recommendation lands: the practical picks are
 
 A language that does not appear in this table has no bundled STT/TTS recommendation yet.
 This is not a deliberate exclusion. It just means nobody has added a `recommends/*.conf` file for it
-so far. Japanese is a widely requested example. `ovos-config` currently ships no `ja-jp` (or any other
-`ja-*`) recommends file, so `autoconfigure -l ja-jp` has nothing to select
-and Japanese support must be configured by hand until a recommendation is contributed.
+so far. Thai is a widely requested example. `ovos-config` currently ships no `th-th` (or any other
+`th-*`) recommends file, so `autoconfigure -l th-th` has nothing to select
+and Thai support must be configured by hand until a recommendation is contributed.
 
 ---
 
