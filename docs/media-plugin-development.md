@@ -71,10 +71,20 @@ class MyPlayer(AudioPlayerBackend):
 `track_info()`, and `shutdown()` are implemented by the base class and normally left
 alone. `load_track` only records the URI and metadata and emits `LOADED_MEDIA`. It does
 **not** start playback. Playback itself is driven by `ocp_start()` / `ocp_pause()` /
-`ocp_resume()` / `ocp_stop()`, which the base class also implements: each one emits the
-matching `ovos.common_play.player.state` / `.media.state` / `.track.state` bus events and
-then calls your `play()` / `pause()` / `resume()` / `stop()`. Implement the plain methods,
-not the `ocp_*` wrappers.
+`ocp_resume()` / `ocp_stop()`, which the base class also implements — each emits a
+different subset of the `ovos.common_play.player.state` / `.media.state` / `.track.state`
+bus events before calling your plain method:
+
+| Wrapper | Emits | Then calls |
+|---|---|---|
+| `ocp_start()` | `player.state` + `media.state` | `play()` |
+| `ocp_pause()` | `player.state` only | `pause()` |
+| `ocp_resume()` | `player.state` + `track.state` | `resume()` |
+| `ocp_stop()` | `player.state` + `media.state` | `stop()` |
+
+`ocp_pause()`, `ocp_resume()`, and `ocp_stop()` are no-ops (they neither emit nor call your
+method) when no track is currently loaded. Implement the plain methods, not the `ocp_*`
+wrappers.
 
 Two constructor arguments matter: `config` (your plugin's settings dict) and `bus` (the
 `MessageBusClient` OCP passes in). `bus` falls back to a `FakeBus()` when unset, which is
