@@ -1450,11 +1450,10 @@ restart them depends on how OVOS was installed:</p>
   <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>restart<span class="w"> </span>ovos.service
 </span></code></pre></div>
   <code>ovos.service</code> is a <code>--user</code> target unit that the other services (<code>ovos-messagebus.service</code>,
-  <code>ovos-listener.service</code>, <code>ovos-audio.service</code>, <code>ovos-skills.service</code>, <code>ovos-phal.service</code>,
-  and — if installed — <code>ovos-gui.service</code>/<code>ovos-shell.service</code>) declare as <code>PartOf=</code>, so
-  restarting it cascades to all of them. Restarting a single service instead (e.g. only the
-  listener after a wake-word change) works the same way: <code>systemctl --user restart
-  ovos-listener.service</code>.</li>
+  <code>ovos-listener.service</code>, <code>ovos-audio.service</code>, <code>ovos-core.service</code>, <code>ovos-phal.service</code>,
+  and — if installed — <code>ovos-gui.service</code>) declare as <code>PartOf=</code>, so restarting it cascades
+  to all of them. Restarting a single service instead (e.g. only the listener after a
+  wake-word change) works the same way: <code>systemctl --user restart ovos-listener.service</code>.</li>
 <li><strong>Docker/container install</strong>: restart the equivalent service(s) in your compose file, e.g.
   <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>restart<span class="w"> </span>&lt;service-name&gt;
 </span></code></pre></div>
@@ -1499,11 +1498,10 @@ restart them depends on how OVOS was installed:</p>
   <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>systemctl<span class="w"> </span>--user<span class="w"> </span>restart<span class="w"> </span>ovos.service
 </span></code></pre></div>
   <code>ovos.service</code> is a <code>--user</code> target unit that the other services (<code>ovos-messagebus.service</code>,
-  <code>ovos-listener.service</code>, <code>ovos-audio.service</code>, <code>ovos-skills.service</code>, <code>ovos-phal.service</code>,
-  and — if installed — <code>ovos-gui.service</code>/<code>ovos-shell.service</code>) declare as <code>PartOf=</code>, so
-  restarting it cascades to all of them. Restarting a single service instead (e.g. only the
-  listener after a wake-word change) works the same way: <code>systemctl --user restart
-  ovos-listener.service</code>.</li>
+  <code>ovos-listener.service</code>, <code>ovos-audio.service</code>, <code>ovos-core.service</code>, <code>ovos-phal.service</code>,
+  and — if installed — <code>ovos-gui.service</code>) declare as <code>PartOf=</code>, so restarting it cascades
+  to all of them. Restarting a single service instead (e.g. only the listener after a
+  wake-word change) works the same way: <code>systemctl --user restart ovos-listener.service</code>.</li>
 <li><strong>Docker/container install</strong>: restart the equivalent service(s) in your compose file, e.g.
   <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>restart<span class="w"> </span>&lt;service-name&gt;
 </span></code></pre></div>
