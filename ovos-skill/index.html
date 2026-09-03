@@ -2006,16 +2006,23 @@ once or repeatedly:</p>
 </span></code></pre></div>
 <ul>
 <li><strong><code>schedule_event(handler, when, data=None, name=None, context=None)</code></strong>: single-shot.
-  <code>when</code> is either a <code>datetime</code> (interpreted in the system timezone) or a number of seconds
-  from now.</li>
+  <code>when</code> is either a <code>datetime</code> or a number of seconds from now. A naive <code>datetime</code> (no
+  <code>tzinfo</code>) is stamped with the assistant's configured timezone (<code>location.timezone.code</code>),
+  not the OS/process timezone — a device on the stock config is in Lawrence, Kansas until
+  its location is set.</li>
 <li><strong><code>schedule_repeating_event(handler, when, frequency, data=None, name=None, context=None)</code></strong>:
   repeating. <code>frequency</code> is the interval <strong>in seconds</strong> between calls. <code>when=None</code> fires the
   first call <code>frequency</code> seconds from now. Pass a <code>datetime</code>/number to control the first firing
   explicitly.</li>
 <li>Both accept an optional <code>name</code> used to reference/cancel the event later with
-  <code>cancel_scheduled_event(name)</code>. Reusing a <code>name</code> for <code>schedule_event</code> does <strong>not</strong> warn or
-  replace a previously scheduled event of the same name. Use unique names, or cancel the old
-  one first.</li>
+  <code>cancel_scheduled_event(name)</code>. Re-scheduling <code>schedule_event</code> under a <code>name</code> that already
+  has a pending one-shot replaces it, so a skill that re-creates its schedules on every load
+  does not accumulate duplicates. <code>schedule_repeating_event</code> does not replace an existing
+  repeating schedule of the same name — cancel it first. <code>update_scheduled_event</code> changes an
+  existing event's payload without touching its fire time; <code>get_scheduled_event_status</code>
+  returns <code>None</code> (not an exception) when nothing is scheduled under that name. A repeating
+  schedule survives skill shutdown/restart — it is tied to the skill id, not the running
+  process.</li>
 <li>Scheduled events are persisted by the <a href="../bus-service/"><code>EventScheduler</code></a> so they survive an
   <code>ovos-core</code> restart. They are not tied to the skill instance staying in memory.</li>
 </ul>

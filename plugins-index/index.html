@@ -1447,7 +1447,7 @@ matchers (Padacioso, Nebulento, Palavreado, Hierarchical KNN, Markov, HiveMind).
 </table>
 <h2 id="media-gui">Media &amp; GUI<a class="headerlink" href="#media-gui" title="Permanent link">&para;</a></h2>
 <p>About 17 plugins in the catalog, across OCP stream extractors and media playback backends. OCP
-Media Classifiers and GUI Adapters exist as specs, not yet as shipped plugins.</p>
+GUI Adapters exist as a spec, not yet as a shipped plugin. Media Classifiers ship — see the row below.</p>
 <table>
 <thead>
 <tr>
@@ -1464,8 +1464,8 @@ Media Classifiers and GUI Adapters exist as specs, not yet as shipped plugins.</
 </tr>
 <tr>
 <td><a href="../media-plugins/#ovos-media-classifier">OCP Media Classifiers</a></td>
-<td>none yet <strong>(experimental)</strong></td>
-<td><em>(unreleased)</em> Recognize media intent + entities (artist, title, station, …) in an utterance. Not yet built or released as an OPM entry-point group. See the <a href="../media-plugins/#ovos-media-classifier">Media Playback</a> page.</td>
+<td><code>opm.media.classifier</code></td>
+<td>Recognize media intent + entities (artist, title, station, …) in an utterance. Deployed as a hard dependency of <code>ovos-ocp-pipeline-plugin</code>. See the <a href="../media-plugins/#ovos-media-classifier">Media Playback</a> page.</td>
 </tr>
 <tr>
 <td><a href="../media-plugins/">Media Playback</a></td>

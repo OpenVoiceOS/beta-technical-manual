@@ -1984,7 +1984,7 @@
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-media-classifier">ovos-media-classifier</a></td>
-<td>Work in progress, not yet deployed in OVOS - a self-describing, pluggable media-intent...</td>
+<td>a self-describing, pluggable media-intent classifier, deployed as a dependency of ovos-ocp-pipeline-plugin...</td>
 <td><a href="#media-ocp-plugins-28">Media / OCP plugins</a></td>
 </tr>
 <tr>
@@ -3344,7 +3344,7 @@ in-process yet, so OCP skills remain the way to provide media today.</p>
 <h3 id="playback-backends-and-legacy-ocp-plugins">Playback backends and legacy OCP plugins<a class="headerlink" href="#playback-backends-and-legacy-ocp-plugins" title="Permanent link">&para;</a></h3>
 <dl>
 <dt><strong><a href="https://github.com/OpenVoiceOS/ovos-media-classifier">ovos-media-classifier</a></strong></dt>
-<dd>⚠️ Work in progress, not yet deployed in OVOS — a self-describing, pluggable media-intent classifier that decides what kind of media a request wants ("play some music", "watch an anime") so the OCP pipeline can route it to the right provider. Intended to register under an OCP classifier entry point once stable; loaded by ovos-media's OCP pipeline when adopted.</dd>
+<dd>A self-describing, pluggable media-intent classifier that decides what kind of media a request wants ("play some music", "watch an anime") so the OCP pipeline can route it to the right provider. Registers under the <code>opm.media.classifier</code> entry point; deployed as a hard dependency of <code>ovos-ocp-pipeline-plugin</code> (not loaded by the <code>ovos-media</code> daemon itself).</dd>
 <dt><strong><a href="https://github.com/OpenVoiceOS/ovos-media-plugin-mpv">ovos-media-plugin-mpv</a></strong></dt>
 <dd>An audio/video backend plugin that drives the MPV media player, with play/pause/stop/seek controls and volume management. Loaded by ovos-media (or the legacy ovos-audio service) when MPV is configured as the active playback backend.</dd>
 <dt><strong><a href="https://github.com/OpenVoiceOS/ovos-media-plugin-ffplay">ovos-media-plugin-ffplay</a></strong></dt>

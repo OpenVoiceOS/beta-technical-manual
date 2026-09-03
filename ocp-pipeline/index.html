@@ -949,6 +949,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="How a media intent is recognized">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mediaprovider-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      MediaProvider plugins
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1390,6 +1405,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="How a media intent is recognized">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mediaprovider-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      MediaProvider plugins
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1560,17 +1590,28 @@ intended. Place it last and only enable it on media-focused devices.</p>
 <ul>
 <li><strong>Explicit intents</strong> (<code>ocp_high</code>): localized <code>.intent</code> files for play, pause,
   resume, stop, next, previous, shuffle, etc.</li>
-<li><strong>Keyword matching</strong> (<code>ocp_medium</code> / <code>ocp_low</code>): <code>voc_match_media()</code> maps
-  vocabulary (MusicKeyword, PodcastKeyword, MovieKeyword, NewsKeyword, …) to a
-  <code>MediaType</code> with a heuristic confidence. <code>is_ocp_query()</code> treats any non-GENERIC
-  media type as a playback query.</li>
+<li><strong>Keyword matching</strong> (<code>ocp_medium</code> / <code>ocp_low</code>): <code>classify_media()</code> delegates
+  to a <code>ContextAwareClassifier</code> backed by the <code>ovos-media-classifier</code> package
+  (a hard dependency), which feeds player status and registered NER entities
+  into the classification. The classifier backend is pluggable — the default
+  is a keyword/vocab matcher, but other <code>opm.media.classifier</code> entry points can
+  be selected via config. <code>is_ocp_query()</code> treats any non-GENERIC media type as
+  a playback query.</li>
 <li><strong>Skill-registered keywords</strong>: skills announce entities (artist names, show
   titles) over <code>ovos.common_play.register_keyword</code>. These feed the
   <code>AhocorasickNER</code> entity matcher and bias media-type classification.</li>
 </ul>
-<p>Media-type classification on <code>dev</code> is keyword/vocab based (localizable, but
-heuristic). If a query maps to exactly one media type that a skill can serve, that
-type is used with full confidence.</p>
+<p>If a query maps to exactly one media type that a skill can serve, that type is
+used with full confidence.</p>
+<h3 id="mediaprovider-plugins">MediaProvider plugins<a class="headerlink" href="#mediaprovider-plugins" title="Permanent link">&para;</a></h3>
+<p>In-process <code>MediaProvider</code> plugins (entry-point group <code>opm.media.provider</code>) run
+alongside the legacy bus <code>@ocp_search</code> window rather than replacing it —
+results from both are merged, bounded by the same timeout. A provider that
+declares no media types is demoted (confidence capped at 50); each provider's
+results are capped at 50. With no <code>MediaProvider</code> plugins installed, behavior
+is unchanged from the legacy bus-only flow. Settings live under
+<code>intents.ovos-ocp-pipeline-plugin.media_providers</code> in <code>mycroft.conf</code>; set
+<code>media_providers.enabled: false</code> to turn the mechanism off entirely.</p>
 <p>Supported media types include <code>music</code>, <code>podcast</code>, <code>movie</code>, <code>radio</code>, <code>audiobook</code>,
 <code>news</code>, and many more from <code>ovos_utils.ocp.MediaType</code>.</p>
 <hr />

@@ -2045,6 +2045,13 @@ not. Its absence means the intent service itself crashed or hung — jump back t
 <a href="#stage-1-is-the-service-even-running-and-is-the-bus-reachable">Stage 1</a>'s <code>systemctl --user status</code> check to confirm
 <code>ovos-core</code> is even alive before digging further. Its presence with no matched
 intent means every pipeline plugin genuinely rejected the utterance.</p>
+<p><strong>"Unknown pipeline matcher" in the logs.</strong> A bare <code>pip install ovos-core</code> ships with no
+pipeline matcher plugins at all — by design, so a minimal deployment isn't forced to pull in
+every intent engine. If <code>intents.pipeline</code> in <code>mycroft.conf</code> names a matcher (e.g.
+<code>adapt_high</code>, <code>ocp_high</code>) whose plugin package (<code>ovos-adapt-pipeline-plugin</code>,
+<code>ovos-ocp-pipeline-plugin</code>, …) isn't installed, the intent service logs "Unknown pipeline
+matcher" for it and skips it. Install the matcher plugin explicitly, or use the installer,
+which bundles a working default set.</p>
 <p>Before blaming the skill's vocabulary, rule out the two upstream causes of
 "installed but never matches":</p>
 <ol>
