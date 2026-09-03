@@ -86,6 +86,15 @@ A label registered with `requires_context` or `excludes_context` is gated the sa
 whether it came from a padatious registration or an INTENT-4 template: the pipeline checks
 the declared context before accepting the label as a match, not just the confidence score.
 
+!!! note "Model2Vec classifies; it does not extract `{slot}` values from the utterance"
+    A `.intent` sample can declare `{slot}` placeholders, but Model2Vec never parses them out
+    of the spoken utterance the way Padatious/Padacioso do. It only fills a label's declared
+    `{slot}` placeholders from whatever is already sitting in `session.intent_context`
+    (OVOS-CONTEXT-1 §7). Skills whose `.intent` files rely on `{slot}` extraction from the
+    utterance itself still need Padatious or Padacioso in the pipeline ahead of Model2Vec to
+    populate those values — Model2Vec alone will match the intent but leave any unfilled
+    placeholder as a literal `{slot}` string.
+
 ```mermaid
 flowchart TD
     U[Utterance] --> E[Embed with Model2Vec model]
@@ -245,6 +254,12 @@ precise parser would have nailed. The usual setup is to place
 confidence) so exact matches win first and Model2Vec catches the paraphrases the
 others miss. Tune `conf_high`/`conf_medium`/`conf_low` to control how aggressive it
 is.
+
+Do not copy Padatious's confidence thresholds over verbatim: the two engines score
+completely differently, and the two Model2Vec modes score differently from each other
+too. `classifier` mode's scores are softmax probabilities out of a trained head;
+`prototype` mode's are raw cosine similarities against stored example embeddings. Retune
+`conf_high`/`conf_medium`/`conf_low` for whichever mode you actually run.
 
 ---
 **Read next:** [Padacioso](padacioso.md)
