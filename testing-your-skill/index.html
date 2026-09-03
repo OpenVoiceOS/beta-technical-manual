@@ -1001,9 +1001,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#multi-turn-tests-always-re-pull-the-session" class="md-nav__link">
+  <a href="#multi-turn-tests-with-a-named-session-the-test-owns-the-session-not-the-server" class="md-nav__link">
     <span class="md-ellipsis">
-      Multi-turn tests: always re-pull the session
+      Multi-turn tests with a named session: the test owns the session, not the server
     </span>
   </a>
   
@@ -1377,9 +1377,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#multi-turn-tests-always-re-pull-the-session" class="md-nav__link">
+  <a href="#multi-turn-tests-with-a-named-session-the-test-owns-the-session-not-the-server" class="md-nav__link">
     <span class="md-ellipsis">
-      Multi-turn tests: always re-pull the session
+      Multi-turn tests with a named session: the test owns the session, not the server
     </span>
   </a>
   
@@ -1693,24 +1693,33 @@ without writing any Python. Both routes produce the same fixture format. Use whi
 your workflow. The Python API is handy when you want to tweak the <code>Session</code> (language,
 pipeline list) before recording.</p>
 </div>
-<h2 id="multi-turn-tests-always-re-pull-the-session">Multi-turn tests: always re-pull the session<a class="headerlink" href="#multi-turn-tests-always-re-pull-the-session" title="Permanent link">&para;</a></h2>
-<p>Session state (which skills are active for <a href="../converse/">converse</a>, context, pipeline order)
-travels <strong>inside each message</strong>, and the server folds it back with last-writer-wins semantics.</p>
-<p>If a test builds one <code>Session</code> object and reuses it (or an old <code>.serialize()</code> snapshot) across
-several injected utterances, every later message re-stamps the stale snapshot. It silently
-undoes whatever the previous turn changed: a skill activated in turn 1 will not get its
-<code>converse()</code> called in turn 2.</p>
-<p>Re-fetch the live session right before building each follow-up message:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.session</span> <span class="kn">import</span> <span class="n">SessionManager</span>
+<h2 id="multi-turn-tests-with-a-named-session-the-test-owns-the-session-not-the-server">Multi-turn tests with a named session: the test owns the session, not the server<a class="headerlink" href="#multi-turn-tests-with-a-named-session-the-test-owns-the-session-not-the-server" title="Permanent link">&para;</a></h2>
+<p>A test's <code>Session</code> almost always carries its own id, not the reserved <code>"default"</code> id.
+Under OVOS-SESSION-2 §2.2/§2.5, the orchestrator holds no state for a named session
+between utterances. The registry only ever stores the <code>"default"</code> session, so a named
+<code>session_id</code> never enters it, and there is nothing server-side to fetch back.</p>
+<p>The test must act as the client would: build one <code>Session</code> object, put its current
+snapshot in every message's <code>context["session"]</code>, and update that same object itself
+between turns from whatever the skill's own reply reported. Do not expect any server-side
+store to remember or merge a named session's state for you.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.session</span> <span class="kn">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">SessionManager</span>
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="c1"># turn 1</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">bus</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">make_utterance_message</span><span class="p">(</span><span class="s2">&quot;book a table&quot;</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">my_session</span><span class="p">))</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1"># ... wait for the reply ...</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1"># turn 2: never reuse `my_session`, pull the updated singleton instead</span>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="n">live</span> <span class="o">=</span> <span class="n">SessionManager</span><span class="o">.</span><span class="n">sessions</span><span class="p">[</span><span class="n">my_session</span><span class="o">.</span><span class="n">session_id</span><span class="p">]</span>
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="n">bus</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">make_utterance_message</span><span class="p">(</span><span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">live</span><span class="p">))</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="s2">&quot;test-1&quot;</span><span class="p">)</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1"># turn 1</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="n">bus</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">make_utterance_message</span><span class="p">(</span><span class="s2">&quot;book a table&quot;</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">))</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="n">reply</span> <span class="o">=</span> <span class="n">wait_for_reply</span><span class="p">()</span>  <span class="c1"># your test&#39;s own capture/wait helper</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="c1"># read what the skill actually changed off the reply&#39;s own session carrier,</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="c1"># or off SessionManager.get(reply) for the message the skill handled</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">reply</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s2">&quot;session&quot;</span><span class="p">])</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="c1"># turn 2: reuse the session object you just updated</span>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="n">bus</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">make_utterance_message</span><span class="p">(</span><span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">))</span>
 </span></code></pre></div>
+<p><a href="https://github.com/OpenVoiceOS/ovos-skill-naptime/blob/dev/test/end2end/test_intents_en_us.py">ovos-skill-naptime's end-to-end tests</a>
+follow exactly this pattern: each test builds its own <code>Session</code>, stamps it onto the
+outgoing <code>Message</code>, and asserts against what the skill emitted back.</p>
 <h2 id="an-observer-on-the-skills-own-fakebus-only-hears-one-spelling">An observer on the skill's own FakeBus only hears one spelling<a class="headerlink" href="#an-observer-on-the-skills-own-fakebus-only-hears-one-spelling" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Subscribe to the canonical intent topic</p>
