@@ -16,9 +16,9 @@ live to a browser tab, in one filterable, searchable timeline.
 !!! note "Bus messages, not logs"
     `ovos-busmon` shows **live bus messages only**. It does **not** parse the log files. It
     complements the log tooling ([`ovos-logs`](cli-tools.md#reading-the-logs-ovos-logs) and the
-    per-service `*.log` files), it doesn't replace it. For a terminal-based **log** viewer, the
-    community project [ovos-tui-client](https://github.com/andlo/ovos-tui-client) reads the OVOS
-    logs directly.
+    per-service `*.log` files), it doesn't replace it. For a terminal-based **log** viewer, use
+    [`ovos-tui`](https://github.com/andlo/ovos-tui-client) — bundled by default in
+    `ovos-installer` virtualenv installs — which reads the OVOS logs directly.
 
 !!! tip "Zero-install demo"
     A hosted static build is available at
