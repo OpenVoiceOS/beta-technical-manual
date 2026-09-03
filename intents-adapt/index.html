@@ -1954,7 +1954,7 @@ differently.</p>
 <h3 id="i-have-added-new-phrases-in-the-voc-file-but-mycroft-isnt-recognizing-them">I have added new phrases in the .voc file, but Mycroft isn't recognizing them<a class="headerlink" href="#i-have-added-new-phrases-in-the-voc-file-but-mycroft-isnt-recognizing-them" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
-<p>OVOS normalizes compound words like "don't", "won't", and "shouldn't", so they become "do not", "will not", "should not". Use the normalized words in your <code>.voc</code> files. Similarly, the normalization process removes definite articles like "the", so avoid using them in your <code>.voc</code> or <code>.rx</code> files as well.</p>
+<p>OVOS normalizes compound words like "don't", "won't", and "shouldn't", so they become "do not", "will not", "should not". Use the normalized words in your <code>.voc</code> files. <code>ovos-utterance-normalizer</code> can also strip definite/indefinite articles via its <code>remove_articles</code> config option, but this is off by default, so "the"/"a"/"an" reach the matcher unchanged on a stock install — no need to avoid them in your <code>.voc</code> or <code>.rx</code> files.</p>
 </li>
 <li>
 <p>A tab is not 4 spaces. Sometimes your text editor or IDE automatically replaces tabs with spaces or vice versa. This may lead to an indentation error. Make sure there are no extra tabs and that your editor doesn't replace your spaces.</p>
