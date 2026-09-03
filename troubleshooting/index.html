@@ -2051,7 +2051,10 @@ every intent engine. If <code>intents.pipeline</code> in <code>mycroft.conf</cod
 <code>adapt_high</code>, <code>ocp_high</code>) whose plugin package (<code>ovos-adapt-pipeline-plugin</code>,
 <code>ovos-ocp-pipeline-plugin</code>, …) isn't installed, the intent service logs "Unknown pipeline
 matcher" for it and skips it. Install the matcher plugin explicitly, or use the installer,
-which bundles a working default set.</p>
+which bundles a working default set — or, for a dev/test environment, <code>pip install
+"ovos-core[plugins]"</code> pulls in Adapt, Padatious, Padacioso and the M2V/OCP/common-query
+matchers together. Padatious itself carries no LGPL dependency (it's pure NumPy, Apache-2.0
+licensed) and lives in this same <code>[plugins]</code> extra, not a separate one.</p>
 <p>Before blaming the skill's vocabulary, rule out the two upstream causes of
 "installed but never matches":</p>
 <ol>
