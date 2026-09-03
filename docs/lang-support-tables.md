@@ -74,7 +74,7 @@ hand until a dedicated recommendation lands: the practical picks are
 
 A language that does not appear in this table has no bundled STT/TTS recommendation yet.
 This is not a deliberate exclusion. It just means nobody has added a `recommends/*.conf` file for it
-so far. Thai is a widely requested example. `ovos-config` currently ships no `th-th` (or any other
+so far. Thai is one such example. `ovos-config` currently ships no `th-th` (or any other
 `th-*`) recommends file, so `autoconfigure -l th-th` has nothing to select
 and Thai support must be configured by hand until a recommendation is contributed.
 
