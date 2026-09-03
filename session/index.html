@@ -1689,6 +1689,7 @@
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">session_id</span><span class="p">)</span>
 </span></code></pre></div>
 <p>If the message originated in the device itself, the <code>session_id</code> is always equal to the reserved value <code>"default"</code>. If it comes from an external client, it will be a unique uuid. The <code>"default"</code> session is special: it is the device-local session whose state the orchestrator holds and persists in-process, rather than receiving it from a client on every message (OVOS-SESSION-2 §5).</p>
+<p><code>SessionManager.get(message)</code> is a pure read — it never writes the store. The default session is folded into the store exactly once per utterance, at intake (<code>SessionManager.fold_inbound</code>), before any handler runs; <code>SessionManager.get</code> afterward just returns the live object for that call. Call it anywhere in a component without worrying about re-triggering a write.</p>
 <div class="admonition info">
 <p class="admonition-title">One microphone, one conversation</p>
 <p>Because everything the on-device microphone hears lands in the single <code>"default"</code>
@@ -1818,6 +1819,13 @@ caller) wants times, dates, units, and place-relative answers rendered for
 All four are optional. An absence falls back to the deployment default,
 and <code>location</code> is what backs the <code>location</code> / <code>location_pretty</code> /
 <code>location_timezone</code> magic properties below.</p>
+<div class="admonition note">
+<p class="admonition-title"><code>location</code> and <code>timezone</code> are an <code>ovos-bus-client</code> implementation detail, not (yet) SESSION-1</p>
+<p>The wire carries <code>location</code> on every session, but the OVOS-SESSION-1 field registry does
+not currently list it (or the derived <code>timezone</code>). These fields are real and load-bearing
+today — implemented on <code>ovos-bus-client</code>'s <code>Session</code> subclass — but they are documented
+here as implementation behavior pending a SESSION-1 amendment to register them formally.</p>
+</div>
 <h2 id="magic-properties">Magic Properties<a class="headerlink" href="#magic-properties" title="Permanent link">&para;</a></h2>
 <p>Skills have some "magic properties." These reflect the current <code>Session</code>'s value when it has
 one, falling back to Configuration otherwise.</p>
@@ -1866,16 +1874,19 @@ one, falling back to Configuration otherwise.</p>
 </span><span id="__span-1-43"><a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="sd">        &quot;&quot;&quot;</span>
 </span></code></pre></div>
 <div class="admonition note">
-<p class="admonition-title">A session update is always a full snapshot, never a field merge</p>
-<p>Both an inbound client message and a pipeline plugin's
-<code>Match.updated_session</code> fold onto the stored session the same way:
-<code>Session.update_from</code> round-trips the incoming state through
-<code>serialize</code>/<code>deserialize</code>, so a field present on the wire overrides the
-stored value and a field the sender omits resets to the spec default,
-not "left alone." This applies uniformly to every <code>session_id</code>,
-including <code>"default"</code>. There is no field-by-field merge path anywhere
-in <code>ovos-core</code>, which is exactly why the earlier warning on this page
-insists a client replay the <strong>complete</strong> session on every message.</p>
+<p class="admonition-title">The default session merges field by field; a named session does not</p>
+<p>The inbound fold onto the <code>"default"</code> session (<code>SessionManager.fold_inbound</code>)
+is a field-by-field merge: a field the message carries replaces the stored
+value, a field it omits leaves the stored value standing. This is why a
+device that only declares <code>intent_context</code> on one turn keeps its other
+fields — <code>blacklisted_skills</code>, presentation preferences, and the rest —
+across turns instead of losing them the moment any message omits them.
+A named <code>session_id</code> gets no such treatment: the orchestrator holds no
+state for it between utterances (OVOS-SESSION-2 §2.2), so its session is
+built fresh from whatever that one message's carrier contains. That
+asymmetry is exactly why the earlier warning on this page insists a
+client replay the <strong>complete</strong> session on every message for a named
+session — there is nothing stored to fill in what it omits.</p>
 </div>
 <h2 id="per-user-interactions">Per User Interactions<a class="headerlink" href="#per-user-interactions" title="Permanent link">&para;</a></h2>
 <p>Let's consider a skill that keeps track of a chat history, how would such a skill keep track of <code>Sessions</code>?</p>
