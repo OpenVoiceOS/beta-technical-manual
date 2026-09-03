@@ -1,13 +1,16 @@
-# Music & Radio Skills
+# Music & Radio
 
 !!! abstract "In a nutshell"
-    These skills play internet radio, streamed news, and local audio/video files.
+    OVOS plays internet radio, streamed news, and local audio/video files through
+    **MediaProvider plugins**, not skills. Install a provider, and the [OCP pipeline](ocp-pipeline.md)
+    picks it up automatically for any "play ..." request. See [MediaProvider plugins](ocp-pipeline.md#mediaprovider-plugins)
+    for how the mechanism works.
 
-## Music & Radio
+!!! warning "The old OCP media skills are archived"
+    `ovos-skill-pyradios`, `ovos-skill-somafm`, `ovos-skill-news`, and `ovos-skill-local-media`
+    are archived. Their MediaProvider plugin replacements below are what to install today.
 
-### PyRadios
-
-**Installer optional** (`extra-skills` feature)
+## PyRadios
 
 A client for the Radio Browser API, a large, community-maintained directory of internet radio
 stations.
@@ -17,12 +20,13 @@ stations.
 - play tsf jazz on pyradios
 - play tsf jazz radio
 
-??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-pyradios](https://github.com/OpenVoiceOS/ovos-skill-pyradios) · `pip install ovos-skill-pyradios` · Maturity: Stable
+```bash
+pip install ovos-media-provider-pyradios
+```
 
-### SomaFM
+[:material-github: OpenVoiceOS/ovos-media-provider-pyradios](https://github.com/OpenVoiceOS/ovos-media-provider-pyradios)
 
-**Installer optional** (`extra-skills` feature)
+## SomaFM
 
 Listen to a variety of commercial-free internet radio stations from SomaFM.
 
@@ -32,12 +36,13 @@ Listen to a variety of commercial-free internet radio stations from SomaFM.
 - play metal detector
 - play secret agent
 
-??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-somafm](https://github.com/OpenVoiceOS/ovos-skill-somafm) · `pip install ovos-skill-somafm` · Maturity: Stable
+```bash
+pip install ovos-media-provider-somafm
+```
 
-### News
+[:material-github: OpenVoiceOS/ovos-media-provider-somafm](https://github.com/OpenVoiceOS/ovos-media-provider-somafm)
 
-**Installer optional** (`extra-skills` feature)
+## News
 
 News streams from around the globe.
 
@@ -48,45 +53,30 @@ News streams from around the globe.
 - play the news
 - play portuguese news
 
-Naming a specific feed by station name ("play euronews") or asking for Catalan news does not
-reliably surface the right feed: the skill's language matcher does not cover Catalan and its
-default-feed bonus can outrank a literal station-name match. Stick to the default feed or the
-language phrasings above until that is fixed upstream.
+```bash
+pip install ovos-media-provider-news
+```
 
-??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-news](https://github.com/OpenVoiceOS/ovos-skill-news) · `pip install ovos-skill-news` · Maturity: Stable
+[:material-github: OpenVoiceOS/ovos-media-provider-news](https://github.com/OpenVoiceOS/ovos-media-provider-news)
 
-### Local Media
+## Local Media
 
-**Installer optional** (`extra-skills` feature)
+Browse and play audio/video files from a USB drive or local folder. Uses `tinytag` for metadata
+rather than the GPL-licensed `mutagen`.
 
-Local media file browser for OpenVoiceOS. Browse and play audio/video files from a USB drive or
-local folder.
+```bash
+pip install ovos-media-provider-local
+```
 
-**Usage examples:**
-
-- open my file browser
-- show my file browser
-- show my usb drive
-- start usb browser app
-- show my usb
-
-- show file browser app
-- show file browser
-- open usb
-- start usb browser
-- open my usb
-
-??? note "Install"
-    [:material-github: OpenVoiceOS/ovos-skill-local-media](https://github.com/OpenVoiceOS/ovos-skill-local-media) · `pip install ovos-skill-local-media` · Maturity: Mature
+[:material-github: OpenVoiceOS/ovos-media-provider-local](https://github.com/OpenVoiceOS/ovos-media-provider-local)
 
 !!! note "Playing your own music or a streaming service"
     Out of the box, OVOS plays internet radio (PyRadios, SomaFM) and local files. It does not
-    include Spotify or another streaming-service player by default. See
+    include Spotify or another streaming-service provider by default. See
     [Cool Things You Can Do](showcase.md) and [Media Plugins](media-plugins.md) for what's
     available to add.
 
 ---
 
 **Read next:** [Skill Examples](skill-examples.md)
-**Related:** [OCP media skills](ocp-skills.md) · [Media Plugins](media-plugins.md) · [Cool Things You Can Do](showcase.md)
+**Related:** [OCP Pipeline](ocp-pipeline.md) · [Media Plugins](media-plugins.md) · [Cool Things You Can Do](showcase.md)

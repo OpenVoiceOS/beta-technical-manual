@@ -19,21 +19,18 @@
 Three pieces work together, all named after the [OCP media stack](ovos-media.md):
 
 - **[`ovos-media-provider-mass`](https://github.com/OpenVoiceOS/ovos-media-provider-mass)**
-  (public, PyPI): the catalog/search half. Registers under `opm.media.provider` as
-  `music_assistant`, superseding the search half of `ovos-skill-music-assistant`.
+  (public, PyPI): the catalog/search half, loaded by the [OCP pipeline](ocp-pipeline.md#mediaprovider-plugins).
+  Registers under `opm.media.provider` as `music_assistant`.
 - **[`ovos-media-plugin-mass`](https://github.com/OpenVoiceOS/ovos-media-plugin-mass)**:
   the playback backend for [`ovos-media`](ovos-media.md). Hands playback off to the MA
   server itself. Its `next()`/`previous()` on the legacy `AudioBackend` interface
   delegate to the Music Assistant queue API (see
   [Legacy Compatibility](ovos-media-compat.md)).
-- **[`ovos-skill-music-assistant`](https://github.com/OpenVoiceOS/ovos-skill-music-assistant)**:
-  the legacy OCP skill both of the above supersede.
 
-All three are public repos and published to PyPI as alpha releases (check PyPI for
-current versions, as alpha releases move fast). `ovos-media-provider-mass` installing
-does nothing yet on its own: `opm.media.provider` in-process
-loading is not wired into `ovos-media` (see
-[ovos-media](ovos-media.md#upcoming-mediaprovider-plugins-replace-ocp-skills)).
+`ovos-skill-music-assistant`, the OCP skill both of the above replace, is **archived**.
+Install `ovos-media-provider-mass` and `ovos-media-plugin-mass` instead. See
+[MediaProvider plugins](ovos-media.md#mediaprovider-plugins-replace-ocp-skills) for the
+full replacement table.
 
 ## Direction 2: Music Assistant loads out-of-tree providers
 

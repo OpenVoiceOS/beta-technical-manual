@@ -425,37 +425,33 @@ listens on (`ovos.common_play.*`, the `ovos.audio.output.*` duck triggers, and c
 
 ---
 
-## Upcoming: MediaProvider plugins replace OCP skills
+## MediaProvider plugins replace OCP skills
 
-!!! info "What changes, and when"
-    Media catalogs are moving **out of skills and into plugins**. A new **MediaProvider** plugin
-    type (`opm.media.provider` / `PluginTypes.MEDIA_PROVIDER`) that the OCP pipeline loads
-    **in-process** and calls `search()` on directly, in place of today's
-    [OCP skills](ocp-skills.md). This first ships in **`ovos-plugin-manager 2.8.0a1`**
-    (Phase 1 of the `ovos-media` migration). OCP skills remain the way to provide media for now.
-    Tracked in [ovos-workshop#423](https://github.com/OpenVoiceOS/ovos-workshop/pull/423).
+Media catalogs moved **out of skills and into plugins**. The **MediaProvider** plugin type
+(`opm.media.provider` / `PluginTypes.MEDIA_PROVIDER`) is what the [OCP pipeline](ocp-pipeline.md#mediaprovider-plugins)
+loads in-process and calls `search()` on. See that page for the loading mechanism, the
+`media_providers` config key, and how results merge with the legacy bus `@ocp_search` path.
 
-    A first batch of MediaProvider plugins now has **public repositories**, and all eleven
-    listed below ship PyPI alpha releases. Installing them does nothing yet —
-    the in-process loading is not wired into `ovos-media` (see below). Each one supersedes
-    the catalog/search half of an older OCP skill:
+The corresponding OCP skills for the eleven media sources below are **archived**. Install
+the MediaProvider plugin instead:
 
-    | MediaProvider plugin | Supersedes |
-    |---|---|
-    | [`ovos-media-provider-bandcamp`](https://github.com/OpenVoiceOS/ovos-media-provider-bandcamp) | [ovos-skill-bandcamp](https://github.com/OpenVoiceOS/ovos-skill-bandcamp) |
-    | [`ovos-media-provider-pyradios`](https://github.com/OpenVoiceOS/ovos-media-provider-pyradios) | [ovos-skill-pyradios](https://github.com/OpenVoiceOS/ovos-skill-pyradios) |
-    | [`ovos-media-provider-somafm`](https://github.com/OpenVoiceOS/ovos-media-provider-somafm) | [ovos-skill-somafm](https://github.com/OpenVoiceOS/ovos-skill-somafm) |
-    | [`ovos-media-provider-soundcloud`](https://github.com/OpenVoiceOS/ovos-media-provider-soundcloud) | [ovos-skill-soundcloud](https://github.com/OpenVoiceOS/ovos-skill-soundcloud) |
-    | [`ovos-media-provider-tunein`](https://github.com/OpenVoiceOS/ovos-media-provider-tunein) | [ovos-skill-tunein](https://github.com/OpenVoiceOS/ovos-skill-tunein) |
-    | [`ovos-media-provider-youtube`](https://github.com/OpenVoiceOS/ovos-media-provider-youtube) | [ovos-skill-youtube](https://github.com/OpenVoiceOS/ovos-skill-youtube) |
-    | [`ovos-media-provider-youtube-music`](https://github.com/OpenVoiceOS/ovos-media-provider-youtube-music) | [ovos-skill-youtube-music](https://github.com/OpenVoiceOS/ovos-skill-youtube-music) |
-    | [`ovos-media-provider-mass`](https://github.com/OpenVoiceOS/ovos-media-provider-mass) | `ovos-skill-music-assistant` (playback via the companion `ovos-media-plugin-mass` backend) |
-    | [`ovos-media-provider-news`](https://github.com/OpenVoiceOS/ovos-media-provider-news) | [ovos-skill-news](https://github.com/OpenVoiceOS/ovos-skill-news) |
-    | [`ovos-media-provider-spotify`](https://github.com/OpenVoiceOS/ovos-media-provider-spotify) | [ovos-skill-spotify](https://github.com/OpenVoiceOS/ovos-skill-spotify) (playback via the companion [ovos-media-plugin-spotify](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify) backend) |
-    | [`ovos-media-provider-local`](https://github.com/OpenVoiceOS/ovos-media-provider-local) | Local file playback; uses `tinytag` (MIT) rather than `mutagen` (GPL) for metadata |
+| MediaProvider plugin | Replaces (archived) |
+|---|---|
+| [`ovos-media-provider-bandcamp`](https://github.com/OpenVoiceOS/ovos-media-provider-bandcamp) | [ovos-skill-bandcamp](https://github.com/OpenVoiceOS/ovos-skill-bandcamp) |
+| [`ovos-media-provider-pyradios`](https://github.com/OpenVoiceOS/ovos-media-provider-pyradios) | [ovos-skill-pyradios](https://github.com/OpenVoiceOS/ovos-skill-pyradios) |
+| [`ovos-media-provider-somafm`](https://github.com/OpenVoiceOS/ovos-media-provider-somafm) | [ovos-skill-somafm](https://github.com/OpenVoiceOS/ovos-skill-somafm) |
+| [`ovos-media-provider-soundcloud`](https://github.com/OpenVoiceOS/ovos-media-provider-soundcloud) | [ovos-skill-soundcloud](https://github.com/OpenVoiceOS/ovos-skill-soundcloud) |
+| [`ovos-media-provider-tunein`](https://github.com/OpenVoiceOS/ovos-media-provider-tunein) | [ovos-skill-tunein](https://github.com/OpenVoiceOS/ovos-skill-tunein) |
+| [`ovos-media-provider-youtube`](https://github.com/OpenVoiceOS/ovos-media-provider-youtube) | [ovos-skill-youtube](https://github.com/OpenVoiceOS/ovos-skill-youtube) |
+| [`ovos-media-provider-youtube-music`](https://github.com/OpenVoiceOS/ovos-media-provider-youtube-music) | [ovos-skill-youtube-music](https://github.com/OpenVoiceOS/ovos-skill-youtube-music) |
+| [`ovos-media-provider-mass`](https://github.com/OpenVoiceOS/ovos-media-provider-mass) | `ovos-skill-music-assistant` (playback via the companion `ovos-media-plugin-mass` backend) |
+| [`ovos-media-provider-news`](https://github.com/OpenVoiceOS/ovos-media-provider-news) | [ovos-skill-news](https://github.com/OpenVoiceOS/ovos-skill-news) |
+| [`ovos-media-provider-spotify`](https://github.com/OpenVoiceOS/ovos-media-provider-spotify) | [ovos-skill-spotify](https://github.com/OpenVoiceOS/ovos-skill-spotify) (playback via the companion [ovos-media-plugin-spotify](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify) backend) |
+| [`ovos-media-provider-local`](https://github.com/OpenVoiceOS/ovos-media-provider-local) | Local file playback; uses `tinytag` (MIT) rather than `mutagen` (GPL) for metadata |
 
-    The old OCP skills keep working; a MediaProvider plugin only takes over once the
-    `opm.media.provider` plugin type ships on a released `ovos-plugin-manager`.
+An OCP skill that is not in this table is unaffected. MediaProvider plugins only replace
+the eleven catalogs above. Skill-based media search remains a supported way to provide
+media for anything else.
 
 ## Legacy Compatibility & Known Coupling Issues
 

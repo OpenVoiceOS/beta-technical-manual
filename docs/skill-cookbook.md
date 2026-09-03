@@ -32,7 +32,7 @@ Every pattern in this cookbook also runs in a real, installable skill. Read the 
 | Pattern | Official skill |
 |---|---|
 | `ConversationalSkill` + scheduling + settings persistence | [`ovos-skill-alerts`](https://github.com/OpenVoiceOS/ovos-skill-alerts) |
-| Full OCP (`@ocp_search`, `@ocp_featured_media`, `Playlist`/`MediaEntry`) | [`ovos-skill-somafm`](https://github.com/OpenVoiceOS/ovos-skill-somafm) |
+| Full OCP (`@ocp_search`, `@ocp_featured_media`, `Playlist`/`MediaEntry`) | [`ovos-skill-somafm`](https://github.com/OpenVoiceOS/ovos-skill-somafm) (archived; source only, see [MediaProvider plugins](ocp-pipeline.md#mediaprovider-plugins) for the current approach) |
 | `FallbackSkill` + `@common_query` | [`ovos-skill-wolfie`](https://github.com/OpenVoiceOS/ovos-skill-wolfie), [`ovos-skill-ddg`](https://github.com/OpenVoiceOS/ovos-skill-ddg), [`ovos-skill-wordnet`](https://github.com/OpenVoiceOS/ovos-skill-wordnet) |
 | `@common_query` on a plain `OVOSSkill` | [`ovos-skill-wikipedia`](https://github.com/OpenVoiceOS/ovos-skill-wikipedia) |
 | Minimal `converse` | [`ovos-skill-parrot`](https://github.com/OpenVoiceOS/ovos-skill-parrot) |

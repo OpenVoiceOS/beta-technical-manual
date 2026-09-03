@@ -67,8 +67,8 @@ lobby music
 - `self.voc_match(phrase, "office_playlist")` reuses the same vocabulary mechanism as intents to give a confident match a high score, while still falling back to a loose substring check.
 - [OCP Skills](ocp-skills.md) also documents `self.extend_timeout()` (ask OCP to wait longer for a slow search). It notes that new integrations not needing the full skill lifecycle may prefer a `MediaProvider` plugin instead. See that page's opening warning.
 
-!!! tip "Full production example"
-    [`ovos-skill-somafm`](https://github.com/OpenVoiceOS/ovos-skill-somafm) is a full modern OCP skill: `@ocp_search`, `@ocp_featured_media`, `register_ocp_keyword`, and results built as `Playlist`/`MediaEntry` objects instead of plain dicts. [`ovos-skill-news`](https://github.com/OpenVoiceOS/ovos-skill-news) applies the same pattern for `MediaType.NEWS`.
+!!! tip "Full production example (archived, source only)"
+    [`ovos-skill-somafm`](https://github.com/OpenVoiceOS/ovos-skill-somafm) is a full modern OCP skill: `@ocp_search`, `@ocp_featured_media`, `register_ocp_keyword`, and results built as `Playlist`/`MediaEntry` objects instead of plain dicts. [`ovos-skill-news`](https://github.com/OpenVoiceOS/ovos-skill-news) applies the same pattern for `MediaType.NEWS`. Both repos are archived. Their MediaProvider plugin replacements are what a new deployment should install; see [Music & Radio](skill-examples-media.md).
 
 ---
 **Read next:** [Skill Cookbook](skill-cookbook.md)

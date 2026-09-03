@@ -138,7 +138,7 @@ There are roughly **260** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-skill-alerts](https://github.com/OpenVoiceOS/ovos-skill-alerts) | A skill to manage alarms, timers, reminders, events and todos and optionally sync them... | [Skills](#skills-53) |
     | [ovos-skill-application-launcher](https://github.com/OpenVoiceOS/ovos-skill-application-launcher) | Application Launcher. | [Skills](#skills-53) |
     | [ovos-skill-audio-recording](https://github.com/OpenVoiceOS/ovos-skill-audio-recording) | Record audio to file, requires ovos-dinkum-listener. | [Skills](#skills-53) |
-    | [ovos-skill-bandcamp](https://github.com/OpenVoiceOS/ovos-skill-bandcamp) | Bandcamp skill for your hipster music needs. | [Skills](#skills-53) |
+    | [ovos-skill-bandcamp](https://github.com/OpenVoiceOS/ovos-skill-bandcamp) | **Archived.** Bandcamp skill for your hipster music needs; see [ovos-media-provider-bandcamp](https://github.com/OpenVoiceOS/ovos-media-provider-bandcamp). | [Skills](#skills-53) |
     | [ovos-skill-boot-finished](https://github.com/OpenVoiceOS/ovos-skill-boot-finished) | The Finished Booting skill provides notifications when OpenVoiceOS (OVOS) has fully... | [Skills](#skills-53) |
     | [ovos-skill-camera](https://github.com/OpenVoiceOS/ovos-skill-camera) | Camera skill for OpenVoiceOS, needs the companion plugin ovos-PHAL-plugin-camera or... | [Skills](#skills-53) |
     | [ovos-skill-cmd](https://github.com/OpenVoiceOS/ovos-skill-cmd) | A simple OVOS skill for running shell scripts and other commands. The commands execute... | [Skills](#skills-53) |
@@ -160,24 +160,24 @@ There are roughly **260** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-skill-ip](https://github.com/OpenVoiceOS/ovos-skill-ip) | Network connection information. | [Skills](#skills-53) |
     | [ovos-skill-iss-location](https://github.com/OpenVoiceOS/ovos-skill-iss-location) | Track the location of the ISS. | [Skills](#skills-53) |
     | [ovos-skill-laugh](https://github.com/OpenVoiceOS/ovos-skill-laugh) | Makes your voice assistant laugh like a maniac. | [Skills](#skills-53) |
-    | [ovos-skill-local-media](https://github.com/OpenVoiceOS/ovos-skill-local-media) | File Browser For Open Voice OS. | [Skills](#skills-53) |
+    | [ovos-skill-local-media](https://github.com/OpenVoiceOS/ovos-skill-local-media) | **Archived.** File Browser For Open Voice OS; see [ovos-media-provider-local](https://github.com/OpenVoiceOS/ovos-media-provider-local). | [Skills](#skills-53) |
     | [ovos-skill-mark1-ctrl](https://github.com/OpenVoiceOS/ovos-skill-mark1-ctrl) | Controls the enclosure api vocally. | [Skills](#skills-53) |
     | [ovos-skill-moviemaster](https://github.com/OpenVoiceOS/ovos-skill-moviemaster) | OVOS skill to query IMDB about movies. | [Skills](#skills-53) |
     | [ovos-skill-naptime](https://github.com/OpenVoiceOS/ovos-skill-naptime) | Put the assistant to sleep when you don't want to be disturbed. | [Skills](#skills-53) |
-    | [ovos-skill-news](https://github.com/OpenVoiceOS/ovos-skill-news) | News Streams catalog. | [Skills](#skills-53) |
+    | [ovos-skill-news](https://github.com/OpenVoiceOS/ovos-skill-news) | **Archived.** News Streams catalog; see [ovos-media-provider-news](https://github.com/OpenVoiceOS/ovos-media-provider-news). | [Skills](#skills-53) |
     | [ovos-skill-number-facts](https://github.com/OpenVoiceOS/ovos-skill-number-facts) | Facts about numbers. | [Skills](#skills-53) |
     | [ovos-skill-parrot](https://github.com/OpenVoiceOS/ovos-skill-parrot) | Turn OpenVoiceOS into a echoing parrot! | [Skills](#skills-53) |
     | [ovos-skill-personal](https://github.com/OpenVoiceOS/ovos-skill-personal) | Learn history and personality of the assistant. | [Skills](#skills-53) |
     | [ovos-skill-pokepedia](https://github.com/OpenVoiceOS/ovos-skill-pokepedia) | A child-friendly OpenVoiceOS (OVOS) skill that allows users to query Pokémon data via... | [Skills](#skills-53) |
-    | [ovos-skill-pyradios](https://github.com/OpenVoiceOS/ovos-skill-pyradios) | OCP skill for Pyradios, a client for the Radio Browser API. | [Skills](#skills-53) |
+    | [ovos-skill-pyradios](https://github.com/OpenVoiceOS/ovos-skill-pyradios) | **Archived.** OCP skill for Pyradios, a client for the Radio Browser API; see [ovos-media-provider-pyradios](https://github.com/OpenVoiceOS/ovos-media-provider-pyradios). | [Skills](#skills-53) |
     | [ovos-skill-randomness](https://github.com/OpenVoiceOS/ovos-skill-randomness) | A skill for all kinds of chance - make a choice, roll a die, flip a coin, pick between... | [Skills](#skills-53) |
     | [ovos-skill-screenshot](https://github.com/OpenVoiceOS/ovos-skill-screenshot) | Take screenshots by voice. | [Skills](#skills-53) |
-    | [ovos-skill-somafm](https://github.com/OpenVoiceOS/ovos-skill-somafm) | OCP skill for SomaFM. | [Skills](#skills-53) |
-    | [ovos-skill-soundcloud](https://github.com/OpenVoiceOS/ovos-skill-soundcloud) | soundcloud skill for OCP. | [Skills](#skills-53) |
+    | [ovos-skill-somafm](https://github.com/OpenVoiceOS/ovos-skill-somafm) | **Archived.** OCP skill for SomaFM; see [ovos-media-provider-somafm](https://github.com/OpenVoiceOS/ovos-media-provider-somafm). | [Skills](#skills-53) |
+    | [ovos-skill-soundcloud](https://github.com/OpenVoiceOS/ovos-skill-soundcloud) | **Archived.** soundcloud skill for OCP; see [ovos-media-provider-soundcloud](https://github.com/OpenVoiceOS/ovos-media-provider-soundcloud). | [Skills](#skills-53) |
     | [ovos-skill-speedtest](https://github.com/OpenVoiceOS/ovos-skill-speedtest) | Ask OVOS to run a simple speedtest. | [Skills](#skills-53) |
     | [ovos-skill-spelling](https://github.com/OpenVoiceOS/ovos-skill-spelling) | Let OVOS help you spell words. | [Skills](#skills-53) |
-    | [ovos-skill-spotify](https://github.com/OpenVoiceOS/ovos-skill-spotify) | OCP skill for spotify. | [Skills](#skills-53) |
-    | [ovos-skill-tunein](https://github.com/OpenVoiceOS/ovos-skill-tunein) | OCP skill for TuneIn. | [Skills](#skills-53) |
+    | [ovos-skill-spotify](https://github.com/OpenVoiceOS/ovos-skill-spotify) | **Archived.** OCP skill for spotify; see [ovos-media-provider-spotify](https://github.com/OpenVoiceOS/ovos-media-provider-spotify). | [Skills](#skills-53) |
+    | [ovos-skill-tunein](https://github.com/OpenVoiceOS/ovos-skill-tunein) | **Archived.** OCP skill for TuneIn; see [ovos-media-provider-tunein](https://github.com/OpenVoiceOS/ovos-media-provider-tunein). | [Skills](#skills-53) |
     | [ovos-skill-volume](https://github.com/OpenVoiceOS/ovos-skill-volume) | Control the volume of your system. | [Skills](#skills-53) |
     | [ovos-skill-wallpapers](https://github.com/OpenVoiceOS/ovos-skill-wallpapers) | Skill that fetches and sets desktop wallpapers from wallhaven.cc by voice command. | [Skills](#skills-53) |
     | [ovos-skill-weather](https://github.com/OpenVoiceOS/ovos-skill-weather) | Weather conditions and forecasts. | [Skills](#skills-53) |
@@ -186,8 +186,8 @@ There are roughly **260** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-skill-wolfie](https://github.com/OpenVoiceOS/ovos-skill-wolfie) | Wolfram Alpha skill for OpenVoiceOS. Adds a voice interface on top of... | [Skills](#skills-53) |
     | [ovos-skill-word-of-the-day](https://github.com/OpenVoiceOS/ovos-skill-word-of-the-day) | Get Word of the Day from Dictionary.com., Dicionário Priberam, Portal das Palabras or... | [Skills](#skills-53) |
     | [ovos-skill-wordnet](https://github.com/OpenVoiceOS/ovos-skill-wordnet) | WordNet skill for OpenVoiceOS. Adds a voice interface on top of ovos-wordnet-plugin,... | [Skills](#skills-53) |
-    | [ovos-skill-youtube](https://github.com/OpenVoiceOS/ovos-skill-youtube) | simple youtube skill for better-cps. | [Skills](#skills-53) |
-    | [ovos-skill-youtube-music](https://github.com/OpenVoiceOS/ovos-skill-youtube-music) | Youtube Music OCP Skill. | [Skills](#skills-53) |
+    | [ovos-skill-youtube](https://github.com/OpenVoiceOS/ovos-skill-youtube) | **Archived.** simple youtube skill for better-cps; see [ovos-media-provider-youtube](https://github.com/OpenVoiceOS/ovos-media-provider-youtube). | [Skills](#skills-53) |
+    | [ovos-skill-youtube-music](https://github.com/OpenVoiceOS/ovos-skill-youtube-music) | **Archived.** Youtube Music OCP Skill; see [ovos-media-provider-youtube-music](https://github.com/OpenVoiceOS/ovos-media-provider-youtube-music). | [Skills](#skills-53) |
     | [OVOS-skills-store](https://github.com/OpenVoiceOS/OVOS-skills-store) | The community skill store: a curated list where OVOS developers submit and discover... | [Meta & infrastructure / other components](#meta-infrastructure-other-components-43) |
     | [ovos-solver-failure-plugin](https://github.com/OpenVoiceOS/ovos-solver-failure-plugin) | Extreme fallback, just complains it does not have a brain. Used by ovos-persona and the... | [Agent Engine plugins](#agent-engine-plugins-8) |
     | [ovos-solver-plugin-aiml](https://github.com/OpenVoiceOS/ovos-solver-plugin-aiml) | A rule-based chatbot answer engine for OVOS, using AIML pattern matching. Used by... | [Agent Engine plugins](#agent-engine-plugins-8) |
