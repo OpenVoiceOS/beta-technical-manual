@@ -1287,7 +1287,7 @@
 <h1 id="linguonnx-language-plugins">linguonnx Language Plugins<a class="headerlink" href="#linguonnx-language-plugins" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>One package gives OVOS offline language detection and offline translation. It runs the models on your own machine, so text never leaves the device. It reaches 586 languages by routing a translation through one or two models instead of holding a single large one. This page shows how to install it, how to configure it, and which settings bound the memory it uses. See <a href="../translation-plugins/">Translation Plugins</a> and the <a href="../glossary/">Glossary</a>.</p>
+<p>One package gives OVOS offline language detection and offline translation. It runs the models on your own machine, so text never leaves the device. It reaches 593 languages by routing a translation through one or two models instead of holding a single large one. This page shows how to install it, how to configure it, and which settings bound the memory it uses. See <a href="../translation-plugins/">Translation Plugins</a> and the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p><code>ovos-plugin-linguonnx</code> ships two plugins in one package:</p>
 <table>
@@ -1410,7 +1410,7 @@
 <p>With <code>max_model_mb: 500</code> and <code>count_cached_as_free: false</code>, <code>en -&gt; ca</code> routes through a 157 MB <code>opus-mt</code> model instead of a 1.7 GB multilingual one. <code>en -&gt; cv</code> (Chuvash) has no model under 500 MB at all, so the fallback escalates to the smallest model that covers it.</p>
 <div class="admonition warning">
 <p class="admonition-title"><code>LINGUONNX_MAX_DOWNLOAD_MB</code> ceilings the escalation</p>
-<p><code>LINGUONNX_MAX_DOWNLOAD_MB</code> is an environment variable, not a config key. It defaults to <code>8192</code> (MB) and caps how large a model the escalation may fetch. Set it at or near your <code>max_model_mb</code> value and the escalation collapses: routable languages on the default graph drop from 586 to 249, the same result as no fallback at all. Leave it at the default unless you deliberately want to bound the fallback.</p>
+<p><code>LINGUONNX_MAX_DOWNLOAD_MB</code> is an environment variable, not a config key. It defaults to <code>8192</code> (MB) and caps how large a model the escalation may fetch. Set it at or near your <code>max_model_mb</code> value and the escalation collapses: routable languages on a 500 MB budget drop from 593 (with <code>oversize_fallback</code> escalating past the cap) to 251, the same result as no fallback at all. Leave it at the default unless you deliberately want to bound the fallback.</p>
 </div>
 <h3 id="bounding-memory">Bounding memory<a class="headerlink" href="#bounding-memory" title="Permanent link">&para;</a></h3>
 <p><code>max_concurrent_translations</code> is the only setting that bounds peak memory. A model that a thread is decoding with is resident because that thread holds it, not because the cache kept it, so no cache setting can reach it. Translation endpoints are commonly served from a threadpool, so peak memory otherwise scales with whatever that pool admits. Requests over the limit wait for a slot.</p>
