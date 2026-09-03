@@ -36,7 +36,7 @@ both families. See the table below for what each currently supports.
 | [ovos-media-plugin-ffplay](#ovos-media-plugin-ffplay) | ffplay (audio) | yes: both | Apache-2.0 | Stable |
 | [ovos-media-plugin-cli](#ovos-media-plugin-cli) | generic CLI-command player (audio) | yes: both | Apache-2.0 | Alpha |
 | [ovos-plugin-vlc](#ovos-plugin-vlc) | VLC | old audio service only (legacy). Use ovos-media-plugin-vlc for ovos-media | Apache-2.0 | Stable |
-| ovos-media-plugin-mass | Music Assistant server (audio) | ovos-media only | — | Not yet published |
+| [ovos-media-plugin-mass](#ovos-media-plugin-mass) | Music Assistant server (audio) | yes: both (old audio service + ovos-media) | Apache-2.0 | Alpha |
 | ovos-media-plugin-mpris | external MPRIS player (audio + video) | ovos-media only | — | Not yet published |
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
@@ -223,12 +223,16 @@ a specific CLI player. See [Media playback: legacy vs. ovos-media](ovos-media.md
 
 ## ovos-media-plugin-mass
 
-- **Status**: not yet published — no public repository or PyPI package exists, so it cannot be
-  installed today.
+- **GitHub**: [ovos-media-plugin-mass](https://github.com/OpenVoiceOS/ovos-media-plugin-mass)
 - **Description**: Hands playback off to a [Music Assistant](https://music-assistant.io/) server
-  instead of playing the stream directly. `opm.media.audio` only, `ovos-media` only — there is
-  no old-audio-service equivalent. Does not implement `next()`/`previous()` through the legacy
-  `AudioBackend` interface; skipping/previous only work through the Music Assistant queue API.
+  instead of playing the stream directly. It registers under both `opm.media.audio`
+  (`ovos-media`) and the legacy `mycroft.plugin.audioservice` group (old `ovos-audio`), each
+  wrapping the same Music Assistant client — `next()`/`previous()`, play/pause, and seeking all
+  go through the Music Assistant queue API rather than a locally decoded stream.
+
+```bash
+pip install ovos-media-plugin-mass
+```
 
 Then select it in your `media.audio_players` config. See [Media playback: legacy vs.
 ovos-media](ovos-media.md).
