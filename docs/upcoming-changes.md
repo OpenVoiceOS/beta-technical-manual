@@ -97,11 +97,17 @@ fleets no longer run legacy-namespace consumers.
 | [ovos-core#837](https://github.com/OpenVoiceOS/ovos-core/pull/837) | Kill-switch: drops the last legacy-topic literals from `ovos-core` | deployers/plugin authors on legacy topic spellings | Yes | not yet released |
 | [ovos-workshop#501](https://github.com/OpenVoiceOS/ovos-workshop/pull/501) | Kill-switch: drops legacy-topic literals from `ovos-workshop` (blocked on #500) | deployers/skill authors on legacy topic spellings | Yes | 10.0.0 |
 | [ovos-utils#412](https://github.com/OpenVoiceOS/ovos-utils/pull/412) | Kill-switch: drops the bridge from `FakeBus` (its prerequisite bridge shipped via #417) | test-harness authors on legacy-compat flags | Yes | 1.0.0 |
+| [ovos-bus-client#320](https://github.com/OpenVoiceOS/ovos-bus-client/pull/320) | Serializes `session.location` as OVOS-SESSION-1 §3.5's three keys (`lat`/`lon`/`tz`); still accepts the legacy nested `mycroft.conf`-style `location` object on ingest, normalizing it with a deprecation warning | skill/plugin authors reading `session.location` or `Session.location_preferences` | No (compat window) | 2.11.3a1 (merged, on `dev`) |
 
 The four kill-switch PRs above (`ovos-bus-client#272`, `ovos-core#837`,
 `ovos-workshop#501`, `ovos-utils#412`) must merge together. `ovos-bus-client#272`
 is explicit: "do not merge until then." `ovos-utils#412` would also be that
 package's first stable 1.0 release.
+
+`ovos-bus-client#320`'s compat window runs until `ovos-bus-client` 3.0.0, when the legacy
+nested `location` ingest path is removed. `Session.location_preferences` is a deprecated
+read/write compatibility view over the three-key shape; ovos-workshop's location
+properties and `ovos-skill-weather` still read it.
 
 ## Other changes by repository
 
