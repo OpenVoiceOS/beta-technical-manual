@@ -222,7 +222,7 @@ differently.
 
 ### I have added new phrases in the .voc file, but Mycroft isn't recognizing them
 
-1. OVOS normalizes compound words like "don't", "won't", and "shouldn't", so they become "do not", "will not", "should not". Use the normalized words in your `.voc` files. Similarly, the normalization process removes definite articles like "the", so avoid using them in your `.voc` or `.rx` files as well.
+1. OVOS normalizes compound words like "don't", "won't", and "shouldn't", so they become "do not", "will not", "should not". Use the normalized words in your `.voc` files. `ovos-utterance-normalizer` can also strip definite/indefinite articles via its `remove_articles` config option, but this is off by default, so "the"/"a"/"an" reach the matcher unchanged on a stock install — no need to avoid them in your `.voc` or `.rx` files.
 
 
 2. A tab is not 4 spaces. Sometimes your text editor or IDE automatically replaces tabs with spaces or vice versa. This may lead to an indentation error. Make sure there are no extra tabs and that your editor doesn't replace your spaces.
