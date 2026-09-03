@@ -9,11 +9,10 @@
       systemctl --user restart ovos.service
       ```
       `ovos.service` is a `--user` target unit that the other services (`ovos-messagebus.service`,
-      `ovos-listener.service`, `ovos-audio.service`, `ovos-skills.service`, `ovos-phal.service`,
-      and — if installed — `ovos-gui.service`/`ovos-shell.service`) declare as `PartOf=`, so
-      restarting it cascades to all of them. Restarting a single service instead (e.g. only the
-      listener after a wake-word change) works the same way: `systemctl --user restart
-      ovos-listener.service`.
+      `ovos-listener.service`, `ovos-audio.service`, `ovos-core.service`, `ovos-phal.service`,
+      and — if installed — `ovos-gui.service`) declare as `PartOf=`, so restarting it cascades
+      to all of them. Restarting a single service instead (e.g. only the listener after a
+      wake-word change) works the same way: `systemctl --user restart ovos-listener.service`.
     - **Docker/container install**: restart the equivalent service(s) in your compose file, e.g.
       ```bash
       docker compose restart <service-name>
