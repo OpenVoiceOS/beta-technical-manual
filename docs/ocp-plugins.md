@@ -21,7 +21,7 @@ Writing a plugin instead of choosing one? See [Writing an OCP Stream Extractor P
 | [ovos-ocp-rss-plugin](#ovos-ocp-rss-plugin) | Parses an RSS/podcast feed and extracts the newest audio enclosure as the playable stream | Apache-2.0 | not rated |
 | [ovos-ocp-youtube-plugin](#ovos-ocp-youtube-plugin) | Resolves YouTube/YouTube Music URLs via a selectable `yt-dlp`/pytube/Invidious/webview backend | Apache-2.0 | not rated |
 | [ovos-ocp-m3u-plugin](#ovos-ocp-m3u-plugin) | Downloads a `.pls`/`.m3u` playlist and extracts the first playable stream URL inside it | Apache-2.0 | not rated |
-| [ovos-media-classifier](#ovos-media-classifier) | ⚠️ experimental: pluggable media-intent classifier that routes a request to the right `MediaProvider`s | Apache-2.0 | not rated |
+| [ovos-media-classifier](#ovos-media-classifier) | Pluggable media-intent classifier that routes a request to the right `MediaProvider`s; deployed as a dependency of ovos-ocp-pipeline-plugin | Apache-2.0 | not rated |
 
 --8<-- "snippets/maturity-disclaimer.md"
 

@@ -108,17 +108,30 @@ OCP combines several signals:
 
 * **Explicit intents** (`ocp_high`): localized `.intent` files for play, pause,
   resume, stop, next, previous, shuffle, etc.
-* **Keyword matching** (`ocp_medium` / `ocp_low`): `voc_match_media()` maps
-  vocabulary (MusicKeyword, PodcastKeyword, MovieKeyword, NewsKeyword, …) to a
-  `MediaType` with a heuristic confidence. `is_ocp_query()` treats any non-GENERIC
-  media type as a playback query.
+* **Keyword matching** (`ocp_medium` / `ocp_low`): `classify_media()` delegates
+  to a `ContextAwareClassifier` backed by the `ovos-media-classifier` package
+  (a hard dependency), which feeds player status and registered NER entities
+  into the classification. The classifier backend is pluggable — the default
+  is a keyword/vocab matcher, but other `opm.media.classifier` entry points can
+  be selected via config. `is_ocp_query()` treats any non-GENERIC media type as
+  a playback query.
 * **Skill-registered keywords**: skills announce entities (artist names, show
   titles) over `ovos.common_play.register_keyword`. These feed the
   `AhocorasickNER` entity matcher and bias media-type classification.
 
-Media-type classification on `dev` is keyword/vocab based (localizable, but
-heuristic). If a query maps to exactly one media type that a skill can serve, that
-type is used with full confidence.
+If a query maps to exactly one media type that a skill can serve, that type is
+used with full confidence.
+
+### MediaProvider plugins
+
+In-process `MediaProvider` plugins (entry-point group `opm.media.provider`) run
+alongside the legacy bus `@ocp_search` window rather than replacing it —
+results from both are merged, bounded by the same timeout. A provider that
+declares no media types is demoted (confidence capped at 50); each provider's
+results are capped at 50. With no `MediaProvider` plugins installed, behavior
+is unchanged from the legacy bus-only flow. Settings live under
+`intents.ovos-ocp-pipeline-plugin.media_providers` in `mycroft.conf`; set
+`media_providers.enabled: false` to turn the mechanism off entirely.
 
 Supported media types include `music`, `podcast`, `movie`, `radio`, `audiobook`,
 `news`, and many more from `ovos_utils.ocp.MediaType`.

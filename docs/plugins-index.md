@@ -87,12 +87,12 @@ matchers (Padacioso, Nebulento, Palavreado, Hierarchical KNN, Markov, HiveMind).
 ## Media & GUI
 
 About 17 plugins in the catalog, across OCP stream extractors and media playback backends. OCP
-Media Classifiers and GUI Adapters exist as specs, not yet as shipped plugins.
+GUI Adapters exist as a spec, not yet as a shipped plugin. Media Classifiers ship — see the row below.
 
 | Type | Entry point | What it does |
 |---|---|---|
 | [OCP Stream Extractors](ocp-plugins.md) | `opm.ocp.extractor` | Resolve a playable stream from a URL (YouTube, RSS, …) |
-| [OCP Media Classifiers](media-plugins.md#ovos-media-classifier) | none yet **(experimental)** | *(unreleased)* Recognize media intent + entities (artist, title, station, …) in an utterance. Not yet built or released as an OPM entry-point group. See the [Media Playback](media-plugins.md#ovos-media-classifier) page. |
+| [OCP Media Classifiers](media-plugins.md#ovos-media-classifier) | `opm.media.classifier` | Recognize media intent + entities (artist, title, station, …) in an utterance. Deployed as a hard dependency of `ovos-ocp-pipeline-plugin`. See the [Media Playback](media-plugins.md#ovos-media-classifier) page. |
 | [Media Playback](media-plugins.md) | `opm.media.audio` / `.video` / `.web` | Backend players for [ovos-media](ovos-media.md) |
 | [OCP Audio Plugin](ocp-audio-plugin.md) | legacy audio backend | The current default playback engine inside ovos-audio |
 | [Stream Extractors](ocp-plugins.md) | `opm.ocp.extractor` | Resolve a stream URL before playback (YouTube, RSS, ...) |

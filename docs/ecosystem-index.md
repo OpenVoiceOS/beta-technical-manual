@@ -72,7 +72,7 @@ There are roughly **260** public, non-archived repositories in the [`OpenVoiceOS
     | [ovos-mark1-utils](https://github.com/OpenVoiceOS/ovos-mark1-utils) | small library to interact with a Mycroft Mark1 faceplate via the messagebus. | [Hardware / OS images](#hardware-os-images-10) |
     | [ovos-markov-pipeline-plugin](https://github.com/OpenVoiceOS/ovos-markov-pipeline-plugin) | An intent pipeline plugin that trains one word-level Markov chain per intent and picks... | [Pipeline / Intent plugins](#pipeline-intent-plugins-10) |
     | [ovos-media](https://github.com/OpenVoiceOS/ovos-media) | **Work in progress** - pre-release software, under active development and not yet... | [Media / OCP plugins](#media-ocp-plugins-28) |
-    | [ovos-media-classifier](https://github.com/OpenVoiceOS/ovos-media-classifier) | Work in progress, not yet deployed in OVOS - a self-describing, pluggable media-intent... | [Media / OCP plugins](#media-ocp-plugins-28) |
+    | [ovos-media-classifier](https://github.com/OpenVoiceOS/ovos-media-classifier) | a self-describing, pluggable media-intent classifier, deployed as a dependency of ovos-ocp-pipeline-plugin... | [Media / OCP plugins](#media-ocp-plugins-28) |
     | [ovos-media-plugin-chromecast](https://github.com/OpenVoiceOS/ovos-media-plugin-chromecast) | chromecast plugin for ovos-audio and ovos-media. | [Media / OCP plugins](#media-ocp-plugins-28) |
     | [ovos-media-plugin-cli](https://github.com/OpenVoiceOS/ovos-media-plugin-cli) | A generic command-line playback backend: it shells out to any CLI media player, or... | [Media / OCP plugins](#media-ocp-plugins-28) |
     | [ovos-media-plugin-ffplay](https://github.com/OpenVoiceOS/ovos-media-plugin-ffplay) | A playback backend plugin wrapping ffplay (the FFmpeg player). Loaded by ovos-media (or... | [Media / OCP plugins](#media-ocp-plugins-28) |
@@ -780,7 +780,7 @@ These register under the upcoming `opm.media.provider` plugin type (see [ovos-me
 ### Playback backends and legacy OCP plugins
 
 **[ovos-media-classifier](https://github.com/OpenVoiceOS/ovos-media-classifier)**
-:   ⚠️ Work in progress, not yet deployed in OVOS — a self-describing, pluggable media-intent classifier that decides what kind of media a request wants ("play some music", "watch an anime") so the OCP pipeline can route it to the right provider. Intended to register under an OCP classifier entry point once stable; loaded by ovos-media's OCP pipeline when adopted.
+:   A self-describing, pluggable media-intent classifier that decides what kind of media a request wants ("play some music", "watch an anime") so the OCP pipeline can route it to the right provider. Registers under the `opm.media.classifier` entry point; deployed as a hard dependency of `ovos-ocp-pipeline-plugin` (not loaded by the `ovos-media` daemon itself).
 
 **[ovos-media-plugin-mpv](https://github.com/OpenVoiceOS/ovos-media-plugin-mpv)**
 :   An audio/video backend plugin that drives the MPV media player, with play/pause/stop/seek controls and volume management. Loaded by ovos-media (or the legacy ovos-audio service) when MPV is configured as the active playback backend.

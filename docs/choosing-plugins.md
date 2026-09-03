@@ -188,7 +188,7 @@ maturity rating.
 | ovos-ocp-bandcamp-plugin | not rated | online | Bandcamp pages |
 | ovos-ocp-news-plugin | not rated | online | A known spoken-news provider URL |
 | ovos-ocp-m3u-plugin | not rated | online | Resolving a `.m3u`/`.pls` playlist URL |
-| ovos-media-classifier | not rated | offline | Experimental: routes a request to the right `MediaProvider` by intent, not yet deployed |
+| ovos-media-classifier | not rated | offline | Routes a request to the right `MediaProvider` by intent; deployed as a dependency of `ovos-ocp-pipeline-plugin` |
 
 ---
 

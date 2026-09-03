@@ -136,16 +136,23 @@ self.cancel_scheduled_event("my-tick")
 ```
 
 - **`schedule_event(handler, when, data=None, name=None, context=None)`**: single-shot.
-  `when` is either a `datetime` (interpreted in the system timezone) or a number of seconds
-  from now.
+  `when` is either a `datetime` or a number of seconds from now. A naive `datetime` (no
+  `tzinfo`) is stamped with the assistant's configured timezone (`location.timezone.code`),
+  not the OS/process timezone — a device on the stock config is in Lawrence, Kansas until
+  its location is set.
 - **`schedule_repeating_event(handler, when, frequency, data=None, name=None, context=None)`**:
   repeating. `frequency` is the interval **in seconds** between calls. `when=None` fires the
   first call `frequency` seconds from now. Pass a `datetime`/number to control the first firing
   explicitly.
 - Both accept an optional `name` used to reference/cancel the event later with
-  `cancel_scheduled_event(name)`. Reusing a `name` for `schedule_event` does **not** warn or
-  replace a previously scheduled event of the same name. Use unique names, or cancel the old
-  one first.
+  `cancel_scheduled_event(name)`. Re-scheduling `schedule_event` under a `name` that already
+  has a pending one-shot replaces it, so a skill that re-creates its schedules on every load
+  does not accumulate duplicates. `schedule_repeating_event` does not replace an existing
+  repeating schedule of the same name — cancel it first. `update_scheduled_event` changes an
+  existing event's payload without touching its fire time; `get_scheduled_event_status`
+  returns `None` (not an exception) when nothing is scheduled under that name. A repeating
+  schedule survives skill shutdown/restart — it is tied to the skill id, not the running
+  process.
 - Scheduled events are persisted by the [`EventScheduler`](bus-service.md) so they survive an
   `ovos-core` restart. They are not tied to the skill instance staying in memory.
 

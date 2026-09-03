@@ -377,6 +377,14 @@ not. Its absence means the intent service itself crashed or hung — jump back t
 `ovos-core` is even alive before digging further. Its presence with no matched
 intent means every pipeline plugin genuinely rejected the utterance.
 
+**"Unknown pipeline matcher" in the logs.** A bare `pip install ovos-core` ships with no
+pipeline matcher plugins at all — by design, so a minimal deployment isn't forced to pull in
+every intent engine. If `intents.pipeline` in `mycroft.conf` names a matcher (e.g.
+`adapt_high`, `ocp_high`) whose plugin package (`ovos-adapt-pipeline-plugin`,
+`ovos-ocp-pipeline-plugin`, …) isn't installed, the intent service logs "Unknown pipeline
+matcher" for it and skips it. Install the matcher plugin explicitly, or use the installer,
+which bundles a working default set.
+
 Before blaming the skill's vocabulary, rule out the two upstream causes of
 "installed but never matches":
 
