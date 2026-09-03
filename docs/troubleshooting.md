@@ -521,7 +521,7 @@ By default every service logs at `INFO`. To see the `DEBUG` lines quoted through
     this way once), `ovos-config set -k log_level -v DEBUG` will find it and write it to
     `mycroft.conf` (the User layer). If `mycroft.conf` was already showing the wrong value
     before running `set`, on an `ovos-config` release before `3.1.1a1`, `set` wrote to the
-    Assistant layer (`runtime.conf`) instead — see [Configuration](config.md#the-layers) —
+    Assistant layer (`runtime.conf`) instead — see [Configuration](config.md#config-layer-stack) —
     and the User layer's stale value silently won.
 
 This applies to every service (they all watch the same configuration and pick up the change
