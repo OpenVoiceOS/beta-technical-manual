@@ -283,29 +283,38 @@ ovoscope run test/fixtures/hello.json -v
     your workflow. The Python API is handy when you want to tweak the `Session` (language,
     pipeline list) before recording.
 
-## Multi-turn tests: always re-pull the session
+## Multi-turn tests with a named session: the test owns the session, not the server
 
-Session state (which skills are active for [converse](converse.md), context, pipeline order)
-travels **inside each message**, and the server folds it back with last-writer-wins semantics.
+A test's `Session` almost always carries its own id, not the reserved `"default"` id.
+Under OVOS-SESSION-2 §2.2/§2.5, the orchestrator holds no state for a named session
+between utterances. The registry only ever stores the `"default"` session, so a named
+`session_id` never enters it, and there is nothing server-side to fetch back.
 
-If a test builds one `Session` object and reuses it (or an old `.serialize()` snapshot) across
-several injected utterances, every later message re-stamps the stale snapshot. It silently
-undoes whatever the previous turn changed: a skill activated in turn 1 will not get its
-`converse()` called in turn 2.
-
-Re-fetch the live session right before building each follow-up message:
+The test must act as the client would: build one `Session` object, put its current
+snapshot in every message's `context["session"]`, and update that same object itself
+between turns from whatever the skill's own reply reported. Do not expect any server-side
+store to remember or merge a named session's state for you.
 
 ```python
-from ovos_bus_client.session import SessionManager
+from ovos_bus_client.session import Session, SessionManager
+
+session = Session("test-1")
 
 # turn 1
-bus.emit(make_utterance_message("book a table", session=my_session))
-# ... wait for the reply ...
+bus.emit(make_utterance_message("book a table", session=session))
+reply = wait_for_reply()  # your test's own capture/wait helper
 
-# turn 2: never reuse `my_session`, pull the updated singleton instead
-live = SessionManager.sessions[my_session.session_id]
-bus.emit(make_utterance_message("yes", session=live))
+# read what the skill actually changed off the reply's own session carrier,
+# or off SessionManager.get(reply) for the message the skill handled
+session = Session.deserialize(reply.context["session"])
+
+# turn 2: reuse the session object you just updated
+bus.emit(make_utterance_message("yes", session=session))
 ```
+
+[ovos-skill-naptime's end-to-end tests](https://github.com/OpenVoiceOS/ovos-skill-naptime/blob/dev/test/end2end/test_intents_en_us.py)
+follow exactly this pattern: each test builds its own `Session`, stamps it onto the
+outgoing `Message`, and asserts against what the skill emitted back.
 
 ## An observer on the skill's own FakeBus only hears one spelling
 
