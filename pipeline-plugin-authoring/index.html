@@ -1390,7 +1390,7 @@
 <li><code>match_type</code>: name of the matching service.</li>
 <li><code>match_data</code>: extra data for the intent handler.</li>
 <li><code>skill_id</code> and <code>utterance</code>: route the dispatch to the right skill.</li>
-<li><code>updated_session</code>: lets a plugin mutate session state as part of matching. It must be the session the round is already running on. The orchestrator compares its <code>session_id</code> against the round's, and a mismatch is logged as an error and ignored, with the round continuing on its own session. Read the session with <code>SessionManager.get(message)</code> and return that same object mutated, rather than constructing a fresh one.</li>
+<li><code>updated_session</code>: lets a plugin mutate session state as part of matching. It must be the session the round is already running on (OVOS-PIPELINE-1 §4.2). The orchestrator compares its <code>session_id</code> against the round's, and a mismatch is logged as an error and ignored, with the round continuing on its own session. Read the session with <code>SessionManager.get(message)</code> and return that same object mutated, rather than constructing a fresh one.</li>
 <li><code>suppress_activation</code>: set this for a termination or continuation of an already-active skill, such as stop. It tells the orchestrator to dispatch without sending a fresh <code>{skill_id}.activate</code>.</li>
 </ul>
 <p>The constructor is <code>__init__(self, bus=None, config=None)</code>. This differs from the transformer templates: there is no <code>name</code> or <code>priority</code> argument. <code>self.bus</code> defaults to a <code>FakeBus()</code> when you pass none. A <code>FakeBus</code> needs no running message bus, so you can unit test a plugin standalone.</p>
