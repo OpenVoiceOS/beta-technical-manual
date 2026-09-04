@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/maturity/">
+        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/dig-for-message/">
       
       
-        <link rel="prev" href="../spec-test-harness/">
+        <link rel="prev" href="../bus-recipes/">
       
       
-        <link rel="next" href="../bus-service/">
+        <link rel="next" href="../security-model/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Maturity Scale - OpenVoiceOS Technical Manual</title>
+        <title>dig_for_message - OpenVoiceOS Technical Manual</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#maturity-scale" class="md-skip">
+        <a href="#dig_for_message" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Maturity Scale
+              dig_for_message
             
           </span>
         </div>
@@ -726,30 +726,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Maturity Scale
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../maturity/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -758,44 +738,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-levels" class="md-nav__link">
-    <span class="md-ellipsis">
-      The levels
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-its-not-the-version-number" class="md-nav__link">
-    <span class="md-ellipsis">
-      Why it's not the version number
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -889,10 +831,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../dig-for-message/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    dig_for_message
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -901,6 +863,71 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-it-solves" class="md-nav__link">
+    <span class="md-ellipsis">
+      The problem it solves
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How it works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-rules-it-actually-follows" class="md-nav__link">
+    <span class="md-ellipsis">
+      The rules it actually follows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-it-breaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where it breaks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Guidance
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1447,18 +1474,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-levels" class="md-nav__link">
+  <a href="#the-problem-it-solves" class="md-nav__link">
     <span class="md-ellipsis">
-      The levels
+      The problem it solves
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-its-not-the-version-number" class="md-nav__link">
+  <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
-      Why it's not the version number
+      How it works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-rules-it-actually-follows" class="md-nav__link">
+    <span class="md-ellipsis">
+      The rules it actually follows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-it-breaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where it breaks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Guidance
     </span>
   </a>
   
@@ -1482,96 +1536,161 @@
   
 
 
-<h1 id="maturity-scale">Maturity Scale<a class="headerlink" href="#maturity-scale" title="Permanent link">&para;</a></h1>
+<h1 id="dig_for_message"><code>dig_for_message</code><a class="headerlink" href="#dig_for_message" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Many pages in this manual carry a <strong>maturity</strong> badge. It tells you how much weight a
-component can bear in a real deployment: a rock-solid dependency, a usable-but-moving
-target, or an early experiment that may change under you. The rating comes from the
-health of the component's source repository, not its version number. See the levels
-below, then read the criteria under <a href="#why-its-not-the-version-number">Why it's not the version number</a> for the detail.</p>
+<p>A lot of OVOS code seems to know which message it is responding to without ever being
+told. <code>self.speak("hello")</code> reaches the right satellite. <code>self.lang</code> returns the
+language of the person who is talking, not the device default. The mechanism behind
+that is <code>dig_for_message</code>, which walks the Python call stack and finds the <code>Message</code>
+your handler was called with. It is powerful, and it fails in ways that are hard to
+guess. This page is for developers who need to rely on it, extend it, or work out why
+it returned <code>None</code>.</p>
 </div>
-<h2 id="the-levels">The levels<a class="headerlink" href="#the-levels" title="Permanent link">&para;</a></h2>
+<p><code>dig_for_message</code> lives in <code>ovos_bus_client.message</code>. It takes no required arguments and
+returns the <code>Message</code> currently being handled, or <code>None</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">dig_for_message</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">def</span> <span class="nf">some_helper</span><span class="p">():</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">message</span> <span class="o">=</span> <span class="n">dig_for_message</span><span class="p">()</span>   <span class="c1"># nobody passed it in</span>
+</span></code></pre></div>
+<hr />
+<h2 id="the-problem-it-solves">The problem it solves<a class="headerlink" href="#the-problem-it-solves" title="Permanent link">&para;</a></h2>
+<p>Almost everything in OVOS is per-session. The language to answer in, the satellite to
+speak to, and the intent context to read all come from the <code>Message</code> that triggered the
+current work. Threading that message through every function that might need it would put
+a <code>message</code> parameter on most of the skill API.</p>
+<p>Instead, the framework reaches up the call stack and finds it. That is why these work
+with no message argument:</p>
 <table>
 <thead>
 <tr>
-<th>Badge</th>
-<th>Level</th>
-<th>What it means for you</th>
+<th>Call</th>
+<th>What it digs the message for</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>⬤⬤⬤⬤⬤</td>
-<td><strong>Mature</strong></td>
-<td>Long-lived, well-proven, widely deployed, actively maintained. Depend on it freely.</td>
+<td><code>self.speak(...)</code></td>
+<td>Forwards from the triggering message, so the reply routes back to the same client</td>
 </tr>
 <tr>
-<td>⬤⬤⬤⬤◯</td>
-<td><strong>Stable</strong></td>
-<td>Established and production-ready, maintained, with real docs. Safe for production; API changes are rare and announced.</td>
+<td><code>self.lang</code></td>
+<td>Reads the session language of the current speaker</td>
 </tr>
 <tr>
-<td>⬤⬤⬤◯◯</td>
-<td><strong>Beta</strong></td>
-<td>Works and is in real use, but younger or still settling — expect the occasional breaking change. Fine to build on with an eye on releases.</td>
+<td><code>self.get_response(...)</code></td>
+<td>Binds the follow-up prompt to the originating session</td>
 </tr>
 <tr>
-<td>⬤⬤◯◯◯</td>
-<td><strong>Alpha</strong></td>
-<td>Functional but early: the API churns, coverage is thin, and it may change substantially. Try it, pin it, don't build a product on it yet.</td>
-</tr>
-<tr>
-<td>⬤◯◯◯◯</td>
-<td><strong>Proof-of-concept</strong></td>
-<td>A spike or reference implementation. It may work, but it is not maintained as a product and may disappear. For exploration only.</td>
-</tr>
-<tr>
-<td>⚠️</td>
-<td><strong>Deprecated</strong></td>
-<td>The repository is archived or no longer maintained. Avoid it for new work; the page notes what replaces it where a replacement exists.</td>
+<td><code>SessionManager.get()</code></td>
+<td>Resolves the session off the current message's carrier</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition info">
-<p class="admonition-title">How maturity is judged</p>
-<p>A component's rating comes from the <strong>health of its source repository</strong>, not its version
-number. OVOS packages are versioned continuously from conventional commits. A <code>0.x</code>
-version says little about how well-proven the code is. A foundational library can sit at
-<code>0.8</code> with hundreds of releases, while a brand-new experiment can ship a <code>1.0</code>. Instead, the
-rating weighs signals that track maturity: how long the repository has existed,
-how actively it is maintained (recent commit activity), the volume of open issues and pull
-requests it fields, and whether it carries real in-repo documentation and tests.</p>
-</div>
+<h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<p><code>dig_for_message</code> calls <code>inspect.stack()</code>, then walks the frames from the most recent
+outward. In each frame it inspects the <strong>named parameters</strong> of that function. It returns
+the value of the first parameter that is a <code>Message</code> instance.</p>
+<p>The scan stops after <code>max_records</code> frames, which defaults to <strong>10</strong>.</p>
+<h2 id="the-rules-it-actually-follows">The rules it actually follows<a class="headerlink" href="#the-rules-it-actually-follows" title="Permanent link">&para;</a></h2>
+<p>These are the behaviors that surprise people. Each one follows from "named parameters of
+frames on the current stack, nearest first".</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th style="text-align: center;">Found?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>def handler(message)</code></td>
+<td style="text-align: center;">yes</td>
+<td>A named parameter holding a <code>Message</code></td>
+</tr>
+<tr>
+<td><code>def handler(self, message)</code></td>
+<td style="text-align: center;">yes</td>
+<td><code>self</code> is inspected, is not a <code>Message</code>, and the scan continues</td>
+</tr>
+<tr>
+<td><code>def handler(*, message=None)</code></td>
+<td style="text-align: center;">yes</td>
+<td>Keyword-only parameters are still named parameters</td>
+</tr>
+<tr>
+<td>A <code>Message</code> in a local variable</td>
+<td style="text-align: center;"><strong>no</strong></td>
+<td>Only parameters are inspected, never other locals</td>
+</tr>
+<tr>
+<td>A <code>Message</code> passed into <code>*args</code></td>
+<td style="text-align: center;"><strong>no</strong></td>
+<td>Variadic arguments are not named parameters</td>
+</tr>
+<tr>
+<td>A <code>Message</code> passed into <code>**kwargs</code></td>
+<td style="text-align: center;"><strong>no</strong></td>
+<td>Same reason</td>
+</tr>
+<tr>
+<td>A handler more than 10 frames down</td>
+<td style="text-align: center;"><strong>no</strong></td>
+<td>Past the <code>max_records</code> limit</td>
+</tr>
+<tr>
+<td>Anything on a different thread</td>
+<td style="text-align: center;"><strong>no</strong></td>
+<td>A new thread has its own stack</td>
+</tr>
+</tbody>
+</table>
+<p>Two more that matter when the result is wrong rather than missing:</p>
+<ul>
+<li><strong>The nearest frame wins.</strong> If a helper is itself called with a different <code>Message</code>,
+  that inner message shadows the outer one.</li>
+<li><strong>Within one frame, declaration order wins.</strong> For <code>def f(a, b)</code> called with two
+  messages, <code>a</code> is returned. This is parameter order, not "the first argument that
+  happens to be a message".</li>
+</ul>
+<h2 id="where-it-breaks">Where it breaks<a class="headerlink" href="#where-it-breaks" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
-<p class="admonition-title">Maturity is not a recommendation</p>
-<p>A badge rates how <em>reliable and maintained</em> a component is. It does not rate whether it is
-the right choice for your use case. A component can be <strong>Mature</strong> (rock-solid and well-proven)
-and still be the wrong tool for a given job. A page may recommend against broad use of
-something whose code is perfectly stable. Always read the page's own recommendation alongside
-the badge.</p>
+<p class="admonition-title">Threads and callbacks lose the message</p>
+<p>The stack is per-thread. Work handed to a <code>Thread</code>, an executor, a timer callback, or
+an event loop runs on a stack that never contained your handler, so
+<code>dig_for_message()</code> returns <code>None</code> there. Capture the message in the calling frame and
+pass it in explicitly:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span> <span class="nf">handle_intent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="c1"># wrong: the worker digs an empty stack</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_work</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="c1"># right: hand the message across the boundary</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_work</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">message</span><span class="p">,))</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">def</span> <span class="nf">_work</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="o">...</span>
+</span></code></pre></div>
 </div>
-<h2 id="why-its-not-the-version-number">Why it's not the version number<a class="headerlink" href="#why-its-not-the-version-number" title="Permanent link">&para;</a></h2>
-<p>A version like <code>1.2.0</code> is set by the release pipeline from commit conventions. A single <code>feat:</code>
-commit can move a <code>0.x</code> library to the next minor, and a <code>chore!:</code> moves it to a new major. That
-makes versions a precise record of <em>what changed</em>, but a poor proxy for <em>how much you can rely on
-it</em>. Repository health is a better signal: age, sustained maintenance, an engaged issue tracker,
-and in-repo docs. It answers the only question a maturity badge should answer: <strong>if I depend on
-this, will it still be here and still work in a year?</strong></p>
-<p>Ratings are a point-in-time judgement and move as repositories do. Treat a badge as guidance, not
-a guarantee.</p>
-<div class="admonition note">
-<p class="admonition-title">A release channel is not a maturity guarantee</p>
-<p>A <a href="../release-channels/">release channel</a> (stable/testing/alpha) only bounds the version
-range of <code>ovos-core</code> itself. It says nothing about the maturity of the individual
-plugins it happens to pull in. A stable-channel install can still resolve to a
-<strong>Beta</strong>-rated (or even Alpha-rated) plugin as a dependency. Check each plugin's own
-maturity badge in the manual before relying on it. Do not assume "stable
-channel" means "every component is production-grade."</p>
-</div>
+<p>The depth limit bites for the same reason in long call chains. Raise it with
+<code>dig_for_message(max_records=50)</code> if you genuinely need to reach further, but treat that
+as a sign the message should have been a parameter.</p>
+<h2 id="guidance">Guidance<a class="headerlink" href="#guidance" title="Permanent link">&para;</a></h2>
+<p>Use <code>dig_for_message</code> when you are writing framework or plugin code that cannot change
+its own signature, and the caller reasonably has a message on the stack.</p>
+<p>Prefer an explicit <code>message</code> parameter everywhere else. Explicit passing survives thread
+boundaries, deep call chains, and refactoring that inserts a frame in the middle. It also
+makes the dependency visible to whoever reads the function next.</p>
+<p>When a helper can be called both ways, accept the message and fall back:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">message</span> <span class="o">=</span> <span class="n">message</span> <span class="ow">or</span> <span class="n">dig_for_message</span><span class="p">()</span>
+</span></code></pre></div>
+<p>That is the pattern the framework itself uses, and it lets a caller who has the message be
+explicit while a caller who does not still works.</p>
 <hr />
-<p><strong>Read next:</strong> <a href="../plugin-manager/">Plugin Manager</a> · <a href="../concepts-overview/">Concepts Overview</a>
-<strong>Related:</strong> <a href="../architecture-specs/">Formal Specifications</a> · <a href="../release-channels/">Manual &amp; Advanced Install</a> · <a href="../architecture-overview/">High-level Overview</a></p>
+<p><strong>Read next:</strong> <a href="../bus-recipes/">Bus Recipes</a>
+<strong>Related:</strong> <a href="../session/">Session Aware Skills</a> · <a href="../bus-service/">MessageBus Service</a> · <a href="../context/">Conversational Context</a></p>
 
 
 
