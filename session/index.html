@@ -1738,7 +1738,13 @@ read as a legacy request for the current <strong>default</strong> session and an
 <code>ovos.session.update_default</code> echo, which only ever concerns the device-local
 <code>"default"</code> session, never an external client's. Multiple clients each carrying their
 own full session converge on consistent state by every one of them adopting this
-same discipline, not by any message that reconciles them from the server side.</p>
+same discipline, not by any message that reconciles them from the server side.
+Connecting to the bus does not announce anything either: a client derives its own
+default session from local configuration and converges by adopting what it
+observes on the bus, not from a push at connect time (<code>ovos-bus-client</code> &gt;=
+2.11.6a1, OVOS-SESSION-2 §2.7). A skill container on an older <code>ovos-bus-client</code>
+joining a pre-spec bus (<code>ovos-core</code> 1.3.x) instead overwrote the core's default
+session on connect, breaking local intent matching — upgrade both sides together.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">A present-but-malformed session never crashes the bus client</p>
