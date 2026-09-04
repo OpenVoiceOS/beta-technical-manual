@@ -341,17 +341,22 @@ CONTEXT-1's declarative `requires_context` / `excludes_context` gate (above) exp
 `set_cross_skill_context` and the deprecated `set_adapt_context` /
 `remove_adapt_context` shortcuts carry the same additive `key`.
 
-!!! note "Both spellings are written, with one decay policy"
-    `set_context` writes into the session per CONTEXT-1 §5.0: the mutation lands on the
-    current handler's session directly, and the legacy `add_context` bus message is also
-    emitted as a compat dual-write for pre-§5.0 cores. Because that write lands on the live
-    session first, context set inside a handler is visible to the dispatch that immediately
-    follows it, in the same handler invocation, with no race. The core writes **two** entries:
-    the legacy munged `skillidkey` spelling and the resolved `<skill_id>:<key>` spelling
-    the declarative gate looks up. One computed `expires_at` applies to both, so
-    `set_context` entries decay normally (`context.timeout`, minutes, default `2`) and a
-    re-set refreshes the expiry of both keys. The remaining gap is declaration-side only
-    (see the warning near the top of this page).
+!!! note "Two distinct mechanisms, not one dual-write"
+    `set_context` writes `intent_context` directly into the session bound to the dispatch
+    message (`SessionManager.get(message)`, CONTEXT-1 §5.3). Because that write lands on
+    the live session object the handler is already running against, context set inside a
+    handler is visible to the dispatch that immediately follows it, in the same handler
+    invocation, with no race. It writes **two** entries there: the legacy munged
+    `skillidkey` spelling and the resolved `<skill_id>:<key>` spelling the declarative gate
+    looks up. One computed `expires_at` applies to both, so `set_context` entries decay
+    normally (`context.timeout`, minutes, default `2`) and a re-set refreshes the expiry of
+    both keys.
+
+    Separately, the legacy `add_context` bus message is also emitted, for pre-spec
+    orchestrators that only understand `Session.context`. This is a different consumer, not
+    a second write path into `intent_context`. The two live in different session fields.
+    The legacy emit now logs a deprecation warning once per process; it is scheduled for
+    removal at `ovos-workshop` 10.0.0.
 
 !!! note "Writing a key replaces it wholesale; there is no read-back"
     Writing an entry under a key that already exists **replaces the whole entry**, value and
