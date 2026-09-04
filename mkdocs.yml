@@ -138,6 +138,7 @@ nav:
       - Bus Restart & Reconnect: bus-reconnect.md
       - Bus Namespace Migration: bus-namespace-migration.md
       - Bus Recipes: bus-recipes.md
+      - dig_for_message: dig-for-message.md
       - Security & Trust Model: security-model.md
       - Plugin Manager: plugin-manager.md
       - Plugin Types Reference: plugin-types-reference.md
