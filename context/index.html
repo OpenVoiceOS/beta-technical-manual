@@ -1979,17 +1979,21 @@ CONTEXT-1's declarative <code>requires_context</code> / <code>excludes_context</
 <code>set_cross_skill_context</code> and the deprecated <code>set_adapt_context</code> /
 <code>remove_adapt_context</code> shortcuts carry the same additive <code>key</code>.</p>
 <div class="admonition note">
-<p class="admonition-title">Both spellings are written, with one decay policy</p>
-<p><code>set_context</code> writes into the session per CONTEXT-1 §5.0: the mutation lands on the
-current handler's session directly, and the legacy <code>add_context</code> bus message is also
-emitted as a compat dual-write for pre-§5.0 cores. Because that write lands on the live
-session first, context set inside a handler is visible to the dispatch that immediately
-follows it, in the same handler invocation, with no race. The core writes <strong>two</strong> entries:
-the legacy munged <code>skillidkey</code> spelling and the resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> spelling
-the declarative gate looks up. One computed <code>expires_at</code> applies to both, so
-<code>set_context</code> entries decay normally (<code>context.timeout</code>, minutes, default <code>2</code>) and a
-re-set refreshes the expiry of both keys. The remaining gap is declaration-side only
-(see the warning near the top of this page).</p>
+<p class="admonition-title">Two distinct mechanisms, not one dual-write</p>
+<p><code>set_context</code> writes <code>intent_context</code> directly into the session bound to the dispatch
+message (<code>SessionManager.get(message)</code>, CONTEXT-1 §5.3). Because that write lands on
+the live session object the handler is already running against, context set inside a
+handler is visible to the dispatch that immediately follows it, in the same handler
+invocation, with no race. It writes <strong>two</strong> entries there: the legacy munged
+<code>skillidkey</code> spelling and the resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> spelling the declarative gate
+looks up. One computed <code>expires_at</code> applies to both, so <code>set_context</code> entries decay
+normally (<code>context.timeout</code>, minutes, default <code>2</code>) and a re-set refreshes the expiry of
+both keys.</p>
+<p>Separately, the legacy <code>add_context</code> bus message is also emitted, for pre-spec
+orchestrators that only understand <code>Session.context</code>. This is a different consumer, not
+a second write path into <code>intent_context</code>. The two live in different session fields.
+The legacy emit now logs a deprecation warning once per process; it is scheduled for
+removal at <code>ovos-workshop</code> 10.0.0.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Writing a key replaces it wholesale; there is no read-back</p>
