@@ -53,6 +53,19 @@ A `session_id` that cannot serve as an identity, absent, `null`, empty, or any n
 
 `SessionManager.get(message)` is a pure read. It never writes the store. The default session is folded into the store exactly once per utterance, at intake, by `SessionManager.fold_inbound`. This happens before any handler runs. `SessionManager.get` only returns the live object; it never re-triggers a write. Call it anywhere in a component.
 
+!!! warning "Always pass the message when you read a session"
+    That intake fold happens in the **orchestrator's** process (`ovos-core`). A process
+    whose bus client is not the orchestrator, an out-of-process skill container, the GUI,
+    or a satellite, does not mirror observed default-session traffic into its own local
+    store. Only a named carrier is routed through `update()` there.
+
+    Inside a handler this costs you nothing: `SessionManager.get()` with no argument digs
+    out the message being handled, so fields a satellite injected are read from that
+    message's carrier. Outside any handler there is no message to dig, and the read falls
+    back to the deployment default rather than to whatever the orchestrator currently
+    holds. Pass the message explicitly, `SessionManager.get(message)`, wherever you have
+    one.
+
 For a named session, repeated calls to `SessionManager.get(message)` for the same message return the same bound `Session` object. A message derived from it, `message.forward(...)`, `message.reply(...)`, or a bus response, carries that bound object's current state, not a stale copy of the carrier the original message arrived with. Mutate the `Session` object `get` returned. Do not edit `message.context["session"]` directly after calling `get`: the bound object wins when a derived message is stamped.
 
 !!! info "One microphone, one conversation"
