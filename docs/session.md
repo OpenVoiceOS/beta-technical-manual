@@ -101,6 +101,12 @@ For a named session, repeated calls to `SessionManager.get(message)` for the sam
     `"default"` session, never an external client's. Multiple clients each carrying their
     own full session converge on consistent state by every one of them adopting this
     same discipline, not by any message that reconciles them from the server side.
+    Connecting to the bus does not announce anything either: a client derives its own
+    default session from local configuration and converges by adopting what it
+    observes on the bus, not from a push at connect time (`ovos-bus-client` >=
+    2.11.6a1, OVOS-SESSION-2 §2.7). A skill container on an older `ovos-bus-client`
+    joining a pre-spec bus (`ovos-core` 1.3.x) instead overwrote the core's default
+    session on connect, breaking local intent matching — upgrade both sides together.
 
 !!! note "A present-but-malformed session never crashes the bus client"
     `Session.from_message` treats an *absent* `session` key (or an explicit
