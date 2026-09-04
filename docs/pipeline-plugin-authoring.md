@@ -28,7 +28,7 @@ Return `None` when your plugin does not want to claim the utterance. Return an `
 *   `match_type`: name of the matching service.
 *   `match_data`: extra data for the intent handler.
 *   `skill_id` and `utterance`: route the dispatch to the right skill.
-*   `updated_session`: lets a plugin mutate session state as part of matching.
+*   `updated_session`: lets a plugin mutate session state as part of matching. It must be the session the round is already running on. The orchestrator compares its `session_id` against the round's, and a mismatch is logged as an error and ignored, with the round continuing on its own session. Read the session with `SessionManager.get(message)` and return that same object mutated, rather than constructing a fresh one.
 *   `suppress_activation`: set this for a termination or continuation of an already-active skill, such as stop. It tells the orchestrator to dispatch without sending a fresh `{skill_id}.activate`.
 
 The constructor is `__init__(self, bus=None, config=None)`. This differs from the transformer templates: there is no `name` or `priority` argument. `self.bus` defaults to a `FakeBus()` when you pass none. A `FakeBus` needs no running message bus, so you can unit test a plugin standalone.
