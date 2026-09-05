@@ -1,7 +1,7 @@
 site_name: OpenVoiceOS Technical Manual
-site_url: https://tigregotico.github.io/ovos-technical-manual
-repo_name: TigreGotico/ovos-technical-manual
-repo_url: https://github.com/TigreGotico/ovos-technical-manual
+site_url: https://openvoiceos.github.io/beta-technical-manual/
+repo_name: OpenVoiceOS/beta-technical-manual
+repo_url: https://github.com/OpenVoiceOS/beta-technical-manual
 edit_uri: edit/master/docs/
 
 # snippets/ holds include-only fragments. They are pulled into real pages by
@@ -77,8 +77,8 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.magiclink:
       repo_url_shorthand: true
-      user: TigreGotico
-      repo: ovos-technical-manual
+      user: OpenVoiceOS
+      repo: beta-technical-manual
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.snippets:

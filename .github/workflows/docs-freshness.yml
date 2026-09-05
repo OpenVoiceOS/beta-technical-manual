@@ -22,7 +22,7 @@ jobs:
   regenerate:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout ovos-technical-manual
+      - name: Checkout beta-technical-manual
         uses: actions/checkout@v4
 
       - name: Checkout gh-automations (dev)
