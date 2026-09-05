@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/migration-workshop-7/">
+        <link rel="canonical" href="https://openvoiceos.github.io/beta-technical-manual/migration-workshop-7/">
       
       
         <link rel="prev" href="../migration-ovos-utils-0-1/">
@@ -195,13 +195,13 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/OpenVoiceOS/beta-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
-    TigreGotico/ovos-technical-manual
+    OpenVoiceOS/beta-technical-manual
   </div>
 </a>
       </div>
@@ -433,13 +433,13 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/OpenVoiceOS/beta-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
-    TigreGotico/ovos-technical-manual
+    OpenVoiceOS/beta-technical-manual
   </div>
 </a>
     </div>
@@ -1677,7 +1677,7 @@ the skill refusing to load without an implementation — arrived later, in 9.3.9
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        <span class="o">...</span>
 </span></code></pre></div>
 <p><code>FallbackSkill.make_intent_failure_handler(cls, bus)</code> (the old mycroft-style
-bus-driven fallback dispatcher) is removed with it (ovos-workshop <code>c066bc3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/336" title="GitHub Issue: TigreGotico/ovos-technical-manual #336">#336</a>).</p>
+bus-driven fallback dispatcher) is removed with it (ovos-workshop <code>c066bc3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/336" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #336">#336</a>).</p>
 <p><strong>v5.0.0: converse moves out of <code>OVOSSkill</code> into its own base class.</strong></p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># old: converse lived directly on OVOSSkill</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">class</span> <span class="nc">MySkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
@@ -1695,17 +1695,17 @@ bus-driven fallback dispatcher) is removed with it (ovos-workshop <code>c066bc3<
 </span></code></pre></div>
 <p>An <code>OVOSSkill</code> subclass that overrides <code>converse()</code> without also inheriting
 <code>ConversationalSkill</code> compiles fine but is silently never called by the
-pipeline (ovos-workshop <code>f725f5e</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/339" title="GitHub Issue: TigreGotico/ovos-technical-manual #339">#339</a>).</p>
+pipeline (ovos-workshop <code>f725f5e</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/339" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #339">#339</a>).</p>
 <p><strong>v6.0.0 / v6.0.1: <code>can_stop</code> conditional abstract method.</strong>
 <code>can_stop(self, message)</code> briefly became a hard <code>@abc.abstractmethod</code>
-(<code>10f9781</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/344" title="GitHub Issue: TigreGotico/ovos-technical-manual #344">#344</a>) then was loosened the same day to only require
+(<code>10f9781</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/344" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #344">#344</a>) then was loosened the same day to only require
 overriding if the skill also overrides <code>stop</code>/<code>stop_session</code>
-(<code>813f7b5</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/346" title="GitHub Issue: TigreGotico/ovos-technical-manual #346">#346</a>, released as <code>6.0.1</code>). If you implement <code>stop()</code> or
+(<code>813f7b5</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/346" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #346">#346</a>, released as <code>6.0.1</code>). If you implement <code>stop()</code> or
 <code>stop_session()</code>, also implement <code>can_stop()</code>.</p>
 <p><strong>v7.0.0: <code>can_answer</code> on <code>ConversationalSkill</code> renamed to <code>can_converse</code>.</strong>
 The v5.0.0 base class shipped with the wrong method name for about a day. Rename
 <code>can_answer</code> → <code>can_converse</code> in any <code>ConversationalSkill</code> subclass
-(ovos-workshop <code>1fdd532</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/348" title="GitHub Issue: TigreGotico/ovos-technical-manual #348">#348</a>).</p>
+(ovos-workshop <code>1fdd532</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/348" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #348">#348</a>).</p>
 <p>Lifecycle:</p>
 <table>
 <thead>
@@ -1757,13 +1757,13 @@ happened to own it.</p>
 <p><code>CommonQuerySkill</code> had been deprecation-flagged since ovos-workshop
 <code>4.0.0</code> and was deleted entirely (259 lines, including the <code>CQSMatchLevel</code>
 enum and <code>CQS_match_query_phrase</code>/<code>CQS_action</code> abstract methods) in
-<code>6382d0a</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/400" title="GitHub Issue: TigreGotico/ovos-technical-manual #400">#400</a>, 2026-04-08), months after the <code>8.0.0</code> release, first shipping in
+<code>6382d0a</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/400" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #400">#400</a>, 2026-04-08), months after the <code>8.0.0</code> release, first shipping in
 <code>8.0.4a3</code>. There is no successor <em>class</em>: a plain
 <code>OVOSSkill</code> joins common-query by decorating a method with <code>@common_query()</code>
 (the removed class's own deprecation warning said exactly this). The matching
 and ranking are dispatched by the common-query pipeline plugin. On <code>ovos-core</code> itself, the equivalent
 hardcoded common-query wiring was removed from <code>ovos_core.intent_services</code>
-in <code>62024dbf98</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/690" title="GitHub Issue: TigreGotico/ovos-technical-manual #690">#690</a>, 2025-06-10, first stable release <code>2.1.0</code>) when the
+in <code>62024dbf98</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/690" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #690">#690</a>, 2025-06-10, first stable release <code>2.1.0</code>) when the
 whole intent-service module became a config-driven OPM pipeline factory.</p>
 <p>Lifecycle:</p>
 <table>

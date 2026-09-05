@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://tigregotico.github.io/ovos-technical-manual/version-compat-guide/">
+        <link rel="canonical" href="https://openvoiceos.github.io/beta-technical-manual/version-compat-guide/">
       
       
         <link rel="prev" href="../migrating-from-mycroft/">
@@ -195,13 +195,13 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/OpenVoiceOS/beta-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
-    TigreGotico/ovos-technical-manual
+    OpenVoiceOS/beta-technical-manual
   </div>
 </a>
       </div>
@@ -433,13 +433,13 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/TigreGotico/ovos-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/OpenVoiceOS/beta-technical-manual" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
-    TigreGotico/ovos-technical-manual
+    OpenVoiceOS/beta-technical-manual
   </div>
 </a>
     </div>
@@ -1581,7 +1581,7 @@ conflict. Try the new path first, fall back to the old one on <code>ImportError<
 <p><code>ovos-workshop</code> <code>5.0.0</code> (2025-06-07) moved <code>converse()</code> off <code>OVOSSkill</code> and into its own
 base class, <code>ConversationalSkill</code>. Before <code>5.0.0</code>, a skill overrode <code>converse()</code> directly on
 <code>OVOSSkill</code>. From <code>5.0.0</code> on, the skill must subclass that base class or the override is
-silently never called by the pipeline (<code>ovos-workshop</code> <code>f725f5e</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/339" title="GitHub Issue: TigreGotico/ovos-technical-manual #339">#339</a>):</p>
+silently never called by the pipeline (<code>ovos-workshop</code> <code>f725f5e</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/339" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #339">#339</a>):</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">try</span><span class="p">:</span>
@@ -1621,7 +1621,7 @@ than moved. Every OVOS package ships a <code>version.py</code> module with integ
 package that owns the break and branch on them. This needs no extra dependency and no
 string parsing.</p>
 <p><code>ConversationalSkill.can_answer</code> was renamed to <code>can_converse</code> in <code>ovos-workshop</code>
-<code>7.0.0</code> (<code>1fdd532</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/348" title="GitHub Issue: TigreGotico/ovos-technical-manual #348">#348</a>), hours after the <code>can_answer</code> name shipped in <code>5.0.0</code> — both landed 2025-06-07.
+<code>7.0.0</code> (<code>1fdd532</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/348" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #348">#348</a>), hours after the <code>can_answer</code> name shipped in <code>5.0.0</code> — both landed 2025-06-07.
 Define both names and delegate one to the other so callers on either generation find
 the method they expect:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.version</span> <span class="kn">import</span> <span class="n">VERSION_MAJOR</span> <span class="k">as</span> <span class="n">WORKSHOP_MAJOR</span>
@@ -1642,7 +1642,7 @@ the method they expect:</p>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="o">...</span>  <span class="c1"># post-break behavior</span>
 </span></code></pre></div>
 <p>The <code>CommonQuerySkill</code> removal is the sharper case: the class itself is gone in
-<code>ovos-workshop</code> as of <code>6382d0a</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/400" title="GitHub Issue: TigreGotico/ovos-technical-manual #400">#400</a>, first shipped in <code>8.0.4a3</code>), so you cannot import
+<code>ovos-workshop</code> as of <code>6382d0a</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/400" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #400">#400</a>, first shipped in <code>8.0.4a3</code>), so you cannot import
 it unconditionally even inside a <code>try</code>/<code>except</code> used only for typing. Prefer the
 modern <code>@common_query</code> decorator (<code>ovos_workshop.decorators.common_query</code>) when it
 exists, and only import the deprecated base class on cores old enough to still ship
@@ -1672,10 +1672,10 @@ it:</p>
 <p>Use this when a plugin template method's argument list changed. Give the parameter a
 default so the same method body satisfies both the old caller, which passes an
 argument, and the new caller, which calls with none.</p>
-<p><code>ovos-plugin-manager</code> <code>1.0.0</code> (<code>ce1c97b</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/314" title="GitHub Issue: TigreGotico/ovos-technical-manual #314">#314</a>) changed the <code>HotWordEngine</code> contract:
+<p><code>ovos-plugin-manager</code> <code>1.0.0</code> (<code>ce1c97b</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/314" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #314">#314</a>) changed the <code>HotWordEngine</code> contract:
 <code>found_wake_word(audio_data)</code> became <code>found_wake_word()</code>, with audio now fed
-separately through <code>update(chunk)</code>. Both <code>mycroft-classic-listener</code> (<code>19d9961</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/12" title="GitHub Issue: TigreGotico/ovos-technical-manual #12">#12</a>,
-2026-01-09) and <code>ovos-simple-listener</code> (<code>34e2219</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/20" title="GitHub Issue: TigreGotico/ovos-technical-manual #20">#20</a>, 2026-01-23) landed the
+separately through <code>update(chunk)</code>. Both <code>mycroft-classic-listener</code> (<code>19d9961</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/12" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #12">#12</a>,
+2026-01-09) and <code>ovos-simple-listener</code> (<code>34e2219</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/20" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #20">#20</a>, 2026-01-23) landed the
 caller-side change when they bumped to opm <code>2.0.0</code>, so a plugin still expecting one positional
 argument gets called with zero and raises <code>TypeError</code> on any updated listener:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.templates.hotwords</span> <span class="kn">import</span> <span class="n">HotWordEngine</span>
@@ -1712,7 +1712,7 @@ persona JSON shared across a mixed fleet keeps working during migration (see
 <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">handlers</span> <span class="o">=</span> <span class="n">persona_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;handlers&quot;</span><span class="p">,</span> <span class="p">[])</span> <span class="o">+</span> <span class="n">persona_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;solvers&quot;</span><span class="p">,</span> <span class="p">[])</span>
 </span></code></pre></div>
 <p>The OCP-to-<code>ovos-media</code> config split is the same pattern at the deployer-config level.
-<code>ovos-media</code> <code>89a50c0</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/19" title="GitHub Issue: TigreGotico/ovos-technical-manual #19">#19</a>, 2024-03-29) renamed the config root key <code>OCP</code> to <code>media</code>
+<code>ovos-media</code> <code>89a50c0</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/19" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #19">#19</a>, 2024-03-29) renamed the config root key <code>OCP</code> to <code>media</code>
 and flipped the MPRIS toggle's polarity (<code>disable_mpris</code>, on by default, became
 <code>enable_mpris</code>, off by default). Reading both root keys keeps a shared <code>mycroft.conf</code>
 working across mixed-version devices:</p>
@@ -1795,7 +1795,7 @@ not write new code that shims legacy topic names. See <a href="../migration-bus-
 legacy-topic dual-emit and its removal</a>
 for the full migration path.</p>
 <p><strong>Pre-fork mycroft-core.</strong> The <code>MycroftSkill</code> compat metaclass that let classic
-Mycroft skills load under OVOS was removed in <code>ovos-workshop</code> <code>2d684a1</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/TigreGotico/ovos-technical-manual/issues/235" title="GitHub Issue: TigreGotico/ovos-technical-manual #235">#235</a>,
+Mycroft skills load under OVOS was removed in <code>ovos-workshop</code> <code>2d684a1</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/235" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #235">#235</a>,
 2024-10-15). There is no import-fallback or version gate that restores it, because the
 whole loading and initialization model changed, and it is not only a symbol location. If you are
 still carrying a skill written against <code>mycroft-core</code>, that is a port, not a compat
