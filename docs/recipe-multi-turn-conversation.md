@@ -6,7 +6,7 @@
 !!! warning "Testing multi-turn flows over the bus"
     When driving this recipe from a test or script, re-fetch the live session before each
     follow-up utterance. Reusing a stale serialized `Session` erases the activation from
-    turn 1. See [Testing Your Skill](testing-your-skill.md#multi-turn-tests-always-re-pull-the-session).
+    turn 1. See [Testing Your Skill](testing-your-skill.md#multi-turn-tests-with-a-named-session-the-test-owns-the-session-not-the-server).
 
 **When you'd want this:** the interaction needs more than one exchange. Booking a table means asking for a time, a party size, and a name in sequence, or reacting to whatever the user says next without them repeating the skill's name.
 
