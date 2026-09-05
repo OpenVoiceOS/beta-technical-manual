@@ -256,4 +256,4 @@ themselves.
 !!! info "Help improve these docs"
     This manual is maintained by the OVOS community. Every page is cross-checked against
     the real source code. If you find an error or something unclear, please
-    [open a pull request or issue](https://github.com/TigreGotico/ovos-technical-manual).
+    [open a pull request or issue](https://github.com/OpenVoiceOS/beta-technical-manual).
