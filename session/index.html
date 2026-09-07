@@ -1098,6 +1098,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#deployment-owned-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment-owned fields
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#presentation-preferences" class="md-nav__link">
     <span class="md-ellipsis">
       Presentation preferences
@@ -1603,6 +1612,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#deployment-owned-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment-owned fields
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#presentation-preferences" class="md-nav__link">
     <span class="md-ellipsis">
       Presentation preferences
@@ -1829,6 +1847,16 @@ default <code>2</code>) or a <code>turns_remaining</code> budget, and a re-set r
 entries written through <code>set_context</code> (see <a href="../context/">Conversational Context</a>). See
 <a href="../intent-service/">Intent Service</a> for how context is set, read, and consumed during
 pipeline matching.</p>
+<h2 id="deployment-owned-fields">Deployment-owned fields<a class="headerlink" href="#deployment-owned-fields" title="Permanent link">&para;</a></h2>
+<p>A <a href="../pipeline-plugin-authoring/">pipeline plugin</a> that returns <code>updated_session</code> may mutate the
+session, but not every field is the plugin's to change. <code>pipeline</code>, the six transformer-chain
+lists (OVOS-TRANSFORM-1 §5), the three blacklist denylists (<code>blacklisted_skills</code>,
+<code>blacklisted_intents</code>, <code>blacklisted_pipelines</code>), and <code>site_id</code> belong to the deployment, not to a
+match round: the orchestrator re-imposes the value it held before the plugin ran onto every one
+of them, discarding whatever the plugin's returned session carried (SESSION-1 §3 / OVOS-PIPELINE-1
+§5.5). A plugin that means to change a deployment-owned field has to change it at the deployment,
+not by writing to the session. Fields the round itself owns, like <code>active_handlers</code> and
+<code>converse_handlers</code>, pass through untouched.</p>
 <h2 id="presentation-preferences">Presentation preferences<a class="headerlink" href="#presentation-preferences" title="Permanent link">&para;</a></h2>
 <p>Beyond <code>session_id</code> and the language signals, a session carries <strong>presentation
 preferences</strong> that follow the session's originator rather than the device.
