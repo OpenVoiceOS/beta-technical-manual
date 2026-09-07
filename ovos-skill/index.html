@@ -2024,7 +2024,8 @@ once or repeatedly:</p>
   schedule survives skill shutdown/restart — it is tied to the skill id, not the running
   process.</li>
 <li>Scheduled events are persisted by the <a href="../bus-service/"><code>EventScheduler</code></a> so they survive an
-  <code>ovos-core</code> restart. They are not tied to the skill instance staying in memory.</li>
+  <code>ovos-core</code> restart. They are not tied to the skill instance staying in memory. See
+  <a href="../scheduler-service/">Scheduled Events</a> for the misfire policy and replay guarantees behind this.</li>
 </ul>
 <h2 id="public-skill-api">Public Skill API<a class="headerlink" href="#public-skill-api" title="Permanent link">&para;</a></h2>
 <p>Decorate a method with <code>@skill_api_method</code> to expose it over the bus. Other skills or tools can call it via <code>SkillApi</code>. The full RPC mechanism — discovery, call protocol, the <code>SkillApi</code> proxy class, and a worked client/server example — is documented on <a href="../skill-api/">Skill API: Inter-Skill RPC</a>.</p>
