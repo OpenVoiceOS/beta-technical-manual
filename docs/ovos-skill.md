@@ -154,7 +154,8 @@ self.cancel_scheduled_event("my-tick")
   schedule survives skill shutdown/restart — it is tied to the skill id, not the running
   process.
 - Scheduled events are persisted by the [`EventScheduler`](bus-service.md) so they survive an
-  `ovos-core` restart. They are not tied to the skill instance staying in memory.
+  `ovos-core` restart. They are not tied to the skill instance staying in memory. See
+  [Scheduled Events](scheduler-service.md) for the misfire policy and replay guarantees behind this.
 
 ## Public Skill API
 
