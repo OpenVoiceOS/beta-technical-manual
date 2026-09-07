@@ -189,6 +189,56 @@ free-form numeric slot like this.
 > **pending** [OpenVoiceOS/architecture#166](https://github.com/OpenVoiceOS/architecture/pull/166),
 > not yet merged.
 
+### Typed slots
+
+A slot can carry a **type prefix**, `{type:name}` instead of the plain
+`{name}` from the examples above. The prefix asks the pipeline to compute
+a normalized value for the slot ahead of matching, in addition to the
+surface text `{name}` always returns:
+
+```text
+Remind me to {task} at {date:when}.
+Set the lights to {color:shade}.
+```
+
+Four types are recognized: `number`, `duration`, `date`, and `color`.
+Each normalizes to a fixed shape: `number` and `duration` to a plain
+number (`duration` in seconds), `date` to an RFC 3339 timestamp resolved
+in the session's timezone, and `color` to `{"hex": "#rrggbb", "name":
+...}`. A prefix outside this list, or on a loader that does not support
+typed slots at all, degrades silently to the plain `{name}` form — a
+typed placeholder never breaks a template that reads it as untyped, and
+`message.data["when"]` always holds the surface text either way.
+
+Read the normalized value from the handler with `self.typed_slot`:
+
+```python
+def handle_reminder_intent(self, message):
+    when = self.typed_slot(message, "when")   # a date, already resolved
+    task = message.data["task"]               # the surface text, as always
+    if when is None:
+        # the utterance had no date the parser could resolve
+        ...
+```
+
+`typed_slot(message, name)` looks up the slot's declared type from the
+intent's own registration and returns the matching entry's normalized
+value, or `None` if nothing covers it. `typed_slots(message, slot_type)`
+returns every entry of one type the parser found in the utterance, not
+just the ones a slot captured, useful for a handler that wants to scan
+the whole utterance rather than a single named slot. Both read from
+`message.data["typed_slots"]`, the map the pipeline attaches ahead of
+matching; a handler never has to reach into that map directly.
+
+A typed slot does not make the slot required. An utterance that matches
+the template without producing a `{date:when}` still fires the handler,
+with `typed_slot` returning `None` for `when`. Forcing a match to fail
+unless a given slot bound something is a separate, orchestrator-level
+`required_slots` check tied to an intent's registration; there is no
+skill-facing API yet to declare it directly, so a handler that truly
+cannot proceed without a value still validates for `None` itself, as in
+the example above.
+
 ### Entities with unknown tokens
 
 Let's say you want to create an intent to match places:
