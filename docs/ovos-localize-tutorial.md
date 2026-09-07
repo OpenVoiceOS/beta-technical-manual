@@ -116,6 +116,9 @@ else: a `{variable}` placeholder inside a line.)
 - **Be consistent**: use the same term for the same concept throughout.
 - **Use the code context** (right column) when a phrase is ambiguous.
 - **Sound natural**: these are things a person says out loud to a voice assistant.
+- **Watch for a "hollow" line**: a line with a double space in it, or one that ends on a bare
+  article or preposition, is a sign a word got dropped in translation. A line like that will
+  not match at runtime, so re-read it and put the missing word back.
 
 ---
 

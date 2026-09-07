@@ -54,7 +54,13 @@ OVOS matches this to any keyword intents that use the `Potato` keyword.
 Regular expressions (or regex) let us capture entities based on the structure of an utterance.
 
 We strongly recommend you avoid regex. It is hard to make portable across languages, hard to
-translate, and the reported confidence of the intents is not great.
+translate, and the reported confidence of the intents is not great. A regex written for one
+language rarely carries over: copying an English preposition pattern like `\b(at|in)` into
+another language's `.rx` file is syntactically valid but matches nothing useful there if that
+language marks the same relationship with a different preposition, word order, or no
+preposition at all. Agglutinative languages such as Basque, Hungarian, or Turkish mark case
+through a suffix on the noun instead of a separate preposition, so a preposition-shaped regex
+cannot express the equivalent there no matter how it is translated.
 
 We suggest using template intents (`.intent` files) instead if you find yourself needing regex.
 See [Padatious Intents](intents-padatious.md).

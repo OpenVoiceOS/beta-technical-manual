@@ -15,6 +15,17 @@ needed (`SkillResources.load_blacklist_file`). The `voc_blacklist=` argument on
 `@intent_handler` is a different, unrelated mechanism. It takes `.voc` filenames, not
 `.blacklist` filenames.
 
+A blacklist phrase matches as a contiguous sequence of whole words, not a raw substring
+(OVOS-INTENT-2 §4.3): a `.blacklist` entry `itinerary` blocks "spell itinerary" but not
+"spell it". A `.blacklist` paired with an `.intent` base name suppresses that intent
+outright, a hard rejection independent of match confidence. Paired with an `.entity` or
+`{slot}` base name instead, it excludes values from that slot: any component that writes a
+value into the slot, including an intent transformer that re-extracts it from the raw
+utterance after the match, must honor the exclusion. The common use is keeping an anaphoric
+pronoun out of a referential slot, for example a `person.blacklist` of "he", "she", "they"
+so `{person}` stays unresolved for "how tall is he" and a later stage can fill it from
+context.
+
 ## Directory Layout
 
 The recommended layout uses a single `locale/` directory:

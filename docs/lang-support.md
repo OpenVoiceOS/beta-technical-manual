@@ -200,6 +200,12 @@ These load directly via HuggingFace `datasets.load_dataset(...)`.
 
 - Skills may have translated intents but missing dialog translations. The assistant typically speaks the dialog filename if it is not translated
 
+- A locale directory should ship the same file set as `en-US`: `.blacklist` files, error-path
+  dialogs, `.rx` files, and `skill.json` included, not only the `.intent`/`.dialog` files that
+  carry the visible conversation. A locale missing one of these still loads, but a skill whose
+  error handling only has an `en-US` dialog falls back to speaking English (or the filename) on
+  a failure path a translator never saw
+
 
 - STT/TTS plugin coverage is uneven per language variant. Some regional variants have no bundled offline recommendation at all (see the gaps called out below the auto-configuration table). A language can be "installed" without actually being able to hear or speak yet.
 

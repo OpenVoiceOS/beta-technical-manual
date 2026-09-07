@@ -130,6 +130,11 @@ turn on (the|) {device}
 (switch|power) on {device}
 ```
 
+Two slots must never sit next to each other with nothing between them: `{r} {g} {b}` raises
+`MalformedTemplate` at registration because there is no way to tell where one slot's match
+ends and the next begins. Put a literal word between them instead, for example
+`{r} and {g} and {b}`.
+
 ```text
 # thing.voc  (slot-free)
 light
