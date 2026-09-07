@@ -315,6 +315,8 @@ directly.
 
 On `ovos.intent.register.keyword` / `.template`, `ovos.intent.deregister`, and `ovos.skill.deregister`, the owning skill is taken from `message.context["skill_id"]`, never from the payload (INTENT-4 §3.2): a skill's own registration bus emitter has no other way to claim intents that are not its own. A message with no context `skill_id`, or one whose payload `skill_id` disagrees with it, is dropped, with a warning naming the topic and both values. `ovos.intent.enable` / `.disable` are the one exception: their payload `skill_id` names the intent being toggled, and the context `skill_id` names the caller doing the toggling. A skill built on `ovos-workshop` never emits these directly, since the base class already stamps the context; the distinction matters only for a bus client hand-assembling one of these `Message` objects itself.
 
+Enable and disable are also scoped to the session doing the toggling (INTENT-4 §11.3), the same session key every registration carries: they change the enabled state of entries matching `(session_id, skill_id, intent_name, lang)`, so disabling an intent from a satellite's session leaves the same intent enabled under the default session and under every other session that registered it. A pipeline engine that suppresses an intent for every session regardless of which one asked is not honoring this scope.
+
 ### Not bridged: adopt the spec directly
 
 A few areas are deliberately **not** in the translator, so subscribing on the spec name alone will
