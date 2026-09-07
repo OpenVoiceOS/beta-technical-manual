@@ -1695,6 +1695,16 @@ not otherwise track what it already asked for.</p>
 never collide, because the id is scoped to the owner, and one component
 can never accidentally reach into another's schedule by guessing its
 name.</p>
+<p>A request that carries no <code>skill_id</code> in its context is refused outright
+(<code>invalid_record</code>), before the scheduler even looks at the id it named. A
+request naming an event outside its own <code>&lt;skill_id&gt;.</code> namespace is refused
+the same way (<code>bad_event</code>). Cancelling, reading, or listing a schedule that
+belongs to a different <code>skill_id</code> is refused as <code>skill_id_mismatch</code>; that
+answer is distinct from asking about an id that genuinely does not exist
+anywhere, which still answers not-found. One allowlisted administrative
+<code>skill_id</code> may list and cancel any component's schedules; that grant does
+not extend to scheduling a new one or reading one back on another
+component's behalf.</p>
 <p>A schedule outlives the process that created it by default. A component
 that stops and does not want its pending schedules to fire in its absence
 must cancel them, or have created them as ephemeral in the first place. A
