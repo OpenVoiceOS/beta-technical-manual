@@ -163,6 +163,18 @@ entries written through `set_context` (see [Conversational Context](context.md))
 [Intent Service](intent-service.md) for how context is set, read, and consumed during
 pipeline matching.
 
+## Deployment-owned fields
+
+A [pipeline plugin](pipeline-plugin-authoring.md) that returns `updated_session` may mutate the
+session, but not every field is the plugin's to change. `pipeline`, the six transformer-chain
+lists (OVOS-TRANSFORM-1 §5), the three blacklist denylists (`blacklisted_skills`,
+`blacklisted_intents`, `blacklisted_pipelines`), and `site_id` belong to the deployment, not to a
+match round: the orchestrator re-imposes the value it held before the plugin ran onto every one
+of them, discarding whatever the plugin's returned session carried (SESSION-1 §3 / OVOS-PIPELINE-1
+§5.5). A plugin that means to change a deployment-owned field has to change it at the deployment,
+not by writing to the session. Fields the round itself owns, like `active_handlers` and
+`converse_handlers`, pass through untouched.
+
 ## Presentation preferences
 
 Beyond `session_id` and the language signals, a session carries **presentation
