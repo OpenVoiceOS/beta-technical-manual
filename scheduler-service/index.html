@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://openvoiceos.github.io/beta-technical-manual/ovos-localize-tutorial/">
+        <link rel="canonical" href="https://openvoiceos.github.io/beta-technical-manual/scheduler-service/">
       
       
-        <link rel="prev" href="../bidirectional-translation/">
+        <link rel="prev" href="../bus-bridge/">
       
       
-        <link rel="next" href="../translation-plugins/">
+        <link rel="next" href="../dig-for-message/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Contributing Translations - OpenVoiceOS Technical Manual</title>
+        <title>Scheduled Events - OpenVoiceOS Technical Manual</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#contribute-translations-with-ovos-localize" class="md-skip">
+        <a href="#scheduled-events" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Contributing Translations
+              Scheduled Events
             
           </span>
         </div>
@@ -253,10 +253,12 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../concepts-overview/" class="md-tabs__link">
           
   
@@ -289,12 +291,10 @@
         
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="../lang-support/" class="md-tabs__link">
           
   
@@ -534,6 +534,544 @@
       
   
   
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Concepts
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concepts Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    High-level Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../life-of-an-utterance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Life of an Utterance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-specs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Formal Specifications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spec-tooling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Specification Tooling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spec-tools-lib/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-spec-tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spec-test-harness/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ovos-test-harness
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maturity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Maturity Scale
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-service/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MessageBus Service
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-reconnect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Restart & Reconnect
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-namespace-migration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Namespace Migration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-recipes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Recipes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bus-bridge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus Bridges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Scheduled Events
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Scheduled Events
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#identity-and-naming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identity and naming
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timing-forms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Timing forms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-gets-replayed" class="md-nav__link">
+    <span class="md-ellipsis">
+      What gets replayed
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#misfire-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Misfire policy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restart-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Restart behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ownership" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ownership
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dig-for-message/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    dig_for_message
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../security-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Security & Trust Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugin-manager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Plugin Manager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugin-types-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Plugin Types Reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../composable-deployments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Composable Deployments
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     
@@ -553,11 +1091,11 @@
         
   
   
-    <a href="../concepts-overview/" class="md-nav__link">
+    <a href="../config/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
-    Concepts
+    Configuration
   </span>
   
 
@@ -567,6 +1105,100 @@
     </a>
   
 
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../core/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    ovos-core Internals
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../speech-service/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sibling Services (own processes on the bus)
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -618,362 +1250,39 @@
       
   
   
-    
   
   
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
   
-    
-    
-    
+  
+    <a href="../lang-support/" class="md-nav__link">
       
-        
-        
-      
-      
-    
-    
-      
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
-            
   
   <span class="md-ellipsis">
     Language
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            Language
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../lang-support/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Overview
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../lang-support-tables/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Language Support Tables
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../lang-selection/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Language Selection (internals)
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../lang-customization/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Customizing Resources
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../bidirectional-translation/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Bidirectional Translation
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+        <span class="md-nav__icon md-icon"></span>
       
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Contributing Translations
-  </span>
+    </a>
   
 
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  <span class="md-ellipsis">
-    Contributing Translations
-  </span>
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-youll-be-translating" class="md-nav__link">
-    <span class="md-ellipsis">
-      What you'll be translating
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-open-the-site-and-pick-a-language" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 1 — Open the site and pick a language
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-translate" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 2 — Translate
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-submit" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 3 — Submit
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-syntax-rules-important" class="md-nav__link">
-    <span class="md-ellipsis">
-      The syntax rules (important)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="The syntax rules (important)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#variables-curly-braces" class="md-nav__link">
-    <span class="md-ellipsis">
-      Variables — {curly braces}
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#alternatives-optional-words-abc" class="md-nav__link">
-    <span class="md-ellipsis">
-      Alternatives &amp; optional words — (a|b|c)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#variants-repeated-phrasings" class="md-nav__link">
-    <span class="md-ellipsis">
-      Variants (repeated phrasings)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tips-for-good-translations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Tips for good translations
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#where-this-fits-in-ovos" class="md-nav__link">
-    <span class="md-ellipsis">
-      Where this fits in OVOS
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#need-help" class="md-nav__link">
-    <span class="md-ellipsis">
-      Need help?
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../translation-plugins/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Translation Plugins
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../linguonnx-plugins/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    linguonnx Language Plugins
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
       
     </li>
   
@@ -1216,105 +1525,54 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-youll-be-translating" class="md-nav__link">
+  <a href="#identity-and-naming" class="md-nav__link">
     <span class="md-ellipsis">
-      What you'll be translating
+      Identity and naming
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-1-open-the-site-and-pick-a-language" class="md-nav__link">
+  <a href="#timing-forms" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 1 — Open the site and pick a language
+      Timing forms
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-translate" class="md-nav__link">
+  <a href="#what-gets-replayed" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 2 — Translate
+      What gets replayed
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-submit" class="md-nav__link">
+  <a href="#misfire-policy" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 3 — Submit
+      Misfire policy
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-syntax-rules-important" class="md-nav__link">
+  <a href="#restart-behavior" class="md-nav__link">
     <span class="md-ellipsis">
-      The syntax rules (important)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="The syntax rules (important)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#variables-curly-braces" class="md-nav__link">
-    <span class="md-ellipsis">
-      Variables — {curly braces}
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#alternatives-optional-words-abc" class="md-nav__link">
-    <span class="md-ellipsis">
-      Alternatives &amp; optional words — (a|b|c)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#variants-repeated-phrasings" class="md-nav__link">
-    <span class="md-ellipsis">
-      Variants (repeated phrasings)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tips-for-good-translations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Tips for good translations
+      Restart behavior
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#where-this-fits-in-ovos" class="md-nav__link">
+  <a href="#ownership" class="md-nav__link">
     <span class="md-ellipsis">
-      Where this fits in OVOS
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#need-help" class="md-nav__link">
-    <span class="md-ellipsis">
-      Need help?
+      Ownership
     </span>
   </a>
   
@@ -1338,160 +1596,113 @@
   
 
 
-<h1 id="contribute-translations-with-ovos-localize">Contribute Translations with OVOS Localize<a class="headerlink" href="#contribute-translations-with-ovos-localize" title="Permanent link">&para;</a></h1>
+<h1 id="scheduled-events">Scheduled Events<a class="headerlink" href="#scheduled-events" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>OVOS only speaks the languages that volunteers have translated it into. You can be one of them without writing any code. OVOS Localize is a website where you translate the short phrases the assistant says and listens for, right in your browser. If you can use a translation app, you can help OVOS understand and speak your language. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>A skill that wants something to happen later, a timer, an alarm, a
+recurring reminder, does not keep its own clock. It asks the scheduler
+to fire an event at a wall-clock instant, and goes on with its life. The
+scheduler remembers the request on disk, fires the event even if the
+device rebooted in between, and tells the owner when it missed one. From
+a skill, this is <code>self.schedule_event</code> and friends. See <a href="../ovos-skill/#scheduling-events">Scheduling
+Events</a> for that API. This page
+describes what the scheduler itself guarantees underneath it.</p>
 </div>
-<p>Want OVOS to speak your language? You don't need to be a programmer to help. <strong>OVOS
-Localize</strong> is a web app where you translate the phrases OVOS says and understands,
-right in your browser. It needs no code, no setup, and no command line.</p>
-<div class="admonition info">
-<p class="admonition-title">What replaced GitLocalize</p>
-<p>OVOS used to translate on a third-party service called <em>GitLocalize</em>. That has
-been <strong>retired</strong> and replaced by <strong><a href="https://openvoiceos.github.io/ovos-localize/">OVOS Localize</a></strong>,
-a purpose-built tool that understands OVOS resource files (intents, dialogs,
-vocabularies) and shows you the actual skill code each phrase belongs to. If you
-have old GitLocalize bookmarks, switch to the link above.</p>
-</div>
-<blockquote>
-<p><strong>Live site:</strong> <strong><a href="https://openvoiceos.github.io/ovos-localize/">openvoiceos.github.io/ovos-localize</a></strong></p>
-</blockquote>
-<hr />
-<h2 id="what-youll-be-translating">What you'll be translating<a class="headerlink" href="#what-youll-be-translating" title="Permanent link">&para;</a></h2>
-<p>OVOS skills keep their language in small text files. You'll mostly meet three kinds:</p>
-<table>
-<thead>
-<tr>
-<th>File</th>
-<th>Holds</th>
-<th>Plain English</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>dialogs</strong> (<code>.dialog</code>)</td>
-<td>sentences <strong>OVOS speaks</strong></td>
-<td>"The weather today is {temperature} degrees."</td>
-</tr>
-<tr>
-<td><strong>intents</strong> (<code>.intent</code>)</td>
-<td>sentences <strong>the user says</strong></td>
-<td>"what is the weather like"</td>
-</tr>
-<tr>
-<td><strong>vocab</strong> (<code>.voc</code>)</td>
-<td>keywords / fragments</td>
-<td>"weather", "forecast"</td>
-</tr>
-</tbody>
-</table>
-<p>You translate the <em>meaning</em>, not word-for-word. The tool shows you, on screen, which
-skill and which line of code each phrase comes from, so you always have context.</p>
-<hr />
-<h2 id="step-1-open-the-site-and-pick-a-language">Step 1 — Open the site and pick a language<a class="headerlink" href="#step-1-open-the-site-and-pick-a-language" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Go to <strong><a href="https://openvoiceos.github.io/ovos-localize/">openvoiceos.github.io/ovos-localize</a></strong>.</li>
-<li>Choose the <strong>language</strong> you want to translate into and the <strong>skill</strong> you want to work on.
-   The dashboard shows how complete each language is, so you can see where help is needed most.</li>
-</ol>
-<div class="admonition tip">
-<p class="admonition-title">Don't see your language?</p>
-<p>Languages are added on request. Ask in the
-<a href="https://matrix.to/#/#OpenVoiceOS:matrix.org">OVOS Matrix chat</a> or
-<a href="https://github.com/OpenVoiceOS/ovos-localize/issues">open an issue on ovos-localize</a> and
-we'll enable it.</p>
-</div>
-<h2 id="step-2-translate">Step 2 — Translate<a class="headerlink" href="#step-2-translate" title="Permanent link">&para;</a></h2>
-<p>The editor has three columns:</p>
+<details class="info">
+<summary>📐 Formal specification</summary>
+<p><strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/scheduler-1.md">OVOS-SCHEDULER-1 — Scheduled Events</a></strong> is prescriptive: where the shipped scheduler differs from it, the implementation is wrong. See also the <a href="../architecture-specs/">spec index</a>.</p>
+</details>
+<p>The scheduler is one service on the bus. Any component, a skill, a plugin,
+a remote participant relayed through a <a href="../bus-bridge/">bridge</a>, asks it to
+fire a named event at a future instant and gets that event back on the bus
+when the time comes. The component does not need to stay running in the
+meantime: the scheduler tracks due dates on its own and survives the
+requester's restart, and its own.</p>
+<h2 id="identity-and-naming">Identity and naming<a class="headerlink" href="#identity-and-naming" title="Permanent link">&para;</a></h2>
+<p>A schedule belongs to the component that created it, identified by the
+<code>skill_id</code> the request message carried, not by any field in the request
+body. Two components can each use the id <code>"morning"</code> without colliding,
+because a schedule's true identity is the pair (<code>skill_id</code>, <code>id</code>).</p>
+<p>The event a schedule fires must be named <code>&lt;skill_id&gt;.&lt;name&gt;</code>, the owner's
+own namespace plus a name it picks. A schedule can never be made to fire
+an event that impersonates another component's message type, because the
+namespace prefix is enforced at request time. From a skill, this
+enforcement is invisible: <code>self.schedule_event(handler, when, name="tick")</code>
+composes the qualified event name for you.</p>
+<h2 id="timing-forms">Timing forms<a class="headerlink" href="#timing-forms" title="Permanent link">&para;</a></h2>
+<p>A schedule expresses its due date in exactly one of four shapes:</p>
 <ul>
-<li><strong>Left</strong>: the original English phrase.</li>
-<li><strong>Center</strong>: where you type your translation (with a live preview so you can see how
-  it expands).</li>
-<li><strong>Right</strong>: the <strong>skill code context</strong>, the actual Python function that uses this
-  phrase, so you understand <em>when</em> OVOS says or expects it.</li>
+<li><strong><code>at</code></strong> — an absolute instant.</li>
+<li><strong><code>in</code></strong> — a delay from the moment the request is accepted, measured
+  against a monotonic clock so a wall-clock step never moves it early or
+  late while the scheduler keeps running.</li>
+<li><strong><code>every</code></strong> — a fixed period between occurrences, anchored to a start
+  instant that never shifts, even when one occurrence fires late. A
+  component that re-creates the same recurring schedule on every one of
+  its own restarts keeps the original phase instead of re-anchoring each
+  time, as long as it omits the anchor on the re-creation.</li>
+<li><strong><code>local</code></strong> — a wall-clock time and set of weekdays evaluated in a
+  named time zone, the shape an alarm or a daily reminder wants. A
+  daylight-saving transition that skips or repeats a wall-clock instant
+  is resolved deterministically: the first instant after a gap, the first
+  of two instants during a repeat.</li>
 </ul>
-<p>You can also use the <strong>auto-translate</strong> button to get a machine-translation starting
-point, then fix it up. This is much faster than starting from a blank box.</p>
-<p>You submit one file at a time. When you're happy with a file, you file it for
-translation and OVOS Localize opens a pre-filled GitHub issue for that single file. A bot
-turns it into a pull request.</p>
-<h2 id="step-3-submit">Step 3 — Submit<a class="headerlink" href="#step-3-submit" title="Permanent link">&para;</a></h2>
-<p>When you're happy with a file, click <strong>Submit</strong>. OVOS Localize files your work for you
-and a bot turns it into a pull request on GitHub. A native speaker or maintainer reviews
-it, and once merged your translation ships in the next skill release. You'll need a free
-<strong>GitHub account</strong> to submit, but you never have to touch git or write code.</p>
+<h2 id="what-gets-replayed">What gets replayed<a class="headerlink" href="#what-gets-replayed" title="Permanent link">&para;</a></h2>
+<p>A schedule's <code>context</code>, everything routing-related about the request that
+created it, is captured at creation and stored untouched. When the
+schedule fires, that context rides the fired event exactly as it was
+given, with one field added describing the occurrence itself: the
+schedule's id, its owning <code>skill_id</code>, when it was due, and when it
+actually fired. This is what lets an alarm set from a remote device ring
+back on that same device: the scheduler never has to understand routing,
+it only has to hand back what it was given.</p>
+<p>A fired event is ordinary bus traffic once it lands. It carries the
+session the request named, but firing it makes no claim that session
+still exists anywhere. A consumer that no longer recognizes the session
+treats it like any other message naming an unknown one.</p>
+<h2 id="misfire-policy">Misfire policy<a class="headerlink" href="#misfire-policy" title="Permanent link">&para;</a></h2>
+<p>An occurrence the scheduler does not fire within a grace period after its
+due instant, sixty seconds by default, is a <strong>misfire</strong>, whether the
+scheduler was down or just running late. Each schedule picks one of two
+policies for its misfires:</p>
+<ul>
+<li><strong><code>late</code></strong> (the default) — fire the most recent missed occurrence once,
+  dropping any earlier ones the same schedule missed.</li>
+<li><strong><code>skip</code></strong> — drop every missed occurrence without firing any of them.</li>
+</ul>
+<p>Either way the scheduler announces what it missed on its own topic before
+performing a late fire, so an owner can tell "fired on time" apart from
+"fired late because the device was off" apart from "silently dropped."</p>
+<h2 id="restart-behavior">Restart behavior<a class="headerlink" href="#restart-behavior" title="Permanent link">&para;</a></h2>
+<p>Every accepted schedule is written to disk before the scheduler
+acknowledges it, except one explicitly marked <strong>ephemeral</strong> — a schedule
+whose owner wants it to die with the current process, such as a
+conversation keep-alive timer. A restart discards ephemeral schedules and
+nothing else: every persisted schedule is reloaded, its due date
+recomputed against the current time, and any occurrence it missed while
+the scheduler was down is handled under its misfire policy the moment the
+scheduler comes back up. A component never has to re-create its schedules
+after a restart to keep them alive. It only re-creates them if it wants a
+fresh due date.</p>
+<p>Sending the same schedule request twice, same owner, same id, has the
+same effect as sending it once: the second request replaces the first
+rather than adding a duplicate. This is what makes "re-create my
+schedules every time I start" a safe pattern for a component that does
+not otherwise track what it already asked for.</p>
+<h2 id="ownership">Ownership<a class="headerlink" href="#ownership" title="Permanent link">&para;</a></h2>
+<p>A component can only read, replace, or cancel a schedule whose owning
+<code>skill_id</code> matches its own. Two components using the same schedule name
+never collide, because the id is scoped to the owner, and one component
+can never accidentally reach into another's schedule by guessing its
+name.</p>
+<p>A schedule outlives the process that created it by default. A component
+that stops and does not want its pending schedules to fire in its absence
+must cancel them, or have created them as ephemeral in the first place. A
+fire with nobody listening is not an error. The scheduler still records
+it as the schedule's most recent fire, so the owner can reconcile by
+reading its own schedules back the next time it starts.</p>
 <hr />
-<h2 id="the-syntax-rules-important">The syntax rules (important)<a class="headerlink" href="#the-syntax-rules-important" title="Permanent link">&para;</a></h2>
-<p>OVOS phrases use a few special markers. Keep these intact or the skill can break.</p>
-<h3 id="variables-curly-braces">Variables — <code>{curly braces}</code><a class="headerlink" href="#variables-curly-braces" title="Permanent link">&para;</a></h3>
-<p>Variables are placeholders that get filled in at runtime (a name, a number, a city).</p>
-<ul>
-<li>Original: <code>My name is {name}</code></li>
-<li>Spanish: <code>Mi nombre es {name}</code></li>
-</ul>
-<p><strong>Rules:</strong></p>
-<ul>
-<li><strong>Never translate</strong> the text inside <code>{ }</code>. Copy it exactly.</li>
-<li>You may <strong>move</strong> a variable to fit your language's grammar.</li>
-<li>Don't invent new variables, and don't let two variables touch. Keep at least one
-  real word between them.</li>
-</ul>
-<h3 id="alternatives-optional-words-abc">Alternatives &amp; optional words — <code>(a|b|c)</code><a class="headerlink" href="#alternatives-optional-words-abc" title="Permanent link">&para;</a></h3>
-<p>The <code>(option1|option2)</code> syntax offers interchangeable choices; an empty option makes a
-word optional.</p>
-<ul>
-<li>Alternatives: <code>I love (cats|dogs|birds)</code> → <code>Amo (gatos|perros|pájaros)</code></li>
-<li>Optional word: <code>I (really|) love it</code> → <code>(Realmente|) me encanta</code></li>
-</ul>
-<h3 id="variants-repeated-phrasings">Variants (repeated phrasings)<a class="headerlink" href="#variants-repeated-phrasings" title="Permanent link">&para;</a></h3>
-<p>Most files hold several lines that say the same thing in different ways, so OVOS can
-recognize (or speak) varied phrasings. Each line is a <strong>variant</strong>. (A <em>slot</em> is something
-else: a <code>{variable}</code> placeholder inside a line.)</p>
-<ul>
-<li>Translate <strong>at least one</strong> variant per file.</li>
-<li>If a line doesn't make sense in your language, enter <code>[UNUSED]</code>. That convention tells
-  us you reviewed it on purpose.</li>
-<li>Need more room for natural variations? Add a new line and write another translation.</li>
-</ul>
-<hr />
-<h2 id="tips-for-good-translations">Tips for good translations<a class="headerlink" href="#tips-for-good-translations" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Meaning over literalness</strong>: convey what's meant, not a word-for-word swap.</li>
-<li><strong>Be consistent</strong>: use the same term for the same concept throughout.</li>
-<li><strong>Use the code context</strong> (right column) when a phrase is ambiguous.</li>
-<li><strong>Sound natural</strong>: these are things a person says out loud to a voice assistant.</li>
-<li><strong>Watch for a "hollow" line</strong>: a line with a double space in it, or one that ends on a bare
-  article or preposition, is a sign a word got dropped in translation. A line like that will
-  not match at runtime, so re-read it and put the missing word back.</li>
-</ul>
-<hr />
-<h2 id="where-this-fits-in-ovos">Where this fits in OVOS<a class="headerlink" href="#where-this-fits-in-ovos" title="Permanent link">&para;</a></h2>
-<p>OVOS Localize is the entry point for translators. Internally it reads the same locale
-files described in <strong><a href="../lang-customization/">Customizing Language Resources</a></strong> and
-feeds the broader <strong><a href="../lang-support/">Language Support</a></strong> effort. Developers who want to
-validate locale files in CI can use its <code>ovos-localize-cli</code> tool; translators never need it.</p>
-<p>For the technical side of multilingual support, language selection, parsers, and
-translation plugins, see the <strong><a href="../lang-support/">Language Support overview</a></strong>.</p>
-<hr />
-<h2 id="need-help">Need help?<a class="headerlink" href="#need-help" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Matrix chat:</strong> <a href="https://matrix.to/#/#OpenVoiceOS:matrix.org">#OpenVoiceOS:matrix.org</a></li>
-<li><strong>Issues:</strong> <a href="https://github.com/OpenVoiceOS/ovos-localize/issues">ovos-localize on GitHub</a></li>
-</ul>
-<p>Every translation makes OVOS usable for more people around the world.</p>
-<hr />
-<p><strong>Read next:</strong> <a href="../translation-plugins/">Translation Plugins</a>
-<strong>Related:</strong> <a href="../bidirectional-translation/">Bidirectional Translation</a> · <a href="../lang-customization/">Customizing Language Resources</a> · <a href="../contributing/">Contributing</a></p>
-<div class="admonition note">
-<p class="admonition-title">Making your own skill translatable</p>
-<p>This page is for <em>translators</em>. If you are a skill <strong>author</strong> adding languages to your
-own skill, the workflow is different: ship a <code>locale/&lt;lang&gt;/</code> folder per language
-(<a href="../lang-customization/">Customizing Language Resources</a> covers the file formats),
-describe per-locale metadata in <a href="../skill-json/#language-support"><code>skill.json</code></a>, and
-lint the result in CI with
-<a href="../gh-automations-repo-skill-checks/#spec-lintyml"><code>spec-lint.yml</code></a>.</p>
-</div>
+<p><strong>Related:</strong> <a href="../ovos-skill/#scheduling-events">Scheduling Events</a> · <a href="../recipe-reminder-persistence/">A reminder skill</a> · <a href="../bus-bridge/">Bus Bridges</a> · <a href="../session/">Sessions</a></p>
 
 
 

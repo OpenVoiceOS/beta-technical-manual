@@ -1698,6 +1698,13 @@ move to a dedicated model as one becomes available.</p>
 <p>Skills may have translated intents but missing dialog translations. The assistant typically speaks the dialog filename if it is not translated</p>
 </li>
 <li>
+<p>A locale directory should ship the same file set as <code>en-US</code>: <code>.blacklist</code> files, error-path
+  dialogs, <code>.rx</code> files, and <code>skill.json</code> included, not only the <code>.intent</code>/<code>.dialog</code> files that
+  carry the visible conversation. A locale missing one of these still loads, but a skill whose
+  error handling only has an <code>en-US</code> dialog falls back to speaking English (or the filename) on
+  a failure path a translator never saw</p>
+</li>
+<li>
 <p>STT/TTS plugin coverage is uneven per language variant. Some regional variants have no bundled offline recommendation at all (see the gaps called out below the auto-configuration table). A language can be "installed" without actually being able to hear or speak yet.</p>
 </li>
 </ul>

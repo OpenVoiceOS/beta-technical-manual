@@ -1444,6 +1444,10 @@ expansion <code>(a|b)</code>, optional <code>[x]</code>, and named slots <code>{
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>turn on (the|) {device}
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>(switch|power) on {device}
 </span></code></pre></div>
+<p>Two slots must never sit next to each other with nothing between them: <code>{r} {g} {b}</code> raises
+<code>MalformedTemplate</code> at registration because there is no way to tell where one slot's match
+ends and the next begins. Put a literal word between them instead, for example
+<code>{r} and {g} and {b}</code>.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># thing.voc  (slot-free)
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>light
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>lamp

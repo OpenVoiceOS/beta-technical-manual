@@ -1818,7 +1818,13 @@ context of this skill. OVOS matches <em>any</em> of these keywords with the inte
 <h3 id="regular-expression-rx-files">Regular Expression (.rx) Files<a class="headerlink" href="#regular-expression-rx-files" title="Permanent link">&para;</a></h3>
 <p>Regular expressions (or regex) let us capture entities based on the structure of an utterance.</p>
 <p>We strongly recommend you avoid regex. It is hard to make portable across languages, hard to
-translate, and the reported confidence of the intents is not great.</p>
+translate, and the reported confidence of the intents is not great. A regex written for one
+language rarely carries over: copying an English preposition pattern like <code>\b(at|in)</code> into
+another language's <code>.rx</code> file is syntactically valid but matches nothing useful there if that
+language marks the same relationship with a different preposition, word order, or no
+preposition at all. Agglutinative languages such as Basque, Hungarian, or Turkish mark case
+through a suffix on the noun instead of a separate preposition, so a preposition-shaped regex
+cannot express the equivalent there no matter how it is translated.</p>
 <p>We suggest using template intents (<code>.intent</code> files) instead if you find yourself needing regex.
 See <a href="../intents-padatious/">Padatious Intents</a>.</p>
 <blockquote>
