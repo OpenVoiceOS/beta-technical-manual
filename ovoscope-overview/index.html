@@ -1419,14 +1419,22 @@ tests.</p>
 <hr />
 <h2 id="why-e2e-testing">Why E2E testing?<a class="headerlink" href="#why-e2e-testing" title="Permanent link">&para;</a></h2>
 <p>Traditional unit tests miss integration issues (for example, a skill that loads fine but fails to match a
-Padatious intent). <code>ovoscope</code> solves this by running a <strong>MiniCroft</strong> instance, a real in-process
+Padacioso intent). <code>ovoscope</code> solves this by running a <strong>MiniCroft</strong> instance, a real in-process
 <code>SkillManager</code>:</p>
 <ul>
-<li><strong>Real intent matching</strong>: uses the actual Adapt and Padatious engines.</li>
+<li><strong>Real intent matching</strong>: uses the actual Adapt and Padacioso engines.</li>
 <li><strong>Bus-level verification</strong>: asserts the correct <code>speak</code> / <code>gui.page.show</code> messages are emitted.</li>
 <li><strong>No hardware</strong>: uses a <code>FakeBus</code> and mocked audio/hardware layers.</li>
 <li><strong>CI ready</strong>: designed to run in GitHub Actions on every pull request.</li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Padatious is opt-in in CI</p>
+<p>A skill-intent test suite does not boot Padatious by default. The shared ovoscope CI workflow
+installs plain <code>ovos-core</code> plus Padacioso, and only pulls in <code>ovos-padatious</code> when the caller
+sets <code>require_padatious: true</code> — see <a href="../testing-your-skill/#step-6-wire-it-into-ci">Test Your Skill</a>.
+A suite that genuinely needs Padatious opts in with that input, plus the matching plugin in its
+own <code>[test]</code> extras.</p>
+</div>
 <hr />
 <h2 id="your-first-test">Your first test<a class="headerlink" href="#your-first-test" title="Permanent link">&para;</a></h2>
 <p><code>End2EndTest</code> is declarative: give it the skill(s) to load, the utterance to send, and the messages
@@ -1440,7 +1448,7 @@ skill spoke a given line, without spelling out the full message sequence:</p>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">def</span> <span class="nf">test_hello_world</span><span class="p">():</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="s2">&quot;test-1&quot;</span><span class="p">)</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">session</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ovos-padatious-pipeline-plugin&quot;</span><span class="p">]</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">session</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ovos-padacioso-pipeline-plugin&quot;</span><span class="p">]</span>
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">utterance</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span>
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        <span class="s2">&quot;recognizer_loop:utterance&quot;</span><span class="p">,</span>
 </span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="p">{</span><span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;hello world&quot;</span><span class="p">],</span> <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="s2">&quot;en-US&quot;</span><span class="p">},</span>
@@ -1463,7 +1471,7 @@ the speak is ever checked.</p>
 <code>expected_messages</code> and call <code>test.execute()</code> directly (see the
 <a href="https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/usage-guide.md">usage guide</a>).</p>
 <p><code>ovoscope</code> also ships ready-made pipeline-stage lists, so you do not have to hand-write
-<code>session.pipeline = [...]</code> for common cases: <code>ADAPT_PIPELINE</code>, <code>PADATIOUS_PIPELINE</code>,
+<code>session.pipeline = [...]</code> for common cases: <code>ADAPT_PIPELINE</code>, <code>PADACIOSO_PIPELINE</code>,
 <code>FALLBACK_PIPELINE</code>, <code>PERSONA_PIPELINE</code>, and <code>DEFAULT_TEST_PIPELINE</code> (a deterministic mix that
 deliberately excludes persona/Ollama/OCP/m2v plugins). Import them from <code>ovoscope</code> and assign
 to <code>session.pipeline</code>. See <a href="https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/end2end-test.md">end2end-test.md</a>

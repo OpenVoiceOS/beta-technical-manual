@@ -1751,6 +1751,17 @@ the <a href="../skill-design-guidelines/">Skill Design Guidelines</a>.</p>
 was captured. The first argument is the dialog to speak.</p>
 <p><code>get_response()</code> suspends the converse channel for this skill until the user responds or a
 timeout is hit. Raise <code>AbortQuestion</code> to cancel gracefully.</p>
+<div class="admonition warning">
+<p class="admonition-title">A stop cancels a pending <code>get_response()</code></p>
+<p>Calling <code>get_response()</code> sets <code>session.response_mode</code> for this skill, the same field
+<a href="../stop-pipeline/">Stop</a> checks. If the user says "stop" while a question is pending and the
+skill's <code>stop()</code> (or <code>stop_session()</code>) reports it handled the stop, <code>get_response()</code> returns
+<code>None</code> right away instead of waiting out its timeout or retry count. Treat a <code>None</code> return as
+"no answer", whether it came from a stop, a timeout, or the user asking to cancel — the three
+are not distinguishable from the return value alone, and a handler that only expects a
+timeout will otherwise treat a stop as an empty reply and keep going with a flavor, a
+confirmation, or a slot it was never given.</p>
+</div>
 <hr />
 <h3 id="3-yesno-questions-with-ask_yesno">3. Yes/No Questions with <code>ask_yesno()</code><a class="headerlink" href="#3-yesno-questions-with-ask_yesno" title="Permanent link">&para;</a></h3>
 <p>Detects affirmations or negations from user responses.</p>

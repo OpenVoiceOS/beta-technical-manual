@@ -1451,18 +1451,18 @@ alongside the skill and OVOS itself, not just present somewhere on the machine.<
 <code>pyproject.toml</code> instead of installing it loose, so <code>pip install -e .[test]</code> pulls in everything a
 contributor needs:</p>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[project.optional-dependencies]</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovoscope&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ovos-padatious&quot;</span><span class="p">]</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovoscope&quot;</span><span class="p">]</span>
 </span></code></pre></div>
+<p><code>padacioso</code> ships as part of <code>ovos-workshop</code>, a dependency of <code>ovos-core</code> itself, so no separate
+package is needed to test against it.</p>
 <h2 id="step-2-write-the-first-end2endtest">Step 2: Write the first <code>End2EndTest</code><a class="headerlink" href="#step-2-write-the-first-end2endtest" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
-<p class="admonition-title">Prerequisite: the Padatious pipeline plugin</p>
-<p>This test drives <code>session.pipeline = ["ovos-padatious-pipeline-plugin"]</code>, so that plugin
-must actually be installed: <code>pip show ovos-padatious || pip install ovos-padatious</code>.</p>
-<p>The pipeline ID and the pip package have different names — <code>pip install
-ovos-padatious-pipeline-plugin</code> fails, there is no such package. See <a href="../pipelines-overview/#pipeline-ids-vs-plugins">Pipeline IDs vs.
-plugins</a>.</p>
-<p>If the test runs but reports no spoken output at all, check for a missing pipeline plugin
-first, not a bug in your skill.</p>
+<p class="admonition-title">The Padacioso pipeline plugin needs no extra install</p>
+<p>This test drives <code>session.pipeline = ["ovos-padacioso-pipeline-plugin"]</code>. Unlike Adapt or
+Padatious, that plugin ships with <code>ovos-workshop</code> and is always present once <code>ovos-core</code> is
+installed — there is nothing extra to <code>pip install</code>.</p>
+<p>If the test runs but reports no spoken output at all, the pipeline plugin is not the likely
+cause; look at the intent file or the skill's dispatch handler instead.</p>
 </div>
 <p>Create <code>test/test_hello.py</code> next to your skill's <code>pyproject.toml</code>:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">ovos_bus_client.message</span> <span class="kn">import</span> <span class="n">Message</span>
@@ -1474,7 +1474,7 @@ first, not a bug in your skill.</p>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="k">def</span> <span class="nf">test_hello_matches_and_speaks</span><span class="p">():</span>
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="s2">&quot;test-1&quot;</span><span class="p">)</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="n">session</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ovos-padatious-pipeline-plugin&quot;</span><span class="p">]</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="n">session</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ovos-padacioso-pipeline-plugin&quot;</span><span class="p">]</span>
 </span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="n">utterance</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span>
 </span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        <span class="s2">&quot;recognizer_loop:utterance&quot;</span><span class="p">,</span>
 </span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>        <span class="p">{</span><span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;hello&quot;</span><span class="p">],</span> <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="s2">&quot;en-US&quot;</span><span class="p">},</span>
@@ -1498,12 +1498,12 @@ first, not a bug in your skill.</p>
 </span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>    <span class="p">}</span>
 </span></code></pre></div>
 <div class="admonition note">
-<p class="admonition-title">Why <code>ovos-padatious-pipeline-plugin</code>, not Adapt?</p>
-<p><code>Hello.intent</code> is a <strong>Padatious</strong> intent file (one example phrase per line). That's a
-different matcher from Adapt's keyword grammar. <code>session.pipeline</code> tells OVOS which intent
-engines to try, and in which order. It has to include the engine that actually understands
-your intent file, or the utterance is never matched. See <a href="../pipelines-overview/">Pipelines Overview</a>
-for how the stages fit together.</p>
+<p class="admonition-title">Why <code>ovos-padacioso-pipeline-plugin</code>, not Adapt?</p>
+<p><code>Hello.intent</code> is an exact-match intent file (one example phrase per line), the format shared
+by Padacioso, Padatious, and m2v. That's a different matcher from Adapt's keyword grammar.
+<code>session.pipeline</code> tells OVOS which intent engines to try, and in which order. It has to
+include the engine that actually understands your intent file, or the utterance is never
+matched. See <a href="../pipelines-overview/">Pipelines Overview</a> for how the stages fit together.</p>
 </div>
 <p><code>skill_ids</code> restricts which skill(s) <code>ovoscope</code> loads for the test, so you're only ever testing
 your own skill, not every skill installed on the machine.</p>
@@ -1534,7 +1534,7 @@ A real run looks like this (trimmed of the framework's own deprecation-warning n
 <div class="admonition tip">
 <p class="admonition-title">First run is slow, and that's normal</p>
 <p>The bulk of that ~70s is <code>ovoscope</code> spinning up a full in-process <code>SkillManager</code> and loading
-<strong>every</strong> intent-pipeline plugin installed on the machine (Adapt, Padatious, Padacioso, and any
+<strong>every</strong> intent-pipeline plugin installed on the machine (Adapt, Padacioso, Padatious, and any
 others you have), not just the one your test needs. On a machine with only the pipeline
 plugins your skill actually depends on, startup is much faster. On a shared box where
 several people run tests at once (a classroom, a CI runner), the runs compete for CPU —
@@ -1566,7 +1566,7 @@ catches an intent file matching too eagerly:</p>
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="k">def</span> <span class="nf">test_unrelated_utterance_is_not_handled</span><span class="p">():</span>
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;An utterance the intent files never taught the skill must NOT trigger it.&quot;&quot;&quot;</span>
 </span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="s2">&quot;test-2&quot;</span><span class="p">)</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="n">session</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ovos-padatious-pipeline-plugin&quot;</span><span class="p">]</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="n">session</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ovos-padacioso-pipeline-plugin&quot;</span><span class="p">]</span>
 </span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="n">utterance</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span>
 </span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>        <span class="s2">&quot;recognizer_loop:utterance&quot;</span><span class="p">,</span>
 </span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>        <span class="p">{</span><span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;what is the capital of france&quot;</span><span class="p">],</span> <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="s2">&quot;en-US&quot;</span><span class="p">},</span>
@@ -1641,7 +1641,7 @@ record</code> does internally:</p>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="kn">from</span> <span class="nn">ovoscope</span> <span class="kn">import</span> <span class="n">End2EndTest</span>
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="s2">&quot;test-1&quot;</span><span class="p">)</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">session</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ovos-padatious-pipeline-plugin&quot;</span><span class="p">]</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">session</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ovos-padacioso-pipeline-plugin&quot;</span><span class="p">]</span>
 </span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">utterance</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span>
 </span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="s2">&quot;recognizer_loop:utterance&quot;</span><span class="p">,</span>
 </span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>    <span class="p">{</span><span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;hello&quot;</span><span class="p">],</span> <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="s2">&quot;en-US&quot;</span><span class="p">},</span>
@@ -1651,7 +1651,7 @@ record</code> does internally:</p>
 </span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>    <span class="n">utterance</span><span class="p">,</span>
 </span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>    <span class="p">[</span><span class="s2">&quot;my-first.youruser&quot;</span><span class="p">],</span>
 </span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>    <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>    <span class="n">default_pipeline</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ovos-padatious-pipeline-plugin&quot;</span><span class="p">],</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>    <span class="n">default_pipeline</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ovos-padacioso-pipeline-plugin&quot;</span><span class="p">],</span>
 </span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="p">)</span>
 </span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="n">test</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;test/fixtures/hello.json&quot;</span><span class="p">)</span>
 </span></code></pre></div>
