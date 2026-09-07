@@ -22,13 +22,20 @@ tests.
 ## Why E2E testing?
 
 Traditional unit tests miss integration issues (for example, a skill that loads fine but fails to match a
-Padatious intent). `ovoscope` solves this by running a **MiniCroft** instance, a real in-process
+Padacioso intent). `ovoscope` solves this by running a **MiniCroft** instance, a real in-process
 `SkillManager`:
 
-- **Real intent matching**: uses the actual Adapt and Padatious engines.
+- **Real intent matching**: uses the actual Adapt and Padacioso engines.
 - **Bus-level verification**: asserts the correct `speak` / `gui.page.show` messages are emitted.
 - **No hardware**: uses a `FakeBus` and mocked audio/hardware layers.
 - **CI ready**: designed to run in GitHub Actions on every pull request.
+
+!!! note "Padatious is opt-in in CI"
+    A skill-intent test suite does not boot Padatious by default. The shared ovoscope CI workflow
+    installs plain `ovos-core` plus Padacioso, and only pulls in `ovos-padatious` when the caller
+    sets `require_padatious: true` — see [Test Your Skill](testing-your-skill.md#step-6-wire-it-into-ci).
+    A suite that genuinely needs Padatious opts in with that input, plus the matching plugin in its
+    own `[test]` extras.
 
 ---
 
@@ -47,7 +54,7 @@ SKILL_ID = "ovos-skill-hello-world.openvoiceos"
 
 def test_hello_world():
     session = Session("test-1")
-    session.pipeline = ["ovos-padatious-pipeline-plugin"]
+    session.pipeline = ["ovos-padacioso-pipeline-plugin"]
     utterance = Message(
         "recognizer_loop:utterance",
         {"utterances": ["hello world"], "lang": "en-US"},
@@ -73,7 +80,7 @@ For full sequence assertions — message types, ordering, routing, and session s
 [usage guide](https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/usage-guide.md)).
 
 `ovoscope` also ships ready-made pipeline-stage lists, so you do not have to hand-write
-`session.pipeline = [...]` for common cases: `ADAPT_PIPELINE`, `PADATIOUS_PIPELINE`,
+`session.pipeline = [...]` for common cases: `ADAPT_PIPELINE`, `PADACIOSO_PIPELINE`,
 `FALLBACK_PIPELINE`, `PERSONA_PIPELINE`, and `DEFAULT_TEST_PIPELINE` (a deterministic mix that
 deliberately excludes persona/Ollama/OCP/m2v plugins). Import them from `ovoscope` and assign
 to `session.pipeline`. See [end2end-test.md](https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/end2end-test.md)

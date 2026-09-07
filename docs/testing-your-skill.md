@@ -38,21 +38,21 @@ contributor needs:
 
 ```toml
 [project.optional-dependencies]
-test = ["ovoscope", "ovos-padatious"]
+test = ["ovoscope"]
 ```
+
+`padacioso` ships as part of `ovos-workshop`, a dependency of `ovos-core` itself, so no separate
+package is needed to test against it.
 
 ## Step 2: Write the first `End2EndTest`
 
-!!! note "Prerequisite: the Padatious pipeline plugin"
-    This test drives `session.pipeline = ["ovos-padatious-pipeline-plugin"]`, so that plugin
-    must actually be installed: `pip show ovos-padatious || pip install ovos-padatious`.
+!!! note "The Padacioso pipeline plugin needs no extra install"
+    This test drives `session.pipeline = ["ovos-padacioso-pipeline-plugin"]`. Unlike Adapt or
+    Padatious, that plugin ships with `ovos-workshop` and is always present once `ovos-core` is
+    installed — there is nothing extra to `pip install`.
 
-    The pipeline ID and the pip package have different names — `pip install
-    ovos-padatious-pipeline-plugin` fails, there is no such package. See [Pipeline IDs vs.
-    plugins](pipelines-overview.md#pipeline-ids-vs-plugins).
-
-    If the test runs but reports no spoken output at all, check for a missing pipeline plugin
-    first, not a bug in your skill.
+    If the test runs but reports no spoken output at all, the pipeline plugin is not the likely
+    cause; look at the intent file or the skill's dispatch handler instead.
 
 Create `test/test_hello.py` next to your skill's `pyproject.toml`:
 
@@ -66,7 +66,7 @@ SKILL_ID = "my-first.youruser"
 
 def test_hello_matches_and_speaks():
     session = Session("test-1")
-    session.pipeline = ["ovos-padatious-pipeline-plugin"]
+    session.pipeline = ["ovos-padacioso-pipeline-plugin"]
     utterance = Message(
         "recognizer_loop:utterance",
         {"utterances": ["hello"], "lang": "en-US"},
@@ -90,12 +90,12 @@ def test_hello_matches_and_speaks():
     }
 ```
 
-!!! note "Why `ovos-padatious-pipeline-plugin`, not Adapt?"
-    `Hello.intent` is a **Padatious** intent file (one example phrase per line). That's a
-    different matcher from Adapt's keyword grammar. `session.pipeline` tells OVOS which intent
-    engines to try, and in which order. It has to include the engine that actually understands
-    your intent file, or the utterance is never matched. See [Pipelines Overview](pipelines-overview.md)
-    for how the stages fit together.
+!!! note "Why `ovos-padacioso-pipeline-plugin`, not Adapt?"
+    `Hello.intent` is an exact-match intent file (one example phrase per line), the format shared
+    by Padacioso, Padatious, and m2v. That's a different matcher from Adapt's keyword grammar.
+    `session.pipeline` tells OVOS which intent engines to try, and in which order. It has to
+    include the engine that actually understands your intent file, or the utterance is never
+    matched. See [Pipelines Overview](pipelines-overview.md) for how the stages fit together.
 
 `skill_ids` restricts which skill(s) `ovoscope` loads for the test, so you're only ever testing
 your own skill, not every skill installed on the machine.
@@ -131,7 +131,7 @@ test/test_hello.py::test_hello_matches_and_speaks PASSED                [100%]
 
 !!! tip "First run is slow, and that's normal"
     The bulk of that ~70s is `ovoscope` spinning up a full in-process `SkillManager` and loading
-    **every** intent-pipeline plugin installed on the machine (Adapt, Padatious, Padacioso, and any
+    **every** intent-pipeline plugin installed on the machine (Adapt, Padacioso, Padatious, and any
     others you have), not just the one your test needs. On a machine with only the pipeline
     plugins your skill actually depends on, startup is much faster. On a shared box where
     several people run tests at once (a classroom, a CI runner), the runs compete for CPU —
@@ -165,7 +165,7 @@ SKILL_ID = "my-first.youruser"
 def test_unrelated_utterance_is_not_handled():
     """An utterance the intent files never taught the skill must NOT trigger it."""
     session = Session("test-2")
-    session.pipeline = ["ovos-padatious-pipeline-plugin"]
+    session.pipeline = ["ovos-padacioso-pipeline-plugin"]
     utterance = Message(
         "recognizer_loop:utterance",
         {"utterances": ["what is the capital of france"], "lang": "en-US"},
@@ -221,7 +221,7 @@ from ovos_bus_client.session import Session
 from ovoscope import End2EndTest
 
 session = Session("test-1")
-session.pipeline = ["ovos-padatious-pipeline-plugin"]
+session.pipeline = ["ovos-padacioso-pipeline-plugin"]
 utterance = Message(
     "recognizer_loop:utterance",
     {"utterances": ["hello"], "lang": "en-US"},
@@ -231,7 +231,7 @@ test = End2EndTest.from_message(
     utterance,
     ["my-first.youruser"],
     timeout=30,
-    default_pipeline=["ovos-padatious-pipeline-plugin"],
+    default_pipeline=["ovos-padacioso-pipeline-plugin"],
 )
 test.save("test/fixtures/hello.json")
 ```

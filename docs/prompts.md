@@ -87,6 +87,16 @@ was captured. The first argument is the dialog to speak.
 `get_response()` suspends the converse channel for this skill until the user responds or a
 timeout is hit. Raise `AbortQuestion` to cancel gracefully.
 
+!!! warning "A stop cancels a pending `get_response()`"
+    Calling `get_response()` sets `session.response_mode` for this skill, the same field
+    [Stop](stop-pipeline.md) checks. If the user says "stop" while a question is pending and the
+    skill's `stop()` (or `stop_session()`) reports it handled the stop, `get_response()` returns
+    `None` right away instead of waiting out its timeout or retry count. Treat a `None` return as
+    "no answer", whether it came from a stop, a timeout, or the user asking to cancel — the three
+    are not distinguishable from the return value alone, and a handler that only expects a
+    timeout will otherwise treat a stop as an empty reply and keep going with a flavor, a
+    confirmation, or a slot it was never given.
+
 ---
 
 ### 3. Yes/No Questions with `ask_yesno()`
