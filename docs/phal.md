@@ -268,7 +268,7 @@ skill as a voice frontend.
 | [ovos-PHAL-plugin-network-manager](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-network-manager) | Provides the network manager interface for NetworkManager-based plugins |
 | [ovos-PHAL-plugin-connectivity-events](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-connectivity-events) | Reports network connectivity changes to the messagebus |
 | [ovos-PHAL-plugin-ipgeo](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-ipgeo) | Autoconfigure default location based on IP address via [ip-api.com](https://ip-api.com) |
-| [ovos-PHAL-plugin-gpsd](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-gpsd) | Provides GPS location to OVOS via gpsd |
+| [ovos-PHAL-plugin-gpsd](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-gpsd) | Provides GPS location to OVOS via gpsd. Warning: the released version imports a `MycroftUserConfig` symbol that no longer exists in `ovos-utils`, so it fails to load on a current install; a fix is pending upstream review |
 | [ovos-PHAL-plugin-camera](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-camera) | Interact with cameras using OpenCV or libcamera: snapshots, video streams over HTTP, and messagebus control |
 | [ovos-PHAL-plugin-wallpaper-manager](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-wallpaper-manager) | Central wallpaper management interface for homescreens and other desktops |
 | [ovos-PHAL-plugin-oauth](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-oauth) | Handles OAuth authentication flows for OVOS skills and services |

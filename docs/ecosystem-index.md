@@ -695,7 +695,7 @@ Each is a PHAL (Platform/Hardware Abstraction Layer) plugin, loaded by ovos-PHAL
 :   PHAL plugin driving DotStar-type LEDs on ReSpeaker 2/4/6/8-mic HATs and the Adafruit VoiceBonnet.
 
 **[ovos-PHAL-plugin-gpsd](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-gpsd)**
-:   Exposes location readings from the `gpsd` daemon (USB/serial GPS receivers) to the assistant.
+:   Exposes location readings from the `gpsd` daemon (USB/serial GPS receivers) to the assistant. Warning: the released version imports a symbol removed from `ovos-utils` and fails to load; a fix is pending upstream review.
 
 **[ovos-PHAL-plugin-hotkeys](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-hotkeys)**
 :   plugin for Keyboard hotkeys, define key combos to trigger bus events.
