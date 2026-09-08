@@ -141,7 +141,7 @@ The entry-point name is the `skill_id` and the value points at the skill class. 
 Once your skill works, publishing it is the same as publishing any Python package:
 
 1. **Push it to a GitHub repository** under your own account (or the `OpenVoiceOS` org if you're contributing an official skill). The `source` field in `skill.json` should point at it.
-2. **Optionally publish it to PyPI** so it can be installed with a plain `pip install`, and set `package_name` in `skill.json` to that PyPI name. Skills without a PyPI release are still installable directly from git via `pip_spec` (see the [PEP 508](https://peps.python.org/pep-0508/) spec syntax used there).
+2. **Optionally publish it to PyPI** so it can be installed with a plain `pip install`, and set `package_name` in `skill.json` to that PyPI name. Build the artifact with `python -m build` (or `pip wheel . -w dist --no-deps`) and upload it with `twine upload dist/*`. Install the built wheel into a clean environment and confirm `ovos_plugin_manager.skills.find_skill_plugins()` lists your skill id before you upload: an editable install can hide a packaging mistake that a wheel exposes. Skills without a PyPI release are still installable directly from git via `pip_spec` (see the [PEP 508](https://peps.python.org/pep-0508/) spec syntax used there).
 3. **List it on the [OVOS Skill store](https://openvoiceos.github.io/OVOS-skills-store)**. Two submission paths, both feeding the same catalog: fill in the guided **Submit Skill** form on the store site, or open a
    [skill-submission issue](https://github.com/OpenVoiceOS/OVOS-skills-store/issues/new?template=skill_submission.yml)
    on the [OVOS-skills-store](https://github.com/OpenVoiceOS/OVOS-skills-store) repo — the

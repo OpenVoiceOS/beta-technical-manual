@@ -216,6 +216,16 @@ From inside the `ovos-skill-my-first/` folder:
 pip install -e .
 ```
 
+Confirm OVOS can see it before you go any further. This reads the same entry points the skill
+loader reads, so it separates a packaging mistake from a matching problem:
+
+```bash
+python -c "from ovos_plugin_manager.skills import find_skill_plugins; print(list(find_skill_plugins()))"
+```
+
+Your skill id should appear in that list. If it does not, the entry point in `pyproject.toml`
+is wrong and no amount of restarting or talking will help.
+
 Your skill matches with a `.intent` file, which is handled by **Padatious**. Padatious is an
 optional install, so a plain OVOS install may not have it. Check, and add it if it is missing:
 
