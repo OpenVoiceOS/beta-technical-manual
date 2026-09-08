@@ -68,13 +68,14 @@ hierarchy. Besides `ovos-core`, five services — the listener, audio, media, GU
 separate processes and could in principle run on separate machines, each responsible for one
 stage of the [utterance lifecycle](life-of-an-utterance.md).
 
-The [six transformer chains](transformer-plugins.md) don't all run in the same place:
+The [seven transformer stages](transformer-plugins.md) don't all run in the same place:
 
 | Chain | Runs in |
 |---|---|
 | Utterance | `ovos-core` (`IntentService`) |
 | Metadata | `ovos-core` (`IntentService`) |
 | Intent | `ovos-core` (`IntentService`) |
+| Typed slots | `ovos-core` (`IntentService`) |
 | Audio | `ovos-dinkum-listener`, before STT |
 | Dialog | `ovos-audio` (or `ovos-media`, where installed) |
 | TTS | `ovos-audio` (or `ovos-media`, where installed) |

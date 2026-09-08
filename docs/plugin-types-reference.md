@@ -48,7 +48,9 @@ The entry point group is the canonical identifier used in `setup.py` / `pyprojec
     `opm.microphone`) are **singleton per service**: their factory (`OVOSSTTFactory`,
     `OVOSTTSFactory`, etc.) reads a single `module` config key and instantiates exactly one
     active engine. This is unlike the six transformer chains below, which are explicitly
-    multi-instance and run all configured plugins of a type in priority order.
+    multi-instance and run all configured plugins of a type in priority order. The
+    seventh transformer type, typed slots, is a singleton like the core types: it
+    produces one map, so the runner selects a single plugin.
 
     Discovery is also name-keyed: if two installed packages register the same entry-point
     name under the same group, OPM keys them by that name, so one silently shadows the other
@@ -63,7 +65,7 @@ The entry point group is the canonical identifier used in `setup.py` / `pyprojec
 
 ### Transformer Plugins
 
-These six types are the six ordered chains of [OVOS-TRANSFORM-1](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md). Each one is injected at a fixed point in the utterance lifecycle (audio → utterance → metadata → intent → dialog → tts) and runs in **ascending** priority order.
+Six of these are the ordered chains of [OVOS-TRANSFORM-1](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md). Each is injected at a fixed point in the utterance lifecycle (audio → utterance → metadata → intent → dialog → tts) and runs every configured plugin in **ascending** priority order. The typed-slots type runs between metadata and the first matcher and selects one plugin instead of chaining.
 
 | Plugin type | Entry point group | Template base class |
 |---|---|---|
@@ -73,14 +75,15 @@ These six types are the six ordered chains of [OVOS-TRANSFORM-1](https://github.
 | [Utterance](life-of-an-utterance.md) Transformer | `opm.transformer.text` | `UtteranceTransformer` |
 | Metadata Transformer | `opm.transformer.metadata` | `MetadataTransformer` |
 | Intent Transformer | `opm.transformer.intent` | `IntentTransformer` |
+| Typed-slots Transformer | `opm.transformer.typed_slots` | `TypedSlotsTransformer` |
 
 #### Canonical chain runners: `ovos_plugin_manager.transformer_services`
 
-Loading, ordering, and chaining transformer plugins used to be reimplemented separately by
-each consumer. `ovos_plugin_manager.transformer_services` is now the single shared
-implementation: `ovos-core`, `ovos-audio`, `ovos-dinkum-listener`, HiveMind, and the OVOS
-TTS/STT servers all build their transformer chains from this module instead of maintaining
-their own copies. It exposes one runner class per transformer type:
+`ovos_plugin_manager.transformer_services` is the single shared implementation of loading,
+ordering, and chaining transformer plugins. `ovos-core`, `ovos-audio`,
+`ovos-dinkum-listener`, HiveMind, and the OVOS TTS/STT servers all build their transformer
+chains from this module rather than keeping their own copies. It exposes one runner class
+per transformer type:
 
 | Class | Transformer type |
 |---|---|

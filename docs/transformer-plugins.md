@@ -38,7 +38,12 @@ All base classes live in `ovos_plugin_manager.templates.transformers` and share 
 
 A `"priority"` key in a plugin's `mycroft.conf` block is not applied automatically. The plugin must read it back out of `self.config` itself if it wants deployments to override priority (see [Utterance Transformers: Config-driven priority](utterance-transformers.md#config-driven-priority)).
 
-### Config shape (all six chains)
+### Config shape (the six chained types)
+
+Six of the seven sections below are *chains*: every loaded plugin runs, one after
+another. The seventh, `typed_slots_transformers`, reads its section the same way
+but runs only one plugin; see [Typed-slots transformers](#7-typed-slots-transformers)
+for where it differs.
 
 Every chain's `mycroft.conf` section follows the same rules (`TransformersService.load_plugins()` in `ovos_plugin_manager.transformer_services`):
 
@@ -82,14 +87,15 @@ Two runtime behaviors from OVOS-TRANSFORM-1 apply in the shared service bases
 | **Intent** | After Intent match, before Skill | `IntentTransformer` | `opm.transformer.intent` |
 | **Dialog** | Before TTS | `DialogTransformer` | `opm.transformer.dialog` |
 | **TTS** | After TTS, before Playback | `TTSTransformer` | `opm.transformer.tts` |
+| **Typed slots** | After Metadata, before the first matcher | `TypedSlotsTransformer` | `opm.transformer.typed_slots` |
 
 `ovos-plugin-manager` also honors the deprecated Neon entry-point groups `neon.plugin.text`,
 `neon.plugin.metadata` and `neon.plugin.audio` as aliases for `opm.transformer.text`,
 `opm.transformer.metadata` and `opm.transformer.audio` (with a deprecation warning). There is
-no such alias for the intent, dialog or TTS chains — a plugin registered only under a legacy
-name for those three groups is not discovered.
+no such alias for the intent, dialog, TTS or typed-slots groups — a plugin registered only
+under a legacy name for those four groups is not discovered.
 
-The runner classes that load and chain these plugins live in `ovos-plugin-manager` (`ovos_plugin_manager.transformer_services`): `UtteranceTransformersService`, `MetadataTransformersService`, `IntentTransformersService`, `AudioTransformersService`, `DialogTransformersService`, `TTSTransformersService`. Each consumer imports the one it needs. `ovos-core` runs the utterance/metadata/intent chains, the listener runs the audio chain, and the audio/TTS stacks run the dialog/TTS chains.
+The runner classes that load and chain these plugins live in `ovos-plugin-manager` (`ovos_plugin_manager.transformer_services`): `UtteranceTransformersService`, `MetadataTransformersService`, `IntentTransformersService`, `AudioTransformersService`, `DialogTransformersService`, `TTSTransformersService`. Each consumer imports the one it needs. `ovos-core` runs the utterance/metadata/intent chains, the listener runs the audio chain, and the audio/TTS stacks run the dialog/TTS chains. The typed-slots stage has its own runner, `TypedSlotsTransformersService` in `ovos_core.transformers`, because it selects rather than chains.
 
 ---
 
@@ -165,6 +171,44 @@ Used to modify the text that OVOS is about to speak, just before it is sent to t
 **Entry point:** `opm.transformer.tts`
 
 Used to process the generated WAV file after TTS synthesis but before it is played back.
+
+---
+
+## 7. Typed-slots Transformers
+**Entry point:** `opm.transformer.typed_slots`
+
+Computes the typed-slots map for an utterance: the number, date, duration and
+colour spans that intents ask for with the `{type:name}` syntax. It runs after the
+utterance and metadata chains and before the first matcher, so a matcher and a
+skill handler both see the same resolved values. Skill authors read the result
+with `self.typed_slot()`, described in
+[Padatious Intents: Typed slots](intents-padatious.md#typed-slots).
+
+`ovos-typed-slots-transformer` is the plugin that ships in the bundled
+`mycroft.conf`, and it uses the OVOS parser libraries to do the work.
+
+This stage reads its config section like the six chains above, but it does not
+chain. Four differences matter to a plugin author:
+
+- **One plugin runs, not all of them.** The stage produces a single map, so the
+  runner picks one plugin and ignores the rest: the first name in an explicit
+  `order` list, or otherwise the lowest `priority` number. Two plugins loaded at
+  the same priority with no `order` list is a warning, and the choice between
+  them is stable but unspecified.
+- **A different `transform()` signature.** It takes the candidate utterances, the
+  set of types the registered intents declared, and the `Session`, and it returns
+  a map of type name to a list of `{"span": [start, end], "surface": str,
+  "value": ...}` entries. It must not touch `utterances` or `Message.context`;
+  that is an utterance or metadata transformer's job.
+- **`supported_types` gates selection.** A plugin declares the types it can
+  compute, and the runner skips one that shares nothing with the declared set.
+- **No provenance stamping.** Like the intent chain, this stage appends nothing
+  to the message context.
+
+A plugin that raises, or returns anything that is not a dictionary, is treated as
+having produced nothing. That is not the same as producing an empty map: an
+absent map means the value was never computed, while an empty one means the
+plugin looked and found nothing.
 
 ---
 

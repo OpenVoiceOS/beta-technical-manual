@@ -7,7 +7,7 @@
 
 ## Creating a Plugin
 
-1.  **Inherit** from the base class for your transformer type. All six live in
+1.  **Inherit** from the base class for your transformer type. All seven live in
     `ovos_plugin_manager.templates.transformers`:
 
     | Base class | Stage | Entry-point group |
@@ -18,6 +18,7 @@
     | `DialogTransformer` | spoken text, before TTS | `opm.transformer.dialog` |
     | `TTSTransformer` | synthesized audio, after TTS | `opm.transformer.tts` |
     | `AudioTransformer` | captured audio, before STT | `opm.transformer.audio` |
+    | `TypedSlotsTransformer` | typed-slot spans, before the first matcher | `opm.transformer.typed_slots` |
 
     Every one of them takes `__init__(self, name, priority=50, config=None)`, and **`name` is
     a required positional argument**. Pass your plugin's name as the default, because that
