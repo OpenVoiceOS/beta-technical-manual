@@ -23,6 +23,7 @@ Requires: PyYAML (`pip install pyyaml`), run with any Python that has it
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import subprocess
 import sys
@@ -42,7 +43,27 @@ GEN_NOTE = (
 
 
 def wrap(section_id: str, body: str) -> str:
+    _reject_terminal_escapes(section_id, body)
     return f"{GEN_BEGIN.format(id=section_id)}\n{GEN_NOTE}\n{body.rstrip()}\n{GEN_END}"
+
+
+def _reject_terminal_escapes(section_id: str, body: str) -> None:
+    """Refuse to write a generated block containing terminal colour codes.
+
+    A coloured capture renders as bracket noise once published, and it looks
+    like an ordinary regeneration in a diff, so it survives review. Failing
+    here is loud; the alternative is a page nobody can read.
+    """
+    if "\x1b" in body:
+        first = next(
+            (n for n, line in enumerate(body.splitlines(), 1) if "\x1b" in line), 0
+        )
+        sys.exit(
+            f"refusing to write section {section_id!r}: terminal escape sequences "
+            f"in the captured output, first at line {first}. The command coloured "
+            f"its output despite NO_COLOR and TERM=dumb; capture it again with "
+            f"colour disabled rather than publishing the escapes."
+        )
 
 
 def replace_marked_section(text: str, section_id: str, new_body: str) -> tuple[str, bool]:
@@ -372,6 +393,22 @@ UNSAFE_FOR_HELP_CAPTURE = {
 }
 
 
+def _plain_output_env() -> dict:
+    """Environment that stops a CLI colouring its own --help.
+
+    click and rich colour their output whenever they believe a terminal is
+    attached. A captured transcript is a document, so the escape sequences are
+    unreadable bracket noise on the published page.
+    """
+    env = dict(os.environ)
+    env.pop("FORCE_COLOR", None)
+    env.pop("CLICOLOR_FORCE", None)
+    env["NO_COLOR"] = "1"
+    env["TERM"] = "dumb"
+    env["COLUMNS"] = "80"
+    return env
+
+
 def _capture_help(cmd: str, venv_bin: Path) -> str | None:
     exe = venv_bin / cmd
     if not exe.exists():
@@ -382,6 +419,7 @@ def _capture_help(cmd: str, venv_bin: Path) -> str | None:
     try:
         result = subprocess.run(
             [str(exe), "--help"], capture_output=True, text=True, timeout=15,
+            env=_plain_output_env(),
         )
         out = (result.stdout or "") + (result.stderr or "")
         return out.strip()
