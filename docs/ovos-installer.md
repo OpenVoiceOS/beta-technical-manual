@@ -61,7 +61,14 @@ flowchart TD
 If you're installing on a headless device (like a Raspberry Pi), you first need its IP address
 or hostname. Try `raspberrypi.local` (the default mDNS hostname on a fresh Raspberry Pi OS
 install), or look up the device's IP in your router's connected-devices list if that doesn't
-resolve. Then connect via SSH:
+resolve.
+
+This step needs SSH already enabled on the device, and a username and password you set when
+you wrote the operating system to the card. Raspberry Pi Imager sets all three in its
+settings panel before writing. If SSH is off, attach a keyboard and monitor to the device
+instead and work at its own terminal.
+
+Then connect via SSH:
 
 ```bash
 ssh -l your-username <your-device-ip-or-raspberrypi.local>
@@ -143,7 +150,8 @@ This can take anywhere from **5 to 20 minutes**, depending on your hardware, int
 
 ## The Installer Wizard
 
-The wizard walks you through language, installation method, release channel, profile,
+The wizard walks you through language, installation method,
+[release channel](release-channels.md), profile,
 feature selection, Raspberry Pi tuning, a summary, and two telemetry prompts, before it
 starts installing. For a screen-by-screen walkthrough of each of those prompts, with
 screenshots, see [The `ovos-installer` Wizard, Screen by Screen](ovos-installer-scenarios.md).
@@ -217,7 +225,7 @@ Key options:
 | --- | --- |
 | `uninstall` | `true` to uninstall instead of install |
 | `method` | `containers` (Docker) or `virtualenv` (Python virtual environment) |
-| `channel` | Release channel: `testing` or `alpha` |
+| `channel` | Release channel: `testing` or `alpha`. See [Release channels](release-channels.md) for what each one gives you |
 | `profile` | Installation profile (e.g. `ovos`) |
 | `features.*` | Per-feature toggles (e.g. `skills`, `extra_skills`, `llm`) |
 | `raspberry_pi_tuning` | Enable Raspberry Pi performance tuning (includes an overclock prompt) |
