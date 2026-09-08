@@ -2012,7 +2012,7 @@ connect and take part with the same permissions as any other client.</p>
 <tr>
 <td><code>async_sender</code></td>
 <td><code>false</code></td>
-<td>Opt-in perf flag (<a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/285"><code>ovos-bus-client#285</code></a>, not yet merged): move outbound socket writes onto one dedicated daemon thread reading a bounded queue, instead of every emitting thread serializing on the socket's send lock. Ordering is unchanged; a send error surfaces in the sender thread's log rather than the caller's. Also settable via the <code>OVOS_BUS_ASYNC_SENDER</code> env var.</td>
+<td>Opt-in perf flag: move outbound socket writes onto one dedicated daemon thread reading a bounded queue, instead of every emitting thread serializing on the socket's send lock. Ordering is unchanged; a send error surfaces in the sender thread's log rather than the caller's. Also settable via the <code>OVOS_BUS_ASYNC_SENDER</code> env var.</td>
 </tr>
 <tr>
 <td><code>local_echo_topics</code></td>

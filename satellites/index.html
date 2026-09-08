@@ -1827,9 +1827,9 @@ OVOS across machines.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <p><strong>Satellite can't connect to the server.</strong></p>
 <ul>
-<li>Check the server's firewall allows inbound traffic on port <code>8181</code> (raw bus) or ports
-  <code>5678</code> <strong>and</strong> <code>5679</code> (HiveMind websocket + HTTP listeners, both default bind
-  <code>0.0.0.0</code>, see the warning above) from the satellite's address.</li>
+<li>Check the server's firewall allows inbound traffic on port <code>8181</code> (raw bus) or port
+  <code>5678</code> (the HiveMind websocket listener), plus <code>5679</code> where the HTTP listener is
+  running, from the satellite's address.</li>
 <li>Confirm <code>websocket.host</code> on the satellite points at the server's real LAN address, not
   <code>127.0.0.1</code>.</li>
 <li>For HiveMind, run <code>hivemind-client test-identity</code> on the satellite. A hang or error
