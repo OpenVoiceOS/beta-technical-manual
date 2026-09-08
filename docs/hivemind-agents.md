@@ -2,7 +2,7 @@
 
 !!! abstract "In a nutshell"
     OpenVoiceOS runs **local-first**. Sometimes you want one capable machine to do the
-    thinking while several small devices ("[satellites](https://jarbashivemind.github.io/HiveMind-community-docs/reference/glossary/)")
+    thinking while several small devices ("[satellites](https://jarbashivemind.github.io/HiveMind-community-docs/02_terminology/)")
     listen and speak. Or you want to reach your assistant securely from off-device.
     **HiveMind** is the companion project that makes this possible. It exposes an OVOS
     install, or a single persona, over an authenticated, encrypted protocol that satellites
@@ -194,9 +194,9 @@ A server is only useful once something connects to it. On the client side:
 This split is the real "voice satellite" story: cheap devices listen and speak, and the server thinks.
 
 HiveMind also ships bridges into existing chat and telephony surfaces.
-Matrix, Mattermost, Telegram, HackChat, and Twitch each have one, and so does VOIP through [HiveMind-baresip-bridge](https://jarbashivemind.github.io/HiveMind-community-docs/integrations/sip/).
+Matrix, Mattermost, Telegram, HackChat, and Twitch each have one, and so does VOIP through [HiveMind-baresip-bridge](https://github.com/JarbasHiveMind/HiveMind-baresip-bridge).
 Each bridge is a client like any other, addressing a different end-user surface.
-The community docs list the current [integrations](https://jarbashivemind.github.io/HiveMind-community-docs/integrations/).
+The community docs list the current [integrations](https://jarbashivemind.github.io/HiveMind-community-docs/gpt_bridges/).
 
 ---
 
@@ -208,14 +208,20 @@ clients may declare the same `session_id`. The server translates each connection
 `session_id` into its own private identity before the utterance reaches the orchestrator, and
 translates it back on the way out. A client sees a stable id, its own name, never another
 client's, per
-[`HIVEMIND-BRIDGE-1 §4`](https://github.com/JarbasHiveMind/architecture/blob/dev/hivemind-bridge-1.md#4-session-fidelity).
+`HIVEMIND-BRIDGE-1 §4`, "Session fidelity".
+
+!!! note "HiveMind specifications are cited, not linked"
+    `HIVEMIND-BRIDGE-1` lives in the HiveMind architecture repository, which is not
+    public. Clauses are named here so the behaviour is traceable for anyone who has
+    access. This is a different specification from OVOS-BRIDGE-1, which covers the
+    OVOS-side bus bridge and is public; see [Bus Bridges](bus-bridge.md).
 
 A non-admin client may also declare OVOS's reserved device-local `"default"` — it's translated
 the same way as any other name, so it stays isolated and never reaches the orchestrator's actual
 device-local session. An **admin** connection is the one exception: it's exempt from
 translation, so its declared `session_id`, `"default"` included, is stamped onto the OVOS bus
 unchanged. Reaching the orchestrator's real sessions by name is what admin standing means here
-([`HIVEMIND-BRIDGE-1 §4.1`](https://github.com/JarbasHiveMind/architecture/blob/dev/hivemind-bridge-1.md#41-the-reserved-default-session-and-the-translation-exemption)).
+(`HIVEMIND-BRIDGE-1 §4.1`, "The reserved default session and the translation exemption").
 
 A client multiplexes several conversations over one connection by declaring a distinct
 `session_id` per message. A chat-room or telephony bridge does this per end-user
@@ -230,7 +236,7 @@ bridged peer that omits a field keeps its own last value, never the orchestrator
 
 HiveMind is **deny-by-default**: a client may only do what it has been explicitly granted,
 enforced per message type. The
-[Security & Permissions community docs](https://jarbashivemind.github.io/HiveMind-community-docs/concepts/security/)
+[Security & Permissions community docs](https://jarbashivemind.github.io/HiveMind-community-docs/16_permissions/)
 cover the model and the admin CLI. One OVOS-side caveat: the skill/intent blacklist verbs
 (`blacklist-skill`, `blacklist-intent`, and their allow counterparts) only write client
 metadata. Enforcing them requires the `OVOSAgentPolicy` plugin (from
