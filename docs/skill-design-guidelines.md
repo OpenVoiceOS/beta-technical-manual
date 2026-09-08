@@ -109,7 +109,7 @@ gives important information about birds, such as wingspan, laden and unladen air
 
 **Avoid**
 
-| Speaker     | \*\*\*\*                                                               |
+| **Speaker** |                                                                        |
 |:------------|:-----------------------------------------------------------------------|
 | **User**    | _what is the airspeed velocity of an unladen swallow?_                 |
 | **Mycroft** | _The unladen airspeed of the european swallow is 20.1 miles per hour._ |
@@ -293,7 +293,7 @@ Inevitably, the user will say something that your skill can't handle. It's best 
 
 | **Speaker** |                         |
 |:------------|:------------------------|
-| **Use**r    | _Timer_                 |
+| **User**    | _Timer_                 |
 | **Mycroft** | _A timer for how long?_ |
 | **User**    | _5 minutes_             |
 

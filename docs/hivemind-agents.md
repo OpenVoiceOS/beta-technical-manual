@@ -86,9 +86,12 @@ of the admin CLI.
 hivemind-core listen           # start listening for HiveMind connections
 ```
 
-By default this listens on `0.0.0.0:5678` (websocket) and `0.0.0.0:5679` (HTTP), on all
-interfaces. Firewall those ports if the machine faces an untrusted network. Connections
-still require the per-client access key and password.
+This listens on `0.0.0.0:5678` (websocket) on all interfaces. The default config also
+declares an HTTP listener on `0.0.0.0:5679`, but that one starts only where
+`hivemind-http-protocol` is installed; `hivemind-core` does not depend on it, so a plain
+install binds 5678 alone and logs that the plugin was not found. Firewall whichever ports
+are open if the machine faces an untrusted network. Connections still require the
+per-client access key and password.
 
 By default it serves the local `ovos-core` via `hivemind-ovos-agent-plugin` (configured under
 `agent_protocol` in `server.json`).
@@ -99,11 +102,11 @@ issued in step 1. This step makes everything else work:
 ```bash
 pip install --pre hivemind-bus-client   # repo name is hivemind-websocket-client;
 # the plain PyPI "stable" (0.4.4) predates the current protocol -- --pre is required
-hivemind-client set-identity --key <access_key> --password <password> --host <server>
+hivemind-client set-identity --key <access_key> --password <password> --host <hostname-or-ip> --port 5678
 ```
 
 Use the access key and password printed by `add-client` in step 1. `set-identity` needs at
-least one of `--key`, `--password` or `--siteid`.
+least one of `--key`, `--password` or `--siteid`. Give `--host` a bare hostname or IP address, not a URL: the port is a separate integer option, and a `ws://host:port` value fails with `ValueError: Port could not be cast to integer value`.
 
 After `set-identity`, clients (and the [solver](#using-hivemind-as-a-solver) below) can connect
 without being handed connection details each time.

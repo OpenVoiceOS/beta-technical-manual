@@ -1,7 +1,7 @@
 # RaspOVOS Commands Reference
 
 !!! abstract "In a nutshell"
-    When you log in to a raspOVOS device, it prints a welcome banner listing its built-in helper commands. These are **raspOVOS-specific shell helpers** (aliases and small scripts baked into the image), not a standard `pip install` of OVOS. This page is the full reference list. Run `ovos-help` on the device at any time to reprint it. See the [Glossary](glossary.md) for unfamiliar terms.
+    When you log in to a raspOVOS device, it prints a welcome banner listing its built-in helper commands. The banner mixes two kinds of command. Most are **raspOVOS-specific shell helpers**, aliases and small scripts baked into the image. Others are standard OVOS console scripts that any install provides, and those are documented in [CLI Tools](cli-tools.md). This page is the full reference list. Run `ovos-help` on the device at any time to reprint it. See the [Glossary](glossary.md) for unfamiliar terms.
 
 ---
 

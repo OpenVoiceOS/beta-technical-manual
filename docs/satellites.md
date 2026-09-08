@@ -147,7 +147,7 @@ separate project with its own protocol and docs.
 
     ```bash
     pip install --pre hivemind-bus-client
-    hivemind-client set-identity --key <access_key> --password <password> --host <server>
+    hivemind-client set-identity --key <access_key> --password <password> --host <hostname-or-ip> --port 5678
     ```
 
     `set-identity` with no arguments raises: it needs at least one of `--key`, `--password`
@@ -174,9 +174,10 @@ separate project with its own protocol and docs.
     [HiveMind-voice-relay](https://github.com/JarbasHiveMind/HiveMind-voice-relay)
     instead.
 
-One firewall note for the OVOS host: by default `hivemind-core listen` starts **two**
-listeners on `0.0.0.0` — websocket on `5678` and HTTP on `5679` — so a firewall rule that
-only covers 5678 leaves the second one open. The mDNS/UPnP presence announcements need the
+One firewall note for the OVOS host: `hivemind-core listen` binds websocket `5678` on
+`0.0.0.0`, and its default config declares a second HTTP listener on `5679` that starts
+only where `hivemind-http-protocol` is installed. Where it is, a firewall rule covering
+only 5678 leaves the second one open. The mDNS/UPnP presence announcements need the
 optional extra (`pip install --pre "hivemind-core[presence]>=4.8.0a1"`); with the plain install above, the
 server silently makes no announcements. Changing hosts, ports, or those presence
 announcements is HiveMind server configuration, covered by the upstream
