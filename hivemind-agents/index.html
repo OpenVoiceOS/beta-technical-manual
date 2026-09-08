@@ -1603,7 +1603,7 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>OpenVoiceOS runs <strong>local-first</strong>. Sometimes you want one capable machine to do the
-thinking while several small devices ("<a href="https://jarbashivemind.github.io/HiveMind-community-docs/reference/glossary/">satellites</a>")
+thinking while several small devices ("<a href="https://jarbashivemind.github.io/HiveMind-community-docs/02_terminology/">satellites</a>")
 listen and speak. Or you want to reach your assistant securely from off-device.
 <strong>HiveMind</strong> is the companion project that makes this possible. It exposes an OVOS
 install, or a single persona, over an authenticated, encrypted protocol that satellites
@@ -1760,9 +1760,9 @@ sentinel.</p>
 </ul>
 <p>This split is the real "voice satellite" story: cheap devices listen and speak, and the server thinks.</p>
 <p>HiveMind also ships bridges into existing chat and telephony surfaces.
-Matrix, Mattermost, Telegram, HackChat, and Twitch each have one, and so does VOIP through <a href="https://jarbashivemind.github.io/HiveMind-community-docs/integrations/sip/">HiveMind-baresip-bridge</a>.
+Matrix, Mattermost, Telegram, HackChat, and Twitch each have one, and so does VOIP through <a href="https://github.com/JarbasHiveMind/HiveMind-baresip-bridge">HiveMind-baresip-bridge</a>.
 Each bridge is a client like any other, addressing a different end-user surface.
-The community docs list the current <a href="https://jarbashivemind.github.io/HiveMind-community-docs/integrations/">integrations</a>.</p>
+The community docs list the current <a href="https://jarbashivemind.github.io/HiveMind-community-docs/gpt_bridges/">integrations</a>.</p>
 <hr />
 <h2 id="session-isolation-between-clients">Session isolation between clients<a class="headerlink" href="#session-isolation-between-clients" title="Permanent link">&para;</a></h2>
 <p>A <code>session_id</code> (see <a href="../session/">Sessions</a>) names an OVOS-side conversation. HiveMind never
@@ -1771,13 +1771,20 @@ clients may declare the same <code>session_id</code>. The server translates each
 <code>session_id</code> into its own private identity before the utterance reaches the orchestrator, and
 translates it back on the way out. A client sees a stable id, its own name, never another
 client's, per
-<a href="https://github.com/JarbasHiveMind/architecture/blob/dev/hivemind-bridge-1.md#4-session-fidelity"><code>HIVEMIND-BRIDGE-1 §4</code></a>.</p>
+<code>HIVEMIND-BRIDGE-1 §4</code>, "Session fidelity".</p>
+<div class="admonition note">
+<p class="admonition-title">HiveMind specifications are cited, not linked</p>
+<p><code>HIVEMIND-BRIDGE-1</code> lives in the HiveMind architecture repository, which is not
+public. Clauses are named here so the behaviour is traceable for anyone who has
+access. This is a different specification from OVOS-BRIDGE-1, which covers the
+OVOS-side bus bridge and is public; see <a href="../bus-bridge/">Bus Bridges</a>.</p>
+</div>
 <p>A non-admin client may also declare OVOS's reserved device-local <code>"default"</code> — it's translated
 the same way as any other name, so it stays isolated and never reaches the orchestrator's actual
 device-local session. An <strong>admin</strong> connection is the one exception: it's exempt from
 translation, so its declared <code>session_id</code>, <code>"default"</code> included, is stamped onto the OVOS bus
 unchanged. Reaching the orchestrator's real sessions by name is what admin standing means here
-(<a href="https://github.com/JarbasHiveMind/architecture/blob/dev/hivemind-bridge-1.md#41-the-reserved-default-session-and-the-translation-exemption"><code>HIVEMIND-BRIDGE-1 §4.1</code></a>).</p>
+(<code>HIVEMIND-BRIDGE-1 §4.1</code>, "The reserved default session and the translation exemption").</p>
 <p>A client multiplexes several conversations over one connection by declaring a distinct
 <code>session_id</code> per message. A chat-room or telephony bridge does this per end-user
 conversation. Each declared name maps to its own isolated session. This needs
@@ -1788,7 +1795,7 @@ bridged peer that omits a field keeps its own last value, never the orchestrator
 <h2 id="permissions-access-control">Permissions &amp; access control<a class="headerlink" href="#permissions-access-control" title="Permanent link">&para;</a></h2>
 <p>HiveMind is <strong>deny-by-default</strong>: a client may only do what it has been explicitly granted,
 enforced per message type. The
-<a href="https://jarbashivemind.github.io/HiveMind-community-docs/concepts/security/">Security &amp; Permissions community docs</a>
+<a href="https://jarbashivemind.github.io/HiveMind-community-docs/16_permissions/">Security &amp; Permissions community docs</a>
 cover the model and the admin CLI. One OVOS-side caveat: the skill/intent blacklist verbs
 (<code>blacklist-skill</code>, <code>blacklist-intent</code>, and their allow counterparts) only write client
 metadata. Enforcing them requires the <code>OVOSAgentPolicy</code> plugin (from
