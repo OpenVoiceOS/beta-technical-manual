@@ -170,7 +170,7 @@ converting the merged list to the OpenAI spec in a single call.
 pip install --pre ovos-PHAL-plugin-tools
 ```
 
-Entry point group: `opm.phal`; plugin name `ovos-phal-plugin-tools`.
+Entry point group: `ovos.plugin.phal`, the legacy name that OPM still aliases to `opm.phal`; plugin name `ovos-phal-plugin-tools`.
 
 ### messagebus event table
 
@@ -333,10 +333,11 @@ model requests one, caller or server executes it — without a GPU:
 llama-server -m Qwen3-0.6B-Q4_K_M.gguf --jinja -c 8192
 ```
 
-Qwen3-0.6B at Q4_K_M quantization is a roughly 380 MB download. The `--jinja` flag is not
-optional: without it, `llama.cpp` skips the chat template that actually produces `tool_calls`,
-and every tool-calling test silently degrades into an ordinary plain-text conversation instead
-of failing loudly.
+Qwen3-0.6B at Q4_K_M quantization is a roughly 380 MB download. Recent `llama.cpp` builds
+enable the chat template by default, and `--jinja` above asks for it explicitly, which keeps
+the command working on an older build. Where the template is off, the server produces no
+`tool_calls` at all, and every tool-calling test degrades into an ordinary plain-text
+conversation instead of failing loudly.
 
 Point a persona at the running server with the OpenAI-compatible chat engine:
 

@@ -16,7 +16,7 @@ It is a FastAPI app served by `uvicorn`. The server loads a persona from a JSON 
 ## Install
 
 ```bash
-pip install ovos-persona-server
+pip install --pre ovos-persona-server
 ```
 
 Install the agent-engine plugin(s) your persona references, e.g.:
@@ -318,7 +318,7 @@ this the same way; on a streaming request it arrives as an in-band SSE error eve
 
 - For production, secure the endpoint (reverse proxy, rate limits). The server itself is unauthenticated.
 
-!!! tip "Why remote MCP only became practical recently"
+!!! tip "Why remote MCP works here but not under the official SDK"
     The official `mcp` SDK's `FastMCP` (1.x) enforces DNS-rebinding protection by default. It
     only accepts a `Host` header of `127.0.0.1` or `localhost`, so a mounted MCP endpoint answers
     normally on the loopback address and returns **421 Misdirected Request** through any other domain
