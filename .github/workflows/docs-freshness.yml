@@ -38,7 +38,7 @@ jobs:
 
       - name: Install generator dependencies
         run: |
-          pip install pyyaml ovos-config ovos-utils
+          pip install --pre pyyaml ovos-config ovos-utils
 
       - name: Regenerate reference pages
         run: |
