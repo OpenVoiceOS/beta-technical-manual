@@ -1683,19 +1683,22 @@ of the admin CLI.</p>
 <p><strong>2. Start the server:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hivemind-core<span class="w"> </span>listen<span class="w">           </span><span class="c1"># start listening for HiveMind connections</span>
 </span></code></pre></div>
-<p>By default this listens on <code>0.0.0.0:5678</code> (websocket) and <code>0.0.0.0:5679</code> (HTTP), on all
-interfaces. Firewall those ports if the machine faces an untrusted network. Connections
-still require the per-client access key and password.</p>
+<p>This listens on <code>0.0.0.0:5678</code> (websocket) on all interfaces. The default config also
+declares an HTTP listener on <code>0.0.0.0:5679</code>, but that one starts only where
+<code>hivemind-http-protocol</code> is installed; <code>hivemind-core</code> does not depend on it, so a plain
+install binds 5678 alone and logs that the plugin was not found. Firewall whichever ports
+are open if the machine faces an untrusted network. Connections still require the
+per-client access key and password.</p>
 <p>By default it serves the local <code>ovos-core</code> via <code>hivemind-ovos-agent-plugin</code> (configured under
 <code>agent_protocol</code> in <code>server.json</code>).</p>
 <p><strong>3. Give a client its identity, then connect.</strong> On the <em>client</em> device, save the access key
 issued in step 1. This step makes everything else work:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>hivemind-bus-client<span class="w">   </span><span class="c1"># repo name is hivemind-websocket-client;</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># the plain PyPI &quot;stable&quot; (0.4.4) predates the current protocol -- --pre is required</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>hivemind-client<span class="w"> </span>set-identity<span class="w"> </span>--key<span class="w"> </span>&lt;access_key&gt;<span class="w"> </span>--password<span class="w"> </span>&lt;password&gt;<span class="w"> </span>--host<span class="w"> </span>&lt;server&gt;
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>hivemind-client<span class="w"> </span>set-identity<span class="w"> </span>--key<span class="w"> </span>&lt;access_key&gt;<span class="w"> </span>--password<span class="w"> </span>&lt;password&gt;<span class="w"> </span>--host<span class="w"> </span>&lt;hostname-or-ip&gt;<span class="w"> </span>--port<span class="w"> </span><span class="m">5678</span>
 </span></code></pre></div>
 <p>Use the access key and password printed by <code>add-client</code> in step 1. <code>set-identity</code> needs at
-least one of <code>--key</code>, <code>--password</code> or <code>--siteid</code>.</p>
+least one of <code>--key</code>, <code>--password</code> or <code>--siteid</code>. Give <code>--host</code> a bare hostname or IP address, not a URL: the port is a separate integer option, and a <code>ws://host:port</code> value fails with <code>ValueError: Port could not be cast to integer value</code>.</p>
 <p>After <code>set-identity</code>, clients (and the <a href="#using-hivemind-as-a-solver">solver</a> below) can connect
 without being handed connection details each time.</p>
 <p><strong>4. Verify the satellite actually connected.</strong> Run this on the client after <code>set-identity</code>:</p>

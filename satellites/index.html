@@ -1675,7 +1675,7 @@ separate project with its own protocol and docs.</p>
     plain PyPI "stable" release (<code>0.4.4</code>) predates the current protocol, so <code>--pre</code>
     is required.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>hivemind-bus-client
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>hivemind-client<span class="w"> </span>set-identity<span class="w"> </span>--key<span class="w"> </span>&lt;access_key&gt;<span class="w"> </span>--password<span class="w"> </span>&lt;password&gt;<span class="w"> </span>--host<span class="w"> </span>&lt;server&gt;
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>hivemind-client<span class="w"> </span>set-identity<span class="w"> </span>--key<span class="w"> </span>&lt;access_key&gt;<span class="w"> </span>--password<span class="w"> </span>&lt;password&gt;<span class="w"> </span>--host<span class="w"> </span>&lt;hostname-or-ip&gt;<span class="w"> </span>--port<span class="w"> </span><span class="m">5678</span>
 </span></code></pre></div>
 <p><code>set-identity</code> with no arguments raises: it needs at least one of <code>--key</code>, <code>--password</code>
 or <code>--siteid</code> (<code>--host</code> alone does not
@@ -1705,9 +1705,10 @@ with a handful of devices. For a local wake word on slightly stronger hardware, 
 instead.</p>
 </li>
 </ol>
-<p>One firewall note for the OVOS host: by default <code>hivemind-core listen</code> starts <strong>two</strong>
-listeners on <code>0.0.0.0</code> — websocket on <code>5678</code> and HTTP on <code>5679</code> — so a firewall rule that
-only covers 5678 leaves the second one open. The mDNS/UPnP presence announcements need the
+<p>One firewall note for the OVOS host: <code>hivemind-core listen</code> binds websocket <code>5678</code> on
+<code>0.0.0.0</code>, and its default config declares a second HTTP listener on <code>5679</code> that starts
+only where <code>hivemind-http-protocol</code> is installed. Where it is, a firewall rule covering
+only 5678 leaves the second one open. The mDNS/UPnP presence announcements need the
 optional extra (<code>pip install --pre "hivemind-core[presence]&gt;=4.8.0a1"</code>); with the plain install above, the
 server silently makes no announcements. Changing hosts, ports, or those presence
 announcements is HiveMind server configuration, covered by the upstream
