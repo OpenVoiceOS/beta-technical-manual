@@ -1392,8 +1392,9 @@ skill and which line of code each phrase comes from, so you always have context.
 <h2 id="step-1-open-the-site-and-pick-a-language">Step 1 — Open the site and pick a language<a class="headerlink" href="#step-1-open-the-site-and-pick-a-language" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Go to <strong><a href="https://openvoiceos.github.io/ovos-localize/">openvoiceos.github.io/ovos-localize</a></strong>.</li>
-<li>Choose the <strong>language</strong> you want to translate into and the <strong>skill</strong> you want to work on.
-   The dashboard shows how complete each language is, so you can see where help is needed most.</li>
+<li>Press <strong>Set languages</strong> in the header to choose the language you want to translate into,
+   then pick the <strong>skill</strong> you want to work on. The dashboard shows how complete each language
+   is, so you can see where help is needed most.</li>
 </ol>
 <div class="admonition tip">
 <p class="admonition-title">Don't see your language?</p>
@@ -1401,6 +1402,12 @@ skill and which line of code each phrase comes from, so you always have context.
 <a href="https://matrix.to/#/#OpenVoiceOS:matrix.org">OVOS Matrix chat</a> or
 <a href="https://github.com/OpenVoiceOS/ovos-localize/issues">open an issue on ovos-localize</a> and
 we'll enable it.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Lines starting with <code>#</code> are comments</p>
+<p>Some files open with one or more <code>#</code> lines. The matcher skips them, so they are notes
+about the file rather than phrases to translate. Translate the lines below them and leave
+the notes alone.</p>
 </div>
 <h2 id="step-2-translate">Step 2 — Translate<a class="headerlink" href="#step-2-translate" title="Permanent link">&para;</a></h2>
 <p>The editor has three columns:</p>
