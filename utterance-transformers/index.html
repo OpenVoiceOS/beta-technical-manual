@@ -1916,9 +1916,11 @@ Register the class under the <code>opm.transformer.text</code> entry-point group
 </span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>        <span class="k">return</span> <span class="n">modified_utterances</span><span class="p">,</span> <span class="n">context</span>
 </span></code></pre></div>
 <p>The base <code>UtteranceTransformer.__init__(self, name, priority=50, config=None)</code> requires <code>name</code>,
-and the loader only ever calls a transformer plugin as <code>plug(config=plugin_config)</code>. So a plugin
-must override <code>__init__</code> to supply its own <code>name</code>, as shown above, and must pass <code>name</code>,
-<code>priority</code>, and <code>config</code> through to <code>super().__init__()</code> so the base class still sees them.</p>
+and the loader never supplies it: it inspects the constructor and calls
+<code>plug(config=plugin_config)</code> where a <code>config</code> keyword is accepted, and <code>plug()</code> otherwise, in
+which case the plugin reads its own section from <code>Configuration()</code>. Either way a plugin must
+override <code>__init__</code> to supply its own <code>name</code>, as shown above, and must pass <code>name</code>, <code>priority</code>,
+and <code>config</code> through to <code>super().__init__()</code> so the base class still sees them.</p>
 <p>The second return value is <em>additional</em> context that gets merged into the message context, not a
 replacement for it.</p>
 <h3 id="config-driven-priority">Config-driven priority<a class="headerlink" href="#config-driven-priority" title="Permanent link">&para;</a></h3>

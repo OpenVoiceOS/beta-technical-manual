@@ -1690,7 +1690,10 @@ install binds 5678 alone and logs that the plugin was not found. Firewall whiche
 are open if the machine faces an untrusted network. Connections still require the
 per-client access key and password.</p>
 <p>By default it serves the local <code>ovos-core</code> via <code>hivemind-ovos-agent-plugin</code> (configured under
-<code>agent_protocol</code> in <code>server.json</code>).</p>
+<code>agent_protocol</code> in <code>server.json</code>), reaching it over the OVOS messagebus on
+<code>127.0.0.1:8181</code>. Start <code>ovos-messagebus</code> and <code>ovos-core</code> before this step. Without them the
+server still accepts pairings and satellites still connect, so the failure looks like silence
+rather than an error: utterances arrive and nothing answers them.</p>
 <p><strong>3. Give a client its identity, then connect.</strong> On the <em>client</em> device, save the access key
 issued in step 1. This step makes everything else work:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>hivemind-bus-client<span class="w">   </span><span class="c1"># repo name is hivemind-websocket-client;</span>
