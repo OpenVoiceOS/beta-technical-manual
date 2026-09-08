@@ -1695,9 +1695,15 @@ the skill's path mounted into the container, or copy it in first).</p>
 <p>From inside the <code>ovos-skill-my-first/</code> folder:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </span></code></pre></div>
+<p>Confirm OVOS can see it before you go any further. This reads the same entry points the skill
+loader reads, so it separates a packaging mistake from a matching problem:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from ovos_plugin_manager.skills import find_skill_plugins; print(list(find_skill_plugins()))&quot;</span>
+</span></code></pre></div>
+<p>Your skill id should appear in that list. If it does not, the entry point in <code>pyproject.toml</code>
+is wrong and no amount of restarting or talking will help.</p>
 <p>Your skill matches with a <code>.intent</code> file, which is handled by <strong>Padatious</strong>. Padatious is an
 optional install, so a plain OVOS install may not have it. Check, and add it if it is missing:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>show<span class="w"> </span>ovos-padatious<span class="w"> </span><span class="o">||</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-padatious
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip<span class="w"> </span>show<span class="w"> </span>ovos-padatious<span class="w"> </span><span class="o">||</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-padatious
 </span></code></pre></div>
 <p>The pipeline ID is <code>ovos-padatious-pipeline-plugin</code>, but the package you install is
 <code>ovos-padatious</code>. <code>pip install ovos-padatious-pipeline-plugin</code> fails, since there is no such
