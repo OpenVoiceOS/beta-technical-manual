@@ -42,6 +42,15 @@ thinks, and speaks, or teach it brand-new abilities.
 
 If you just want a working voice assistant with the least fuss, install Raspberry Pi OS
 on a Raspberry Pi and run the **[ovos-installer](ovos-installer.md)**, a guided wizard.
+
+Starting from a Raspberry Pi still in its box, do this first. Write Raspberry Pi OS to an
+SD card with [Raspberry Pi Imager](https://www.raspberrypi.com/software/), the official
+tool. In the Imager, open the settings before writing and set a username and password,
+your Wi-Fi network, and **enable SSH**. Without SSH you need a keyboard and monitor
+attached to the Pi. Raspberry Pi's own
+[getting-started guide](https://www.raspberrypi.com/documentation/computers/getting-started.html)
+covers this in full. Then boot the Pi, connect to it, and run the installer.
+
 The flash-and-boot **[raspOVOS](install-raspovos.md)** image is an alternative, but its
 stable images date from mid-2025 and are unmaintained, so check its status first.
 Everyone else, pick your path in the grid below.
