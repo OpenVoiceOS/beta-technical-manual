@@ -637,6 +637,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#working-with-the-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working with the bus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#specs-and-quality" class="md-nav__link">
     <span class="md-ellipsis">
       Specs and quality
@@ -996,48 +1005,6 @@
   
   <span class="md-ellipsis">
     Security & Trust Model
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../plugin-manager/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Plugin Manager
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../plugin-types-reference/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Plugin Types Reference
   </span>
   
 
@@ -1534,6 +1501,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#working-with-the-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working with the bus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#specs-and-quality" class="md-nav__link">
     <span class="md-ellipsis">
       Specs and quality
@@ -1609,24 +1585,40 @@
 <li><a href="../bus-service/">MessageBus Service</a>: the shared channel every other part talks over.</li>
 <li><a href="../security-model/">Security &amp; Trust Model</a>: what OVOS assumes about the device it runs on.</li>
 </ol>
+<h2 id="working-with-the-bus">Working with the bus<a class="headerlink" href="#working-with-the-bus" title="Permanent link">&para;</a></h2>
+<p>Four pages go deeper than the service page, for when you are debugging traffic
+rather than learning the model.</p>
+<ul>
+<li><a href="../bus-reconnect/">Bus Restart &amp; Reconnect</a>: what happens to a client when the bus goes away.</li>
+<li><a href="../bus-namespace-migration/">Bus Namespace Migration</a>: the old and new topic names, and which to emit.</li>
+<li><a href="../bus-recipes/">Bus Recipes</a>: worked examples of common message exchanges.</li>
+<li><a href="../bus-bridge/">Bus Bridges</a>: connecting one bus to another without merging them.</li>
+<li><a href="../scheduler-service/">Scheduled Events</a>: asking for something to happen later.</li>
+<li><a href="../dig-for-message/">dig_for_message</a>: how a handler finds the message it is answering, and why the wrong one is a common bug.</li>
+</ul>
 <h2 id="specs-and-quality">Specs and quality<a class="headerlink" href="#specs-and-quality" title="Permanent link">&para;</a></h2>
 <p>OVOS components follow written specs, and this manual has tooling to check code against them. Start with the specs themselves, then the tooling, then the badge scale used to mark how mature each part is.</p>
 <ul>
 <li><a href="../architecture-specs/">Formal Specifications</a>: component contracts written down, not just implemented.</li>
 <li><a href="../spec-tooling/">Specification Tooling</a>: tools that check code against those contracts.</li>
+<li><a href="../spec-tools-lib/">ovos-spec-tools</a>: the library those tools are built on.</li>
+<li><a href="../spec-test-harness/">ovos-test-harness</a>: running a component against a spec.</li>
 <li><a href="../maturity/">Maturity Scale</a>: how to read the maturity badges used throughout this manual.</li>
 </ul>
 <h2 id="system-pieces">System pieces<a class="headerlink" href="#system-pieces" title="Permanent link">&para;</a></h2>
 <p>Two cross-cutting pieces don't fit under a single service: how plugins get discovered, and how to run OVOS as a library instead of a full assistant.</p>
 <ul>
-<li><a href="../plugin-manager/">Plugin Manager</a>: how OVOS finds and loads swappable plugins.</li>
 <li><a href="../composable-deployments/">Composable Deployments</a>: using OVOS as a library instead of the full assistant.</li>
 </ul>
+<p>Plugin discovery and the list of plugin types live in the Plugins tab with the
+rest of the ecosystem. Start at <a href="../plugin-manager/">How Plugins Load</a>.</p>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
 <p>Start with the overview to learn where config files live and how they layer, then use the reference and locations pages as lookup tables.</p>
 <ul>
 <li><a href="../config/">Overview</a>: how settings are changed and where they live.</li>
+<li><a href="../config-internals/">Internals</a>: how the layers are merged, for when the result surprises you.</li>
 <li><a href="../config-reference/">Reference</a>: lookup table of settings and defaults.</li>
+<li><a href="../config-all-keys/">All Configuration Keys</a>: every key OVOS ships, generated from the shipped file.</li>
 <li><a href="../locations-ref/">Locations</a>: the folders OVOS reads and writes.</li>
 </ul>
 <h2 id="ovos-core-internals">ovos-core Internals<a class="headerlink" href="#ovos-core-internals" title="Permanent link">&para;</a></h2>
@@ -1638,8 +1630,9 @@
 <p>These run as their own processes on the bus, separate from <code>ovos-core</code>. Each page covers one service; start with whichever one matches the part of the system you're investigating.</p>
 <ul>
 <li><a href="../speech-service/">Speech Service</a>, <a href="../audio-service/">Audio Service</a>, <a href="../ovos-media/">Media Service</a>.</li>
+<li>Media internals: <a href="../ovos-media-pipeline/">OCP Pipeline Plugin</a>, <a href="../ovos-media-mpris/">MPRIS Integration</a>, <a href="../ovos-media-compat/">Legacy Compatibility</a>.</li>
 <li><a href="../gui-status/">Screens on OVOS Today</a>, <a href="../gui-service/">GUI Service (legacy)</a>.</li>
-<li><a href="../phal/">PHAL</a> for hardware access.</li>
+<li><a href="../phal/">PHAL</a> for hardware access, and <a href="../phal-authoring/">Writing PHAL Plugins</a>.</li>
 </ul>
 <p>Digging into how intents get matched? That's the Pipeline tab. Building a skill? That's the Skills tab.</p>
 <hr />

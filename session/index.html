@@ -1720,7 +1720,9 @@ out the message being handled, so fields a satellite injected are read from that
 message's carrier. Outside any handler there is no message to dig, and the read falls
 back to the deployment default rather than to whatever the orchestrator currently
 holds. Pass the message explicitly, <code>SessionManager.get(message)</code>, wherever you have
-one.</p>
+one. <a href="../dig-for-message/">dig_for_message</a> explains how that dig finds the
+message, and why a handler that runs off the dispatch thread can find the
+wrong one or none at all.</p>
 </div>
 <p>For a named session, repeated calls to <code>SessionManager.get(message)</code> for the same message return the same bound <code>Session</code> object. A message derived from it, <code>message.forward(...)</code>, <code>message.reply(...)</code>, or a bus response, carries that bound object's current state, not a stale copy of the carrier the original message arrived with. Mutate the <code>Session</code> object <code>get</code> returned. Do not edit <code>message.context["session"]</code> directly after calling <code>get</code>: the bound object wins when a derived message is stamped.</p>
 <div class="admonition info">
