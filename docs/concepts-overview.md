@@ -14,7 +14,7 @@ This tab is for anyone who wants to understand how OpenVoiceOS is built, not jus
 
 ## Working with the bus
 
-Four pages go deeper than the service page, for when you are debugging traffic
+These go deeper than the service page, for when you are debugging traffic
 rather than learning the model.
 
 - [Bus Restart & Reconnect](bus-reconnect.md): what happens to a client when the bus goes away.
