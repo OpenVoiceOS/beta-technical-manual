@@ -121,7 +121,7 @@ pipeline anyway.
 
 ## Settings File Watcher
 
-When enabled, a `FileWatcher` monitors `~/.config/ovos/skills/*/settings.json`. Any change emits:
+When enabled, a `FileWatcher` monitors `~/.config/mycroft/skills/*/settings.json`. Any change emits:
 
 ```text
 ovos.skills.settings_changed  {skill_id: "..."}
