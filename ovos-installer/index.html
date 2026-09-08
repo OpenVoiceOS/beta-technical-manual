@@ -1561,7 +1561,12 @@ setups might need some manual intervention.</p>
 <p>If you're installing on a headless device (like a Raspberry Pi), you first need its IP address
 or hostname. Try <code>raspberrypi.local</code> (the default mDNS hostname on a fresh Raspberry Pi OS
 install), or look up the device's IP in your router's connected-devices list if that doesn't
-resolve. Then connect via SSH:</p>
+resolve.</p>
+<p>This step needs SSH already enabled on the device, and a username and password you set when
+you wrote the operating system to the card. Raspberry Pi Imager sets all three in its
+settings panel before writing. If SSH is off, attach a keyboard and monitor to the device
+instead and work at its own terminal.</p>
+<p>Then connect via SSH:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ssh<span class="w"> </span>-l<span class="w"> </span>your-username<span class="w"> </span>&lt;your-device-ip-or-raspberrypi.local&gt;
 </span></code></pre></div>
 <hr />
@@ -1614,7 +1619,8 @@ unless you're already comfortable with that trade-off.</p>
 <p>This can take anywhere from <strong>5 to 20 minutes</strong>, depending on your hardware, internet speed, and storage performance. Now let's walk through the installer screens!</p>
 <hr />
 <h2 id="the-installer-wizard">The Installer Wizard<a class="headerlink" href="#the-installer-wizard" title="Permanent link">&para;</a></h2>
-<p>The wizard walks you through language, installation method, release channel, profile,
+<p>The wizard walks you through language, installation method,
+<a href="../release-channels/">release channel</a>, profile,
 feature selection, Raspberry Pi tuning, a summary, and two telemetry prompts, before it
 starts installing. For a screen-by-screen walkthrough of each of those prompts, with
 screenshots, see <a href="../ovos-installer-scenarios/">The <code>ovos-installer</code> Wizard, Screen by Screen</a>.</p>
@@ -1690,7 +1696,7 @@ containers on a Raspberry Pi with default skills):</p>
 </tr>
 <tr>
 <td><code>channel</code></td>
-<td>Release channel: <code>testing</code> or <code>alpha</code></td>
+<td>Release channel: <code>testing</code> or <code>alpha</code>. See <a href="../release-channels/">Release channels</a> for what each one gives you</td>
 </tr>
 <tr>
 <td><code>profile</code></td>
