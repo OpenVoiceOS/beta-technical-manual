@@ -23,9 +23,11 @@
 
 OVOS itself does not manage process supervision. That is left to the OS. The
 [`ovos-installer`](ovos-installer.md) and the [raspOVOS](install-raspovos.md) image both use
-**systemd user units** for this. The examples below are adapted from the units raspOVOS
-actually ships (`overlays/base_ovos/home/ovos/.config/systemd/user/` in the
-[raspOVOS](https://github.com/OpenVoiceOS/raspOVOS) repository).
+**systemd user units** for this. The examples below follow the layout raspOVOS uses
+(`overlays/base_ovos/home/ovos/.config/systemd/user/` in the
+[raspOVOS](https://github.com/OpenVoiceOS/raspOVOS) repository), rewritten for an install
+built from PyPI. Two of raspOVOS's units call binaries that exist only inside its image, so
+they are not copied here verbatim.
 
 A top-level dummy target groups all the OVOS services so you can start/stop/enable the whole
 stack as one unit:
@@ -57,12 +59,16 @@ After=ovos.service
 [Service]
 Group=ovos
 UMask=002
-ExecStart=/usr/local/bin/ovos_rust_messagebus
+ExecStart=%h/.venvs/ovos/bin/ovos-messagebus
 Restart=on-failure
 
 [Install]
 WantedBy=ovos.service
 ```
+
+The `ovos-messagebus` package installs that console script. raspOVOS runs a Rust
+reimplementation from `/usr/local/bin/ovos_rust_messagebus` instead, which is built into the
+image and is not on PyPI, so a from-scratch deployment uses the Python one above.
 
 ```ini title="~/.config/systemd/user/ovos-core.service"
 [Unit]
@@ -80,6 +86,12 @@ RestartSec=5s
 [Install]
 WantedBy=ovos.service
 ```
+
+`Type=simple` means systemd calls this unit active as soon as the process starts, which is
+well before the skills finish loading. raspOVOS avoids that with a `Type=notify` unit running
+an image-specific wrapper that signals readiness once skills are actually up. Without such a
+wrapper, treat "active" as "the process started" and use a readiness probe for anything that
+must wait for the stack to answer.
 
 If you are writing your own unit for a custom service (a skill runner, a persona server, a
 thin-client bridge), the pattern worth keeping is:

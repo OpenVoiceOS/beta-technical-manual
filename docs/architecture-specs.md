@@ -70,6 +70,7 @@ is direct:
 | [**OVOS-SESSION-1: Session Specification**](https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md) | The wire shape of the session (the per-conversation state that rides in every message) and the field registry other specs extend. |
 | [**OVOS-SESSION-2: Session Lifecycle & State Ownership**](https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md) | Who owns session state, when it may be mutated, the reserved `"default"` device session, and out-of-band sync. |
 | [**OVOS-BRIDGE-1: Bus Bridge & Opaque Relay**](https://github.com/OpenVoiceOS/architecture/blob/dev/bridge-1.md) | How a satellite / remote deployment relays messages and preserves sessions across a [HiveMind](https://github.com/JarbasHiveMind) mesh. |
+| [**OVOS-INSTALL-1: Plugin Installation Bus Contract**](https://github.com/OpenVoiceOS/architecture/blob/dev/install-1.md) | How a client asks for a plugin to be installed, and how it names the environment the install must land in, since a plugin installed into the wrong container is never loaded. |
 
 ### Orchestrator stack: what processes utterances
 
@@ -83,6 +84,7 @@ is direct:
 | [**OVOS-PERSONA-1: Persona Pipeline Plugin**](https://github.com/OpenVoiceOS/architecture/blob/dev/persona.md) | A complete conversational agent (e.g. an LLM) as a summonable pipeline stage. |
 | [**OVOS-FALLBACK-1: Fallback Pipeline Plugin**](https://github.com/OpenVoiceOS/architecture/blob/dev/fallback.md) | The priority-ordered handlers that catch utterances no earlier stage claimed. |
 | [**OVOS-COMMON-QUERY-1: Common Query Pipeline Plugin**](https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md) | The scatter-gather question-answering contest across every skill that can answer. |
+| [**OVOS-SCHEDULER-1: Scheduled Events**](https://github.com/OpenVoiceOS/architecture/blob/dev/scheduler-1.md) | When a scheduled event fires, what happens to a missed occurrence, how a schedule survives a restart, and how time zones and clock changes are handled. |
 
 ### I/O stack: input and output surfaces
 

@@ -47,9 +47,9 @@ skill and which line of code each phrase comes from, so you always have context.
     we'll enable it.
 
 !!! tip "Lines starting with `#` are comments"
-    Some files open with one or more `#` lines. The matcher skips them, so they are notes
-    about the file rather than phrases to translate. Translate the lines below them and leave
-    the notes alone.
+    Some files open with one or more `#` lines. The skill's resource loader strips them
+    before the phrases reach the matcher, so they are notes about the file rather than
+    phrases to translate. Translate the lines below them and leave the notes alone.
 
 ## Step 2 — Translate
 
