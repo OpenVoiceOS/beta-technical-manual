@@ -14,16 +14,19 @@ This is the single largest deployer-facing config break the ecosystem
 shipped: every short pipeline stage ID a deployer might have hand-listed
 in `core.pipeline` was replaced by a plugin-id form in one commit, and the
 old spellings were not rejected, just silently ignored. A customized
-pipeline written against the old IDs did not error after upgrading; it
-just quietly stopped registering some of its stages, with `adapt_low` and
-`common_qa` dropped from the default list entirely. The same commit also
+pipeline written against the old IDs did not error after upgrading, it
+just quietly stopped registering some of its stages, and `adapt_low` and
+`common_qa` left the default list entirely. `ovos-core` `2.1.4a2` closed
+that gap with a migration map from every short ID to its plugin ID. The same commit also
 flipped the default `lang` casing from `"en-us"` to `"en-US"`, breaking
 any code doing an exact string comparison against the old default.
 
 `ovos-config` `2.0.0` (`e24e9ce`, #228, 2025-06-16) is the single largest
 deployer-facing config break in the ecosystem. If you have a customized
-`core.pipeline` list in your `mycroft.conf`, every stage ID in it is now
-unregistered and will be silently skipped rather than erroring.
+`core.pipeline` list of short stage IDs in your `mycroft.conf`, `ovos-core`
+`2.1.4a2` and later map each one forward to its plugin ID, so the list keeps
+working. Between `ovos-config` `2.0.0` and that release the short IDs were
+skipped without an error.
 
 Old `core.pipeline`, before `2.0.0`:
 
@@ -68,7 +71,7 @@ Lifecycle:
 
 | Change | Active | Deprecated but functional | Dropped |
 |---|---|---|---|
-| Short pipeline stage IDs (`stop_high`, `converse`, ...) | before `2.0.0` (2025-06-16) | unverified | `2.0.0` |
+| Short pipeline stage IDs (`stop_high`, `converse`, ...) | before `2.0.0` (2025-06-16) | `ovos-core` `2.1.4a2`+, mapped forward | skipped between `2.0.0` and `ovos-core` `2.1.4a2` |
 | `lang` default `"en-us"` | before `2.0.0` | n/a | `2.0.0` (now `"en-US"`) |
 | `skills.directory` default key | before `2.0.0` | unverified | `2.0.0` |
 | NLP plugin config block | before `2.0.0` | unverified | `2.0.0` |

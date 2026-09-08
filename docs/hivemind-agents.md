@@ -94,10 +94,10 @@ are open if the machine faces an untrusted network. Connections still require th
 per-client access key and password.
 
 By default it serves the local `ovos-core` via `hivemind-ovos-agent-plugin` (configured under
-`agent_protocol` in `server.json`), reaching it over the OVOS messagebus on
-`127.0.0.1:8181`. Start `ovos-messagebus` and `ovos-core` before this step. Without them the
-server still accepts pairings and satellites still connect, so the failure looks like silence
-rather than an error: utterances arrive and nothing answers them.
+`agent_protocol` in `server.json`), over the OVOS messagebus on `127.0.0.1:8181`.
+Start `ovos-messagebus` and `ovos-core` before this step. Without them the server still
+accepts pairings and satellites still connect. The failure looks like silence rather than
+an error: utterances arrive and nothing answers them.
 
 **3. Give a client its identity, then connect.** On the *client* device, save the access key
 issued in step 1. This step makes everything else work:
@@ -109,7 +109,7 @@ hivemind-client set-identity --key <access_key> --password <password> --host <ho
 ```
 
 Use the access key and password printed by `add-client` in step 1. `set-identity` needs at
-least one of `--key`, `--password` or `--siteid`. Give `--host` a bare hostname or IP address, not a URL: the port is a separate integer option, and a `ws://host:port` value fails with `ValueError: Port could not be cast to integer value`.
+least one of `--key`, `--password` or `--siteid`. Give `--host` a bare hostname or IP address, not a URL. The port is stored separately, so a `ws://host:port` value is accepted without complaint and then builds a malformed address at connect time.
 
 After `set-identity`, clients (and the [solver](#using-hivemind-as-a-solver) below) can connect
 without being handed connection details each time.

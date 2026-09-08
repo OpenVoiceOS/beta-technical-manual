@@ -76,7 +76,7 @@ Claude Desktop config:
 
 ```bash
 pip install "ovos-tts-server[mcp]"
-ovos-tts-server --engine ovos-tts-plugin-piper --port 9666 --mcp
+ovos-tts-server --engine ovos-tts-plugin-phoonnx --port 9666 --mcp
 ```
 
 | Endpoint | Method | Description |
