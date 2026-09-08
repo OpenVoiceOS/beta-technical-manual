@@ -1480,7 +1480,8 @@ not among the registered samples is penalized <code>0.1</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Bracket/alternation expansion is capped per intent: keep high-cardinality lines narrow</p>
 <p>Each <code>add_intent()</code> call bracket-expands every line (<code>(a|b|c)</code> alternation, <code>[optional]</code>
-words). All of an intent's lines share one fixed sample budget: 2000 total. A single line
+words). All of an intent's lines share one fixed sample budget: 50000 total, which a
+deployment can raise or lower per container with <code>max_expansions</code>. A single line
 with a large alternation product, for example
 <code>(what is|what's) the (low|lowest|...) temp (mon|tue|...|sun) (morning|afternoon|...|night)</code>,
 can run into the hundreds of combinations and consume most or all of that budget alone.</p>

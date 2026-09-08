@@ -1666,7 +1666,7 @@ recording is in progress. Neither cancels speech on its own.</p>
 <p>Collects the session's <strong>active skills</strong> (skipping session-blacklisted ones).</p>
 </li>
 <li>
-<p>Pings each of them on its per-skill topic <code>{skill_id}.stop.ping</code>. The spec name <code>ovos.stop.ping</code> exists in STOP-1 but is <strong>not emitted</strong> today, because per-skill placeholder topics cannot be auto-bridged (a deliberate exclusion in <code>ovos-spec-tools</code>). Skills subscribe only to the per-skill form. It then waits up to <code>0.5s</code> for <code>ovos.stop.pong</code> (legacy: <code>skill.stop.pong</code>, this direction <em>is</em> bridged) replies carrying <code>can_handle</code>.</p>
+<p>Emits the <code>ovos.stop.ping</code> broadcast STOP-1 defines, and also pings each active handler on its per-skill topic <code>{skill_id}.stop.ping</code>. Both go out on every stop. The per-skill form is what reaches skills today, because the <code>ovos-workshop</code> base class subscribes to that one and not to the broadcast; keep the per-skill subscription until the base class moves. <code>ovos-core</code> logs a warning that the per-skill emission is a compatibility measure and names the release that drops it. The plugin then waits up to <code>0.5s</code> for <code>ovos.stop.pong</code> (legacy: <code>skill.stop.pong</code>) replies carrying <code>can_handle</code>.</p>
 </li>
 <li>
 <p>Dispatches <code>&lt;skill_id&gt;:stop</code> (legacy: <code>{skill_id}.stop</code>) to the most recently activated positive responder.</p>
@@ -1736,9 +1736,14 @@ recording is in progress. Neither cancels speech on its own.</p>
 <td>Targeted stop dispatch to one skill</td>
 </tr>
 <tr>
+<td><code>ovos.stop.ping</code></td>
+<td>out</td>
+<td>Broadcast asking active handlers whether they can stop, per STOP-1. The <code>ovos-workshop</code> base class does not subscribe to it yet</td>
+</tr>
+<tr>
 <td><code>{skill_id}.stop.ping</code></td>
 <td>out</td>
-<td>Asks one active handler whether it can stop. Emitted only in this per-skill form — the STOP-1 spec name <code>ovos.stop.ping</code> is not on the wire (per-skill placeholders are excluded from the bridge map)</td>
+<td>The same question addressed to one skill, emitted alongside the broadcast. The form skills actually answer, since the base class subscribes to it rather than the broadcast. Removed in a future <code>ovos-core</code></td>
 </tr>
 <tr>
 <td><code>ovos.stop.pong</code> (legacy: <code>skill.stop.pong</code>)</td>
