@@ -65,7 +65,7 @@ sequenceDiagram
 This plugin only *orchestrates* translation. It does not translate anything itself. You must **first** configure a language **detection** plugin and a **translation** plugin under the `"language"` section of `mycroft.conf` (see [Translation Plugins](translation-plugins.md)). The transformers below then call whatever you configured there.
 
 ### Recommended Plugins
-- **Local**: `ovos-translate-plugin-nllb` (No Language Left Behind, offline) paired with an offline detector such as `ovos-lang-detector-classics-plugin` or `ovos-lang-detector-fasttext-plugin`.
+- **Local**: `ovos-translate-plugin-nllb` (No Language Left Behind, offline) paired with an offline detector such as `ovos-lang-detector-fasttext-plugin`, or the `ovos-lang-detector-plugin-voter` entry point from `ovos-lang-detector-classics-plugin`. The voter loads cld2, langdetect and fastlang and raises at startup if any of them is missing, so install it as `ovos-lang-detector-classics-plugin pycld2 langdetect fastlang`.
 - **Remote**: `ovos-translate-plugin-server` for translation and `ovos-lang-detector-plugin-server` for detection (both from `ovos-translate-server-plugin`, pointing at an [ovos-translate-server](https://github.com/OpenVoiceOS/ovos-translate-server)).
 
 ### Configuration Example

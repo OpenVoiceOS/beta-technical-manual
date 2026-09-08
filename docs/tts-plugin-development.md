@@ -18,7 +18,7 @@ from typing import Set
 from ovos_utils import classproperty
 from ovos_plugin_manager.templates.tts import TTS
 
-class MyTTS(TTS):
+class MyTTSPlugin(TTS):
     def get_tts(self, sentence: str, wav_file: str, lang: str = None,
                 voice: str = None):
         # Synthesize `sentence` and write the audio to `wav_file`
@@ -51,7 +51,7 @@ To make the class detectable as a TTS plugin, the package needs to provide an en
 
 ```toml
 [project.entry-points."opm.tts"]
-example_tts = "my_tts:MyTTS"
+example_tts = "my_tts:MyTTSPlugin"
 
 [project.entry-points."opm.tts.config"]
 "example_tts.config" = "my_tts:MyTTSConfig"
@@ -272,7 +272,7 @@ wrapping a synchronous, whole-file engine in an async generator that yields one 
 ### Package and publish
 
 1. **Pin the dependency version.** Put a floor and a ceiling on `ovos-plugin-manager` in
-   `pyproject.toml`, for example `ovos-plugin-manager>=0.5.0,<1.0.0`. A floor alone lets a future
+   `pyproject.toml`, for example `ovos-plugin-manager>=2.3.0a1,<3.0.0`. A floor alone lets a future
    breaking release slip in unnoticed. A ceiling alone lets an old install miss a needed feature.
 2. **Install for local development.** Run `pip install -e .` from the plugin's own repository so
    changes to the source take effect without reinstalling. See

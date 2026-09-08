@@ -36,7 +36,7 @@ Also install the translation plugin(s) you intend to serve:
 
 ```bash
 pip install ovos-translate-plugin-nllb
-pip install --pre ovos-lang-detector-classics-plugin
+pip install --pre ovos-lang-detector-classics-plugin pycld2 langdetect fastlang
 ```
 
 ---
@@ -48,7 +48,7 @@ pip install --pre ovos-lang-detector-classics-plugin
 ```bash
 ovos-translate-server \
   --tx-engine ovos-translate-plugin-nllb \
-  --detect-engine ovos-lang-detector-classics-plugin \
+  --detect-engine ovos-lang-detector-plugin-voter \
   --host 0.0.0.0 \
   --port 9686
 ```
@@ -72,7 +72,7 @@ from ovos_translate_server import start_translate_server
 
 app, engine = start_translate_server(
     tx_engine="ovos-translate-plugin-nllb",
-    detect_engine="ovos-lang-detector-classics-plugin",
+    detect_engine="ovos-lang-detector-plugin-voter",
 )
 uvicorn.run(app, host="0.0.0.0", port=9686)
 ```
