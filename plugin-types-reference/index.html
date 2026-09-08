@@ -1977,7 +1977,9 @@ Until it lands, the current GUI plugin type is <code>opm.gui</code> (<code>GUIEx
 <code>opm.microphone</code>) are <strong>singleton per service</strong>: their factory (<code>OVOSSTTFactory</code>,
 <code>OVOSTTSFactory</code>, etc.) reads a single <code>module</code> config key and instantiates exactly one
 active engine. This is unlike the six transformer chains below, which are explicitly
-multi-instance and run all configured plugins of a type in priority order.</p>
+multi-instance and run all configured plugins of a type in priority order. The
+seventh transformer type, typed slots, is a singleton like the core types: it
+produces one map, so the runner selects a single plugin.</p>
 <p>Discovery is also name-keyed: if two installed packages register the same entry-point
 name under the same group, OPM keys them by that name, so one silently shadows the other
 with no error. Avoid duplicate plugin names across packages.</p>
@@ -1989,7 +1991,7 @@ already picked one of them silently at import time. The factory has no way to de
 warn about the collision, it only ever sees the single class discovery handed it.</p>
 </div>
 <h3 id="transformer-plugins">Transformer Plugins<a class="headerlink" href="#transformer-plugins" title="Permanent link">&para;</a></h3>
-<p>These six types are the six ordered chains of <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1</a>. Each one is injected at a fixed point in the utterance lifecycle (audio → utterance → metadata → intent → dialog → tts) and runs in <strong>ascending</strong> priority order.</p>
+<p>Six of these are the ordered chains of <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md">OVOS-TRANSFORM-1</a>. Each is injected at a fixed point in the utterance lifecycle (audio → utterance → metadata → intent → dialog → tts) and runs every configured plugin in <strong>ascending</strong> priority order. The typed-slots type runs between metadata and the first matcher and selects one plugin instead of chaining.</p>
 <table>
 <thead>
 <tr>
@@ -2029,14 +2031,19 @@ warn about the collision, it only ever sees the single class discovery handed it
 <td><code>opm.transformer.intent</code></td>
 <td><code>IntentTransformer</code></td>
 </tr>
+<tr>
+<td>Typed-slots Transformer</td>
+<td><code>opm.transformer.typed_slots</code></td>
+<td><code>TypedSlotsTransformer</code></td>
+</tr>
 </tbody>
 </table>
 <h4 id="canonical-chain-runners-ovos_plugin_managertransformer_services">Canonical chain runners: <code>ovos_plugin_manager.transformer_services</code><a class="headerlink" href="#canonical-chain-runners-ovos_plugin_managertransformer_services" title="Permanent link">&para;</a></h4>
-<p>Loading, ordering, and chaining transformer plugins used to be reimplemented separately by
-each consumer. <code>ovos_plugin_manager.transformer_services</code> is now the single shared
-implementation: <code>ovos-core</code>, <code>ovos-audio</code>, <code>ovos-dinkum-listener</code>, HiveMind, and the OVOS
-TTS/STT servers all build their transformer chains from this module instead of maintaining
-their own copies. It exposes one runner class per transformer type:</p>
+<p><code>ovos_plugin_manager.transformer_services</code> is the single shared implementation of loading,
+ordering, and chaining transformer plugins. <code>ovos-core</code>, <code>ovos-audio</code>,
+<code>ovos-dinkum-listener</code>, HiveMind, and the OVOS TTS/STT servers all build their transformer
+chains from this module rather than keeping their own copies. It exposes one runner class
+per transformer type:</p>
 <table>
 <thead>
 <tr>

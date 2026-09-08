@@ -1758,7 +1758,7 @@ knowing about each other. See the
 hierarchy. Besides <code>ovos-core</code>, five services — the listener, audio, media, GUI, and PHAL — are
 separate processes and could in principle run on separate machines, each responsible for one
 stage of the <a href="../life-of-an-utterance/">utterance lifecycle</a>.</p>
-<p>The <a href="../transformer-plugins/">six transformer chains</a> don't all run in the same place:</p>
+<p>The <a href="../transformer-plugins/">seven transformer stages</a> don't all run in the same place:</p>
 <table>
 <thead>
 <tr>
@@ -1777,6 +1777,10 @@ stage of the <a href="../life-of-an-utterance/">utterance lifecycle</a>.</p>
 </tr>
 <tr>
 <td>Intent</td>
+<td><code>ovos-core</code> (<code>IntentService</code>)</td>
+</tr>
+<tr>
+<td>Typed slots</td>
 <td><code>ovos-core</code> (<code>IntentService</code>)</td>
 </tr>
 <tr>

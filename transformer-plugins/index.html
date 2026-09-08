@@ -978,9 +978,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#config-shape-all-six-chains" class="md-nav__link">
+  <a href="#config-shape-the-six-chained-types" class="md-nav__link">
     <span class="md-ellipsis">
-      Config shape (all six chains)
+      Config shape (the six chained types)
     </span>
   </a>
   
@@ -1070,6 +1070,15 @@
   <a href="#6-tts-transformers" class="md-nav__link">
     <span class="md-ellipsis">
       6. TTS Transformers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-typed-slots-transformers" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Typed-slots Transformers
     </span>
   </a>
   
@@ -1523,9 +1532,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#config-shape-all-six-chains" class="md-nav__link">
+  <a href="#config-shape-the-six-chained-types" class="md-nav__link">
     <span class="md-ellipsis">
-      Config shape (all six chains)
+      Config shape (the six chained types)
     </span>
   </a>
   
@@ -1621,6 +1630,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#7-typed-slots-transformers" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Typed-slots Transformers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#standalone-usage" class="md-nav__link">
     <span class="md-ellipsis">
       Standalone Usage
@@ -1682,7 +1700,11 @@ the background job finishing.</p>
 <h2 id="transformer-types">Transformer Types<a class="headerlink" href="#transformer-types" title="Permanent link">&para;</a></h2>
 <p>All base classes live in <code>ovos_plugin_manager.templates.transformers</code> and share the same constructor: <code>__init__(self, name, priority=50, config=None)</code>, plus <code>bind(bus)</code> and <code>initialize()</code>. The loader (<code>TransformersService.load_plugins()</code> in <code>ovos_plugin_manager.transformer_services</code>) only ever instantiates a plugin as <code>plug(config=plugin_config)</code>. It does not pass <code>name</code> or <code>priority</code>. Since the base class has no default for <code>name</code>, every plugin must override <code>__init__</code> to supply its own <code>name</code> (and usually a default <code>priority</code>). Each plugin must call <code>super().__init__(name, priority, config)</code> so the base class still gets them.</p>
 <p>A <code>"priority"</code> key in a plugin's <code>mycroft.conf</code> block is not applied automatically. The plugin must read it back out of <code>self.config</code> itself if it wants deployments to override priority (see <a href="../utterance-transformers/#config-driven-priority">Utterance Transformers: Config-driven priority</a>).</p>
-<h3 id="config-shape-all-six-chains">Config shape (all six chains)<a class="headerlink" href="#config-shape-all-six-chains" title="Permanent link">&para;</a></h3>
+<h3 id="config-shape-the-six-chained-types">Config shape (the six chained types)<a class="headerlink" href="#config-shape-the-six-chained-types" title="Permanent link">&para;</a></h3>
+<p>Six of the seven sections below are <em>chains</em>: every loaded plugin runs, one after
+another. The seventh, <code>typed_slots_transformers</code>, reads its section the same way
+but runs only one plugin; see <a href="#7-typed-slots-transformers">Typed-slots transformers</a>
+for where it differs.</p>
 <p>Every chain's <code>mycroft.conf</code> section follows the same rules (<code>TransformersService.load_plugins()</code> in <code>ovos_plugin_manager.transformer_services</code>):</p>
 <ul>
 <li>Each <strong>key</strong> in the section is an enabled plugin's entry-point name, except the two
@@ -1761,14 +1783,20 @@ the background job finishing.</p>
 <td><code>TTSTransformer</code></td>
 <td><code>opm.transformer.tts</code></td>
 </tr>
+<tr>
+<td><strong>Typed slots</strong></td>
+<td>After Metadata, before the first matcher</td>
+<td><code>TypedSlotsTransformer</code></td>
+<td><code>opm.transformer.typed_slots</code></td>
+</tr>
 </tbody>
 </table>
 <p><code>ovos-plugin-manager</code> also honors the deprecated Neon entry-point groups <code>neon.plugin.text</code>,
 <code>neon.plugin.metadata</code> and <code>neon.plugin.audio</code> as aliases for <code>opm.transformer.text</code>,
 <code>opm.transformer.metadata</code> and <code>opm.transformer.audio</code> (with a deprecation warning). There is
-no such alias for the intent, dialog or TTS chains — a plugin registered only under a legacy
-name for those three groups is not discovered.</p>
-<p>The runner classes that load and chain these plugins live in <code>ovos-plugin-manager</code> (<code>ovos_plugin_manager.transformer_services</code>): <code>UtteranceTransformersService</code>, <code>MetadataTransformersService</code>, <code>IntentTransformersService</code>, <code>AudioTransformersService</code>, <code>DialogTransformersService</code>, <code>TTSTransformersService</code>. Each consumer imports the one it needs. <code>ovos-core</code> runs the utterance/metadata/intent chains, the listener runs the audio chain, and the audio/TTS stacks run the dialog/TTS chains.</p>
+no such alias for the intent, dialog, TTS or typed-slots groups — a plugin registered only
+under a legacy name for those four groups is not discovered.</p>
+<p>The runner classes that load and chain these plugins live in <code>ovos-plugin-manager</code> (<code>ovos_plugin_manager.transformer_services</code>): <code>UtteranceTransformersService</code>, <code>MetadataTransformersService</code>, <code>IntentTransformersService</code>, <code>AudioTransformersService</code>, <code>DialogTransformersService</code>, <code>TTSTransformersService</code>. Each consumer imports the one it needs. <code>ovos-core</code> runs the utterance/metadata/intent chains, the listener runs the audio chain, and the audio/TTS stacks run the dialog/TTS chains. The typed-slots stage has its own runner, <code>TypedSlotsTransformersService</code> in <code>ovos_core.transformers</code>, because it selects rather than chains.</p>
 <hr />
 <h2 id="1-audio-transformers">1. Audio Transformers<a class="headerlink" href="#1-audio-transformers" title="Permanent link">&para;</a></h2>
 <p><strong>Entry point:</strong> <code>opm.transformer.audio</code></p>
@@ -1818,6 +1846,39 @@ name for those three groups is not discovered.</p>
 <h2 id="6-tts-transformers">6. TTS Transformers<a class="headerlink" href="#6-tts-transformers" title="Permanent link">&para;</a></h2>
 <p><strong>Entry point:</strong> <code>opm.transformer.tts</code></p>
 <p>Used to process the generated WAV file after TTS synthesis but before it is played back.</p>
+<hr />
+<h2 id="7-typed-slots-transformers">7. Typed-slots Transformers<a class="headerlink" href="#7-typed-slots-transformers" title="Permanent link">&para;</a></h2>
+<p><strong>Entry point:</strong> <code>opm.transformer.typed_slots</code></p>
+<p>Computes the typed-slots map for an utterance: the number, date, duration and
+colour spans that intents ask for with the <code>{type:name}</code> syntax. It runs after the
+utterance and metadata chains and before the first matcher, so a matcher and a
+skill handler both see the same resolved values. Skill authors read the result
+with <code>self.typed_slot()</code>, described in
+<a href="../intents-padatious/#typed-slots">Padatious Intents: Typed slots</a>.</p>
+<p><code>ovos-typed-slots-transformer</code> is the plugin that ships in the bundled
+<code>mycroft.conf</code>, and it uses the OVOS parser libraries to do the work.</p>
+<p>This stage reads its config section like the six chains above, but it does not
+chain. Four differences matter to a plugin author:</p>
+<ul>
+<li><strong>One plugin runs, not all of them.</strong> The stage produces a single map, so the
+  runner picks one plugin and ignores the rest: the first name in an explicit
+  <code>order</code> list, or otherwise the lowest <code>priority</code> number. Two plugins loaded at
+  the same priority with no <code>order</code> list is a warning, and the choice between
+  them is stable but unspecified.</li>
+<li><strong>A different <code>transform()</code> signature.</strong> It takes the candidate utterances, the
+  set of types the registered intents declared, and the <code>Session</code>, and it returns
+  a map of type name to a list of <code>{"span": [start, end], "surface": str,
+  "value": ...}</code> entries. It must not touch <code>utterances</code> or <code>Message.context</code>;
+  that is an utterance or metadata transformer's job.</li>
+<li><strong><code>supported_types</code> gates selection.</strong> A plugin declares the types it can
+  compute, and the runner skips one that shares nothing with the declared set.</li>
+<li><strong>No provenance stamping.</strong> Like the intent chain, this stage appends nothing
+  to the message context.</li>
+</ul>
+<p>A plugin that raises, or returns anything that is not a dictionary, is treated as
+having produced nothing. That is not the same as producing an empty map: an
+absent map means the value was never computed, while an empty one means the
+plugin looked and found nothing.</p>
 <hr />
 <h2 id="standalone-usage">Standalone Usage<a class="headerlink" href="#standalone-usage" title="Permanent link">&para;</a></h2>
 <p>You can use transformers independently of the full OVOS stack. Here is an example with an <code>UtteranceTransformer</code>:</p>

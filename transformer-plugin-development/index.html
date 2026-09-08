@@ -1477,7 +1477,7 @@ plugin to use instead of writing one? Go to <a href="../transformer-plugins/">Tr
 <h2 id="creating-a-plugin">Creating a Plugin<a class="headerlink" href="#creating-a-plugin" title="Permanent link">&para;</a></h2>
 <ol>
 <li>
-<p><strong>Inherit</strong> from the base class for your transformer type. All six live in
+<p><strong>Inherit</strong> from the base class for your transformer type. All seven live in
     <code>ovos_plugin_manager.templates.transformers</code>:</p>
 <table>
 <thead>
@@ -1517,6 +1517,11 @@ plugin to use instead of writing one? Go to <a href="../transformer-plugins/">Tr
 <td><code>AudioTransformer</code></td>
 <td>captured audio, before STT</td>
 <td><code>opm.transformer.audio</code></td>
+</tr>
+<tr>
+<td><code>TypedSlotsTransformer</code></td>
+<td>typed-slot spans, before the first matcher</td>
+<td><code>opm.transformer.typed_slots</code></td>
 </tr>
 </tbody>
 </table>
