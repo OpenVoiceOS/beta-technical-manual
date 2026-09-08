@@ -142,8 +142,6 @@ nav:
       - Scheduled Events: scheduler-service.md
       - dig_for_message: dig-for-message.md
       - Security & Trust Model: security-model.md
-      - Plugin Manager: plugin-manager.md
-      - Plugin Types Reference: plugin-types-reference.md
       - Composable Deployments: composable-deployments.md
       - Configuration:
           - Overview: config.md
@@ -268,6 +266,8 @@ nav:
       - Testing Reference (ovoscope): ovoscope-overview.md
   - Plugins:
       - Index & Overview: plugins-index.md
+      - How Plugins Load (Plugin Manager): plugin-manager.md
+      - Plugin Types Reference: plugin-types-reference.md
       - Choosing Plugins (compare & recommend): choosing-plugins.md
       - Plugin Arena (benchmarks): plugin-arena.md
       - Speech & Audio:
@@ -366,7 +366,7 @@ nav:
           - Dates & Time: date-parser.md
           - Colors: color-parser.md
           - Quebra Frases: quebra-frases.md
-      - Tools:
+      - Documentation Tools:
           - ovos-docs-viewer: docs-viewer.md
       - Hardware:
           - Hardware Integrators: hardware-integrators.md

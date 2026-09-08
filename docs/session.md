@@ -64,7 +64,9 @@ A `session_id` that cannot serve as an identity, absent, `null`, empty, or any n
     message's carrier. Outside any handler there is no message to dig, and the read falls
     back to the deployment default rather than to whatever the orchestrator currently
     holds. Pass the message explicitly, `SessionManager.get(message)`, wherever you have
-    one.
+    one. [dig_for_message](dig-for-message.md) explains how that dig finds the
+    message, and why a handler that runs off the dispatch thread can find the
+    wrong one or none at all.
 
 For a named session, repeated calls to `SessionManager.get(message)` for the same message return the same bound `Session` object. A message derived from it, `message.forward(...)`, `message.reply(...)`, or a bus response, carries that bound object's current state, not a stale copy of the carrier the original message arrived with. Mutate the `Session` object `get` returned. Do not edit `message.context["session"]` directly after calling `get`: the bound object wins when a derived message is stamped.
 
