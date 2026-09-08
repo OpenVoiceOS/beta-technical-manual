@@ -94,7 +94,7 @@ The plugin:
 1. Collects the session's **active skills** (skipping session-blacklisted ones).
 
 
-2. Pings each of them on its per-skill topic `{skill_id}.stop.ping`. The spec name `ovos.stop.ping` exists in STOP-1 but is **not emitted** today, because per-skill placeholder topics cannot be auto-bridged (a deliberate exclusion in `ovos-spec-tools`). Skills subscribe only to the per-skill form. It then waits up to `0.5s` for `ovos.stop.pong` (legacy: `skill.stop.pong`, this direction *is* bridged) replies carrying `can_handle`.
+2. Emits the `ovos.stop.ping` broadcast STOP-1 defines, and also pings each active handler on its per-skill topic `{skill_id}.stop.ping`. Both go out on every stop. The per-skill form is what reaches skills today, because the `ovos-workshop` base class subscribes to that one and not to the broadcast; keep the per-skill subscription until the base class moves. `ovos-core` logs a warning that the per-skill emission is a compatibility measure and names the release that drops it. The plugin then waits up to `0.5s` for `ovos.stop.pong` (legacy: `skill.stop.pong`) replies carrying `can_handle`.
 
 
 3. Dispatches `<skill_id>:stop` (legacy: `{skill_id}.stop`) to the most recently activated positive responder.
@@ -164,7 +164,8 @@ The stop plugin interfaces with the OVOS session system:
 |---|---|---|
 | `<pipeline_id>:global_stop` (legacy: `stop:global`) | in | Global-stop dispatch — its handler emits the `ovos.stop` broadcast (and `ovos.utterance.handled`) |
 | `<skill_id>:stop` (legacy: `stop:skill` → `{skill_id}.stop`) | out | Targeted stop dispatch to one skill |
-| `{skill_id}.stop.ping` | out | Asks one active handler whether it can stop. Emitted only in this per-skill form — the STOP-1 spec name `ovos.stop.ping` is not on the wire (per-skill placeholders are excluded from the bridge map) |
+| `ovos.stop.ping` | out | Broadcast asking active handlers whether they can stop, per STOP-1. The `ovos-workshop` base class does not subscribe to it yet |
+| `{skill_id}.stop.ping` | out | The same question addressed to one skill, emitted alongside the broadcast. The form skills actually answer, since the base class subscribes to it rather than the broadcast. Removed in a future `ovos-core` |
 | `ovos.stop.pong` (legacy: `skill.stop.pong`) | in | Handler's `can_handle` reply |
 | `ovos.stop` (legacy: `mycroft.stop`) | out | Universal stop broadcast |
 
