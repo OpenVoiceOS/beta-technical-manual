@@ -202,9 +202,10 @@ chain. Four differences matter to a plugin author:
   that is an utterance or metadata transformer's job.
 - **`supported_types` describes, it does not gate.** A plugin declares the types
   it can compute, and the runner reads that as documentation only. It never
-  withholds the call from a plugin whose declared types look irrelevant, because
-  a plugin may compute every registered type and skipping it would turn
-  "computed, found nothing" into "not computed". Those are different answers.
+  withholds the call from a plugin whose declared types look irrelevant. A
+  transformer may compute every registered type where the deployment asks for
+  that, so skipping it on the strength of its declaration would discard values
+  it was entitled to produce.
 - **No provenance stamping.** Like the intent chain, this stage appends nothing
   to the message context.
 
