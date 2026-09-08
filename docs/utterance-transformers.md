@@ -262,9 +262,11 @@ class MyCustomTransformer(UtteranceTransformer):
 ```
 
 The base `UtteranceTransformer.__init__(self, name, priority=50, config=None)` requires `name`,
-and the loader only ever calls a transformer plugin as `plug(config=plugin_config)`. So a plugin
-must override `__init__` to supply its own `name`, as shown above, and must pass `name`,
-`priority`, and `config` through to `super().__init__()` so the base class still sees them.
+and the loader never supplies it: it inspects the constructor and calls
+`plug(config=plugin_config)` where a `config` keyword is accepted, and `plug()` otherwise, in
+which case the plugin reads its own section from `Configuration()`. Either way a plugin must
+override `__init__` to supply its own `name`, as shown above, and must pass `name`, `priority`,
+and `config` through to `super().__init__()` so the base class still sees them.
 
 The second return value is *additional* context that gets merged into the message context, not a
 replacement for it.

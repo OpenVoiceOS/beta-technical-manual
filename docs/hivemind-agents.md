@@ -94,7 +94,10 @@ are open if the machine faces an untrusted network. Connections still require th
 per-client access key and password.
 
 By default it serves the local `ovos-core` via `hivemind-ovos-agent-plugin` (configured under
-`agent_protocol` in `server.json`).
+`agent_protocol` in `server.json`), reaching it over the OVOS messagebus on
+`127.0.0.1:8181`. Start `ovos-messagebus` and `ovos-core` before this step. Without them the
+server still accepts pairings and satellites still connect, so the failure looks like silence
+rather than an error: utterances arrive and nothing answers them.
 
 **3. Give a client its identity, then connect.** On the *client* device, save the access key
 issued in step 1. This step makes everything else work:

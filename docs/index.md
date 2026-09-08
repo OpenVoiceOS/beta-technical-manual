@@ -72,6 +72,15 @@ Everyone else, pick your path in the grid below.
     [Advanced / manual install](release-channels.md) ·
     [Skill examples](skill-examples.md)
 
+-   :material-lan: __I want more than one device__
+
+    ---
+
+    Put cheap satellites around the house and let one machine do the thinking.
+
+    [:octicons-arrow-right-24: Satellites](satellites.md) ·
+    [HiveMind](hivemind-agents.md)
+
 -   :material-account-question: __Coming from Alexa or Google?__
 
     ---
