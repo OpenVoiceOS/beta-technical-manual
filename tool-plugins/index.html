@@ -1698,7 +1698,7 @@ converting the merged list to the OpenAI spec in a single call.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-tools">OpenVoiceOS/ovos-PHAL-plugin-tools</a> is a PHAL plugin that loads all installed <code>ToolBox</code> plugins and registers them on the messagebus. Any component that can emit bus messages can then use them.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-PHAL-plugin-tools
 </span></code></pre></div>
-<p>Entry point group: <code>opm.phal</code>; plugin name <code>ovos-phal-plugin-tools</code>.</p>
+<p>Entry point group: <code>ovos.plugin.phal</code>, the legacy name that OPM still aliases to <code>opm.phal</code>; plugin name <code>ovos-phal-plugin-tools</code>.</p>
 <h3 id="messagebus-event-table">messagebus event table<a class="headerlink" href="#messagebus-event-table" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1913,10 +1913,11 @@ own OpenAI-compatible server is enough to exercise the whole path — server dis
 model requests one, caller or server executes it — without a GPU:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>llama-server<span class="w"> </span>-m<span class="w"> </span>Qwen3-0.6B-Q4_K_M.gguf<span class="w"> </span>--jinja<span class="w"> </span>-c<span class="w"> </span><span class="m">8192</span>
 </span></code></pre></div>
-<p>Qwen3-0.6B at Q4_K_M quantization is a roughly 380 MB download. The <code>--jinja</code> flag is not
-optional: without it, <code>llama.cpp</code> skips the chat template that actually produces <code>tool_calls</code>,
-and every tool-calling test silently degrades into an ordinary plain-text conversation instead
-of failing loudly.</p>
+<p>Qwen3-0.6B at Q4_K_M quantization is a roughly 380 MB download. Recent <code>llama.cpp</code> builds
+enable the chat template by default, and <code>--jinja</code> above asks for it explicitly, which keeps
+the command working on an older build. Where the template is off, the server produces no
+<code>tool_calls</code> at all, and every tool-calling test degrades into an ordinary plain-text
+conversation instead of failing loudly.</p>
 <p>Point a persona at the running server with the OpenAI-compatible chat engine:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tool-test&quot;</span><span class="p">,</span>
