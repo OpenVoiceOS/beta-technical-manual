@@ -92,6 +92,12 @@
 | `utterance_transformers.ovos-utterance-plugin-cancel` | `{}` |  |
 | `utterance_transformers.ovos-utterance-corrections-plugin` | `{}` |  |
 
+### `typed_slots_transformers`
+
+| Key | Default | Description |
+|---|---|---|
+| `typed_slots_transformers.ovos-typed-slots-transformer` | `{}` |  |
+
 ### `intent_transformers`
 
 | Key | Default | Description |
