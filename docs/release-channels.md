@@ -144,8 +144,9 @@ uv pip install ovos-core[mycroft] --pre -c https://raw.githubusercontent.com/Ope
     nothing to a talking assistant on one machine, no installer wizard involved:
 
     ```bash
-    # 1. Install the core services on the stable channel
-    uv pip install "ovos-core[mycroft]" \
+    # 1. Install the core services, the intent pipeline and a few skills
+    #    (mycroft alone gives you the services but no matcher and nothing to ask)
+    uv pip install "ovos-core[mycroft,plugins,skills-essential]" \
         -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
 
     # 2. Launch each service (one terminal/tmux pane each, or use the systemd units

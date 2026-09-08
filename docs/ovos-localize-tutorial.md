@@ -36,14 +36,20 @@ skill and which line of code each phrase comes from, so you always have context.
 ## Step 1 — Open the site and pick a language
 
 1. Go to **[openvoiceos.github.io/ovos-localize](https://openvoiceos.github.io/ovos-localize/)**.
-2. Choose the **language** you want to translate into and the **skill** you want to work on.
-   The dashboard shows how complete each language is, so you can see where help is needed most.
+2. Press **Set languages** in the header to choose the language you want to translate into,
+   then pick the **skill** you want to work on. The dashboard shows how complete each language
+   is, so you can see where help is needed most.
 
 !!! tip "Don't see your language?"
     Languages are added on request. Ask in the
     [OVOS Matrix chat](https://matrix.to/#/#OpenVoiceOS:matrix.org) or
     [open an issue on ovos-localize](https://github.com/OpenVoiceOS/ovos-localize/issues) and
     we'll enable it.
+
+!!! tip "Lines starting with `#` are comments"
+    Some files open with one or more `#` lines. The matcher skips them, so they are notes
+    about the file rather than phrases to translate. Translate the lines below them and leave
+    the notes alone.
 
 ## Step 2 — Translate
 
