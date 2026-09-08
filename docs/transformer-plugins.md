@@ -200,8 +200,11 @@ chain. Four differences matter to a plugin author:
   a map of type name to a list of `{"span": [start, end], "surface": str,
   "value": ...}` entries. It must not touch `utterances` or `Message.context`;
   that is an utterance or metadata transformer's job.
-- **`supported_types` gates selection.** A plugin declares the types it can
-  compute, and the runner skips one that shares nothing with the declared set.
+- **`supported_types` describes, it does not gate.** A plugin declares the types
+  it can compute, and the runner reads that as documentation only. It never
+  withholds the call from a plugin whose declared types look irrelevant, because
+  a plugin may compute every registered type and skipping it would turn
+  "computed, found nothing" into "not computed". Those are different answers.
 - **No provenance stamping.** Like the intent chain, this stage appends nothing
   to the message context.
 
