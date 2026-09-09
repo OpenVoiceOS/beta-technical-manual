@@ -1576,7 +1576,7 @@
 <p>Because stopping is a <strong>fundamental feature of a voice assistant</strong>, it is implemented as a <strong>dedicated pipeline plugin</strong>, rather than a fallback or intent handler. STOP-1 is emphatic that stop is a <strong>pipeline plugin and not a skill</strong>. <code>skill-ovos-stop</code> is superseded. PIPELINE-1's first-match-wins rule places a high-confidence stop stage <em>first</em> in <code>session.pipeline</code> (STOP-1 §7). That placement is why stop works: the stage intercepts "stop" before any other pipeline plugin claims the bare word.</p>
 <div class="admonition note">
 <p class="admonition-title">Spec model and topic names</p>
-<p>STOP-1 distinguishes two outcomes, both via reserved <code>intent_name</code>s. A generic <strong>stop</strong> cascades to the <em>most recently active</em> handler: the plugin reads <code>session.active_handlers</code> (the recency record, PIPELINE-1 §7.1), pings them with <code>ovos.stop.ping</code>, collects <code>ovos.stop.pong</code> (<code>can_handle</code>) within a recommended 0.5s ceiling, and returns a <code>Match</code> on the reserved <code>stop</code> name targeting the highest-<code>activated_at</code> positive responder, dispatched on <code>&lt;skill_id&gt;:stop</code>. A handler that does not answer within the timeout counts as <code>can_handle: false</code>.</p>
+<p>STOP-1 distinguishes two outcomes, both via reserved <code>intent_name</code>s. A generic <strong>stop</strong> cascades to the handler with the strongest claim on the session: the plugin builds its candidate list from <code>session.response_mode</code> and <code>session.active_handlers</code> (the recency record, PIPELINE-1 §7.1), pings them with <code>ovos.stop.ping</code>, collects <code>ovos.stop.pong</code> (<code>can_handle</code>) within a recommended 0.5s ceiling, and returns a <code>Match</code> on the reserved <code>stop</code> name targeting the first positive responder in candidate order, dispatched on <code>&lt;skill_id&gt;:stop</code>. A handler that does not answer within the timeout counts as <code>can_handle: false</code>.</p>
 <p><code>global_stop</code> covers the three cases where there is nothing to target (STOP-1 §5.1): explicit "stop everything" vocabulary, a generic stop with <code>active_handlers</code> empty (or containing only the stop plugin itself), and a ping round that produced <strong>no positive responder</strong> (§4.1 step 5). Its <code>Match</code> clears <code>active_handlers</code>, <code>converse_handlers</code> and <code>response_mode</code> atomically, and its handler broadcasts <code>ovos.stop</code>, which every active component subscribes to.</p>
 <table>
 <thead>
@@ -1663,13 +1663,13 @@ recording is in progress. Neither cancels speech on its own.</p>
 <p>The plugin:</p>
 <ol>
 <li>
-<p>Collects the session's <strong>active skills</strong> (skipping session-blacklisted ones).</p>
+<p>Collects the session's stop candidates, skipping session-blacklisted ones and the stop plugin itself. A skill holding the session's <code>response_mode</code> window comes first, ahead of the recency list; the session's active handlers follow in recency order.</p>
 </li>
 <li>
 <p>Emits the <code>ovos.stop.ping</code> broadcast STOP-1 defines, and also pings each active handler on its per-skill topic <code>{skill_id}.stop.ping</code>. Both go out on every stop. The per-skill form is what reaches skills today, because the <code>ovos-workshop</code> base class subscribes to that one and not to the broadcast; keep the per-skill subscription until the base class moves. <code>ovos-core</code> logs a warning that the per-skill emission is a compatibility measure and names the release that drops it. The plugin then waits up to <code>0.5s</code> for <code>ovos.stop.pong</code> (legacy: <code>skill.stop.pong</code>) replies carrying <code>can_handle</code>.</p>
 </li>
 <li>
-<p>Dispatches <code>&lt;skill_id&gt;:stop</code> (legacy: <code>{skill_id}.stop</code>) to the most recently activated positive responder.</p>
+<p>Dispatches <code>&lt;skill_id&gt;:stop</code> (legacy: <code>{skill_id}.stop</code>) to the first positive responder in candidate order. Pongs are re-sorted into that order before the winner is picked, so the answer that arrived first does not decide the round.</p>
 </li>
 <li>
 <p>If no skill is active, no responder answered positively, or the utterance matched <code>global_stop</code>, emits a <strong>global stop</strong>: <code>ovos.stop</code> (legacy: <code>mycroft.stop</code>).</p>
@@ -1678,16 +1678,16 @@ recording is in progress. Neither cancels speech on its own.</p>
 <h3 id="medium-confidence-stop_medium">Medium-confidence (<code>stop_medium</code>)<a class="headerlink" href="#medium-confidence-stop_medium" title="Permanent link">&para;</a></h3>
 <p>A fuzzy (<code>exact=False</code>) match of the same <code>stop</code> / <code>global_stop</code> vocab, for phrases that contain a stop command but are not exact. When it matches, it delegates to <code>match_low</code> to compute a confidence score.</p>
 <h3 id="low-confidence-stop_low">Low-confidence (<code>stop_low</code>)<a class="headerlink" href="#low-confidence-stop_low" title="Permanent link">&para;</a></h3>
-<p>Scores the utterance against the <code>stop</code> vocab list via fuzzy matching (<code>match_one</code>), adds a small bonus when active skills are present, and rejects anything below <code>min_conf</code> (default <code>0.5</code>). Used as a permissive catch-all so phrases like "can you stop now?" still reach the stop logic.</p>
+<p>Scores the utterance against the <code>stop</code> vocab list via fuzzy matching (<code>match_one</code>), adds a small bonus when active skills are present, and rejects anything below <code>min_conf</code> (default <code>0.5</code>). Used as a permissive catch-all so phrases like "can you please stop?" still reach the stop logic.</p>
 <pre class="mermaid"><code>flowchart TD
     U[Utterance] --&gt; V{Matches stop /\nglobal_stop vocab?}
     V --&gt;|no| N[No match]
     V --&gt;|global_stop or\nno active skills| G[Global stop\nbroadcast ovos.stop]
     V --&gt;|yes, skills active| P[Ping active skills\n{skill_id}.stop.ping]
     P --&gt; W{Any skill replies\ncan_handle?}
-    W --&gt;|yes| D[Dispatch stop to\nmost recent responder]
+    W --&gt;|yes| D[Dispatch stop to\nfirst candidate responder]
     W --&gt;|no, timeout| G</code></pre>
-<p><em>Diagram: an utterance that matches the stop vocabulary either targets the most recently active skill that confirms it can stop, or falls back to a global stop broadcast when there is nothing to target or no skill responds in time.</em></p>
+<p><em>Diagram: an utterance that matches the stop vocabulary either targets the highest-ranked candidate skill that confirms it can stop, or falls back to a global stop broadcast when there is nothing to target or no skill responds in time.</em></p>
 <hr />
 <h2 id="localization">Localization<a class="headerlink" href="#localization" title="Permanent link">&para;</a></h2>
 <p>The plugin supports stop commands in multiple languages using <code>.voc</code> files bundled in <code>ovos-core</code> under <code>ovos_core/intent_services/locale/&lt;lang&gt;/</code>:</p>
