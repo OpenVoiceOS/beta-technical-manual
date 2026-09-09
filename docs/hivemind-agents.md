@@ -36,7 +36,7 @@
 | Piece | Role |
 |---|---|
 | **`hivemind-core`** | The server. Listens for connections, authenticates clients, enforces permissions, and routes messages to an **agent**. |
-| **Agent** | What actually answers: a full [ovos-core](core.md) install (`hivemind-ovos-agent-plugin`), a single [persona](personas.md) (`hivemind-persona-agent-plugin`), or a remote media renderer (`hivemind-player-agent-plugin`). |
+| **Agent** | What actually answers: a full [ovos-core](core.md) install (`hivemind-ovos-agent-plugin`), a single [persona](personas.md) (`hivemind-persona-agent-plugin`), or a remote media renderer (`hivemind-player-agent-plugin`, which installs as `hivemind-player-protocol`). |
 | **Satellites / clients** | The devices and apps that connect to `hivemind-core` (mic satellites, CLI clients, your own code). |
 
 `hivemind-core` is **pluggable** via the **HiveMind Plugin Manager (HPM)** across four axes.
@@ -178,9 +178,11 @@ key holding its config.
 
 ### A remote media renderer: `hivemind-player-agent-plugin`
 
-Ships in the [`hivemind-media-player`](https://github.com/JarbasHiveMind/hivemind-media-player)
-repo, as the `hivemind-player-agent-plugin` entry point under the `hivemind.agent.protocol`
-group. Set `agent_protocol.module` to it and the node runs `ovos-audio` and OCP as a remote
+Installs as `hivemind-player-protocol` from the
+[`hivemind-media-player`](https://github.com/JarbasHiveMind/hivemind-media-player) repo, and
+registers the `hivemind-player-agent-plugin` entry point under the `hivemind.agent.protocol`
+group. The package name, the repo name and the plugin id all differ, so
+`pip install hivemind-player-agent-plugin` finds nothing. Set `agent_protocol.module` to it and the node runs `ovos-audio` and OCP as a remote
 media renderer. Any OCP-speaking client can send it play/pause/seek commands over HiveMind. It
 answers no natural-language queries; a `natural_language_query` yields only the end-of-query
 sentinel.
