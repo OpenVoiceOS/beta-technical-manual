@@ -1731,6 +1731,10 @@ padatious, and adapt, and stops at the first one confident enough to handle the 
 </details>
 <h2 id="utterance-handling-flow">Utterance Handling Flow<a class="headerlink" href="#utterance-handling-flow" title="Permanent link">&para;</a></h2>
 <p>When an <code>ovos.utterance.handle</code> message (legacy: <code>recognizer_loop:utterance</code>) arrives on the bus, it triggers the lifecycle entry point of <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 §9.1</a>:</p>
+<div class="admonition warning">
+<p class="admonition-title">The orchestrator stamps its own <code>utterance_id</code></p>
+<p>At entry the orchestrator writes a fresh uuid into <code>context.utterance_id</code>, replacing whatever the entry message carried (OVOS-PIPELINE-1 §9.1.1). An id supplied by whatever produced the utterance is not the lifecycle identifier, so a bridge or satellite that sets one for its own tracing must not expect to see it again: everything downstream correlates on the orchestrator's value, which <code>Message.reply</code> and <code>Message.forward</code> propagate. Once stamped, no component overwrites it.</p>
+</div>
 <pre class="mermaid"><code>flowchart TD
     START(["ovos.utterance.handle&lt;br/&gt;(legacy: recognizer_loop:utterance) §9.1"])
     START --&gt; UT["UtteranceTransformersService.transform()&lt;br/&gt;utterance-transformer chain, TRANSFORM-1 §3.2"]
@@ -1927,7 +1931,7 @@ keeps a registry of <code>intent_name</code> values leased to a pipeline-plugin 
 <code>response</code>, <code>stop</code>, <code>fallback</code> and <code>common_query</code>. A skill or pipeline <strong>must not</strong> register
 a reserved name under INTENT-4. A skill subscribes to the reserved dispatch topic by
 framework convention instead. The spec reserves these names, but <code>ovos-core</code>'s intent
-manifest does not currently reject a reserved-name registration. It only warns on
+manifest does not reject a reserved-name registration. It only warns on
 registrations missing required fields, so this is a contract skills must honor, not one the
 orchestrator enforces today.
 A reservation is a namespace lease, not a dispatch change. Reserved-name dispatches fire
