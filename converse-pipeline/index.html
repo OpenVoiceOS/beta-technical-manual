@@ -1662,7 +1662,7 @@
 <p><strong>Preserve conversational context</strong> across multiple turns.</p>
 </li>
 <li>
-<p><strong>Prioritize recently used skills</strong> for more natural interactions.</p>
+<p><strong>Prioritize the skills used last</strong> for more natural interactions.</p>
 </li>
 <li>
 <p><strong>Enable stateful behavior</strong>, such as follow-up questions or corrections.</p>
@@ -1692,7 +1692,7 @@
 <p>Hey Mycroft, what's the weather</p>
 </blockquote>
 <p>The utterance "what's the weather" is first sent to the Timer Skill's <code>converse()</code> method, then to the intent service for normal handling, where the Weather Skill is called.</p>
-<p>Because the Weather Skill was called, it is now added to the front of the Active Skills List. The next utterance received is directed to:</p>
+<p>Because the Weather Skill was called, it is added to the front of the Active Skills List. The next utterance received is directed to:</p>
 <ol>
 <li>
 <p><code>WeatherSkill.converse()</code></p>
@@ -1968,7 +1968,8 @@
 </tbody>
 </table>
 <h3 id="get_response-support"><code>get_response</code> Support<a class="headerlink" href="#get_response-support" title="Permanent link">&para;</a></h3>
-<p>During <code>skill.get_response</code>, the skill temporarily holds the converse channel. This is tracked per-session via the skill's <code>UtteranceState.RESPONSE</code>: while set, <code>match()</code> routes the next utterance straight to that skill (match type <code>{skill_id}.converse.get_response</code>), bypassing the normal ping/pong path.</p>
+<p>During <code>skill.get_response</code>, the skill temporarily holds the converse channel. This is tracked per session in <code>Session.response_mode</code>, a single <code>{skill_id, expires_at}</code> object naming the one holder, or <code>None</code> when nobody is waiting on a direct answer. While a holder is set, <code>match()</code> routes the next utterance straight to that skill (match type <code>{skill_id}.converse.get_response</code>), bypassing the normal ping/pong path.</p>
+<p><code>Session.utterance_states</code> is a deprecated view of the same window, shaped as <code>{skill_id: state}</code> for code written before <code>response_mode</code> existed. It stores nothing of its own: reading it projects the current holder as <code>UtteranceState.RESPONSE</code> and reports every other skill as <code>INTENT</code> by omission, and writing to it, including mutating the dict it returns, forwards to <code>set_response_mode</code> and <code>clear_response_mode</code>. The two cannot disagree. Every access logs a deprecation warning naming the major version that removes it, so write new code against <code>response_mode</code> and the <code>enable_response_mode</code> / <code>disable_response_mode</code> / <code>clear_response_mode</code> methods.</p>
 <ul>
 <li>
 <p><code>skill.converse.get_response.enable</code> → <code>session.enable_response_mode(skill_id)</code> (lock converse to this skill)</p>
