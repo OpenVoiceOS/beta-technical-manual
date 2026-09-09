@@ -1644,7 +1644,7 @@ reconnect/backoff behavior a client must implement. That protocol is documented 
 </tr>
 <tr>
 <td><strong>Agent</strong></td>
-<td>What actually answers: a full <a href="../core/">ovos-core</a> install (<code>hivemind-ovos-agent-plugin</code>), a single <a href="../personas/">persona</a> (<code>hivemind-persona-agent-plugin</code>), or a remote media renderer (<code>hivemind-player-agent-plugin</code>).</td>
+<td>What actually answers: a full <a href="../core/">ovos-core</a> install (<code>hivemind-ovos-agent-plugin</code>), a single <a href="../personas/">persona</a> (<code>hivemind-persona-agent-plugin</code>), or a remote media renderer (<code>hivemind-player-agent-plugin</code>, which installs as <code>hivemind-player-protocol</code>).</td>
 </tr>
 <tr>
 <td><strong>Satellites / clients</strong></td>
@@ -1749,9 +1749,11 @@ in <code>Persona.chat</code>/<code>Persona.stream</code>, which could break a re
 <code>"module"</code> value must equal the plugin's entry-point name. That same string is reused as the
 key holding its config.</p>
 <h3 id="a-remote-media-renderer-hivemind-player-agent-plugin">A remote media renderer: <code>hivemind-player-agent-plugin</code><a class="headerlink" href="#a-remote-media-renderer-hivemind-player-agent-plugin" title="Permanent link">&para;</a></h3>
-<p>Ships in the <a href="https://github.com/JarbasHiveMind/hivemind-media-player"><code>hivemind-media-player</code></a>
-repo, as the <code>hivemind-player-agent-plugin</code> entry point under the <code>hivemind.agent.protocol</code>
-group. Set <code>agent_protocol.module</code> to it and the node runs <code>ovos-audio</code> and OCP as a remote
+<p>Installs as <code>hivemind-player-protocol</code> from the
+<a href="https://github.com/JarbasHiveMind/hivemind-media-player"><code>hivemind-media-player</code></a> repo, and
+registers the <code>hivemind-player-agent-plugin</code> entry point under the <code>hivemind.agent.protocol</code>
+group. The package name, the repo name and the plugin id all differ, so
+<code>pip install hivemind-player-agent-plugin</code> finds nothing. Set <code>agent_protocol.module</code> to it and the node runs <code>ovos-audio</code> and OCP as a remote
 media renderer. Any OCP-speaking client can send it play/pause/seek commands over HiveMind. It
 answers no natural-language queries; a <code>natural_language_query</code> yields only the end-of-query
 sentinel.</p>
