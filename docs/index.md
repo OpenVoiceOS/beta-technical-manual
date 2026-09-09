@@ -72,6 +72,15 @@ Everyone else, pick your path in the grid below.
     [Advanced / manual install](release-channels.md) ·
     [Skill examples](skill-examples.md)
 
+-   :material-home-automation: __I want it to control my smart home__
+
+    ---
+
+    Point OVOS at Home Assistant and speak to the devices you already have.
+
+    [:octicons-arrow-right-24: Home Assistant](home-assistant.md) ·
+    [Smart-home skills](skill-examples.md#smart-home)
+
 -   :material-lan: __I want more than one device__
 
     ---

@@ -88,7 +88,9 @@ With those two in hand, either:
   pip install skill-homeassistant
   ```
   Then configure it with your instance's URL and token (see the skill's own repository for the
-  current configuration key names), and restart OVOS to load it.
+  configuration key names), and restart OVOS to load it. Skill settings live in
+  `~/.config/mycroft/skills/<skill_id>/settings.json`, which
+  [Skill Settings](skill-settings.md) covers in full.
 
 ### Example utterances
 
