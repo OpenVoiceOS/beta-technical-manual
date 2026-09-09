@@ -3,7 +3,7 @@
 !!! abstract "In a nutshell"
     Normally a skill listens for all of its commands at once. Intent Layers let a skill turn
     commands on and off as a conversation progresses, so only the choices that make sense
-    right now are available, much like a "choose your own adventure" book where each page
+    are available at that point, much like a "choose your own adventure" book where each page
     unlocks the next set of options. This is handy for step-by-step flows, games, or anything
     that should react differently depending on what the user just did. For the broader
     picture, see the [Glossary](glossary.md).
@@ -48,6 +48,14 @@ class RotatingIntentsSkill(OVOSSkill):
 ```
 
 > **NOTE**: `enable_intent` / `disable_intent` change the **global** intent set. These states are shared across [Sessions](session.md). For per-session gating, use [Intent Layers](#decorators) (which gate via intent context) instead.
+
+!!! warning "Two mechanisms, similar names, different scope"
+
+    The skill methods `self.enable_intent()` and `self.disable_intent()` are device-wide. They work by deregistering the intent and registering it again, so the effect lands on the shared pipeline registry no matter which session the calling skill was serving, and no matter whether it was serving one at all.
+
+    The bus messages `ovos.intent.enable` and `ovos.intent.disable` (OVOS-INTENT-4 §8.5) are a different mechanism with a different scope. Each binds to the session its message carries: under the `default` session the effect is device-wide, because every session inherits that registration, while under a satellite's own `session_id` it suppresses the intent for that satellite alone and leaves every other session matching. The adapt and padatious pipeline plugins each keep their own session-scoped record and consult it when they choose match candidates.
+
+    A skill method is therefore not the in-process shortcut for the bus message of nearly the same name. Reach for the bus message when one session must differ from the others, and for intent layers when a skill is walking one session through a sequence of states.
 
 
 ## State Machines
@@ -160,7 +168,7 @@ layer is a named group of intents that you can manage at once.
 Slightly more complex than the previous example, we may want to offer several "forks" on the
 intent execution, enabling different intent groups depending on previous interactions.
 
-`skill-moon-game` (a VoiceGamez title, not currently public) is an example full voice
+`skill-moon-game` (a VoiceGamez title, not public) is an example full voice
 game implemented this way.
 
 Here is an excerpt from the game to illustrate usage of `IntentLayer` decorators:
