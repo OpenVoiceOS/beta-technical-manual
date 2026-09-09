@@ -49,6 +49,11 @@ padatious, and adapt, and stops at the first one confident enough to handle the 
 
 When an `ovos.utterance.handle` message (legacy: `recognizer_loop:utterance`) arrives on the bus, it triggers the lifecycle entry point of [OVOS-PIPELINE-1 §9.1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md):
 
+!!! warning "The orchestrator stamps its own `utterance_id`"
+
+    At entry the orchestrator writes a fresh uuid into `context.utterance_id`, replacing whatever the entry message carried (OVOS-PIPELINE-1 §9.1.1). An id supplied by whatever produced the utterance is not the lifecycle identifier, so a bridge or satellite that sets one for its own tracing must not expect to see it again: everything downstream correlates on the orchestrator's value, which `Message.reply` and `Message.forward` propagate. Once stamped, no component overwrites it.
+
+
 ```mermaid
 flowchart TD
     START(["ovos.utterance.handle<br/>(legacy: recognizer_loop:utterance) §9.1"])
@@ -232,7 +237,7 @@ write-through). See [Session Aware Skills](session.md).
     `response`, `stop`, `fallback` and `common_query`. A skill or pipeline **must not** register
     a reserved name under INTENT-4. A skill subscribes to the reserved dispatch topic by
     framework convention instead. The spec reserves these names, but `ovos-core`'s intent
-    manifest does not currently reject a reserved-name registration. It only warns on
+    manifest does not reject a reserved-name registration. It only warns on
     registrations missing required fields, so this is a contract skills must honor, not one the
     orchestrator enforces today.
     A reservation is a namespace lease, not a dispatch change. Reserved-name dispatches fire
