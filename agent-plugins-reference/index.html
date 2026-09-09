@@ -1784,6 +1784,9 @@ Start at <a href="../agent-plugins/">Agent Plugins</a> to pick a plugin, come he
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-persona-server">OpenVoiceOS/ovos-persona-server</a></p>
 </li>
 <li>
+<p><strong>Install</strong>: <code>pip install --pre ovos-persona-server</code>. <code>--pre</code> is required: the last stable <code>ovos-persona</code> does not declare <code>ovos-workshop</code>, so a plain install imports with <code>ModuleNotFoundError</code>.</p>
+</li>
+<li>
 <p><strong>Description</strong>: Standalone server that exposes an OVOS persona over an HTTP API (e.g. <code>ovos-persona-server --persona rivescript_bot.json</code>).</p>
 </li>
 </ul>
