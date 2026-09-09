@@ -315,6 +315,22 @@ directly.
 
 On `ovos.intent.register.keyword` / `.template`, `ovos.intent.deregister`, `ovos.skill.deregister`, and `ovos.intent.enable` / `.disable`, the payload `skill_id` names the **target**: the skill whose registration is created, removed, suppressed or re-armed (INTENT-4 §3.2). The context `skill_id` names the **source** and is provenance only. A consumer logs the two at DEBUG when they differ and never substitutes one for the other, never rejects on a difference, and never treats an absent context `skill_id` as malformed. A skill built on `ovos-workshop` never emits these directly, since the base class already fills both fields.
 
+!!! info "These topics are alpha-channel only"
+    The orchestrator manifest that answers them first shipped in `ovos-core`
+    `2.4.0a1`, and every release carrying it is a prerelease. The stable channel
+    pins `ovos-core>=1.3.1,<1.4.0` and the testing channel pins `>=2.1.1,<3.0.0`
+    without prereleases, so neither has the manifest, these topics, or the
+    identity rule below. This is not a change a reader on those channels can be
+    on either side of.
+
+    The payload became authoritative in `3.4.4a1`, and session-scoped enable and
+    disable route through the same helper from `3.5.2a1`. Four alpha releases in
+    between behaved differently: `3.4.1a1`, `3.4.2a1`, `3.4.3a1` and `3.4.3a2`
+    treated the context as authoritative and dropped a message whose payload
+    named a different skill, logging at WARNING. Before and after that window the
+    payload is preferred, so only a tool built against those four releases, and
+    only one relying on the drop as a guard, changes meaning on upgrade.
+
 Write `ovos.skill.deregister` for a skill removing its own registrations. Sending it with a payload `skill_id` naming a different skill is not a supported operation, and the deregistration messages a skill emits for itself are unaffected by that.
 
 Enable and disable are also scoped to the session doing the toggling (INTENT-4 §11.3), the same session key every registration carries: they change the enabled state of entries matching `(session_id, skill_id, intent_name, lang)`, so disabling an intent from a satellite's session leaves the same intent enabled under the default session and under every other session that registered it. A pipeline engine that suppresses an intent for every session regardless of which one asked is not honoring this scope.
