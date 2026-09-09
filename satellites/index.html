@@ -1687,7 +1687,7 @@ satisfy the check).</p>
 <li>
 <p>For a mic-only satellite that leaves STT/TTS to the server, use
     <a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a>
-    instead of running a full listener/audio pair locally. Two things the package name
+    instead of running a full listener/audio pair locally. Three things the package name
     does not tell you:</p>
 <ul>
 <li>The <strong>server</strong> needs <code>pip install hivemind-audio-binary-protocol</code>. Plain
@@ -1695,9 +1695,17 @@ satisfy the check).</p>
   audio into a void.</li>
 <li>The satellite's run command is <strong><code>hivemind-mic-sat</code></strong> (after the same
   <code>set-identity</code> step as above, or pass <code>--key/--password/--host</code> directly).</li>
+<li>The package pulls in <strong>no microphone or VAD plugin</strong>, so install them yourself:
+  <code>pip install --pre ovos-microphone-plugin-alsa ovos-vad-plugin-silero</code>. Without
+  them the satellite connects to the hub and only then fails, with
+  <code>TypeError: 'NoneType' object is not callable</code> from the microphone and VAD
+  factories once their default fallback chains find nothing installed. Silero runs
+  on onnxruntime and needs no torch, so the pair stays light enough for a Pi Zero.</li>
 </ul>
 <p>The device runs only a microphone and VAD plugin. Cheap hardware like a Pi Zero
-works, while wake word, STT and TTS all happen server-side. The trade-off: with no
+works for this shape, while wake word, STT and TTS all happen server-side. That is
+a satellite, not a full install: a Pi Zero cannot run the whole local stack, which
+<a href="../install-raspovos/">Installing raspOVOS</a> covers. The trade-off: with no
 local wake word, every VAD-detected voice segment streams upstream, costing
 bandwidth and putting the full STT load on the server. This is fine for a homelab
 with a handful of devices. For a local wake word on slightly stronger hardware, use
