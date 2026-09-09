@@ -72,7 +72,7 @@ flowchart TD
 2. `FallbackService.match_high/medium/low()` filters registered fallbacks to the stage's priority range
 
 
-3. It pings candidates via `ovos.skills.fallback.ping` (carrying the priority `range` and a `fallback_request_id`) and collects `ovos.skills.fallback.pong` acknowledgements (`can_handle`, echoing the same `fallback_request_id`) within ~0.5s. The request id lets the service ignore a pong that answers a stale or concurrent poll round, instead of the one it is currently waiting on.
+3. It pings candidates via `ovos.skills.fallback.ping` (carrying the priority `range` and a `fallback_request_id`) and collects `ovos.skills.fallback.pong` acknowledgements (`can_handle`, echoing the same `fallback_request_id`) within ~0.5s. The request id lets the service ignore a pong that answers a stale or concurrent poll round, instead of the one it is waiting on.
 
 
 4. Candidates are sorted by priority ascending; the winning match dispatches to that skill via `ovos.skills.fallback.{skill_id}.request`
@@ -163,6 +163,25 @@ This lets you customize fallback behavior for your skill ecosystem.
 | `ovos.skills.fallback.ping` | Skill-side: `_handle_fallback_ack` replies with `ovos.skills.fallback.pong` |
 | `ovos.skills.fallback.pong` | Service-side: `handle_ack` collects a skill's `can_handle` reply |
 | `ovos.skills.fallback.{skill_id}.request` | Skill-side: `_handle_fallback_request` actually runs the winning skill's fallback handlers |
+
+### Which skill a registration acts on
+
+Both `ovos.skills.fallback.register` and `ovos.skills.fallback.deregister` act on
+the `skill_id` in the message payload. That field names the **target**: the skill
+whose fallback handler is added to or removed from the registry.
+
+A message also carries `context.skill_id`, which names the **source** that
+emitted it. The two are the same whenever a skill registers itself, which is the
+ordinary case, and `ovos-workshop` emits the registration that way on startup.
+They are not required to match. The service indexes under the payload value, does
+not substitute the context value for it, and rejects nothing on the strength of a
+difference or of a missing context `skill_id` — a source that is not a skill at
+all, such as a provisioning tool, registers on a skill's behalf. A plugin logs
+both at DEBUG when they differ.
+
+Removing another skill's fallback handler is a form of remote uninstall, so a
+deployment may block cross-skill messages as hardening. The shape of that policy
+is left to the deployment.
 
 ---
 
