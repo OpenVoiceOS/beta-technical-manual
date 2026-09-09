@@ -40,7 +40,7 @@ Key purposes include:
 * **Preserve conversational context** across multiple turns.
 
 
-* **Prioritize recently used skills** for more natural interactions.
+* **Prioritize the skills used last** for more natural interactions.
 
 
 * **Enable stateful behavior**, such as follow-up questions or corrections.
@@ -80,7 +80,7 @@ Skills are called in order of when they were last active. For example, if a user
 
 The utterance "what's the weather" is first sent to the Timer Skill's `converse()` method, then to the intent service for normal handling, where the Weather Skill is called.
 
-Because the Weather Skill was called, it is now added to the front of the Active Skills List. The next utterance received is directed to:
+Because the Weather Skill was called, it is added to the front of the Active Skills List. The next utterance received is directed to:
 
 1. `WeatherSkill.converse()`
 
@@ -266,7 +266,9 @@ Customize the pipeline via `mycroft.conf` under `skills.converse`:
 
 ### `get_response` Support
 
-During `skill.get_response`, the skill temporarily holds the converse channel. This is tracked per-session via the skill's `UtteranceState.RESPONSE`: while set, `match()` routes the next utterance straight to that skill (match type `{skill_id}.converse.get_response`), bypassing the normal ping/pong path.
+During `skill.get_response`, the skill temporarily holds the converse channel. This is tracked per session in `Session.response_mode`, a single `{skill_id, expires_at}` object naming the one holder, or `None` when nobody is waiting on a direct answer. While a holder is set, `match()` routes the next utterance straight to that skill (match type `{skill_id}.converse.get_response`), bypassing the normal ping/pong path.
+
+`Session.utterance_states` is a deprecated view of the same window, shaped as `{skill_id: state}` for code written before `response_mode` existed. It stores nothing of its own: reading it projects the current holder as `UtteranceState.RESPONSE` and reports every other skill as `INTENT` by omission, and writing to it, including mutating the dict it returns, forwards to `set_response_mode` and `clear_response_mode`. The two cannot disagree. Every access logs a deprecation warning naming the major version that removes it, so write new code against `response_mode` and the `enable_response_mode` / `disable_response_mode` / `clear_response_mode` methods.
 
 - `skill.converse.get_response.enable` → `session.enable_response_mode(skill_id)` (lock converse to this skill)
 
