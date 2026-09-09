@@ -80,6 +80,26 @@ This writes the client to the server's credentials database (under
 [community docs](https://jarbashivemind.github.io/HiveMind-community-docs/) cover the rest
 of the admin CLI.
 
+!!! warning "A new client is allowed nothing until you say otherwise"
+
+    `add-client` leaves the client's message-type whitelist empty, and an empty
+    whitelist denies everything. Administrator status does not exempt a client
+    from it. The command prints a note saying so; the failure it prevents is a
+    satellite that authenticates, connects, and is mute.
+
+    Grant each type the client needs, one call per type:
+
+    ```bash
+    hivemind-core allow-msg recognizer_loop:utterance <client_id>
+    ```
+
+    The whitelist covers both directions. A satellite sends `recognizer_loop:*`
+    and receives `speak`, `speak:b64_audio.response`, `mycroft.audio.play_sound`
+    and `ovos.utterance.handled`, so a client granted only what it sends will
+    talk to the hub and hear nothing back. Messages the hub addresses to one
+    connection by name bypass the whitelist; the ones a bridge infers from
+    session ownership, which is how a spoken reply reaches a satellite, do not.
+
 **2. Start the server:**
 
 ```bash
