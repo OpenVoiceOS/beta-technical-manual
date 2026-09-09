@@ -116,9 +116,17 @@ ovos.pip.uninstall         data: {"packages": ["some-lib"]}
 ```
 
 Services other than core can run their own `ServiceInstaller` (from `ovos-utils`), which
-listens on the broadcast topics above **and** on a targeted
-`ovos.pip.install.<service_name>` / `ovos.pip.uninstall.<service_name>` pair, so a package
-installs into the process that actually loads it. Four services do this: `ovos-audio`
+listens on the broadcast topics above. To install into one service rather than all of them,
+name it in the payload: a request carrying `data.service_name` is acted on only by the
+service of that name, and a request without it reaches every installer (OVOS-INSTALL-1 §2).
+That is how a package installs into the process that actually loads it.
+
+The suffixed `ovos.pip.install.<service_name>` / `ovos.pip.uninstall.<service_name>` pair
+addresses the same thing and predates the specification. Those topics still work and log a
+deprecation, for one stable cycle. Write `data.service_name` instead: a topic carries no
+target, which is what the payload is for.
+
+Four services run their own installer: `ovos-audio`
 (service name `ovos_audio`, since 2.2.0a1), `ovos-dinkum-listener` (`ovos_dinkum_listener`,
 since 0.9.0a1), `ovos-gui` (`ovos_gui`, since 1.5.0a1), and `ovos-PHAL` (since 0.3.0a1,
 service name `ovos_PHAL`, or `ovos_PHAL_admin` when running as [AdminPHAL](phal.md)).
