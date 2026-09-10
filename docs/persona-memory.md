@@ -55,7 +55,7 @@ Two rules hold for every backend in this package:
 - The **first** message MAY be a `system` message carrying the persona's `system_prompt`.
 - The **last** message is ALWAYS the current user utterance.
 
-The short-term memory previously hard-coded in `ovos-persona` is now a plugin under this interface, so all memory strategies are composable.
+Short-term memory is a plugin under this interface like any other strategy, so all of them are composable.
 
 `update_history` normalizes what it is given before storing it: a leading message left over with no matching turn is dropped, and consecutive assistant messages are merged into one, so callers do not need to pre-clean the message list themselves.
 
@@ -126,11 +126,29 @@ The retrieval backends (`local-rag`, `lexical`) and the `composite` share a `Bas
 
 | `inject_mode` | What it does | When to use |
 |---|---|---|
-| `system` (default) | Retrieved context goes in a **separate** `system` message; the persona's `system_prompt` stays its own message | Keeps the base prompt stable/cacheable; safe default |
+| `system` (default) | Retrieved context goes in a **separate** `system` message; the persona's `system_prompt` stays its own message | Keeps the base prompt stable and cacheable, but see the warning below before relying on it |
 | `developer` | Same, but a `developer`-role message | Providers that distinguish developer from system instructions |
 | `system_prompt` | Context folded into the persona's system prompt (one combined `system` message) | Backends that only honour a single system message |
 | `user` | Context prepended to the final user message | Backends that ignore system/developer roles |
 | `tool` | A synthetic assistant `tool_calls` turn + its `tool` result carry the context, just before the user turn | Tool-calling brains; presents recall as a search-tool result. Needs the `ovos-plugin-manager` TOOL contract |
+
+!!! warning "The default mode loses the context on an OpenAI chat engine"
+
+    `ovos-openai-plugin` removes every `system` message from a request unless
+    `allow_system_prompts` is set, and that setting is off by default. A memory
+    plugin left on the default `inject_mode` hands its recalled text over as a
+    `system` message, so the engine discards it before the request is sent. The
+    modes `system` and `system_prompt` both lose it this way; `developer`, `user`
+    and `tool` all keep it.
+
+    Nothing reports the loss. The reply comes back fluent and the persona simply
+    answers as though it recalled nothing, which reads as a memory plugin that
+    found nothing rather than a request that arrived without it.
+
+    Set `inject_mode` to `developer` for a persona that needs memory on this
+    engine. Setting `allow_system_prompts` also works, and costs more than it
+    looks: it lets a caller's own system message through the chat API, which is
+    what the setting exists to prevent.
 
 ### Retrieval knobs
 

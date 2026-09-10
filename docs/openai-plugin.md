@@ -92,7 +92,7 @@ round-trip), letting the caller run a tool loop. This is the same hook the
 | Key | Type | Default | Description |
 |---|---|---|---|
 | `system_prompt` | `str` | `null` | Instruction prepended to every conversation as a `system` message. |
-| `allow_system_prompts` | `bool` | `false` | When `true`, caller system messages are merged with the configured prompt. |
+| `allow_system_prompts` | `bool` | `false` | When `true`, caller system messages are merged with the configured prompt. When `false` they are removed, including a `system` message a memory plugin assembled — see [Persona Memory](persona-memory.md#inject-modes). |
 
 ### System prompt merging
 
