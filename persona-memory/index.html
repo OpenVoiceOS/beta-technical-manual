@@ -1599,7 +1599,7 @@
 <li>The <strong>first</strong> message MAY be a <code>system</code> message carrying the persona's <code>system_prompt</code>.</li>
 <li>The <strong>last</strong> message is ALWAYS the current user utterance.</li>
 </ul>
-<p>The short-term memory previously hard-coded in <code>ovos-persona</code> is now a plugin under this interface, so all memory strategies are composable.</p>
+<p>Short-term memory is a plugin under this interface like any other strategy, so all of them are composable.</p>
 <p><code>update_history</code> normalizes what it is given before storing it: a leading message left over with no matching turn is dropped, and consecutive assistant messages are merged into one, so callers do not need to pre-clean the message list themselves.</p>
 <hr />
 <h2 id="per-session-persona-tracking">Per-Session Persona Tracking<a class="headerlink" href="#per-session-persona-tracking" title="Permanent link">&para;</a></h2>
@@ -1689,7 +1689,7 @@ keys) are in the <a href="#backends">per-backend sections</a> below.</p>
 <tr>
 <td><code>system</code> (default)</td>
 <td>Retrieved context goes in a <strong>separate</strong> <code>system</code> message; the persona's <code>system_prompt</code> stays its own message</td>
-<td>Keeps the base prompt stable/cacheable; safe default</td>
+<td>Keeps the base prompt stable and cacheable, but see the warning below before relying on it</td>
 </tr>
 <tr>
 <td><code>developer</code></td>
@@ -1713,6 +1713,22 @@ keys) are in the <a href="#backends">per-backend sections</a> below.</p>
 </tr>
 </tbody>
 </table>
+<div class="admonition warning">
+<p class="admonition-title">The default mode loses the context on an OpenAI chat engine</p>
+<p><code>ovos-openai-plugin</code> removes every <code>system</code> message from a request unless
+<code>allow_system_prompts</code> is set, and that setting is off by default. A memory
+plugin left on the default <code>inject_mode</code> hands its recalled text over as a
+<code>system</code> message, so the engine discards it before the request is sent. The
+modes <code>system</code> and <code>system_prompt</code> both lose it this way; <code>developer</code>, <code>user</code>
+and <code>tool</code> all keep it.</p>
+<p>Nothing reports the loss. The reply comes back fluent and the persona simply
+answers as though it recalled nothing, which reads as a memory plugin that
+found nothing rather than a request that arrived without it.</p>
+<p>Set <code>inject_mode</code> to <code>developer</code> for a persona that needs memory on this
+engine. Setting <code>allow_system_prompts</code> also works, and costs more than it
+looks: it lets a caller's own system message through the chat API, which is
+what the setting exists to prevent.</p>
+</div>
 <h3 id="retrieval-knobs">Retrieval knobs<a class="headerlink" href="#retrieval-knobs" title="Permanent link">&para;</a></h3>
 <p>Set under the backend's <code>retrieval</code> block:</p>
 <ul>

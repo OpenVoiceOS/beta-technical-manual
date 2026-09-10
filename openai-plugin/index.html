@@ -1769,7 +1769,7 @@ this package ships is the server-coupled RAG memory described below.</p>
 <td><code>allow_system_prompts</code></td>
 <td><code>bool</code></td>
 <td><code>false</code></td>
-<td>When <code>true</code>, caller system messages are merged with the configured prompt.</td>
+<td>When <code>true</code>, caller system messages are merged with the configured prompt. When <code>false</code> they are removed, including a <code>system</code> message a memory plugin assembled — see <a href="../persona-memory/#inject-modes">Persona Memory</a>.</td>
 </tr>
 </tbody>
 </table>
