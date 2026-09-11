@@ -65,15 +65,20 @@ flowchart TD
 ## Quickstart: expose an OVOS install
 
 ```bash
-pip install hivemind-core "setuptools<82"
+pip install --pre hivemind-core
 ```
 
-!!! warning "Why setuptools is pinned"
+!!! warning "Install the prerelease, on both sides"
 
-    `hivemind-core` alone installs and imports, then fails on the first command
-    below. It reads its plugins through `pkg_resources`, which setuptools 82
-    removed, so a fresh environment raises `ModuleNotFoundError: No module named
-    'pkg_resources'`. Nothing reports this at install time.
+    `--pre` is not optional here. Without it the install resolves a release that
+    reads its plugins through `pkg_resources`, which recent setuptools no longer
+    ships, so the first command below fails with `ModuleNotFoundError: No module
+    named 'pkg_resources'` and nothing warns at install time.
+
+    The satellite is installed with `--pre` as well, further down. Use the same
+    form on both: the server and the satellite negotiate a protocol, and
+    installing one from prereleases and the other without them can pair two
+    generations that do not speak to each other.
 
 **1. Provision a client.** Every satellite or client needs an access key issued by the server:
 
