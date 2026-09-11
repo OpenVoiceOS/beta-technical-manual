@@ -75,12 +75,6 @@ pip install hivemind-core "setuptools<82"
     removed, so a fresh environment raises `ModuleNotFoundError: No module named
     'pkg_resources'`. Nothing reports this at install time.
 
-    A `KeyError` naming a database plugin at the same step is a different
-    problem, and the package list is not the place to fix it: the server reads
-    its backend from configuration, and that message means the configuration on
-    the machine selects a backend that is not installed. A fresh install selects
-    the JSON backend, which ships with it.
-
 **1. Provision a client.** Every satellite or client needs an access key issued by the server:
 
 ```bash
@@ -92,6 +86,14 @@ This writes the client to the server's credentials database (under
 `~/.config/hivemind-core/server.json`. The
 [community docs](https://jarbashivemind.github.io/HiveMind-community-docs/) cover the rest
 of the admin CLI.
+
+??? question "That command ended in a `KeyError` naming a database plugin"
+
+    The server chooses its database backend from configuration, so this message
+    means the machine's configuration selects a backend that is not installed.
+    Install that backend, or set the configured one back to the JSON backend
+    that ships with the server. A fresh install selects the JSON backend and
+    does not raise this.
 
 !!! warning "A new client is allowed nothing until you say otherwise"
 
