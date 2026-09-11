@@ -74,6 +74,13 @@ OVOS follows [**semantic versioning**](https://semver.org/) (SemVer) with a **ro
 
 These channels are managed via the [constraints files](https://pip.pypa.io/en/stable/user_guide/#constraints-files) hosted in the [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases) repository. **If unsure, choose Testing.** It gets bug fixes and new features without the instability of Alpha.
 
+Each channel below installs into a virtual environment, which `uv` requires and does not create for you. Make one and activate it first, then run the command for the channel you chose:
+
+```bash
+uv venv
+source .venv/bin/activate
+```
+
 ### 1. Stable Channel (Production-Ready)
 
 - ✅ Bug fixes only
