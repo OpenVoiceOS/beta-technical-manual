@@ -1670,8 +1670,21 @@ You can swap implementations without touching the rest:</p>
 <p><img alt="Diagram of a server running ovos-core and hivemind-core, exposing a hivemind_listener on port 5678 that three satellite clients (Kitchen, Bedroom, Restroom) connect to, each relaying its own spoken request back to the server" src="../img/satellites.png" /></p>
 <hr />
 <h2 id="quickstart-expose-an-ovos-install">Quickstart: expose an OVOS install<a class="headerlink" href="#quickstart-expose-an-ovos-install" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>hivemind-core
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>hivemind-core<span class="w"> </span><span class="s2">&quot;setuptools&lt;81&quot;</span><span class="w"> </span>hivemind-sqlite-database
 </span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Why the extra two packages</p>
+<p><code>hivemind-core</code> alone installs and imports, then fails on the first command
+below. It reads its plugins through <code>pkg_resources</code>, which setuptools 81
+removed, so a fresh environment raises <code>ModuleNotFoundError: No module named
+'pkg_resources'</code>. Past that, it opens its client database through
+<code>hivemind-sqlite-db-plugin</code>, which it names as the default and does not
+depend on, so the command ends in <code>KeyError: 'hivemind-sqlite-db-plugin' not
+found</code>.</p>
+<p>Both are packaging gaps rather than choices, and neither is reported at
+install time. Installing the two packages above alongside it is what makes
+the documented commands run.</p>
+</div>
 <p><strong>1. Provision a client.</strong> Every satellite or client needs an access key issued by the server:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>hivemind-core<span class="w"> </span>add-client<span class="w">       </span><span class="c1"># prints an access key + password for one client</span>
 </span></code></pre></div>

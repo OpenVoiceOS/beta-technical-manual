@@ -1666,7 +1666,7 @@ every satellite and check it after any config reset. See
 be told apart from one another. This manual covers only the OVOS side. HiveMind is a
 separate project with its own protocol and docs.</p>
 <ol>
-<li>Install and run the server: <code>pip install hivemind-core</code>, then <code>hivemind-core listen</code>.
+<li>Install and run the server: <code>pip install hivemind-core "setuptools&lt;81" hivemind-sqlite-database</code>, then <code>hivemind-core listen</code>. The other two packages are not optional: without them the next step fails, for reasons <a href="../hivemind-agents/">HiveMind agents</a> explains.
     By default it bridges to a local <code>ovos-core</code> through <code>hivemind-ovos-agent-plugin</code>.</li>
 <li>Provision each satellite with its own access key: <code>hivemind-core add-client</code>. A new client's message-type whitelist is empty and denies everything, so grant what the satellite sends and what it receives with <code>hivemind-core allow-msg</code>, or it will connect and stay mute. See <a href="../hivemind-agents/">HiveMind agents</a> for the list.</li>
 <li>
