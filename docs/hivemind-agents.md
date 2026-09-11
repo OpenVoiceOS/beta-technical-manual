@@ -65,22 +65,21 @@ flowchart TD
 ## Quickstart: expose an OVOS install
 
 ```bash
-pip install hivemind-core "setuptools<81" hivemind-sqlite-database
+pip install hivemind-core "setuptools<82"
 ```
 
-!!! warning "Why the extra two packages"
+!!! warning "Why setuptools is pinned"
 
     `hivemind-core` alone installs and imports, then fails on the first command
-    below. It reads its plugins through `pkg_resources`, which setuptools 81
+    below. It reads its plugins through `pkg_resources`, which setuptools 82
     removed, so a fresh environment raises `ModuleNotFoundError: No module named
-    'pkg_resources'`. Past that, it opens its client database through
-    `hivemind-sqlite-db-plugin`, which it names as the default and does not
-    depend on, so the command ends in `KeyError: 'hivemind-sqlite-db-plugin' not
-    found`.
+    'pkg_resources'`. Nothing reports this at install time.
 
-    Both are packaging gaps rather than choices, and neither is reported at
-    install time. Installing the two packages above alongside it is what makes
-    the documented commands run.
+    A `KeyError` naming a database plugin at the same step is a different
+    problem, and the package list is not the place to fix it: the server reads
+    its backend from configuration, and that message means the configuration on
+    the machine selects a backend that is not installed. A fresh install selects
+    the JSON backend, which ships with it.
 
 **1. Provision a client.** Every satellite or client needs an access key issued by the server:
 
