@@ -145,14 +145,15 @@ is a regular expression using a Python **named** group, `(?P<Name>...)`:
 ```text
 
 # artist.rx
-play (?P<Artist>.*) by (?P<Artist>.*)
+play (?P<Title>.*) by (?P<Artist>.*)
 
 ```
 
 The captured group's name becomes an Adapt entity, available the same way a
 `.voc` file's file name would be. An unnamed group (`(.*)` without `?P<Name>`)
 captures nothing usable: Adapt registers the pattern but no entity comes out
-of a match.
+of a match. `.rx` is deprecated alongside the Adapt engine itself; write new
+keyword-capturing resources as `.intent` slots or `.entity` files instead.
 
 ## Language [Fallback](fallback-pipeline.md)
 
