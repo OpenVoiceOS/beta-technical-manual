@@ -39,17 +39,23 @@ directory. The override only takes effect if that directory already exists when 
 loads; create it before starting/restarting the skill, not after.
 
 Replace one dialog file of an installed [skill](skill-design-guidelines.md) with your own
-wording. This example replaces `time.current.dialog` in `ovos-skill-date-time.openvoiceos`.
+wording. This example replaces `time_current.dialog` in `ovos-skill-date-time.openvoiceos`.
+
+An override matches a resource file by its **current** base name in the skill, so check the
+skill's own `locale` folder for that name first: a rename inside the skill (for example a
+base-name change to meet [OVOS-INTENT-2](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md)'s
+lowercase-underscore rule) leaves an override written against the old name unmatched, with no
+warning.
 
 1. Find the skill ID and the dialog file you want to replace. The file lives in the skill's
    `locale/en-us/dialog` directory.
-2. Write a replacement file with the same name, `time.current.dialog`. Change, add, or remove
+2. Write a replacement file with the same name, `time_current.dialog`. Change, add, or remove
    lines as you like.
 3. Copy it into the matching path under the user resources directory:
 
     ```bash
     mkdir -p ~/.local/share/mycroft/resources/ovos-skill-date-time.openvoiceos/locale/en-us/dialog
-    cp time.current.dialog \
+    cp time_current.dialog \
       ~/.local/share/mycroft/resources/ovos-skill-date-time.openvoiceos/locale/en-us/dialog/
     ```
 
@@ -61,9 +67,9 @@ non-effective override usually means the path, the file name, the extension, or 
 folder casing doesn't match exactly.
 
 !!! warning "Your file REPLACES the original, it does not merge with it"
-    The user-specific file is used instead of the skill's own `time.current.dialog`, line for
+    The user-specific file is used instead of the skill's own `time_current.dialog`, line for
     line. It is not appended to or merged with the original. If the skill is later updated
-    upstream and new lines are added to its `time.current.dialog`, your override keeps
+    upstream and new lines are added to its `time_current.dialog`, your override keeps
     shadowing the whole file, and you will not see those new lines until you copy them into
     your override yourself.
 
