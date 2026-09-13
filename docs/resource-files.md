@@ -121,15 +121,39 @@ The Adapt entity name is the file name without its extension (`hello` for `hello
 
 ## Intent Files (Padatious)
 
-One example utterance per line. Supports entity slots `{entity}` and alternation `(a | b)`:
+One example utterance per line. Supports entity slots `{entity}`, alternation `(a | b)`,
+and an optional segment `[x]` — shorthand for `(x|)` (OVOS-INTENT-1 §3.3):
 
 ```text
 
 # my.intent
 what is the weather in {location}
 (show | tell me) the weather
+what[ is] the time
 
 ```
+
+A line that is a bare slot and nothing else, `{location}`, is malformed: an intent needs
+at least one literal word to anchor the match (OVOS-INTENT-1 §3.6).
+
+## Regex Files (Adapt)
+
+A framework extension, not an OVOS-INTENT-2 role: `.rx` complements `.voc` where a
+keyword needs to capture the matched text rather than only be present. Each line
+is a regular expression using a Python **named** group, `(?P<Name>...)`:
+
+```text
+
+# artist.rx
+play (?P<Title>.*) by (?P<Artist>.*)
+
+```
+
+The captured group's name becomes an Adapt entity, available the same way a
+`.voc` file's file name would be. An unnamed group (`(.*)` without `?P<Name>`)
+captures nothing usable: Adapt registers the pattern but no entity comes out
+of a match. `.rx` is deprecated alongside the Adapt engine itself; write new
+keyword-capturing resources as `.intent` slots or `.entity` files instead.
 
 ## Language [Fallback](fallback-pipeline.md)
 
