@@ -39,7 +39,9 @@ directory. The override only takes effect if that directory already exists when 
 loads; create it before starting/restarting the skill, not after.
 
 Replace one dialog file of an installed [skill](skill-design-guidelines.md) with your own
-wording. This example replaces `time_current.dialog` in `ovos-skill-date-time.openvoiceos`.
+wording. This example replaces `time_current.dialog` in `ovos-skill-date-time.openvoiceos`
+(ovos-skill-date-time 1.3.2a1 or later; older releases, including the current stable 1.1.5,
+ship `time.current.dialog` instead).
 
 An override matches a resource file by its **current** base name in the skill, so check the
 skill's own `locale` folder for that name first: a rename inside the skill (for example a
@@ -48,7 +50,7 @@ lowercase-underscore rule) leaves an override written against the old name unmat
 warning.
 
 1. Find the skill ID and the dialog file you want to replace. The file lives in the skill's
-   `locale/en-us/dialog` directory.
+   `locale/en-US/dialog` directory.
 2. Write a replacement file with the same name, `time_current.dialog`. Change, add, or remove
    lines as you like.
 3. Copy it into the matching path under the user resources directory:
