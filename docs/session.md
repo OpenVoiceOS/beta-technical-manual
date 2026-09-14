@@ -194,7 +194,25 @@ below.
 offsets, daylight-saving state, is derived out of band and has no wire shape. The one
 normative consumer rule: when `location.tz` is present, a consumer must use it to
 resolve wall-clock time for that session, and fall back to the deployment timezone
-otherwise.
+otherwise. `location` is client-owned: a session's originator, not the consumer that
+reads it, is the only party allowed to stamp it, and doing so is the sole conformant way
+to declare it (OVOS-SESSION-1 §4.1 governs a component deriving *someone else's* session,
+not a session's own origin).
+
+Every key in `location` is optional under §3.5, and an object with none of them is the
+same as an omitted field. A session that carries no `location` therefore resolves at each
+consumer against that consumer's own deployment default. Across a HiveMind link the
+consumer is the master, so a satellite that declares nothing reads as the master's
+timezone, whatever its own configuration says. The omission is conformant, so the way to
+keep the satellite's own timezone is to declare it, not to file a specification defect.
+
+!!! warning "Alpha channel only"
+    `ovos-bus-client` stamps the field from `2.11.19a1`. A process that constructs the
+    session it originates, and passes no `location`, declares the `lat`, `lon` and `tz`
+    its deployment configures. A session rebuilt from a received carrier keeps what that
+    carrier held, so a component that derives a session it did not originate still
+    synthesizes nothing, which is what §4.1 requires. A deployment that configures no
+    location declares nothing and reads as the paragraph above describes.
 
 ## Magic Properties
 
