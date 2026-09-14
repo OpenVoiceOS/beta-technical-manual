@@ -33,6 +33,7 @@ Runs `pytest --cov`, generates a coverage report, and posts it to the job summar
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.11` |  |
@@ -40,6 +41,8 @@ Runs `pytest --cov`, generates a coverage report, and posts it to the job summar
 | `test_extras` | string | `dev` | Name of the pyproject.toml extras key that declares the package's test dependencies (e.g. 'dev' or 'test'). Tried first via 'pip install -e .[<test_extras>]'. Override per repo if the package uses a different convention. |
 | `test_extras_fallback` | string | `test` | Extras key tried if `test_extras` is not declared. Default 'test'. Set to empty to skip the fallback. |
 | `install_extras` | string | `""` | Extra dependencies to install before tests. Accepts a bare extras name ('dev'), a bracketed list ('[dev,rl]'), a full target ('.[dev]'), or raw pip arguments ('-r requirements/test.txt'). If empty, the package itself is installed via 'pip install -e .[dev]' (falling back to bare install). |
+| `pre_test_command` | string | `""` | Command run after the package is installed and before pytest, in the repository root. For test dependencies that are not pip packages: a model download, a generated fixture, a service the tests talk to. |
+| `espeak_ng_version` | string | `""` | Build espeak-ng from source at this tag (for example 1.52.0) before the tests and put it on PATH with ESPEAK_DATA_PATH set. The build is cached per version and runner. Empty skips it. |
 | `pre_install_pip` | string | `""` | Optional space-separated pip requirement specs to install BEFORE the package install step. Use this to override transitive deps with git URLs (e.g. for testing against an unreleased version of a sibling package). |
 | `test_path` | string | `test/` | Path passed to pytest (file, directory, or glob) |
 | `coverage_source` | string | `.` | Value of --cov= passed to pytest. Set to your package directory (e.g. 'ovos_core') to measure only your own code rather than the full repo. |
@@ -181,6 +184,7 @@ Scans installed dependencies for known CVEs using [`pypa/gh-action-pip-audit`](h
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.14` | Python version to use for the audit |

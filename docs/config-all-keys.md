@@ -89,7 +89,7 @@
 | Key | Default | Description |
 |---|---|---|
 | `utterance_transformers.ovos-utterance-normalizer` | `{}` |  |
-| `utterance_transformers.ovos-utterance-plugin-cancel` | `{}` |  |
+| `utterance_transformers.ovos-utterance-cancel-plugin` | `{}` |  |
 | `utterance_transformers.ovos-utterance-corrections-plugin` | `{}` |  |
 
 ### `typed_slots_transformers`

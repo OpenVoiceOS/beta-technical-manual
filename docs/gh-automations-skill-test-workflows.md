@@ -33,8 +33,9 @@ Runs [ovoscope](ovoscope-overview.md) end-to-end skill tests on a **single Pytho
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
-| `pytest_workers` | string | `auto` | pytest-xdist worker count for the e2e suite. Each ovoscope test boots its own in-process MiniCroft and is independent, so they parallelize cleanly. "auto" = one worker per core; "0" runs serially (disable xdist). |
+| `pytest_workers` | string | `2` | pytest-xdist worker count for the e2e suite. Each worker boots its own in-process MiniCroft and trains its own intent engines. The default is 2: with "auto" (4 workers on ubuntu-latest) the parallel trainers starved each other, and utterances returned ovos.intent.unmatched or a worker crashed. A repository can set a higher value or "auto". "0" runs serially (disable xdist). |
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_version` | string | `3.11` | Python version to use |
 | `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated) |
@@ -146,6 +147,7 @@ Use alongside [`ovoscope.yml`](#ovoscopeyml): `ovoscope.yml` for hand-written E2
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.11` |  |
@@ -179,6 +181,7 @@ End-to-end TTS intelligibility scoring. Synthesises speech with the TTS plugin u
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_version` | string | `3.11` | Python version to use |
