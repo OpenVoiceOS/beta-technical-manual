@@ -194,7 +194,18 @@ below.
 offsets, daylight-saving state, is derived out of band and has no wire shape. The one
 normative consumer rule: when `location.tz` is present, a consumer must use it to
 resolve wall-clock time for that session, and fall back to the deployment timezone
-otherwise.
+otherwise. `location` is client-owned: a session's originator, not the consumer that
+reads it, is the only party allowed to stamp it, and doing so is the sole conformant way
+to declare it (OVOS-SESSION-1 §4.1 governs a component deriving *someone else's* session,
+not a session's own origin).
+
+!!! warning "Not yet what satellites do"
+    `ovos-bus-client` does not stamp `location` on the sessions it originates today; it
+    applies the configured fallback at read time instead. A satellite still omits
+    `location` on the wire, so a HiveMind master resolves the satellite's session against
+    its own deployment timezone — a device configured for one timezone reads as the
+    master's across a link. This is a known defect in the client library, not conformant
+    behavior; it does not change what §3.5 requires.
 
 ## Magic Properties
 
