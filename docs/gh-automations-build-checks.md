@@ -32,6 +32,7 @@ Runs build, install, and optionally tests across a configurable matrix of Python
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_versions` | string | `["3.10", "3.11", "3.12", "3.13", "3.14"]` | JSON array of Python versions to test against |
@@ -41,6 +42,8 @@ Runs build, install, and optionally tests across a configurable matrix of Python
 | `test_path` | string | `""` | If set, run pytest against this path after installing the package. Leave empty to skip test execution (build/install verification only). |
 | `pytest_args` | string | `""` | Extra arguments appended to the pytest invocation, e.g. '--capture=tee-sys' to keep a crashing test's output visible when pytest's default fd-level capture would otherwise swallow it (native crashes, SIGABRT). Same name and meaning as on channel-compat.yml. Empty by default: no change to the command line. |
 | `test_env` | string | `""` | Extra environment variables for the test step, as newline-separated KEY=value pairs, e.g. 'PYTHONFAULTHANDLER=1\nRUST_BACKTRACE=full' to get a traceback/panic message out of a native crash instead of just "Fatal Python error: Aborted". Appended to $GITHUB_ENV before the Run Tests step. Empty by default: no vars are added. |
+| `pre_test_command` | string | `""` | Command run after the package is installed and before pytest, in the repository root. For test dependencies that are not pip packages: a model download, a generated fixture, a service the tests talk to. |
+| `espeak_ng_version` | string | `""` | Build espeak-ng from source at this tag (for example 1.52.0) before the tests and put it on PATH with ESPEAK_DATA_PATH set. The build is cached per version and runner. Empty skips it. |
 | `pr_comment` | boolean | `true` | Post a '🔨 Build Tests' section in the OVOS PR Checks comment. Only runs on pull_request events. |
 <!-- END GENERATED -->
 
@@ -96,6 +99,7 @@ comment.
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `channel_url` | string | _(required)_ | Raw URL of the OVOS distro constraints file for the channel under test, e.g. https://raw.githubusercontent.com/OpenVoiceOS/OpenVoiceOS/main/constraints-stable.txt |
 | `channel_name` | string | `""` | Short label for the channel, used in job output and artifact names. Defaults to the constraints filename with the 'constraints-' prefix and '.txt' suffix removed (so 'stable' or 'testing'). |
 | `runner` | string | `ubuntu-latest` | Runner label |
@@ -176,6 +180,7 @@ Runs an install matrix across Python versions and install modes (regular + edita
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `package_name` | string | `""` | Package name (for OPM verification). If empty, attempt to read from setup.py/pyproject.toml. |

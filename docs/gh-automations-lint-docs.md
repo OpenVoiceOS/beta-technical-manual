@@ -34,6 +34,7 @@ Runs `ruff` and/or `pre-commit` and posts results to the OVOS PR Checks comment.
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.11` |  |
@@ -57,6 +58,7 @@ Runs `mypy` and posts a `Type Check` section. Informational only, never blocks m
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.11` |  |
@@ -83,6 +85,7 @@ Verifies required documentation files exist and optionally lints Markdown. Posts
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `runner` | string | `ubuntu-latest` |  |
 | `required_files` | string | `README.md` | Comma-separated list of files that must exist at the repo root. Checked with a simple exists() test — no content validation. |
 | `markdownlint` | boolean | `false` | Run markdownlint-cli2 on *.md files. Requires Node.js (available on ubuntu-latest runners). Results are reported in the PR comment but never block merges regardless of fail_on_missing. |

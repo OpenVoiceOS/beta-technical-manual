@@ -33,6 +33,7 @@ Runs OPM (OVOS Plugin Manager) plugin detection and validation on a **single Pyt
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_version` | string | `3.11` | Python version to use for OPM checks |
@@ -153,6 +154,7 @@ Checks all installed dependencies for licenses incompatible with the **OVOS univ
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.14` |  |
@@ -218,6 +220,7 @@ Checks that a repo contains the required files (`README`, `LICENSE`, `pyproject.
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `runner` | string | `ubuntu-latest` |  |
 | `version_file` | string | `""` | Path to version.py (relative to repo root). If empty, auto-detects root or pkg/version.py. |
 | `pr_comment` | boolean | `true` | Post sections in the shared 'OVOS PR Checks' comment. Only runs when triggered by a pull_request event. |
