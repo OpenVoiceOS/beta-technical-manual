@@ -190,7 +190,7 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
 
 ---
 
-!!! warning "Upcoming: unreleased"
+!!! warning "Alpha channel only"
     The following describes a **plugin-based rendering rework** that is **not yet
     released** and not present on any published package. It is specified by the
     [OVOS-GUI-1](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md) spec

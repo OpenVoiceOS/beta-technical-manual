@@ -37,7 +37,7 @@ The entry point group is the canonical identifier used in `setup.py` / `pyprojec
 | PHAL (admin/root) | `opm.phal.admin` | `AdminPlugin` |
 | GUI | `opm.gui` | `GUIExtension` |
 
-!!! warning "Upcoming, unreleased"
+!!! warning "Alpha channel only"
     A dedicated GUI-adapter plugin type (entry point `opm.gui_adapter`, base class
     `AbstractGUIPlugin`) is in development. Tracked in
     [ovos-plugin-manager#377](https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377).

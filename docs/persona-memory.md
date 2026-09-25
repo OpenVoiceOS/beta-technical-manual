@@ -1,5 +1,7 @@
 # Persona Memory Plugins
 
+--8<-- "snippets/alpha-only.md"
+
 !!! abstract "In a nutshell"
     This controls what your assistant's persona *remembers* from earlier in a conversation. Rather than always carrying the whole chat along, a memory plugin decides which past messages, or short summaries of them, to bring back into the next reply, like a notepad that keeps the bits worth keeping. It also decides whether those notes survive between separate conversations. See [AI Agents & Personas](personas.md) for the bigger picture and the [Glossary](glossary.md) for unfamiliar terms.
 

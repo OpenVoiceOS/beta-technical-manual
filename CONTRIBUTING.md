@@ -40,6 +40,45 @@ consistent meaning, not interchangeably:
 | `!!! danger` | Data loss or a security-relevant risk (data exposure, RCE-adjacent, credentials). |
 | `??? example` / `??? abstract` (collapsible) | Reference material that is useful but would otherwise push the main flow down the page — tables of exhaustive options, deep API listings. |
 
+## Marking content the prerelease channel alone carries
+
+The manual documents the rolling prerelease channel beside the stable one. Two kinds of content
+belong to the prerelease channel alone, and each has one marker, so a stable-channel copy of the
+manual is a script run and not a reading exercise.
+
+A **block of prose** about something no published stable release carries takes this admonition,
+title and all:
+
+```markdown
+!!! warning "Alpha channel only"
+    What is prerelease-only here, and what a stable install has instead.
+```
+
+Write that exact title. A page that needs no wording of its own includes the shared snippet, which
+renders the same admonition:
+
+```markdown
+--8<-- "snippets/alpha-only.md"
+```
+
+An **install command** that needs the prerelease channel carries the `--pre` flag, and the flag is
+the marker: `pip install --pre ovos-example`. Say in the surrounding text why the flag is needed
+when a reader would otherwise drop it.
+
+An admonition about the *maturity* of a project or a feature is a different thing and keeps its own
+wording: maturity is true on every channel. See the [Maturity Scale](docs/maturity.md).
+
+`tools/alpha_only.py` reads both markers:
+
+```bash
+python3 tools/alpha_only.py check    # every alpha marker uses the canonical title
+python3 tools/alpha_only.py census   # how many markers and --pre commands there are
+python3 tools/alpha_only.py strip --dry-run   # what a stable-channel copy would lose
+```
+
+`check` fails on any other spelling of the title. A title that mentions alpha, a prerelease or an
+unreleased state and is not the marker belongs in that script's `ALLOWED_TITLES`, with the reason.
+
 ## Code fences
 
 Every fenced code block **must** carry a language tag (` ```python `, ` ```bash `, ` ```json `,

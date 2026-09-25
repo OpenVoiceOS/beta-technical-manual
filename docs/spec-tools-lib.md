@@ -1,5 +1,7 @@
 # ovos-spec-tools
 
+--8<-- "snippets/alpha-only.md"
+
 !!! note "Maturity: Beta ⬤⬤⬤◯◯"
     In real use but still settling. Watch releases for the occasional breaking change. Rated by [repository health](maturity.md), not version.
 
