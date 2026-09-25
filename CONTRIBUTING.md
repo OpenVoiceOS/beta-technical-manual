@@ -74,10 +74,19 @@ wording: maturity is true on every channel. See the [Maturity Scale](docs/maturi
 python3 tools/alpha_only.py check    # every alpha marker uses the canonical title
 python3 tools/alpha_only.py census   # how many markers and --pre commands there are
 python3 tools/alpha_only.py strip --dry-run   # what a stable-channel copy would lose
+python3 tools/test_alpha_only.py     # the script's own tests
 ```
 
-`check` fails on any other spelling of the title. A title that mentions alpha, a prerelease or an
-unreleased state and is not the marker belongs in that script's `ALLOWED_TITLES`, with the reason.
+`check` fails on any other spelling of the title, the canonical title on another admonition type
+included. A title that mentions alpha, a prerelease or an unreleased state and is not the marker
+belongs in that script's `ALLOWED_TITLES`, with the reason.
+
+`strip` fails, after writing its changes, when a page it edited still asks for the `--pre` flag in
+its prose, and it names every such line.
+
+A sentence that demands the flag, beside a command that no longer carries it, is worse than either
+alone. Two ways out: write the sentence so it does not name the flag, or put it inside the
+canonical admonition, which the strip removes whole.
 
 ## Code fences
 
