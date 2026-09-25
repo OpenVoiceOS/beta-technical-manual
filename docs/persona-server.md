@@ -26,9 +26,15 @@ pip install ovos-openai-plugin
 ```
 
 Optional extras: `rag` (file/vector-store endpoints), `mcp` (pulls in `fastmcp>=3,<4` to
-serve the `/mcp` endpoint below), and `a2a` (Agent-to-Agent endpoint). The stable PyPI
-release predates both extras — use `--pre` and a floor pin, e.g.
-`pip install --pre 'ovos-persona-server[a2a]>=0.17.2a1'`.
+serve the `/mcp` endpoint below), and `a2a` (Agent-to-Agent endpoint).
+
+!!! warning "Alpha channel only"
+    The stable PyPI release predates the `rag`, `mcp` and `a2a` extras, so they need
+    `--pre` and a floor pin:
+
+    ```bash
+    pip install --pre 'ovos-persona-server[a2a]>=0.17.2a1'
+    ```
 
 !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
     The extra is still called `mcp`, so `pip install --pre 'ovos-persona-server[mcp]'` is unchanged,

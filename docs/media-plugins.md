@@ -213,8 +213,9 @@ Then select it in your audio/media backend config. See [Media playback: legacy v
 pip install --pre ovos-media-plugin-cli
 ```
 
-Only alpha releases exist on PyPI so far, matching its Alpha rating above — hence the
-`--pre` flag.
+!!! warning "Alpha channel only"
+    Only alpha releases of this plugin exist on PyPI, which matches its Alpha rating
+    above, so the install needs `--pre`.
 
 Then select it in your audio/media backend config, optionally setting the `command` to
 a specific CLI player. See [Media playback: legacy vs. ovos-media](ovos-media.md).

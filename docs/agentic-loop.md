@@ -60,8 +60,11 @@ pip install --pre ovos-agentic-loop
 pip install --pre 'ovos-agentic-loop[web]'
 ```
 
-The stable `0.1.0` release ships only seven of the eight loops below — `ovos-native-toolcall-loop`
-needs `>=0.2.0a1`. Use `--pre` to get all eight.
+The stable `0.1.0` release ships seven of the eight loops below.
+
+!!! warning "Alpha channel only"
+    `ovos-native-toolcall-loop` needs `>=0.2.0a1`, so `--pre` is what gets all eight
+    loops. On the stable channel the eighth loop is not installable.
 
 ---
 

@@ -125,24 +125,30 @@ uv pip install ovos-core[mycroft] -c https://raw.githubusercontent.com/OpenVoice
 - ⚠️ May include breaking changes
 - 🧪 Not suitable for production use
 
-!!! warning "`--pre` is not scoped to OVOS"
-    `--pre` tells `pip`/`uv` to allow pre-release versions of **every** dependency it
-    resolves, not just the `ovos-*` packages. A transitive dependency you didn't expect
-    can also jump to a pre-release. Use a dedicated virtual environment for alpha testing.
+This is the channel the fleet develops on, and the only one that carries a
+prerelease. Its install needs both the alpha constraints file and the flag that
+permits a prerelease, so the two belong together.
 
-!!! warning "Omitting `--pre` silently downgrades transitive dependencies"
-    The reverse trap is worse. Installing without `--pre` still resolves a **top-level**
-    package to a pre-release when its requested version pin names one, but every
-    **transitive** dependency quietly falls back to its latest stable — so one service can
-    end up on `ovos-bus-client` from a stable line years behind its siblings, with no
-    warning at install time. After any alpha install, verify what you actually got, not
-    what you asked for: `pip list | grep ovos` (or `uv pip list`) and check the key
-    libraries carry the expected alpha suffix.
+!!! warning "Alpha channel only"
+    Install the alpha channel with the flag and the constraints file together:
 
-```bash
-uv pip install ovos-core[mycroft] --pre -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-alpha.txt
+    ```bash
+    uv pip install ovos-core[mycroft] --pre -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-alpha.txt
+    ```
 
-```
+    **The flag is not scoped to OVOS.** `--pre` tells `pip` and `uv` to allow a
+    pre-release of **every** dependency they resolve, not only the `ovos-*` packages.
+    A transitive dependency you did not expect can jump to a pre-release too, so use a
+    dedicated virtual environment for alpha testing.
+
+    **Omitting the flag downgrades transitive dependencies silently.** The reverse trap
+    is worse. An install without `--pre` still resolves a **top-level** package to a
+    pre-release when its requested version pin names one, but every **transitive**
+    dependency quietly falls back to its latest stable. One service can end up on
+    `ovos-bus-client` from a stable line years behind its siblings, with no warning at
+    install time. After any alpha install, verify what you got and not what you asked
+    for: `pip list | grep ovos`, or `uv pip list`, and check that the key libraries
+    carry the expected alpha suffix.
 
 ---
 
@@ -299,7 +305,6 @@ fetch the channel file on every operation:
 
 ## ⚠️ Tips & Caveats
 
-- Using `--pre` installs pre-releases across all dependencies, not just OVOS-specific ones. Use it with caution.
 - You can mix and match extras based on your hardware or use case, e.g., omit GUI skills on a headless server.
 - A constraints file only bounds packages it lists. Anything absent resolves freely. If you need an exact, repeatable set of versions, install from your own `uv pip freeze` output rather than from a channel file.
 - After installing you need to launch the individual ovos services, either manually or by creating a systemd service

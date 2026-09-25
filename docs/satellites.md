@@ -137,13 +137,21 @@ Use HiveMind when satellites need auth, need to cross an untrusted network, or n
 be told apart from one another. This manual covers only the OVOS side. HiveMind is a
 separate project with its own protocol and docs.
 
-1. Install and run the server: `pip install --pre hivemind-core`, then `hivemind-core listen`. The `--pre` is not optional: without it the next step fails, for the reason [HiveMind agents](hivemind-agents.md) explains. The satellite below installs with `--pre` too, and the two sides negotiate a protocol, so use the same form on both.
+1. Install and run the server: `pip install --pre hivemind-core`, then `hivemind-core listen`.
+
+    !!! warning "Alpha channel only"
+        `--pre` is not optional here: without it the next step fails, for the reason
+        [HiveMind agents](hivemind-agents.md) explains. The satellite below installs
+        with `--pre` as well, and the two sides negotiate a protocol, so use the same
+        form on both.
     By default it bridges to a local `ovos-core` through `hivemind-ovos-agent-plugin`.
 2. Provision each satellite with its own access key: `hivemind-core add-client`. A new client's message-type whitelist is empty and denies everything, so grant what the satellite sends and what it receives with `hivemind-core allow-msg`, or it will connect and stay mute. See [HiveMind agents](hivemind-agents.md) for the list.
 3. On each satellite, install the client and store the key. The distribution is
-    `hivemind-bus-client`. The repository is `hivemind-websocket-client`. The
-    plain PyPI "stable" release (`0.4.4`) predates the current protocol, so `--pre`
-    is required.
+    `hivemind-bus-client`. The repository is `hivemind-websocket-client`.
+
+    !!! warning "Alpha channel only"
+        The plain PyPI "stable" release (`0.4.4`) predates the current protocol, so
+        `--pre` is required.
 
     ```bash
     pip install --pre hivemind-bus-client

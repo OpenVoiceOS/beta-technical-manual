@@ -26,11 +26,12 @@ The companion client plugin `ovos-translate-server-plugin` can point an OVOS dev
 pip install --pre "ovos-translate-server>=0.10.0a1"
 ```
 
-!!! warning "A bare `pip install ovos-translate-server` gets an unusable release"
-    Without `--pre` and a floor pin, pip resolves the name to the latest **stable** release,
+!!! warning "Alpha channel only"
+    A bare `pip install ovos-translate-server` gets an unusable release. Without
+    `--pre` and a floor pin, pip resolves the name to the latest stable release,
     `0.0.2`, which is years behind the `0.10.0a1` line this page documents. It looks
-    installed and serves nothing described here. After installing, confirm what you actually
-    got: `pip show ovos-translate-server`.
+    installed and serves nothing described here. After installing, confirm what you
+    actually got: `pip show ovos-translate-server`.
 
 Also install the translation plugin(s) you intend to serve:
 
