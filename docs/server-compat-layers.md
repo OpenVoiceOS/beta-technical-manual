@@ -95,7 +95,12 @@ All compat routers are always loaded. No feature flag is needed.
 
 ## Persona Server Compat Routes
 
-`pip install --pre ovos-persona-server`. `--pre` is required: the last stable `ovos-persona` does not declare `ovos-workshop`, so a plain install imports with `ModuleNotFoundError: No module named 'ovos_workshop'`. `create_persona_app()` mounts the routes below.
+!!! warning "Alpha channel only"
+    `pip install --pre ovos-persona-server`. The last stable `ovos-persona`, `0.7.1`, does not
+    declare `ovos-workshop`, so an install from the stable channel imports with
+    `ModuleNotFoundError: No module named 'ovos_workshop'`.
+
+`create_persona_app()` mounts the routes below.
 It mounts a chat router at prefix `/openai/v1` (`POST /openai/v1/chat/completions`,
 OpenAI-compatible), an Ollama router at prefix `/ollama/api`, and a UTCP router at `/tools`.
 It also mounts `/mcp` when started with the `--mcp` flag (which requires the `mcp` extra — the extra alone no longer exposes the endpoint).

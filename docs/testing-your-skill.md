@@ -28,14 +28,15 @@ alongside the skill and OVOS itself, not just present somewhere on the machine.
 
 Add it as a test dependency of the skill you built in [Your First Skill](first-skill.md):
 
-```bash
-pip install --pre ovoscope
-```
+!!! warning "Alpha channel only"
+    OVOS ships its current work as prereleases, and one of the packages ovoscope needs,
+    `ovos-spec-tools`, has no stable release at all, so ovoscope installs from the prerelease
+    channel alone. The stable channel resolves an older combination that cannot run these
+    tests.
 
-The `--pre` flag is required, not optional. OVOS ships its current work as
-prereleases, and one of the packages ovoscope needs, `ovos-spec-tools`, has no
-stable release at all. Without the flag pip resolves an older combination that
-cannot run these tests.
+    ```bash
+    pip install --pre ovoscope
+    ```
 
 For a real skill repository, list it under a `[project.optional-dependencies]` "test" extra in
 `pyproject.toml` instead of installing it loose, so `pip install -e .[test]` pulls in everything a

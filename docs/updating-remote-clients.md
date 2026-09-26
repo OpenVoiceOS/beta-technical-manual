@@ -20,9 +20,13 @@ upstream `mycroft-bus-client` package to `ovos-bus-client`. This is a
 Python import change, not a wire change: listed here because it is the
 package-level ancestor of the topic-level migration above.
 
-- Migration: `pip install --pre ovos-bus-client` (the plain PyPI stable, `1.5.0`, predates the dual-emit bridge this page documents; `--pre` is required). `from mycroft_bus_client
-  import Message` → `from ovos_bus_client.message import Message` (or
+- Migration: `from mycroft_bus_client import Message` →
+  `from ovos_bus_client.message import Message` (or
   `from ovos_bus_client import MessageBusClient`).
+
+    !!! warning "Alpha channel only"
+        `pip install --pre ovos-bus-client`. The plain PyPI stable, `1.5.0`, predates the
+        dual-emit bridge this page documents.
 Lifecycle:
 
 | Phase | Version | Notes |

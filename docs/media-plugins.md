@@ -209,12 +209,13 @@ Then select it in your audio/media backend config. See [Media playback: legacy v
   `CLIAudioService`) and the old audio service (`mycroft.plugin.audioservice`, type
   `ovos_cli`).
 
-```bash
-pip install --pre ovos-media-plugin-cli
-```
+!!! warning "Alpha channel only"
+    `ovos-media-plugin-cli` has no stable release on PyPI, which matches its Alpha rating
+    above, so it installs from the prerelease channel alone:
 
-Only alpha releases exist on PyPI so far, matching its Alpha rating above — hence the
-`--pre` flag.
+    ```bash
+    pip install --pre ovos-media-plugin-cli
+    ```
 
 Then select it in your audio/media backend config, optionally setting the `command` to
 a specific CLI player. See [Media playback: legacy vs. ovos-media](ovos-media.md).
