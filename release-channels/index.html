@@ -1776,8 +1776,13 @@ warning at install time. After any alpha install, verify what you actually got, 
 what you asked for: <code>pip list | grep ovos</code> (or <code>uv pip list</code>) and check the key
 libraries carry the expected alpha suffix.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Alpha channel only</p>
+<p>The constraints file pins alpha versions, so this command belongs to the
+prerelease channel and to no other.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ovos-core<span class="o">[</span>mycroft<span class="o">]</span><span class="w"> </span>--pre<span class="w"> </span>-c<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-alpha.txt
 </span></code></pre></div>
+</div>
 <hr />
 <div class="admonition example">
 <p class="admonition-title">A minimal lab-ready manual install, start to finish</p>
