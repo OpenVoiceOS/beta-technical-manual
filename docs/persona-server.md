@@ -25,10 +25,17 @@ Install the agent-engine plugin(s) your persona references, e.g.:
 pip install ovos-openai-plugin
 ```
 
-Optional extras: `rag` (file/vector-store endpoints), `mcp` (pulls in `fastmcp>=3,<4` to
-serve the `/mcp` endpoint below), and `a2a` (Agent-to-Agent endpoint). The stable PyPI
-release predates both extras — use `--pre` and a floor pin, e.g.
-`pip install --pre 'ovos-persona-server[a2a]>=0.17.2a1'`.
+Optional extras: `rag` (file/vector-store endpoints), `mcp` (pulls in `fastmcp>=3,<4` to serve the
+`/mcp` endpoint below), and `a2a` (Agent-to-Agent endpoint).
+
+!!! warning "Alpha channel only"
+    The last stable release, `0.5.0`, declares no extras at all, and `a2a` alone arrives
+    with `0.6.0a1`, so an extra needs the prerelease channel and a floor pin that carries
+    the extra you want:
+
+    ```bash
+    pip install --pre 'ovos-persona-server[a2a]>=0.17.2a1'
+    ```
 
 !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
     The extra is still called `mcp`, so `pip install --pre 'ovos-persona-server[mcp]'` is unchanged,

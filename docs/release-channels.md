@@ -302,7 +302,7 @@ fetch the channel file on every operation:
 
 ## ⚠️ Tips & Caveats
 
-- Using `--pre` installs pre-releases across all dependencies, not just OVOS-specific ones. Use it with caution.
+- The alpha channel installs pre-releases of every dependency, not only the OVOS ones. Use it with caution.
 - You can mix and match extras based on your hardware or use case, e.g., omit GUI skills on a headless server.
 - A constraints file only bounds packages it lists. Anything absent resolves freely. If you need an exact, repeatable set of versions, install from your own `uv pip freeze` output rather than from a channel file.
 - After installing you need to launch the individual ovos services, either manually or by creating a systemd service

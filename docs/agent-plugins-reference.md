@@ -171,7 +171,12 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 - **GitHub**: [OpenVoiceOS/ovos-persona-server](https://github.com/OpenVoiceOS/ovos-persona-server)
 
-- **Install**: `pip install --pre ovos-persona-server`. `--pre` is required: the last stable `ovos-persona` does not declare `ovos-workshop`, so a plain install imports with `ModuleNotFoundError`.
+- **Install**: see [Persona server](persona-server.md).
+
+    !!! warning "Alpha channel only"
+        `pip install --pre ovos-persona-server`. The last stable `ovos-persona`, `0.7.1`, does
+        not declare `ovos-workshop`, so an install from the stable channel imports with
+        `ModuleNotFoundError`.
 
 
 - **Description**: Standalone server that exposes an OVOS persona over an HTTP API (e.g. `ovos-persona-server --persona rivescript_bot.json`).
