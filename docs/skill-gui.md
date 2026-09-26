@@ -22,7 +22,7 @@ created automatically for every `OVOSSkill`. On current `ovos-workshop` the base
 lives in `ovos_bus_client.apis.gui.GUIInterface`. The skill wrapper is
 `ovos_workshop.skills.ovos.SkillGUI`, namespaced to your `skill_id`.
 
-!!! warning "Upcoming — unreleased"
+!!! warning "Alpha channel only"
     A planned breaking change rebinds `self.gui` to a
     `GUIInterface` from the standalone **`ovos-gui-api-client`** package (instead of
     `ovos_bus_client.apis.gui`) and drops the `ui_directories` constructor argument (today,

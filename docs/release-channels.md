@@ -139,10 +139,13 @@ uv pip install ovos-core[mycroft] -c https://raw.githubusercontent.com/OpenVoice
     what you asked for: `pip list | grep ovos` (or `uv pip list`) and check the key
     libraries carry the expected alpha suffix.
 
-```bash
-uv pip install ovos-core[mycroft] --pre -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-alpha.txt
+!!! warning "Alpha channel only"
+    The constraints file pins alpha versions, so this command belongs to the
+    prerelease channel and to no other.
 
-```
+    ```bash
+    uv pip install ovos-core[mycroft] --pre -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-alpha.txt
+    ```
 
 ---
 

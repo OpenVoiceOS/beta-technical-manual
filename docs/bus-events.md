@@ -315,7 +315,7 @@ directly.
 
 On `ovos.intent.register.keyword` / `.template`, `ovos.intent.deregister`, `ovos.skill.deregister`, and `ovos.intent.enable` / `.disable`, the payload `skill_id` names the **target**: the skill whose registration is created, removed, suppressed or re-armed (INTENT-4 §3.2). The context `skill_id` names the **source** and is provenance only. A consumer logs the two at DEBUG when they differ and never substitutes one for the other, never rejects on a difference, and never treats an absent context `skill_id` as malformed. A skill built on `ovos-workshop` never emits these directly, since the base class already fills both fields.
 
-!!! info "These topics are alpha-channel only"
+!!! warning "Alpha channel only"
     The orchestrator manifest that answers them first shipped in `ovos-core`
     `2.4.0a1`, and every release carrying it is a prerelease. The stable channel
     pins `ovos-core>=1.3.1,<1.4.0` and the testing channel pins `>=2.1.1,<3.0.0`

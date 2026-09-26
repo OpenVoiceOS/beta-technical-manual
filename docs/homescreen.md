@@ -57,7 +57,7 @@ Select a homescreen skill in `mycroft.conf` (or via [ovos-shell](ovos-shell.md))
 
 ```
 
-!!! warning "Unreleased: not on any published package"
+!!! warning "Alpha channel only"
     The `homescreen.data.*` / `homescreen.widget.*` messages below belong to
     `ovos-legacy-mycroft-gui-plugin` (`ovos_legacy_mycroft_gui/homescreen.py`), part of the
     [GUI adapter](gui-adapters.md) rework described in [GUI Service](gui-service.md). That
