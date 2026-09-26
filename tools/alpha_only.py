@@ -20,7 +20,10 @@ things on a page belong to the prerelease channel alone:
 
 `check` reports any other spelling of the first marker, so the set stays one
 spelling. `strip` removes every marked block, every include of the snippet and
-every `--pre` flag, which is what a stable-channel copy of the manual needs.
+every `--pre` flag, which is what a stable-channel copy of the manual needs. It
+then refuses to call that copy finished while a line still asks for a prerelease:
+a sentence that names the flag, or an install whose requirement floor is a
+prerelease version, which the stable channel cannot resolve.
 `census` prints the counts.
 
 Stdlib only.
@@ -49,6 +52,21 @@ PRE_FLAG_CUT_RE = re.compile(r"[ \t]--pre(?=\s)")
 # ALLOWED_TITLES is the exception, because such a title keeps its block on every
 # channel and its subject is the flag itself.
 PRE_MENTION_RE = re.compile(r"--pre\b")
+
+# An install command whose requirement floor is a prerelease version. The flag
+# and the floor say the same thing twice: `pip install --pre "name>=1.2.3a1"`
+# keeps asking for a prerelease after the strip has taken the flag away, and the
+# stable channel has nothing that satisfies the floor, so pip resolves nothing
+# and the command fails. Only a line that installs is read: a page that names
+# such a pin to describe a channel file (`ovos-audio>=2.1.1a1` in the
+# constraints tables) is correct on every channel.
+INSTALL_RE = re.compile(r"\b(?:pip[0-9]?|pipx|uv pip)\s+install\b")
+PRERELEASE_REQ_RE = re.compile(
+    r"[A-Za-z0-9][A-Za-z0-9._-]*"          # distribution name
+    r"(?:\[[^\]]*\])?"                     # optional extras
+    r"\s*(?:==|>=|~=|>)\s*"
+    r"\d+(?:\.\d+)*(?:a|b|rc|\.dev)\d*"    # a floor no stable release meets
+)
 
 # An admonition whose title speaks about alpha, a prerelease or an unreleased
 # state, yet does not mark alpha-only content. Each entry is a title and the
@@ -168,8 +186,18 @@ def strip_text(text: str) -> str:
     return new
 
 
+def prerelease_floor(line: str) -> bool:
+    """True when this line installs something the stable channel cannot resolve."""
+    return bool(INSTALL_RE.search(line) and PRERELEASE_REQ_RE.search(line))
+
+
 def surviving_mentions(path: Path, text: str) -> list[tuple[Path, int, str]]:
-    """Every line of one stable-channel page that still asks for the flag.
+    """Every line of one stable-channel page that still asks for a prerelease.
+
+    Two ways a line asks. It names the flag, which a sentence beside a stripped
+    command does when the command has lost it. Or it installs a requirement whose
+    floor version is a prerelease, which the flag used to say out loud and the
+    floor still says: the stable channel holds nothing that satisfies it.
 
     An admonition whose title is in ALLOWED_TITLES is exempt, title line and
     body. `strip` keeps such a block, so reporting it would leave the page with
@@ -183,7 +211,8 @@ def surviving_mentions(path: Path, text: str) -> list[tuple[Path, int, str]]:
             exempt.update(range(start, end))
     return [(path, i + 1, line.strip())
             for i, line in enumerate(lines)
-            if i not in exempt and PRE_MENTION_RE.search(line)]
+            if i not in exempt
+            and (PRE_MENTION_RE.search(line) or prerelease_floor(line))]
 
 
 def cmd_strip(argv: argparse.Namespace) -> int:
@@ -207,12 +236,14 @@ def cmd_strip(argv: argparse.Namespace) -> int:
     print(f"alpha-only strip: {changed} page(s)" + (" (dry run)" if argv.dry_run else ""))
     if survivors:
         print()
-        print("the flag is gone from the commands and these lines still ask for it:")
+        print("the flag is gone from the commands and these lines still ask for a "
+              "prerelease, by naming the flag or by pinning a prerelease floor:")
         for p, ln, line in survivors:
             print(f"  {p}:{ln}: {line}")
-        print(f"alpha-only strip: {len(survivors)} surviving mention(s) of --pre "
-              f"on {len({p for p, _l, _t in survivors})} page(s). Rewrite the prose, "
-              "or mark it with the canonical admonition so the strip removes it too.")
+        print(f"alpha-only strip: {len(survivors)} surviving prerelease "
+              f"reference(s) on {len({p for p, _l, _t in survivors})} page(s). "
+              "Rewrite the prose, or mark it with the canonical admonition so the "
+              "strip removes it too.")
         return 1
     return 0
 

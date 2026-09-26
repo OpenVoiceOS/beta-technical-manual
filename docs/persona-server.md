@@ -62,7 +62,7 @@ ovos-persona-server --persona my_persona.json --host 0.0.0.0 --port 8337
 | `--host` | `0.0.0.0` | Host to bind |
 | `--port` | `8337` | TCP port |
 | `--mcp` | off | Mount the MCP endpoint at `/mcp` (requires the `mcp` extra; the extra alone does not expose it) |
-| `--a2a-base-url` | `None` | Mounts an [A2A](https://a2aproject.github.io/A2A/)-compatible endpoint at `/a2a`, using this URL as the public base URL in the Agent Card (e.g. `http://myhost:8337/a2a`). Requires the `a2a` extra (`pip install --pre 'ovos-persona-server[a2a]>=0.17.2a1'`) |
+| `--a2a-base-url` | `None` | Mounts an [A2A](https://a2aproject.github.io/A2A/)-compatible endpoint at `/a2a`, using this URL as the public base URL in the Agent Card (e.g. `http://myhost:8337/a2a`). Requires the `a2a` extra, which the install section above covers |
 
 The console script is `ovos-persona-server` (module `ovos_persona_server.__main__:main`).
 

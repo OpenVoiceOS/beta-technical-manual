@@ -65,7 +65,7 @@ class StripKeepsNoContradiction(unittest.TestCase):
             code, out = run(alpha_only.cmd_strip, dry_run=False)
         self.assertEqual(code, 1, out)
         self.assertIn("docs/persona-server.md:3", out)
-        self.assertIn("surviving mention(s) of --pre", out)
+        self.assertIn("surviving prerelease reference(s)", out)
 
     def test_a_page_whose_prose_does_not_name_the_flag_passes(self):
         page = self.PAGE.replace("Use `--pre` and a floor pin:", "Install it:")
@@ -194,7 +194,7 @@ class AllowedAdmonitionsAreNotReported(unittest.TestCase):
             code, out = run(alpha_only.cmd_strip, dry_run=False)
             text = Path("docs/release-channels.md").read_text()
         self.assertEqual(code, 0, out)
-        self.assertNotIn("surviving mention(s)", out)
+        self.assertNotIn("surviving prerelease reference(s)", out)
         self.assertIn("pip install ovos-core", text)
         self.assertIn("`--pre` is not scoped to OVOS", text)
 
@@ -211,6 +211,79 @@ class AllowedAdmonitionsAreNotReported(unittest.TestCase):
             code, out = run(alpha_only.cmd_strip, dry_run=False)
         self.assertEqual(code, 1, out)
         self.assertIn("docs/release-channels.md:6", out)
+
+
+class PrereleaseFloorIsReported(unittest.TestCase):
+    """An install the stable channel cannot resolve must not pass silently.
+
+    The flag and the floor say the same thing twice. `strip` takes the flag and
+    leaves the floor, so the command keeps asking for a prerelease while no
+    sentence beside it names the flag.
+    """
+
+    PINNED = (
+        "# Translate server\n"
+        "\n"
+        "```bash\n"
+        'pip install --pre "ovos-translate-server>=0.10.0a1"\n'
+        "```\n"
+    )
+
+    def test_the_pin_is_reported_after_the_flag_is_cut(self):
+        with manual({"translate-server.md": self.PINNED}):
+            code, out = run(alpha_only.cmd_strip, dry_run=False)
+            text = Path("docs/translate-server.md").read_text()
+        self.assertEqual(code, 1, out)
+        self.assertIn("docs/translate-server.md:4", out)
+        self.assertNotIn("--pre ", text)          # the flag went
+        self.assertIn(">=0.10.0a1", text)         # the floor stayed
+
+    def test_the_marked_block_clears_it(self):
+        page = ("# Translate server\n"
+                "\n"
+                '!!! warning "Alpha channel only"\n'
+                "    The stable release serves none of this.\n"
+                "\n"
+                "    ```bash\n"
+                '    pip install --pre "ovos-translate-server>=0.10.0a1"\n'
+                "    ```\n")
+        with manual({"translate-server.md": page}):
+            code, out = run(alpha_only.cmd_strip, dry_run=False)
+        self.assertEqual(code, 0, out)
+
+    def test_a_stable_floor_passes(self):
+        page = self.PINNED.replace('--pre "ovos-translate-server>=0.10.0a1"',
+                                   '"ovos-translate-server>=0.10.0"')
+        with manual({"translate-server.md": page}):
+            code, out = run(alpha_only.cmd_strip, dry_run=False)
+        self.assertEqual(code, 0, out)
+
+    def test_a_pin_that_installs_nothing_is_not_reported(self):
+        # The constraints tables name such a pin to describe a channel file. That
+        # sentence is correct on every channel, and no install runs on the line.
+        page = ("# Release automation\n"
+                "\n"
+                "`constraints-alpha.txt` uses pure `>=`, e.g. `ovos-audio>=2.1.1a1`,\n"
+                "to always pull the newest pre-release.\n")
+        with manual({"gh-automations-release.md": page}):
+            code, out = run(alpha_only.cmd_strip, dry_run=False)
+        self.assertEqual(code, 0, out)
+
+    def test_uv_and_a_dockerfile_line_count_as_installs(self):
+        page = ("# Page\n"
+                "\n"
+                "```dockerfile\n"
+                'RUN pip install --pre "ovos-stt-http-server>=0.25.1a3"\n'
+                "```\n"
+                "\n"
+                "```bash\n"
+                'uv pip install --pre "ovos-audio>=2.1.1a1"\n'
+                "```\n")
+        with manual({"page.md": page}):
+            code, out = run(alpha_only.cmd_strip, dry_run=False)
+        self.assertEqual(code, 1, out)
+        self.assertIn("docs/page.md:4", out)
+        self.assertIn("docs/page.md:8", out)
 
 
 if __name__ == "__main__":

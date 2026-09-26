@@ -202,9 +202,13 @@ Beyond the native endpoints above, the app mounts drop-in compatible routers. Cl
 A Model Context Protocol endpoint exposes the translate/detect tools to MCP clients, served with
 the third-party `fastmcp` package (`fastmcp>=3,<4`). It requires the `mcp` extra:
 
-```bash
-pip install --pre 'ovos-translate-server[mcp]>=0.10.0a1'
-```
+!!! warning "Alpha channel only"
+    The `mcp` extra has a prerelease floor, so it installs from the prerelease
+    channel:
+
+    ```bash
+    pip install --pre 'ovos-translate-server[mcp]>=0.10.0a1'
+    ```
 
 !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
     The extra name is unchanged, but it resolves `fastmcp`, not the official `mcp` SDK — MCP SDK
@@ -293,14 +297,17 @@ class LanguageDetector:
 
 A minimal Dockerfile for serving a single plugin:
 
-```dockerfile
-FROM python:3.11
+!!! warning "Alpha channel only"
+    The server installs from the prerelease channel, so the image builds against it:
 
-RUN pip install --pre "ovos-translate-server>=0.10.0a1"
-RUN pip install --pre <plugin-package>
+    ```dockerfile
+    FROM python:3.11
 
-ENTRYPOINT ovos-translate-server --tx-engine <plugin-name>
-```
+    RUN pip install --pre "ovos-translate-server>=0.10.0a1"
+    RUN pip install --pre <plugin-package>
+
+    ENTRYPOINT ovos-translate-server --tx-engine <plugin-name>
+    ```
 
 Build and run:
 
