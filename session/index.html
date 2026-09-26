@@ -1874,7 +1874,25 @@ below.</p>
 offsets, daylight-saving state, is derived out of band and has no wire shape. The one
 normative consumer rule: when <code>location.tz</code> is present, a consumer must use it to
 resolve wall-clock time for that session, and fall back to the deployment timezone
-otherwise.</p>
+otherwise. <code>location</code> is client-owned: a session's originator, not the consumer that
+reads it, is the only party allowed to stamp it, and doing so is the sole conformant way
+to declare it (OVOS-SESSION-1 §4.1 governs a component deriving <em>someone else's</em> session,
+not a session's own origin).</p>
+<p>Every key in <code>location</code> is optional under §3.5, and an object with none of them is the
+same as an omitted field. A session that carries no <code>location</code> therefore resolves at each
+consumer against that consumer's own deployment default. Across a HiveMind link the
+consumer is the master, so a satellite that declares nothing reads as the master's
+timezone, whatever its own configuration says. The omission is conformant, so the way to
+keep the satellite's own timezone is to declare it, not to file a specification defect.</p>
+<div class="admonition warning">
+<p class="admonition-title">Alpha channel only</p>
+<p><code>ovos-bus-client</code> stamps the field from <code>2.11.19a1</code>. A process that constructs the
+session it originates, and passes no <code>location</code>, declares the <code>lat</code>, <code>lon</code> and <code>tz</code>
+its deployment configures. A session rebuilt from a received carrier keeps what that
+carrier held, so a component that derives a session it did not originate still
+synthesizes nothing, which is what §4.1 requires. A deployment that configures no
+location declares nothing and reads as the paragraph above describes.</p>
+</div>
 <h2 id="magic-properties">Magic Properties<a class="headerlink" href="#magic-properties" title="Permanent link">&para;</a></h2>
 <p>Skills have some "magic properties." These reflect the current <code>Session</code>'s value when it has
 one, falling back to Configuration otherwise.</p>
