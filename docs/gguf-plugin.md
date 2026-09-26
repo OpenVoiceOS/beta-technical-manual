@@ -1,5 +1,7 @@
 # GGUF / Local LLM Agent Plugin (`ovos-gguf-plugin`)
 
+--8<-- "snippets/alpha-only.md"
+
 !!! abstract "In a nutshell"
     This plugin runs an AI language model *entirely on your own device*. No internet, no accounts, and nothing sent to a company's servers. This is ideal when privacy or offline use matters. ("GGUF" is the file format these downloadable models come in.) It can chat, summarize, translate, detect languages, and more. See [AI Agents & Personas](personas.md) for the bigger picture and the [Glossary](glossary.md) for unfamiliar terms.
 

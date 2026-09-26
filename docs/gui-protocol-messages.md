@@ -292,7 +292,7 @@ User swipes / taps on Qt:
 
 ---
 
-!!! warning "Upcoming: unreleased"
+!!! warning "Alpha channel only"
     In the GUI-rework, specified by the
     [OVOS-GUI-1](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md) spec
     (see [GUI Service](gui-service.md)), the bus contract changes:

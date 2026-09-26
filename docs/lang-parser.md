@@ -9,7 +9,7 @@
     languages just by asking. See the [Glossary](glossary.md) for terms, or
     [Language Selection](lang-selection.md) for how OVOS decides which language to use.
 
-!!! note "Install the prerelease"
+!!! warning "Alpha channel only"
     Like the rest of the rolling-release ecosystem, this page documents the latest
     prerelease: `pip install --pre ovos-lang-parser` (a plain `pip install` without
     `--pre` or a [constraints file](release-channels.md) lands on an old build with

@@ -31,6 +31,14 @@ jobs:
       - name: Check documented pip packages exist on PyPI
         run: python3 tools/check_docs.py packages
 
+      # The alpha-only marker has one spelling, and tools/alpha_only.py is what
+      # holds it to one. Its own tests run first: a broken tool reports a clean
+      # manual, which is the failure that matters here.
+      - name: Check the alpha-only marker
+        run: |
+          python3 tools/test_alpha_only.py
+          python3 tools/alpha_only.py check
+
   strict-build:
     name: Strict mkdocs build
     runs-on: ubuntu-latest

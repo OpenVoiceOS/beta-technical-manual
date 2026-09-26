@@ -68,7 +68,7 @@ flowchart TD
 pip install --pre hivemind-core
 ```
 
-!!! warning "Install the prerelease, on both sides"
+!!! warning "Alpha channel only"
 
     `--pre` is not optional here. Without it the install resolves a release that
     reads its plugins through `pkg_resources`, which recent setuptools no longer

@@ -136,7 +136,7 @@ actual homescreen, and its resting-screen page renders through
 `Mycroft.SkillView`. Skills register idle screens with `@resting_screen_handler`. See
 [Home Screen](homescreen.md) for the configuration and the resting-screen API.
 
-!!! warning "Upcoming — unreleased"
+!!! warning "Alpha channel only"
     The GUI rework (specified by the
     [OVOS-GUI-1](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md) spec)
     moves homescreen data coordination into a `HomescreenManager` inside
