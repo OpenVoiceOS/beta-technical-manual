@@ -22,8 +22,15 @@ hundreds of training sentences per intent).
 
 ```bash
 pip install nebulento            # the library
-pip install --pre "nebulento[ovos]>=0.5.0a1"    # + the OVOS pipeline plugin
 ```
+
+!!! warning "Alpha channel only"
+    The `ovos` extra, which adds the pipeline plugin, has a prerelease floor, so it
+    installs from the prerelease channel:
+
+    ```bash
+    pip install --pre "nebulento[ovos]>=0.5.0a1"
+    ```
 
 ## Usage
 

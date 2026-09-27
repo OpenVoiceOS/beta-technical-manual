@@ -17,12 +17,13 @@ The OpenVoiceOS STT HTTP Server wraps your chosen OVOS STT plugin inside a FastA
 
 ## Usage Guide
 
-**Install the server** 
+!!! warning "Alpha channel only"
+    **Install the server.** The requirement floor names a prerelease, so the
+    server installs from the prerelease channel:
 
-```bash
-pip install --pre "ovos-stt-http-server>=0.25.1a3"
-
-```
+    ```bash
+    pip install --pre "ovos-stt-http-server>=0.25.1a3"
+    ```
 
 **Choose your STT plugin**
 
@@ -105,7 +106,7 @@ The short help text leaves out the defaults: the port defaults to `8080` and the
   `--multi` loads one engine instance per language on demand (one model per `lang`), instead of a single shared model.
 
 - **Compatibility routers**  
-  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (`POST /wit/speech`, override the SDK host with the `WIT_URL` env var) and Chromium speech-api (`POST /speech-api/v2/recognize`). The app also routes for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See `/docs` for the authoritative set. A `GET /utcp` manual advertises the endpoints to UTCP agents. An MCP endpoint mounts at `/mcp` on the same port when the server is started with `--mcp` (requires `pip install --pre 'ovos-stt-http-server[mcp]>=0.26.0a1'`). The extra alone no longer auto-mounts it.
+  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (`POST /wit/speech`, override the SDK host with the `WIT_URL` env var) and Chromium speech-api (`POST /speech-api/v2/recognize`). The app also routes for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See `/docs` for the authoritative set. A `GET /utcp` manual advertises the endpoints to UTCP agents. An MCP endpoint mounts at `/mcp` on the same port when the server is started with `--mcp` (requires the `mcp` extra, which the prerelease channel carries). The extra alone no longer auto-mounts it.
 
     !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
         The extra keeps the name `mcp`, but it resolves the third-party `fastmcp>=3,<4` package,
@@ -326,25 +327,25 @@ server-backed engine as the fallback for when the light one comes back empty.
 
 ## Docker Deployment
 
-**Create a Dockerfile**
+!!! warning "Alpha channel only"
+    **Create a Dockerfile.** The server installs from the prerelease channel,
+    so the image builds against it:
 
-```dockerfile
-FROM python:3.11-slim
-RUN pip install --pre "ovos-stt-http-server>=0.25.1a3"
-RUN pip install {YOUR_STT_PLUGIN}
-ENTRYPOINT ["ovos-stt-server", "--engine", "{YOUR_STT_PLUGIN}"]
+    ```dockerfile
+    FROM python:3.11-slim
+    RUN pip install --pre "ovos-stt-http-server>=0.25.1a3"
+    RUN pip install {YOUR_STT_PLUGIN}
+    ENTRYPOINT ["ovos-stt-server", "--engine", "{YOUR_STT_PLUGIN}"]
+    ```
 
-```
+    The console script is `ovos-stt-server` (not `ovos-stt-http-server`, which is the PyPI package name).
 
-The console script is `ovos-stt-server` (not `ovos-stt-http-server`, which is the PyPI package name).
+    **Build & Run**
 
-**Build & Run**
-
-```bash
-docker build -t my-ovos-stt .
-docker run -p 8080:8080 my-ovos-stt
-
-```
+    ```bash
+    docker build -t my-ovos-stt .
+    docker run -p 8080:8080 my-ovos-stt
+    ```
 
 Pre-built containers are also available via the [ovos-docker-stt](https://github.com/OpenVoiceOS/ovos-docker-stt) repository.
 
@@ -356,8 +357,8 @@ Pre-built containers are also available via the [ovos-docker-stt](https://github
 
 - **Audio Formats**: the native `/stt` endpoint takes raw PCM/WAV bytes. The
   vendor-compatible multipart routers (OpenAI, ElevenLabs, Groq, and the rest) accept
-  other container formats only when `pydub` is installed, which the base install omits:
-  `pip install --pre 'ovos-stt-http-server[audio]>=0.25.1a3'`. Without that extra, uploading anything
+  other container formats only when `pydub` is installed, which the base install omits. It
+  comes with the `audio` extra, which the prerelease channel carries. Without that extra, uploading anything
   other than WAV through those routers returns HTTP **501** naming the missing format
   support.
 

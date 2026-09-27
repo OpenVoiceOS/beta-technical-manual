@@ -16,8 +16,15 @@ Not in the default pipeline. Add its stage IDs to `intents.pipeline` explicitly 
 
 ```bash
 pip install palavreado            # the library
-pip install --pre "palavreado[ovos]>=1.0.0a1"    # + the OVOS pipeline plugin
 ```
+
+!!! warning "Alpha channel only"
+    The `ovos` extra, which adds the pipeline plugin, has a prerelease floor, so it
+    installs from the prerelease channel:
+
+    ```bash
+    pip install --pre "palavreado[ovos]>=1.0.0a1"
+    ```
 
 ## Usage
 

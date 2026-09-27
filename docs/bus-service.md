@@ -363,9 +363,10 @@ A separate, drop-in Rust implementation exists as its own project for deployment
 
 **In plain terms:** on a stable install, run the default Python (Tornado) server. Only reach for the Rust build if profiling shows the bus is a bottleneck.
 
-!!! info "Optional `webrockets` backend"
+!!! warning "Alpha channel only"
     `ovos-messagebus` also bundles an optional, higher-throughput **webrockets** backend
-    (Python), installed as an extra and run in place of the Tornado server:
+    (Python). The extra has a prerelease floor, so it installs from the prerelease
+    channel and runs in place of the Tornado server:
 
     ```bash
     pip install --pre "ovos-messagebus[webrockets]>=0.2.1a1"
