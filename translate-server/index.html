@@ -1863,16 +1863,16 @@ servers entirely: fully offline plugins exist for everything.</p>
 </div>
 <hr />
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Alpha channel only</p>
+<p>The latest stable release, <code>0.0.2</code>, is years behind the <code>0.10.0a1</code> line this page
+documents. It looks installed and serves nothing described here, so this server installs
+from the prerelease channel with a floor pin. After installing, confirm what you actually
+got: <code>pip show ovos-translate-server</code>.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s2">&quot;ovos-translate-server&gt;=0.10.0a1&quot;</span>
 </span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">A bare <code>pip install ovos-translate-server</code> gets an unusable release</p>
-<p>Without <code>--pre</code> and a floor pin, pip resolves the name to the latest <strong>stable</strong> release,
-<code>0.0.2</code>, which is years behind the <code>0.10.0a1</code> line this page documents. It looks
-installed and serves nothing described here. After installing, confirm what you actually
-got: <code>pip show ovos-translate-server</code>.</p>
 </div>
-<p>Also install the translation plugin(s) you intend to serve:</p>
+<p>Install the translation plugin(s) you intend to serve:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-translate-plugin-nllb
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-lang-detector-classics-plugin<span class="w"> </span>pycld2<span class="w"> </span>langdetect<span class="w"> </span>fastlang
 </span></code></pre></div>

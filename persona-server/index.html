@@ -1538,10 +1538,16 @@ endpoints, a UTCP tool surface, and vendor-compatible routers for <strong>Anthro
 <p>Install the agent-engine plugin(s) your persona references, e.g.:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-openai-plugin
 </span></code></pre></div>
-<p>Optional extras: <code>rag</code> (file/vector-store endpoints), <code>mcp</code> (pulls in <code>fastmcp&gt;=3,&lt;4</code> to
-serve the <code>/mcp</code> endpoint below), and <code>a2a</code> (Agent-to-Agent endpoint). The stable PyPI
-release predates both extras — use <code>--pre</code> and a floor pin, e.g.
-<code>pip install --pre 'ovos-persona-server[a2a]&gt;=0.17.2a1'</code>.</p>
+<p>Optional extras: <code>rag</code> (file/vector-store endpoints), <code>mcp</code> (pulls in <code>fastmcp&gt;=3,&lt;4</code> to serve the
+<code>/mcp</code> endpoint below), and <code>a2a</code> (Agent-to-Agent endpoint).</p>
+<div class="admonition warning">
+<p class="admonition-title">Alpha channel only</p>
+<p>The last stable release, <code>0.5.0</code>, declares no extras at all, and <code>a2a</code> alone arrives
+with <code>0.6.0a1</code>, so an extra needs the prerelease channel and a floor pin that carries
+the extra you want:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s1">&#39;ovos-persona-server[a2a]&gt;=0.17.2a1&#39;</span>
+</span></code></pre></div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">The <code>mcp</code> extra installs <code>fastmcp</code>, not the <code>mcp</code> SDK</p>
 <p>The extra is still called <code>mcp</code>, so <code>pip install --pre 'ovos-persona-server[mcp]'</code> is unchanged,
@@ -1554,7 +1560,7 @@ consuming another MCP server (like <a href="../tool-plugins/"><code>ovos-mcp-too
 </div>
 <hr />
 <h2 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ovos-persona-server<span class="w"> </span>--persona<span class="w"> </span>my_persona.json<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8337</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ovos-persona-server<span class="w"> </span>--persona<span class="w"> </span>my_persona.json<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8337</span>
 </span></code></pre></div>
 <table>
 <thead>
@@ -1604,7 +1610,7 @@ consuming another MCP server (like <a href="../tool-plugins/"><code>ovos-mcp-too
 </table>
 <p>The console script is <code>ovos-persona-server</code> (module <code>ovos_persona_server.__main__:main</code>).</p>
 <h3 id="serving-multiple-personas-from-one-process">Serving multiple personas from one process<a class="headerlink" href="#serving-multiple-personas-from-one-process" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ovos-persona-server<span class="w"> </span>--personas-dir<span class="w"> </span>/etc/ovos/personas<span class="w"> </span>--default-persona<span class="w"> </span>assistant<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8337</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ovos-persona-server<span class="w"> </span>--personas-dir<span class="w"> </span>/etc/ovos/personas<span class="w"> </span>--default-persona<span class="w"> </span>assistant<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8337</span>
 </span></code></pre></div>
 <p>Every <code>*.json</code> file in the directory loads as its own persona, keyed by its <code>name</code>. A client
 selects which one to talk to with the <code>model</code> field. A request that omits it falls back to
@@ -1621,15 +1627,15 @@ not-yet-populated volume into a container.</p>
 <hr />
 <h2 id="the-persona-file">The Persona File<a class="headerlink" href="#the-persona-file" title="Permanent link">&para;</a></h2>
 <p>A persona is a JSON object whose <code>handlers</code> list names the plugins that answer queries. Per-plugin config is keyed by the plugin name. Example pointing at an OpenAI-compatible LLM:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;kb-assistant&quot;</span><span class="p">,</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">],</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nt">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="nt">&quot;api_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://llama.smartgic.io/v1&quot;</span><span class="p">,</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;llama3.1:8b&quot;</span><span class="p">,</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sk-xxx&quot;</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;kb-assistant&quot;</span><span class="p">,</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">],</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="nt">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="nt">&quot;api_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://llama.smartgic.io/v1&quot;</span><span class="p">,</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;llama3.1:8b&quot;</span><span class="p">,</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sk-xxx&quot;</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Solvers are tried in order. The first that returns an answer wins. Some solvers are <strong>not</strong> LLMs and keep no chat history. In that case only the last user message is processed.</p>
 <hr />
@@ -1943,18 +1949,18 @@ for that name. Give tools specific names to avoid this.</p>
 <hr />
 <h2 id="openai-compatible-example">OpenAI-Compatible Example<a class="headerlink" href="#openai-compatible-example" title="Permanent link">&para;</a></h2>
 <p>Point the <code>openai</code> SDK at the <code>/openai/v1</code> path:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">openai</span> <span class="kn">import</span> <span class="n">OpenAI</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;not-needed&quot;</span><span class="p">,</span>                       <span class="c1"># no key required for local use</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8337/openai/v1&quot;</span><span class="p">,</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">)</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>                                    <span class="c1"># empty selects the default persona</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;tell me a joke&quot;</span><span class="p">}],</span>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="p">)</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">openai</span> <span class="kn">import</span> <span class="n">OpenAI</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;not-needed&quot;</span><span class="p">,</span>                       <span class="c1"># no key required for local use</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8337/openai/v1&quot;</span><span class="p">,</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">)</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>                                    <span class="c1"># empty selects the default persona</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;tell me a joke&quot;</span><span class="p">}],</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="p">)</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 </span></code></pre></div>
 <p>An empty (or any) <code>model</code> maps to the default persona on a single-persona server. On a
 <strong>multi-persona</strong> server a non-empty <code>model</code> must name a loaded persona — a guessed name
@@ -1964,7 +1970,7 @@ OpenAI-compatible endpoint.</p>
 <div class="admonition tip">
 <p class="admonition-title">Verify it worked</p>
 <p>A working call prints a punchline-shaped string, e.g.:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Why don&#39;t scientists trust atoms? Because they make up everything!
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Why don&#39;t scientists trust atoms? Because they make up everything!
 </span></code></pre></div>
 <p>If instead you get a connection error, double-check the server is actually running on that
 host/port (<code>ovos-persona-server --persona ... --port 8337</code>) and that the URL includes the

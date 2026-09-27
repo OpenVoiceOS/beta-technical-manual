@@ -1937,7 +1937,7 @@ machine a month apart, can resolve to different versions.</p>
 </div>
 <h2 id="tips-caveats">⚠️ Tips &amp; Caveats<a class="headerlink" href="#tips-caveats" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Using <code>--pre</code> installs pre-releases across all dependencies, not just OVOS-specific ones. Use it with caution.</li>
+<li>The alpha channel installs pre-releases of every dependency, not only the OVOS ones. Use it with caution.</li>
 <li>You can mix and match extras based on your hardware or use case, e.g., omit GUI skills on a headless server.</li>
 <li>A constraints file only bounds packages it lists. Anything absent resolves freely. If you need an exact, repeatable set of versions, install from your own <code>uv pip freeze</code> output rather than from a channel file.</li>
 <li>After installing you need to launch the individual ovos services, either manually or by creating a systemd service</li>
