@@ -125,6 +125,13 @@ uv pip install ovos-core[mycroft] -c https://raw.githubusercontent.com/OpenVoice
 - ⚠️ May include breaking changes
 - 🧪 Not suitable for production use
 
+The alpha channel is the prerelease channel. Its constraints file is
+`constraints-alpha.txt`, in the same [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases)
+repository as the other two. Two things make the command different from the stable and the
+testing one above: that file in place of `constraints-stable.txt`, and the flag that lets
+`pip`/`uv` resolve a prerelease at all. The two warnings below tell you what that flag does
+to the rest of the resolution. Read both before you use this channel.
+
 !!! warning "`--pre` is not scoped to OVOS"
     `--pre` tells `pip`/`uv` to allow pre-release versions of **every** dependency it
     resolves, not just the `ovos-*` packages. A transitive dependency you didn't expect
@@ -141,7 +148,8 @@ uv pip install ovos-core[mycroft] -c https://raw.githubusercontent.com/OpenVoice
 
 !!! warning "Alpha channel only"
     The constraints file pins alpha versions, so this command belongs to the
-    prerelease channel and to no other.
+    prerelease channel and to no other. The paragraph above names the two
+    differences for a reader on another channel.
 
     ```bash
     uv pip install ovos-core[mycroft] --pre -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-alpha.txt
