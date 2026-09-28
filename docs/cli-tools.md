@@ -220,7 +220,7 @@ service from an editable checkout of its own repo while fixing a bug in it, see
     │ autoconfigure  Automatically configures the language, STT, and TTS settings  │
     │                based on user input.                                          │
     │ telemetry      Enable intent telemetry upload for the opendata initiative.   │
-    │                OpenData can be seen live at https://opendata.tigregotico.pt  │
+    │                OpenData can be seen live at https://metrics.openvoiceos.pt   │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 

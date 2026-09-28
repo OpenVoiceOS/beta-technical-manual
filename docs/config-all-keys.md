@@ -89,7 +89,7 @@
 | Key | Default | Description |
 |---|---|---|
 | `utterance_transformers.ovos-utterance-normalizer` | `{}` |  |
-| `utterance_transformers.ovos-utterance-plugin-cancel` | `{}` |  |
+| `utterance_transformers.ovos-utterance-cancel-plugin` | `{}` |  |
 | `utterance_transformers.ovos-utterance-corrections-plugin` | `{}` |  |
 
 ### `typed_slots_transformers`
@@ -318,6 +318,8 @@
 | Key | Default | Description |
 |---|---|---|
 | `tts.pulse_duck` | `false` |  |
+| `tts.ocp_cork` | `false` |  |
+| `tts.ocp_duck` | `false` |  |
 | `tts.module` | `"ovos-tts-plugin-server"` | Stock default is `ovos-tts-plugin-server`, which routes text to a public community server for text-to-speech. See [Privacy & Security](privacy-security.md). |
 | `tts.fallback_module` | `""` |  |
 | `tts.ovos-tts-plugin-mimic.voice` | `"ap"` |  |

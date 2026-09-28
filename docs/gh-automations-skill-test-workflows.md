@@ -33,8 +33,11 @@ Runs [ovoscope](ovoscope-overview.md) end-to-end skill tests on a **single Pytho
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
-| `pytest_workers` | string | `auto` | pytest-xdist worker count for the e2e suite. Each ovoscope test boots its own in-process MiniCroft and is independent, so they parallelize cleanly. "auto" = one worker per core; "0" runs serially (disable xdist). |
+| `test_timeout` | number | `180` | Seconds a single test may take before pytest-timeout fails it and dumps its stack. A healthy ovoscope test boots a MiniCroft and runs in seconds; a hang here names the test instead of taking the job with it. |
+| `timeout_minutes` | number | `30` | Ceiling for the whole job. Most healthy runs take one to three minutes and the slowest measured across the fleet takes ten, so thirty leaves that one three times its room while a hung run still reports within the hour rather than at the runner's own limit. The test step runs under its own timeout five minutes below this, so the log says the run was cut. |
+| `pytest_workers` | string | `2` | pytest-xdist worker count for the e2e suite. Each worker boots its own in-process MiniCroft and trains its own intent engines. The default is 2: with "auto" (4 workers on ubuntu-latest) the parallel trainers starved each other, and utterances returned ovos.intent.unmatched or a worker crashed. A repository can set a higher value or "auto". "0" runs serially (disable xdist). |
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_version` | string | `3.11` | Python version to use |
 | `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated) |
@@ -146,6 +149,7 @@ Use alongside [`ovoscope.yml`](#ovoscopeyml): `ovoscope.yml` for hand-written E2
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.11` |  |
@@ -179,12 +183,15 @@ End-to-end TTS intelligibility scoring. Synthesises speech with the TTS plugin u
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_version` | string | `3.11` | Python version to use |
 | `system_deps` | string | `""` | Extra apt packages to install before testing (space-separated), e.g. 'espeak-ng sox'. Engines backed by a system binary need this. |
+| `pre_test_command` | string | `""` | Command run after the package is installed and before pytest, in the repository root. For test dependencies that are not pip packages: a model download, a generated fixture, a service the tests talk to. |
 | `install_extras` | string | `test` | Extra dependencies used when installing the package; the extras should pull in ovoscope[tts]. Accepts a bare extras name ('test'), a bracketed list ('[dev,test]'), a full target ('.[test]'), or raw pip arguments ('-r requirements/test.txt'). |
 | `test_path` | string | `test/end2end/test_tts_intelligibility.py` | Path passed to pytest — the intelligibility test file |
+| `timeout_minutes` | number | `45` | Ceiling for the whole job. A healthy run synthesises and transcribes a handful of sentences in a few minutes; this leaves room for a cold model cache and still reports within the hour. The test step runs under its own timeout five minutes below this, so the log can say the run was cut instead of the runner killing the job silently. |
 | `max_wer` | string | `0.5` | Intelligibility gate (exported as TTS_MAX_WER): the test fails when the mean word-error-rate of the STT round-trip exceeds this. Default 0.5 — more than half the words wrong is treated as unintelligible. Raise it per-plugin for engines/voices/low-resource langs the reference STT transcribes weakly; lower it to tighten the bar. |
 | `pre_release` | boolean | `false` | Install ovoscope[tts] from its GitHub `dev` branch instead of PyPI. Use to validate against unreleased ovoscope changes. |
 | `pr_comment` | boolean | `true` | Post a '🗣️ TTS Intelligibility' section in the OVOS PR Checks comment. Only runs on pull_request events. |
