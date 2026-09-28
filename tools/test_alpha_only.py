@@ -144,6 +144,14 @@ class FlagRegexesAgree(unittest.TestCase):
             len(alpha_only.PRE_FLAG_CUT_RE.findall(text)),
         )
 
+    def test_the_cutting_regex_needs_the_newline_a_line_split_removes(self):
+        # Why a caller that works line by line appends the newline first. Both
+        # expressions end the flag on whitespace, and at the end of a line the
+        # newline is that whitespace.
+        line = "pip install ovos-core --pre"
+        self.assertIsNone(alpha_only.PRE_FLAG_CUT_RE.search(line))
+        self.assertEqual(alpha_only.PRE_FLAG_CUT_RE.search(line + "\n").group(), " --pre")
+
 
 class StripFailsOnEveryRun(unittest.TestCase):
     """An already stripped manual must fail the same way the first run did."""
@@ -197,6 +205,78 @@ class AllowedAdmonitionsAreNotReported(unittest.TestCase):
         self.assertNotIn("surviving mention(s)", out)
         self.assertIn("pip install ovos-core", text)
         self.assertIn("`--pre` is not scoped to OVOS", text)
+
+    def test_a_bare_flag_inside_the_allowed_block_is_reported_by_check(self):
+        # The defect: the exemption reaches the report and not the cut, so the
+        # command loses its flag on the stable copy and the strip says nothing.
+        page = (self.ALLOWED + "\n"
+                '!!! warning "Omitting `--pre` silently downgrades transitive dependencies"\n'
+                "    Install it from the prerelease channel:\n"
+                "\n"
+                "    ```bash\n"
+                "    pip install --pre ovos-core\n"
+                "    ```\n")
+        with manual({"release-channels.md": page}):
+            code, out = run(alpha_only.cmd_check)
+            strip_code, strip_out = run(alpha_only.cmd_strip, dry_run=False)
+            text = Path("docs/release-channels.md").read_text()
+        # What check must say.
+        self.assertEqual(code, 1, out)
+        self.assertIn("docs/release-channels.md:10", out)
+        self.assertIn("1 bare flag(s) inside an exempt admonition", out)
+        # And what it is protecting the author from: the strip is silent, and the
+        # command it leaves behind belongs to no channel.
+        self.assertEqual(strip_code, 0, strip_out)
+        self.assertNotIn("surviving mention(s)", strip_out)
+        self.assertIn("pip install ovos-core\n", text)
+
+    def test_a_flag_at_the_end_of_a_line_is_reported_by_check(self):
+        # The same defect with the flag last on the line, which is the ordinary
+        # spelling of the command. The cut takes it through the newline, so a
+        # report that reads one line at a time misses it.
+        page = (self.ALLOWED + "\n"
+                '!!! warning "Omitting `--pre` silently downgrades transitive dependencies"\n'
+                "    Install it from the prerelease channel:\n"
+                "\n"
+                "    ```bash\n"
+                "    pip install ovos-core --pre\n"
+                "    ```\n")
+        with manual({"release-channels.md": page}):
+            code, out = run(alpha_only.cmd_check)
+            strip_code, strip_out = run(alpha_only.cmd_strip, dry_run=False)
+            text = Path("docs/release-channels.md").read_text()
+        self.assertEqual(code, 1, out)
+        self.assertIn("docs/release-channels.md:10", out)
+        self.assertIn("1 bare flag(s) inside an exempt admonition", out)
+        # And what the report is protecting the author from.
+        self.assertEqual(strip_code, 0, strip_out)
+        self.assertNotIn("surviving mention(s)", strip_out)
+        self.assertIn("pip install ovos-core\n", text)
+
+    def test_backticked_prose_inside_the_allowed_block_is_not_reported(self):
+        # The control: the exemption exists for this, and the cut leaves it
+        # alone, because the flag has no whitespace before it.
+        with manual({"release-channels.md": self.ALLOWED}):
+            code, out = run(alpha_only.cmd_check)
+        self.assertEqual(code, 0, out)
+        self.assertIn("0 bare flag(s) inside an exempt admonition", out)
+
+    def test_a_bare_flag_in_the_canonical_marker_is_not_reported(self):
+        # The control that names the fix: the same command inside the canonical
+        # marker is correct, because the strip removes the block whole.
+        page = ("# Release channels\n"
+                "\n"
+                '!!! warning "Alpha channel only"\n'
+                "    ```bash\n"
+                "    pip install --pre ovos-core\n"
+                "    ```\n")
+        with manual({"release-channels.md": page}):
+            code, out = run(alpha_only.cmd_check)
+            strip_code, _strip_out = run(alpha_only.cmd_strip, dry_run=False)
+            text = Path("docs/release-channels.md").read_text()
+        self.assertEqual(code, 0, out)
+        self.assertEqual(strip_code, 0, out)
+        self.assertNotIn("pip install", text)
 
     def test_an_ordinary_admonition_body_is_still_reported(self):
         page = self.ALLOWED.replace("`--pre` is not scoped to OVOS", "Read this first")
