@@ -106,10 +106,40 @@ def blocks(lines: list[str]) -> list[tuple[int, int, str, str | None]]:
     return found
 
 
+def exempt_block_cuts(path: Path, lines: list[str]) -> list[tuple[Path, int, str]]:
+    """Every flag the cut takes inside an admonition ALLOWED_TITLES exempts.
+
+    The exemption reaches the report and not the edit. `surviving_mentions` skips
+    such a block, and `strip_text` still substitutes over the whole page, so a
+    bare `pip install --pre thing` in there becomes `pip install thing` on the
+    stable-channel copy and nothing says so. The command asks for the prerelease
+    channel and the copy that carries it is the stable one.
+
+    The test is `PRE_FLAG_CUT_RE`, the expression the cut itself uses, so the two
+    cannot drift apart. The page arrives split on newlines and the cut reads the
+    newline as the whitespace that ends the flag, so each line gets its newline
+    back. Without it a trailing `pip install thing --pre` is cut and not reported.
+
+    A backticked mention carries no whitespace in front of the flag, so the cut
+    leaves it alone and this leaves it alone with it. That prose is what the
+    exemption exists for.
+    """
+    found = []
+    for start, end, _kind, title in blocks(lines):
+        if title not in ALLOWED_TITLES:
+            continue
+        for i in range(start, end):
+            if PRE_FLAG_CUT_RE.search(lines[i] + "\n"):
+                found.append((path, i + 1, lines[i].strip()))
+    return found
+
+
 def cmd_check(argv: argparse.Namespace) -> int:
     bad = []
+    cuts: list[tuple[Path, int, str]] = []
     for p in pages():
         lines = p.read_text().split("\n")
+        cuts.extend(exempt_block_cuts(p, lines))
         for start, _end, kind, title in blocks(lines):
             if title is None or is_marker(kind, title):
                 continue
@@ -125,7 +155,13 @@ def cmd_check(argv: argparse.Namespace) -> int:
         print(f'{p}:{ln}: {why}: "{title}"')
         print(f"    use {CANON_LINE}, or add the title to ALLOWED_TITLES with a reason")
     print(f"alpha-marker check: {len(bad)} non-canonical marker(s)")
-    return 1 if bad else 0
+    for p, ln, line in cuts:
+        print(f"{p}:{ln}: a bare `--pre` inside an admonition ALLOWED_TITLES exempts; "
+              f"the strip cuts it and reports nothing: {line}")
+        print(f"    move the command inside {CANON_LINE}, so the strip removes it whole,")
+        print("    or write the flag as prose in backticks, which the cut leaves alone")
+    print(f"alpha-cut check: {len(cuts)} bare flag(s) inside an exempt admonition")
+    return 1 if bad or cuts else 0
 
 
 def cmd_census(argv: argparse.Namespace) -> int:
@@ -220,7 +256,8 @@ def cmd_strip(argv: argparse.Namespace) -> int:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("check", help="every alpha marker uses the canonical spelling")
+    sub.add_parser("check", help="every alpha marker uses the canonical spelling, "
+                                "and no exempt admonition holds a bare --pre")
     sub.add_parser("census", help="count the markers and the --pre commands")
     strip = sub.add_parser("strip", help="remove alpha-only content for a stable-channel copy")
     strip.add_argument("--dry-run", action="store_true", help="print, change nothing")
