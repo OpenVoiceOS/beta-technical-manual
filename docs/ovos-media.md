@@ -198,15 +198,15 @@ account current player state):
 
 `OCPVoiceSkill` (the built-in `ovos-media` skill described under [ovos-media
 Player](#ovos-media-player)) registers five regular padatious intents (en-us) about the
-currently playing track: `WhatSong`, `WhatArtist`, `WhatAlbum`, `ShuffleOn`, and `ShuffleOff`.
+track in playback: `what_song`, `what_artist`, `what_album`, `shuffle_on`, and `shuffle_off`.
 
-`WhatSong` and `WhatArtist` answer from the player's global status
+`what_song` and `what_artist` answer from the player's global status
 (`ovos.common_play.status`), the same read-only state every session gets back from a status
-query — so these two intents answer on **any** session, not just the local device. `WhatAlbum`
+query — so these two intents answer on **any** session, not just the local device. `what_album`
 always reports it has no album information: `MediaEntry` (the player's now-playing model) has
 no album field to report, an upstream data-model limitation rather than a missing lookup.
 
-`ShuffleOn` and `ShuffleOff` are different: they act on the player (`shuffle.set` /
+`shuffle_on` and `shuffle_off` are different: they act on the player (`shuffle.set` /
 `shuffle.unset`), so they follow the same session gating as any other playback-affecting
 command — only the local/"default" session may trigger them, unless the owning `ovos-media`
 was configured with `media.validate_source: false` (see [HiveMind: multi-session
@@ -402,22 +402,22 @@ A few guarantees hold for `OCPMediaPlayer` regardless of which backend is active
 
 `ovos-media` also speaks three failure dialogs, each guarded so it does not talk over itself:
 
-- **`no.playback.backend`** speaks once per daemon lifetime, at the first play attempt made
+- **`no_playback_backend`** speaks once per daemon lifetime, at the first play attempt made
   while zero audio, video, or web backends are loaded. An install with no backend plugin fails
   every play request the same way, so the daemon does not repeat the warning on later attempts.
-- **`track.failed`** is rate-limited to once per queue, not once per skipped track, so a run of
+- **`track_failed`** is rate-limited to once per queue, not once per skipped track, so a run of
   several broken tracks in a row does not talk over itself.
-- **`queue.finished`** speaks only when the queue is genuinely exhausted: every track played
+- **`queue_finished`** speaks only when the queue is genuinely exhausted: every track played
   through in order and none remain. It does not fire when autoplay is off mid-queue, and it
   does not fire when an external MPRIS player's track ends.
 
-The `track.failed` guard resets on real evidence of playback starting, not on a track merely
+The `track_failed` guard resets on real evidence of playback starting, not on a track merely
 loading, so a track that loads fine but fails to play does not reset the rate limit early. The
-`no.playback.backend` guard never resets: it is a once-per-lifetime warning, not a per-queue one.
+`no_playback_backend` guard never resets: it is a once-per-lifetime warning, not a per-queue one.
 
 Shuffle mode honors the same failure bounds (0.4.13a1): a shuffled pick excludes tracks whose
 uri already failed this queue, and when nothing playable remains — every track failed, or the
-queue is empty and the current track failed — the player stops and speaks `queue.finished`,
+queue is empty and the current track failed — the player stops and speaks `queue_finished`,
 the same ending as sequential playback. Repeat mode with at least one good track keeps
 playing. A shut-down player also stops reacting to duck/unduck/cork on every spelling it
 listens on (`ovos.common_play.*`, the `ovos.audio.output.*` duck triggers, and cork's
