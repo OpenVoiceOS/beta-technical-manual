@@ -33,6 +33,7 @@ Runs OPM (OVOS Plugin Manager) plugin detection and validation on a **single Pyt
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_version` | string | `3.11` | Python version to use for OPM checks |
@@ -153,6 +154,7 @@ Checks all installed dependencies for licenses incompatible with the **OVOS univ
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.14` |  |
@@ -163,6 +165,7 @@ Checks all installed dependencies for licenses incompatible with the **OVOS univ
 | `fail_licenses` | string | `StrongCopyleft,NetworkCopyleft,WeakCopyleft,Other,Error` | Comma-separated license categories that cause the check to fail. Valid values: StrongCopyleft, NetworkCopyleft, WeakCopyleft, Copyleft (all three), Permissive, Other, Error. Default enforces the OVOS universal donor policy (Apache 2.0). |
 | `warn_only` | boolean | `false` | When true, report license violations in the PR comment but do NOT fail the job. Useful for repos in transition or where a violation needs review before fixing. |
 | `pr_comment` | boolean | `true` | Post a section in the shared 'OVOS PR Checks' comment on the PR. Only runs when the workflow is triggered by a pull_request event. |
+| `deny_no_metadata` | string | `""` | Comma-separated package names that ship no licence metadata but whose PyPI history a maintainer has read and confirmed carries a forbidden licence. Such a package fails the hard check instead of being excluded as a WARN, without editing this shared workflow. |
 <!-- END GENERATED -->
 
 ### PR comment content
@@ -218,6 +221,7 @@ Checks that a repo contains the required files (`README`, `LICENSE`, `pyproject.
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `runner` | string | `ubuntu-latest` |  |
 | `version_file` | string | `""` | Path to version.py (relative to repo root). If empty, auto-detects root or pkg/version.py. |
 | `pr_comment` | boolean | `true` | Post sections in the shared 'OVOS PR Checks' comment. Only runs when triggered by a pull_request event. |
