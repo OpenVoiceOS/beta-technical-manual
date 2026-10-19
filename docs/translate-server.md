@@ -200,7 +200,7 @@ Beyond the native endpoints above, the app mounts drop-in compatible routers. Cl
 ## MCP Server
 
 A Model Context Protocol endpoint exposes the translate/detect tools to MCP clients, served with
-the third-party `fastmcp` package (`fastmcp>=4,<5`). It requires the `mcp` extra:
+the third-party `fastmcp` package (`fastmcp>=4.1.1`). It requires the `mcp` extra:
 
 ```bash
 pip install --pre 'ovos-translate-server[mcp]>=0.10.0a1'
@@ -215,9 +215,8 @@ pip install --pre 'ovos-translate-server[mcp]>=0.10.0a1'
 
 With the extra installed **and** the `--mcp` flag passed at startup, the HTTP server mounts
 MCP at `/mcp` on its own port (`0.0.0.0:9686` by default). The flag is required — installing
-the extra alone does not mount the endpoint. `--mcp` without the extra runs without `/mcp`,
-and requests to `/mcp` return `404`. The server sets its log level to `ERROR`, so it prints no
-warning about the missing extra. A standalone MCP-only process is also available, useful for running
+the extra alone does not mount the endpoint. `--mcp` without the extra logs a warning that
+names the install command, and the server runs without `/mcp`. A standalone MCP-only process is also available, useful for running
 MCP on its own host/port without exposing the HTTP API:
 
 ```bash
@@ -231,8 +230,7 @@ The standalone process defaults to host `127.0.0.1` and port `9687`, distinct fr
 server's `0.0.0.0:9686`. The `FastMCP` instance can also be embedded into an existing FastAPI app.
 
 Either way it exposes two tools: `translate(text, target_lang, source_lang=None)` returns the
-translated string (omit `source_lang` and the translator plugin receives no source language;
-a plugin that requires one then fails), and `detect_language(text)` returns a
+translated string (omit `source_lang` and the server detects the source language first), and `detect_language(text)` returns a
 BCP-47 tag. A minimal MCP client call to `translate` looks like:
 
 ```json

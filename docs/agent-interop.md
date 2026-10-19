@@ -46,10 +46,10 @@ flowchart TD
 
 | Component | Protocol | Direction | What it does | Documentation |
 |---|---|---|---|---|
-| `ovos-stt-server` (pip: `ovos-stt-http-server`) | MCP, UTCP | Exposes | Speech-to-text as a `transcribe` tool | [STT Server](stt-server.md), [repository](https://github.com/OpenVoiceOS/ovos-stt-server) |
-| `ovos-tts-server` | MCP, UTCP | Exposes | Text-to-speech as a `synthesize` tool | [TTS Server](tts-server.md), [repository](https://github.com/OpenVoiceOS/ovos-tts-server) |
-| `ovos-translate-server` | MCP, UTCP | Exposes | Machine translation and language detection | [Translate Server](translate-server.md), [repository](https://github.com/OpenVoiceOS/ovos-translate-server) |
-| `ovos-persona-server` | MCP, UTCP, A2A | Exposes | Installed tool plugins over MCP and UTCP; personas as A2A agents | [Persona Server](persona-server.md), [repository](https://github.com/OpenVoiceOS/ovos-persona-server) |
+| `ovos-stt-server` (pip: `ovos-stt-http-server`) | MCP, UTCP | Exposes | Speech-to-text as a `transcribe` tool | [STT Server](stt-server.md), [AI agents guide](https://github.com/OpenVoiceOS/ovos-stt-server/blob/dev/docs/ai-agents.md) |
+| `ovos-tts-server` | MCP, UTCP | Exposes | Text-to-speech as a `synthesize` tool | [TTS Server](tts-server.md), [AI agents guide](https://github.com/OpenVoiceOS/ovos-tts-server/blob/dev/docs/ai-agents.md) |
+| `ovos-translate-server` | MCP, UTCP | Exposes | Machine translation and language detection | [Translate Server](translate-server.md), [AI agents guide](https://github.com/OpenVoiceOS/ovos-translate-server/blob/dev/docs/ai-agents.md) |
+| `ovos-persona-server` | MCP, UTCP, A2A | Exposes | Installed tool plugins over MCP and UTCP; personas as A2A agents | [Persona Server](persona-server.md), [AI agents guide](https://github.com/OpenVoiceOS/ovos-persona-server/blob/dev/docs/ai-agents.md) |
 | `ovos-plugin-manager` (`ToolBox`) | Tool plugin contract | Both | The plugin interface that every tool, adapter, and bridge shares | [Agent Tool Plugins](tool-plugins.md) |
 | `ovos-PHAL-plugin-tools` | Messagebus | Exposes | Installed tool plugins on the OVOS messagebus | [Agent Tool Plugins](tool-plugins.md#phal-bus-provider), [repository](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-tools) |
 | `ovos-agentic-loop` | Tool plugin contract | Consumes | Reasoning loops that call tool plugins for a persona | [Agentic Loops](agentic-loop.md), [repository](https://github.com/OpenVoiceOS/ovos-agentic-loop) |
@@ -74,17 +74,17 @@ The `mcp` extra installs the third-party `fastmcp` package, which serves MCP. A 
 | Server | MCP tools | UTCP tools |
 |---|---|---|
 | STT (default port `8080`) | `transcribe(audio_b64 \| audio_path, lang="auto", sample_rate=16000, sample_width=2)` | `stt`, `lang_detect`, `status` |
-| TTS (default port `9666`) | `synthesize(text, voice=None, lang=None)` returns base64 WAV, MIME type, a server-side file path, and phonemes | `tts_status`, `tts_synthesize_v2`, `tts_synthesize_legacy` |
-| Translate (default port `9686`) | `translate(text, target_lang, source_lang=None)`, `detect_language(text)` | `ovos_translate.translate`, `ovos_translate.translate_with_source`, `ovos_translate.detect_language`, `ovos_translate.classify_language`, `ovos_translate.supported_languages` |
+| TTS (default port `9666`) | `synthesize(text, voice=None, lang=None)` returns base64 WAV, MIME type, a server-side file path, and phonemes | `tts_status`, `tts_synthesize_v2` (returns the same JSON shape as MCP `synthesize`, without the path) |
+| Translate (default port `9686`) | `translate(text, target_lang, source_lang=None)` (without `source_lang`, the server detects the source language), `detect_language(text)` | `ovos_translate.translate`, `ovos_translate.translate_with_source`, `ovos_translate.detect_language`, `ovos_translate.classify_language`, `ovos_translate.supported_languages` |
 | Persona (default port `8337`) | One tool per tool of each installed `ToolBox` plugin | The same tools, in the manual at `/tools/manual` |
 
-The STT `transcribe` tool reads `audio_b64` as raw PCM at the given sample rate and width. `audio_path` names a file on the **server's** file system.
+The STT `transcribe` tool decodes a WAV file, from `audio_b64` or `audio_path`, with the file's own sample rate, width, and channels. It reads any other input as raw PCM at the given `sample_rate` and `sample_width`. `audio_path` names a file on the **server's** file system.
 
 ---
 
 ## User stories
 
-Each story uses the Translate Server, because the current UTCP and MCP clients load all of its tools. The same steps apply to the other servers. Change the port and the tool names, and read [Known limitations](#known-limitations) first.
+Each story uses the Translate Server. The same steps apply to the other servers: change the port and the tool names. Each server's AI agents guide, linked in the table above, carries the same stories with that server's own tools and real output.
 
 All of these stories start the server with MCP turned on:
 
@@ -202,7 +202,39 @@ pip install --pre ovos-agentic-loop "ovos-tool-adapters[mcp]"
 
 The loop then offers `translate` and `detect_language` to its brain. If the adapter settings sit at the top level of the persona instead, the loop passes the adapter an empty config. The adapter then logs `MCPToolBox: failed to connect to MCP server: 'command'` and offers no tools.
 
-The Persona Server's own tool endpoints (`/tools/*`, `/mcp`) are different. They load every installed toolbox, and they read each toolbox's section from the top level of the persona file that the `PERSONA_PATH` environment variable names.
+The Persona Server's own tool endpoints (`/tools/*`, `/mcp`) are different. They load every installed toolbox, and they read each toolbox's section from the top level of the default persona (`--default-persona`, or else the first `--persona`). A process that loads no persona, such as the `ovos-persona-tools-mcp` stdio server, reads the persona file that the `PERSONA_PATH` environment variable names.
+
+### Let a persona use tools from a UTCP manual
+
+The same loop can read a UTCP manual instead. `ovos-utcp-toolbox` lists each manual under `manual_call_templates`:
+
+```bash
+pip install --pre ovos-agentic-loop "ovos-tool-adapters[utcp]"
+```
+
+```json
+{
+  "name": "translator",
+  "handlers": ["ovos-react-loop"],
+  "ovos-react-loop": {
+    "brain": "ovos-chat-openai-plugin",
+    "toolboxes": ["ovos-utcp-toolbox"],
+    "ovos-utcp-toolbox": {
+      "utcp_config": {
+        "manual_call_templates": [{
+          "name": "ovos_translate",
+          "call_template_type": "http",
+          "url": "http://localhost:9686/utcp",
+          "http_method": "GET"
+        }]
+      },
+      "timeout": 30
+    }
+  }
+}
+```
+
+UTCP tool names carry the manual name as a prefix (`ovos_translate.translate`). MCP tool names do not (`translate`). A config that still uses the pre-1.0 key `tool_providers` loads no tools, and the toolbox logs an error that names `manual_call_templates`.
 
 ### Let a persona answer through a remote A2A agent
 
@@ -216,18 +248,9 @@ You want other agents to reach an OVOS persona over A2A. Start the Persona Serve
 
 ## Known limitations
 
-These limitations apply to the code on the `dev` branches. A fix for each one is **Upcoming**.
-
 | Component | Limitation | What to do instead |
 |---|---|---|
-| STT Server `/utcp` | The manual's call templates use field names that the UTCP 1.x client does not read. The client registers no tools and logs `KeyError: 'call_template_type'`. | Use MCP, or call `/stt` directly. |
-| TTS Server `/utcp` | The synthesis tools return WAV bytes, and the UTCP 1.x HTTP client fails with `UnicodeDecodeError` when it reads them. `tts_status` works. | Use the MCP `synthesize` tool, which returns base64 audio. |
-| Translate Server | Text that contains `/` breaks the routes that carry the text in the URL path. The request returns `404`. This applies to the native endpoints and to the UTCP tools. | Remove `/` from the text, or use the MCP tools. |
-| Persona Server `/tools/manual` | The manual does not follow the UTCP 1.0 schema. The UTCP 1.x client rejects it with a `ValidationError`. | Use MCP (`--mcp`), or `POST /tools/{name}` directly. |
-| `ovos-utcp-toolbox` | The adapter imports a module that the UTCP 1.x client does not have. It loads no tools and logs `No module named 'utcp.client'`. | Use `ovos-mcp-toolbox`. |
-| `ovos-a2a-solver`, `hivemind-a2a-agent-plugin` | Both send the early A2A method names `tasks/send` and `tasks/sendSubscribe`. An `a2a-sdk` 1.x server, the Persona Server's `/a2a` among them, answers `-32601 Method not found`. | Use an A2A server that accepts `tasks/send`. |
-| Translate Server MCP `translate` | Without `source_lang`, the tool passes no source language to the translator plugin. A plugin that requires one fails. | Pass `source_lang`, or call `detect_language` first. |
-| Translate Server | With `--mcp` but without the `mcp` extra, the server starts without `/mcp` and logs no warning. Requests to `/mcp` return `404`. | Install the `mcp` extra when you pass `--mcp`. |
+| STT Server MCP `transcribe` | Only WAV is decoded. AIFF and FLAC are read as raw PCM and give an empty or wrong transcript. | Convert the audio to WAV or to raw 16-bit PCM first. |
 
 !!! danger "No authentication on any agent endpoint"
     `/mcp`, `/utcp`, `/tools/*`, and `/a2a` accept every request. Any client that reaches the port can call every tool. The STT `transcribe` tool also reads any server file that `audio_path` names. Bind the servers to `127.0.0.1` or a trusted network. To serve other hosts, put a reverse proxy that adds authentication in front.
@@ -283,7 +306,7 @@ The flag needs `a2a-sdk` installed. See [Persona Server](persona-server.md).
 
 ### OVOS as A2A consumer
 
-[OpenVoiceOS/ovos-a2a-agent-plugin](https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin) (pip: `ovos-a2a-solver-plugin`) is an `A2AChatEngine` `ChatEngine` plugin (OPM group `opm.agents.chat`, entry point `ovos-a2a-solver`) that delegates persona reasoning to an external A2A server.
+[OpenVoiceOS/ovos-a2a-agent-plugin](https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin) (pip: `ovos-a2a-solver-plugin`) is an `A2AChatEngine` `ChatEngine` plugin (OPM group `opm.agents.chat`, entry point `ovos-a2a-solver`) that delegates persona reasoning to an external A2A server. It uses the `a2a-sdk` client and speaks A2A 1.0: it reads the agent card from `/.well-known/agent-card.json`, sends `SendMessage` or `SendStreamingMessage` to the URL the card names, and sends the OVOS session id as the A2A `contextId`. The remote agent keeps the conversation for each `contextId`, so the plugin sends only the new user message.
 
 ```json
 {
@@ -307,7 +330,7 @@ Config keys:
 | `timeout` | `60` | Seconds per call |
 | `streaming` | `false` | Use the SSE streaming endpoint when `true` |
 
-[JarbasHiveMind/hivemind-a2a-agent-plugin](https://github.com/JarbasHiveMind/hivemind-a2a-agent-plugin) does the same job for a HiveMind master. It registers under the `hivemind.agent.protocol` entry-point group, and it takes the same four keys in the `hivemind.a2a_agent` section of the HiveMind configuration.
+[JarbasHiveMind/hivemind-a2a-agent-plugin](https://github.com/JarbasHiveMind/hivemind-a2a-agent-plugin) does the same job for a HiveMind master. It registers under the `hivemind.agent.protocol` entry-point group, and it takes the same four keys in the `hivemind.a2a_agent` section of the HiveMind configuration. It uses the same `a2a-sdk` client, sends the HiveMind session id as the `contextId`, and sends the satellite language as `{"lang": ...}` in the message metadata. Both plugins reach the Persona Server's `/a2a` endpoint.
 
 ---
 
@@ -358,7 +381,7 @@ multiple servers of the same type can run side by side, and a `timeout` (default
 
 ### UTCP (`ovos-utcp-toolbox`)
 
-`ovos-utcp-toolbox` loads no tools with the UTCP 1.x client. See [Known limitations](#known-limitations). Use `ovos-mcp-toolbox` with the servers above.
+`ovos-utcp-toolbox` takes a `utcp_config` with a `manual_call_templates` list. See [Let a persona use tools from a UTCP manual](#let-a-persona-use-tools-from-a-utcp-manual). The `utcp` extra installs `utcp` and `utcp-http`. Without `utcp-http`, the UTCP client refuses every manual whose `call_template_type` is `http`.
 
 A background asyncio event loop keeps sessions alive between tool calls. Each server's JSON Schema is translated to a Pydantic model at discovery time so the LLM receives the actual input schema.
 

@@ -267,8 +267,8 @@ Each takes its own config section, keyed by plugin name **inside the loop's sect
 `toolboxes`. The loop passes `config["<plugin name>"]` from its own section to each toolbox, so a
 section at the top level of the persona never reaches the loop's adapter. The
 [Persona Server](persona-server.md)'s own tool endpoints are the exception: they load every
-installed toolbox and read its section from the top level of the persona file that the
-`PERSONA_PATH` environment variable names. For `ovos-mcp-toolbox`,
+installed toolbox and read its section from the top level of the default persona
+(`--default-persona`, or else the first `--persona`). For `ovos-mcp-toolbox`,
 `transport` selects the connection kind: `stdio` needs `command` (and `args`), `sse` and `http`
 need a `url`:
 
@@ -288,8 +288,8 @@ need a `url`:
 }
 ```
 
-`ovos-utcp-toolbox` loads no tools with the UTCP 1.x client. See
-[Known limitations](agent-interop.md#known-limitations).
+`ovos-utcp-toolbox` takes a `utcp_config` whose `manual_call_templates` list names each UTCP
+manual. See [Let a persona use tools from a UTCP manual](agent-interop.md#let-a-persona-use-tools-from-a-utcp-manual).
 
 !!! warning "A ToolBox that fails to connect serves zero tools, silently"
     If the bridged server cannot be reached, or its config is wrong, the failure surfaces during

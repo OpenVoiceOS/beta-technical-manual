@@ -84,7 +84,7 @@ normally — but `/mcp` returns `404`, which looks like a routing problem rather
 flag. If MCP tool calls 404, check that `--mcp` was actually passed.
 
 !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
-    The extra keeps the name `mcp`, but it resolves the third-party `fastmcp>=3,<4` package, not
+    The extra keeps the name `mcp`, but it resolves the third-party `fastmcp>=4.1.1` package, not
     the official `mcp` SDK. MCP SDK 2.0 removed `mcp.server.fastmcp.FastMCP`, so a server still
     importing that symbol fails to start on the 2.x SDK. This server *serves* MCP with `fastmcp`.
     A client consuming a different MCP server (like `ovos-mcp-toolbox`, see
