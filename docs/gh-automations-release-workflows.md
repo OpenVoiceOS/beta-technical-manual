@@ -214,6 +214,7 @@ Reads `version.py`, predicts the next version from PR labels and/or title using 
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_version` | string | `3.14` | Python version |
 | `package_name` | string | `""` | Package name (for channel compatibility check). If empty, attempt to read from setup.py/pyproject.toml. |

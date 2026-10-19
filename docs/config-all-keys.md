@@ -89,7 +89,7 @@
 | Key | Default | Description |
 |---|---|---|
 | `utterance_transformers.ovos-utterance-normalizer` | `{}` |  |
-| `utterance_transformers.ovos-utterance-plugin-cancel` | `{}` |  |
+| `utterance_transformers.ovos-utterance-cancel-plugin` | `{}` |  |
 | `utterance_transformers.ovos-utterance-corrections-plugin` | `{}` |  |
 
 ### `typed_slots_transformers`
@@ -253,43 +253,38 @@
 | `hotwords.hey_mycroft.trigger_level` | `3` |  |
 | `hotwords.hey_mycroft.sensitivity` | `0.5` |  |
 | `hotwords.hey_mycroft.listen` | `true` |  |
-| `hotwords.hey_mycroft.fallback_ww` | `"hey_mycroft_tflite"` |  |
-| `hotwords.hey_mycroft_tflite.module` | `"ovos-ww-plugin-precise-lite"` |  |
-| `hotwords.hey_mycroft_tflite.model` | `"https://github.com/OpenVoiceOS/precise-lite-models/raw/master/wakewords/en/hey_mycroft.tflite"` |  |
-| `hotwords.hey_mycroft_tflite.expected_duration` | `3` |  |
-| `hotwords.hey_mycroft_tflite.trigger_level` | `3` |  |
-| `hotwords.hey_mycroft_tflite.sensitivity` | `0.5` |  |
-| `hotwords.hey_mycroft_tflite.listen` | `true` |  |
-| `hotwords.hey_mycroft_tflite.fallback_ww` | `"hey_mycroft_precise"` |  |
-| `hotwords.hey_mycroft_precise.module` | `"ovos-ww-plugin-precise"` |  |
-| `hotwords.hey_mycroft_precise.version` | `"0.3"` |  |
-| `hotwords.hey_mycroft_precise.model` | `"https://github.com/MycroftAI/precise-data/raw/models-dev/hey-mycroft.tar.gz"` |  |
-| `hotwords.hey_mycroft_precise.expected_duration` | `3` |  |
-| `hotwords.hey_mycroft_precise.trigger_level` | `3` |  |
-| `hotwords.hey_mycroft_precise.sensitivity` | `0.5` |  |
-| `hotwords.hey_mycroft_precise.listen` | `true` |  |
-| `hotwords.hey_mycroft_precise.fallback_ww` | `"hey_mycroft_vosk"` |  |
+| `hotwords.hey_mycroft.fallback_ww` | `"hey_mycroft_wakehubert_streaming"` |  |
+| `hotwords.hey_mycroft_wakehubert_streaming.module` | `"ovos-ww-plugin-wakeforge"` |  |
+| `hotwords.hey_mycroft_wakehubert_streaming.model` | `"wakehubert_hey_mycroft_streaming"` |  |
+| `hotwords.hey_mycroft_wakehubert_streaming.listen` | `true` |  |
+| `hotwords.hey_mycroft_wakehubert_streaming.fallback_ww` | `"hey_mycroft_wakehubert"` |  |
+| `hotwords.hey_mycroft_wakehubert.module` | `"ovos-ww-plugin-wakeforge"` |  |
+| `hotwords.hey_mycroft_wakehubert.model` | `"wakehubert_hey_mycroft"` |  |
+| `hotwords.hey_mycroft_wakehubert.listen` | `true` |  |
+| `hotwords.hey_mycroft_wakehubert.fallback_ww` | `"hey_mycroft_vosk"` |  |
 | `hotwords.hey_mycroft_vosk.module` | `"ovos-ww-plugin-vosk"` |  |
 | `hotwords.hey_mycroft_vosk.samples` | `["hey mycroft", "hey microsoft", "hey mike roft", "hey minecraft"]` |  |
 | `hotwords.hey_mycroft_vosk.rule` | `"fuzzy"` |  |
+| `hotwords.hey_mycroft_vosk.lang` | `"en-US"` |  |
 | `hotwords.hey_mycroft_vosk.listen` | `true` |  |
-| `hotwords.hey_mycroft_vosk.fallback_ww` | `"hey_mycroft_pocketsphinx"` |  |
-| `hotwords.hey_mycroft_pocketsphinx.module` | `"ovos-ww-plugin-pocketsphinx"` |  |
-| `hotwords.hey_mycroft_pocketsphinx.phonemes` | `"HH EY . M AY K R AO F T"` |  |
-| `hotwords.hey_mycroft_pocketsphinx.threshold` | `1e-90` |  |
-| `hotwords.hey_mycroft_pocketsphinx.lang` | `"en-us"` |  |
-| `hotwords.hey_mycroft_pocketsphinx.listen` | `true` |  |
-| `hotwords.wake_up.module` | `"ovos-ww-plugin-vosk"` |  |
-| `hotwords.wake_up.rule` | `"fuzzy"` |  |
-| `hotwords.wake_up.samples` | `["wake up"]` |  |
-| `hotwords.wake_up.lang` | `"en-us"` |  |
+| `hotwords.wake_up.module` | `"ovos-ww-plugin-wakeforge"` |  |
+| `hotwords.wake_up.model` | `"wakehubert_wake_up"` |  |
 | `hotwords.wake_up.wakeup` | `true` |  |
-| `hotwords.wake_up.fallback_ww` | `"wake_up_pocketsphinx"` |  |
-| `hotwords.wake_up_pocketsphinx.module` | `"ovos-ww-plugin-pocketsphinx"` |  |
-| `hotwords.wake_up_pocketsphinx.phonemes` | `"W EY K . AH P"` |  |
-| `hotwords.wake_up_pocketsphinx.threshold` | `1e-20` |  |
-| `hotwords.wake_up_pocketsphinx.lang` | `"en-us"` |  |
-| `hotwords.wake_up_pocketsphinx.wakeup` | `true` |  |
+| `hotwords.wake_up.fallback_ww` | `"wake_up_vosk"` |  |
+| `hotwords.wake_up_vosk.module` | `"ovos-ww-plugin-vosk"` |  |
+| `hotwords.wake_up_vosk.rule` | `"fuzzy"` |  |
+| `hotwords.wake_up_vosk.samples` | `["wake up"]` |  |
+| `hotwords.wake_up_vosk.lang` | `"en-US"` |  |
+| `hotwords.wake_up_vosk.wakeup` | `true` |  |
+| `hotwords.stop_recording.module` | `"ovos-ww-plugin-wakeforge-zeroshot"` |  |
+| `hotwords.stop_recording.ipa` | `["s t \u0251\u02d0 p \u0279 \u1d7b k \u0254\u02d0\u0279 d \u026a \u014b", "\u025b n d \u0279 \u1d7b k \u0254\u02d0\u0279 d \u026a \u014b"]` |  |
+| `hotwords.stop_recording.stopword` | `true` |  |
+| `hotwords.stop_recording.fallback_ww` | `"stop_recording_vosk"` |  |
+| `hotwords.stop_recording_vosk.module` | `"ovos-ww-plugin-vosk"` |  |
+| `hotwords.stop_recording_vosk.rule` | `"fuzzy"` |  |
+| `hotwords.stop_recording_vosk.samples` | `["stop recording", "end recording"]` |  |
+| `hotwords.stop_recording_vosk.lang` | `"en-US"` |  |
+| `hotwords.stop_recording_vosk.stopword` | `true` |  |
 
 ### `gui`
 
@@ -318,6 +313,8 @@
 | Key | Default | Description |
 |---|---|---|
 | `tts.pulse_duck` | `false` |  |
+| `tts.ocp_cork` | `false` |  |
+| `tts.ocp_duck` | `false` |  |
 | `tts.module` | `"ovos-tts-plugin-server"` | Stock default is `ovos-tts-plugin-server`, which routes text to a public community server for text-to-speech. See [Privacy & Security](privacy-security.md). |
 | `tts.fallback_module` | `""` |  |
 | `tts.ovos-tts-plugin-mimic.voice` | `"ap"` |  |
