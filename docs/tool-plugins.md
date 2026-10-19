@@ -170,7 +170,7 @@ converting the merged list to the OpenAI spec in a single call.
 pip install --pre ovos-PHAL-plugin-tools
 ```
 
-Entry point group: `ovos.plugin.phal`, the legacy name that OPM still aliases to `opm.phal`; plugin name `ovos-phal-plugin-tools`.
+Entry point group: `opm.phal`; plugin name `ovos-phal-plugin-tools`.
 
 ### messagebus event table
 
@@ -263,9 +263,14 @@ pip install ovos-tool-adapters[mcp]     # for ovos-mcp-toolbox
 pip install ovos-tool-adapters[utcp]    # for ovos-utcp-toolbox
 ```
 
-Each takes its own config section, keyed by plugin name in the persona JSON exactly like a
-handler plugin. For `ovos-mcp-toolbox`, `transport` selects the connection kind: `stdio` needs
-`command` (and `args`), `sse` and `http` need a `url`:
+Each takes its own config section, keyed by plugin name **inside the loop's section**, beside
+`toolboxes`. The loop passes `config["<plugin name>"]` from its own section to each toolbox, so a
+section at the top level of the persona never reaches the loop's adapter. The
+[Persona Server](persona-server.md)'s own tool endpoints are the exception: they load every
+installed toolbox and read its section from the top level of the persona file that the
+`PERSONA_PATH` environment variable names. For `ovos-mcp-toolbox`,
+`transport` selects the connection kind: `stdio` needs `command` (and `args`), `sse` and `http`
+need a `url`:
 
 ```json
 {
@@ -273,15 +278,18 @@ handler plugin. For `ovos-mcp-toolbox`, `transport` selects the connection kind:
   "handlers": ["ovos-react-loop"],
   "ovos-react-loop": {
     "brain": "ovos-chat-openai-plugin",
-    "toolboxes": ["ovos-mcp-toolbox"]
-  },
-  "ovos-mcp-toolbox": {
-    "transport": "stdio",
-    "command": "uvx",
-    "args": ["mcp-server-fetch"]
+    "toolboxes": ["ovos-mcp-toolbox"],
+    "ovos-mcp-toolbox": {
+      "transport": "stdio",
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    }
   }
 }
 ```
+
+`ovos-utcp-toolbox` loads no tools with the UTCP 1.x client. See
+[Known limitations](agent-interop.md#known-limitations).
 
 !!! warning "A ToolBox that fails to connect serves zero tools, silently"
     If the bridged server cannot be reached, or its config is wrong, the failure surfaces during

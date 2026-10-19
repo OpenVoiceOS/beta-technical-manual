@@ -21,3 +21,6 @@ ovos-translate-server
 numpy
 uvicorn
 radiosoma
+utcp
+utcp-http
+mcp

@@ -21,7 +21,9 @@
 
     HiveMind is the **voice-satellite transport**: how a mic/speaker device or remote client
     reaches an OVOS brain. MCP and A2A (see [Agent Interop](agent-interop.md)) are different:
-    LLM/agent tool protocols that let AI systems call each other's tools.
+    LLM/agent tool protocols that let AI systems call each other's tools. The two meet in one
+    place: `hivemind-a2a-agent-plugin` lets a HiveMind master hand satellite queries to an
+    external A2A agent. See [OVOS as A2A consumer](agent-interop.md#ovos-as-a2a-consumer).
 
     If you are writing a remote or native (non-Python) client that connects over HiveMind,
     this manual is **not** the place to look for the wire details. HiveMind defines its own
