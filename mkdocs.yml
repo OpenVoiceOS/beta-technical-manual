@@ -278,6 +278,8 @@ nav:
           - Wake Word: wake-word-plugins.md
           - Wake Word Plugin Development: wake-word-plugin-development.md
           - Wake Word Verifiers: ww-verifier.md
+          - Change the Wake Word Without Training: change-wake-word-without-training.md
+          - Make OVOS Answer Only Your Voice: answer-only-your-voice.md
           - STT: stt-plugins.md
           - STT Plugins Reference: stt-plugins-reference.md
           - STT Plugin Development: stt-plugin-development.md

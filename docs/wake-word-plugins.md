@@ -27,6 +27,9 @@ Wake-word plugins let Open Voice OS detect specific words or sounds, typically t
 
 5. Say the new phrase. The assistant now wakes on it instead of "hey mycroft".
 
+!!! tip "Pick any phrase, with no training"
+    To use your own phrase without recording clips or training a model, see [Change the Wake Word Without Training](change-wake-word-without-training.md). You can try a phrase in the [WakePhoneHuBERT Space](https://huggingface.co/spaces/TigreGotico/wakephonehubert-space) first. To make the assistant answer only the people in your household, see [Make OVOS Answer Only Your Voice](answer-only-your-voice.md).
+
 ## Available Plugins
 
 OVOS supports different wake-word detection plugins, each with its own strengths and use cases.
@@ -205,10 +208,12 @@ flowchart LR
 ```jsonc
 "listener": {
   "ww_verifiers": {
-    "ovos-ww-verifier-speaker": {"threshold": 0.1}
+    "ovos-ww-verifier-speaker": {"threshold": 0.45, "fail_open": false}
   }
 }
 ```
+
+The speaker verifier is set up step by step in [Make OVOS Answer Only Your Voice](answer-only-your-voice.md).
 
 Verifiers fail open: if a verifier plugin raises an unexpected exception, the exception is
 logged and the detection is **not** suppressed. Only an explicit `False` return from
