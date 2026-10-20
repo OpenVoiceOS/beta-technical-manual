@@ -1442,7 +1442,8 @@ more detail and more options.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Want to do this by voice instead of editing files?</p>
-<p>Everything below needs opening a text file and a restart. If you'd rather change your wake
+<p>Everything below needs opening a text file, and most of it needs a restart. A voice change
+does not need a restart: see <a href="#change-your-voice">Change your voice</a>. If you'd rather change your wake
 word, voice, or volume by <em>talking</em> to your assistant, see
 <a href="../skill-examples/">What can I say?</a> and <a href="../everyday-help/">It's Not Working: Quick Fixes</a>
 for what's already possible hands-free (e.g. volume) versus what still needs a config edit
@@ -1511,8 +1512,9 @@ custom hotword like this one, with no <code>fallback_ww</code> configured. A mod
 load is logged loudly (an <code>ERROR</code> with a traceback in the listener log) and simply dropped,
 so the assistant stops responding to that wake word.</p>
 <p>The shipped default <code>hey_mycroft</code>
-behaves differently. Its config chains through <code>fallback_ww</code> entries (tflite → precise →
-vosk → pocketsphinx), so a failed primary engine there falls back to the next engine.
+behaves differently. Its config chains through <code>fallback_ww</code> entries, so a failed primary
+engine there falls back to the next engine. On the stable and testing channels the chain is
+precise-lite → precise → vosk → pocketsphinx. On the alpha channel it is precise-onnx → WakeForge → vosk.
 The assistant keeps listening, though each failed engine still logs its own <code>ERROR</code>
 (see <a href="../wake-word-plugins/">Wake-word Plugins</a>). Full walkthrough,
 plugin choices, and tuning: <a href="../wake-word-plugins/#change-your-wake-word">Wake-word Plugins</a>.</p>
@@ -1535,6 +1537,19 @@ note in <a href="../tts-plugins/#change-your-voice">TTS Plugins</a>.</p>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>You do not need to restart OVOS for a voice change. <code>ovos-audio</code> watches the configuration
+files. When <code>tts.module</code> or the settings block of that plugin changes, it shuts down the old
+voice and loads the new one. A change to another key in the <code>tts</code> section, such as <code>lang</code>,
+does not reload the voice. The
+log of <code>ovos-audio</code> shows <code>(re)loading TTS engine</code> when this happens.</p>
+<div class="admonition warning">
+<p class="admonition-title">Alpha channel only</p>
+<p>On the stable channel (<code>ovos-audio</code> 0.4.0) and the testing channel (<code>ovos-audio</code> 1.2.0),
+the voice reloads only when the settings block of the plugin changes, for example a new
+<code>voice</code> value. If you change only <code>module</code>, and neither plugin has a settings block, the
+old voice keeps speaking until you restart OVOS. <code>ovos-audio</code> 2.2.1a1 and later also
+reload when <code>module</code> changes.</p>
+</div>
 <p>Browse voice samples and see every available plugin: <a href="../tts-plugins/#change-your-voice">TTS Plugins</a>.</p>
 <h2 id="make-it-talk-slower">Make it talk slower<a class="headerlink" href="#make-it-talk-slower" title="Permanent link">&para;</a></h2>
 <p>There is no single global speaking-rate setting. Rate lives in the active TTS plugin's own

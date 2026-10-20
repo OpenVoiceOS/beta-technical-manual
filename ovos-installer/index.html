@@ -625,6 +625,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#set-up-from-the-web-wizard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set up from the web wizard
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#step-by-step-installation" class="md-nav__link">
     <span class="md-ellipsis">
       Step-by-step Installation
@@ -699,6 +708,21 @@
       Installation Complete!
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Installation Complete!">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-more-packages-later" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install more packages later
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1447,6 +1471,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#set-up-from-the-web-wizard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set up from the web wizard
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#step-by-step-installation" class="md-nav__link">
     <span class="md-ellipsis">
       Step-by-step Installation
@@ -1521,6 +1554,21 @@
       Installation Complete!
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Installation Complete!">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-more-packages-later" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install more packages later
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1606,15 +1654,40 @@ and are not receiving updates (the newer DEV builds on its
 work-in-progress toward a refreshed image), so check status before choosing it. This
 installer is the supported route meanwhile, and the recommended path on the Pi and
 everywhere else.</p>
-<p><strong>This runs over SSH in a terminal, not an app.</strong> There's no phone app or setup wizard with a
-graphical pairing flow. You type commands into a terminal, usually over SSH into a headless
-device. If you've never used SSH before, budget some extra time to get comfortable with it,
-or consider the <a href="../install-raspovos/">raspOVOS</a> image (see its status note above) which boots
-into a working assistant with no SSH step.</p>
+<p><strong>This runs in a terminal, not an app.</strong> There's no phone app. You type commands into a
+terminal, usually over SSH into a headless device. The <a href="#set-up-from-the-web-wizard">web setup wizard</a>
+prepares the command for you, but you still paste it into the device's terminal. If you've
+never used SSH before, budget some extra time to get comfortable with it, or consider the
+<a href="../install-raspovos/">raspOVOS</a> image (see its status note above) which boots into a working
+assistant with no SSH step.</p>
 <p><strong>Exotic hardware.</strong> Some hardware (like ReSpeaker microphones or certain audio HATs) may
 require extra configuration. The installer aims for wide compatibility, but specialized
 setups might need some manual intervention.</p>
 </div>
+<hr />
+<h2 id="set-up-from-the-web-wizard">Set up from the web wizard<a class="headerlink" href="#set-up-from-the-web-wizard" title="Permanent link">&para;</a></h2>
+<p><a href="https://start.openvoiceos.org/">start.openvoiceos.org</a> is a web page that prepares the
+installer for you. Use it from any browser, for example on your laptop.</p>
+<ol>
+<li>Open <a href="https://start.openvoiceos.org/">start.openvoiceos.org</a>.</li>
+<li>Choose your language, your device and your preferences.</li>
+<li>Follow the preparation steps for your device.</li>
+<li>Copy the install command that the wizard gives you, and paste it into the device's terminal.</li>
+<li>Keep the wizard open. It shows the installation progress, then helps you check your speaker
+   and microphone.</li>
+</ol>
+<p>The wizard makes these choices for you:</p>
+<ul>
+<li>It installs from the <strong>alpha</strong> channel. It does not offer a channel choice.</li>
+<li>On a Raspberry Pi, a Mark 1, a Mark II or a DevKit, it turns on
+  <a href="../ovos-installer-scenarios/#raspberry-pi-tuning-if-applicable">Raspberry Pi tuning</a>.</li>
+<li>It asks whether to send the one-time install statistics (<code>share_telemetry</code>). The switch
+  starts on, and you can turn it off before you continue. Ongoing usage telemetry
+  (<code>share_usage_telemetry</code>) stays off.</li>
+</ul>
+<p>The wizard does not show every installer option. To choose a channel or another option it does
+not offer, run the installer yourself as the next section shows. To change your setup or to
+reinstall, open the wizard again.</p>
 <hr />
 <h2 id="step-by-step-installation">Step-by-step Installation<a class="headerlink" href="#step-by-step-installation" title="Permanent link">&para;</a></h2>
 <h3 id="1-connect-to-your-device-if-remote">1. Connect to Your Device <em>(if remote)</em><a class="headerlink" href="#1-connect-to-your-device-if-remote" title="Permanent link">&para;</a></h3>
@@ -1713,9 +1786,24 @@ before speaking your request. A bare "What's the weather?" with no wake
 word first won't be heard. See <a href="../wake-word-plugins/">Wake-word plugins</a>
 if you want to change it.</p>
 </div>
+<h3 id="install-more-packages-later">Install more packages later<a class="headerlink" href="#install-more-packages-later" title="Permanent link">&para;</a></h3>
+<p>On a <code>virtualenv</code> install, the installer writes a <code>pip.conf</code> file into the virtual environment.
+It points pip at a copy of the constraints file of your release channel. Every run of that
+environment's pip uses it, with no activation and no extra flag:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>~/.venvs/ovos/bin/pip<span class="w"> </span>install<span class="w"> </span>ovos-skill-application-launcher
+</span></code></pre></div>
+<p>pip then installs versions that match the channel the device was installed from. Without the
+constraints, pip can install an older release of a skill that downgrades <code>ovos-workshop</code> or
+<code>ovos-bus-client</code> under a running <code>ovos-core</code>, which then stops working.</p>
+<p>At the end of a <code>virtualenv</code> install, the installer runs <code>uv pip check</code>. If two installed
+packages disagree about their dependencies, the installer prints a warning that starts with
+"Some installed packages disagree about their dependencies." and names each package. The
+install still finishes. Report the warning when you ask for help, because a package that cannot
+import the version it was given can make a skill or a pipeline plugin disappear with no log
+line.</p>
 <hr />
 <h2 id="post-install-tuning">Post-install tuning<a class="headerlink" href="#post-install-tuning" title="Permanent link">&para;</a></h2>
-<p>The installer picks sensible defaults, but the best speech plugins vary by language and hardware. After the initial install, review the selected plugins and run <code>ovos-config autoconfigure --help</code> to see the language-aware reconfiguration options. Note that the default STT/TTS plugins talk to public community-run servers rather than running locally. See <a href="../privacy-security/#network-surface-of-a-default-install">Privacy &amp; Security</a> for exactly what that means and how to switch to an offline or self-hosted plugin.</p>
+<p>The installer picks sensible defaults, but the best speech plugins vary by language and hardware. After the initial install, review the selected plugins and run <code>ovos-config autoconfigure --help</code> to see the language-aware reconfiguration options. Note that the default STT/TTS plugins talk to public community-run servers rather than running locally, unless you chose <code>local</code> on the <a href="../ovos-installer-scenarios/#speech-if-applicable">Speech</a> screen. See <a href="../privacy-security/#network-surface-of-a-default-install">Privacy &amp; Security</a> for exactly what that means and how to switch to an offline or self-hosted plugin.</p>
 <p>The recording below shows this post-install tuning step in action: the operator runs
 <code>ovos-config autoconfigure</code> in a terminal, the tool prints the recommended STT/TTS plugins
 for the configured language, and the operator confirms to write them into <code>mycroft.conf</code>.</p>
@@ -1725,17 +1813,17 @@ for the configured language, and the operator confirms to write them into <code>
 <p>For scripting or fleet deployment, the installer can run without the TUI by reading a
 scenario file from <code>~/.config/ovos-installer/scenario.yaml</code>. Example (Docker
 containers on a Raspberry Pi with default skills):</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nn">---</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nt">uninstall</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">containers</span><span class="w">       </span><span class="c1"># or &quot;virtualenv&quot;</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nt">channel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">testing</span><span class="w">         </span><span class="c1"># or &quot;alpha&quot;</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nt">profile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ovos</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nt">features</span><span class="p">:</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span><span class="nt">skills</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span><span class="nt">extra_skills</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="nt">raspberry_pi_tuning</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="nt">share_telemetry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">        </span><span class="c1"># one-time install report, see Privacy &amp; Security</span>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="nt">share_usage_telemetry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># ongoing intent-matching reports, kept separate on purpose</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nn">---</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nt">uninstall</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">containers</span><span class="w">       </span><span class="c1"># or &quot;virtualenv&quot;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nt">channel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">testing</span><span class="w">         </span><span class="c1"># or &quot;alpha&quot;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nt">profile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ovos</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nt">features</span><span class="p">:</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="nt">skills</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">extra_skills</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="nt">raspberry_pi_tuning</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="nt">share_telemetry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">        </span><span class="c1"># one-time install report, see Privacy &amp; Security</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="nt">share_usage_telemetry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># ongoing intent-matching reports, kept separate on purpose</span>
 </span></code></pre></div>
 <p>Key options:</p>
 <table>
@@ -1778,6 +1866,10 @@ containers on a Raspberry Pi with default skills):</p>
 <td><code>share_usage_telemetry</code></td>
 <td>Configures the <em>installed, running</em> assistant to keep reporting intent-matching data afterwards. Not a one-time report (<a href="../ovos-installer-scenarios/#anonymous-telemetry">details</a>)</td>
 </tr>
+<tr>
+<td><code>speech_engine</code></td>
+<td>Optional. <code>public</code> (the default) uses the community servers. <code>local</code> runs speech on the device, with the public servers as a fallback. See <a href="../ovos-installer-scenarios/#speech-if-applicable">Speech</a> for the requirements</td>
+</tr>
 </tbody>
 </table>
 <p>All of <code>uninstall</code>, <code>method</code>, <code>channel</code>, <code>profile</code>, <code>features</code>, <code>raspberry_pi_tuning</code>,
@@ -1800,15 +1892,15 @@ skill entirely, even with <code>features.homeassistant: true</code> set. <strong
 <p>💡 <strong>Satellite profile.</strong> Deploying <code>profile: satellite</code> non-interactively requires a
 <code>hivemind:</code> block giving the connection details to the OVOS core it pairs with:
 <code>hivemind.host</code>, <code>hivemind.port</code>, <code>hivemind.key</code>, and <code>hivemind.password</code>:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">profile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">satellite</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nt">hivemind</span><span class="p">:</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.100.50</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5678</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">95b774f1e85c2ea8e8a80ac2c5d09c6b</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255203b3c8a7e59de1d60441a55d4f48</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="nt">features</span><span class="p">:</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">skills</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="nt">extra_skills</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">profile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">satellite</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">hivemind</span><span class="p">:</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.100.50</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5678</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">95b774f1e85c2ea8e8a80ac2c5d09c6b</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255203b3c8a7e59de1d60441a55d4f48</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nt">features</span><span class="p">:</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="nt">skills</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="nt">extra_skills</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </span></code></pre></div>
 </blockquote>
 <hr />
@@ -1824,9 +1916,9 @@ skill entirely, even with <code>features.homeassistant: true</code> set. <strong
 cascades to the individual OVOS services (<code>PartOf=ovos.service</code>). Check that before digging
 through logs.</p>
 <p>A healthy unit reads:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>● ovos.service - OVOS
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>     Loaded: loaded (/home/ovos/.config/systemd/user/ovos.service; enabled; preset: enabled)
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>     Active: active (running) since ...
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>● ovos.service - OVOS
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>     Loaded: loaded (/home/ovos/.config/systemd/user/ovos.service; enabled; preset: enabled)
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>     Active: active (running) since ...
 </span></code></pre></div>
 <p><code>Active: failed</code>, <code>activating (auto-restart)</code>, or a <code>Loaded: ... disabled</code> line each mean
 something is wrong. <code>active (running)</code> is the only pass. See

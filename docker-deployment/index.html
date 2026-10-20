@@ -1177,6 +1177,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#speech-on-the-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      Speech on the device
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#containerized-hivemind" class="md-nav__link">
     <span class="md-ellipsis">
       Containerized HiveMind
@@ -1540,6 +1549,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#speech-on-the-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      Speech on the device
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#containerized-hivemind" class="md-nav__link">
     <span class="md-ellipsis">
       Containerized HiveMind
@@ -1819,6 +1837,60 @@ for a worked compose example splitting the speech backend from the thin client.<
 </span></code></pre></div>
 <p>A container that "keeps getting slow" while showing <code>Up</code> in <code>docker ps</code> is the classic
 presentation of this failure mode.</p>
+<h2 id="speech-on-the-device">Speech on the device<a class="headerlink" href="#speech-on-the-device" title="Permanent link">&para;</a></h2>
+<p>The listener and audio images can run speech recognition and the voice on the device, with no
+STT or TTS server.</p>
+<div class="admonition warning">
+<p class="admonition-title">Alpha channel only</p>
+<p>Only the alpha listener image installs <code>ovos-stt-plugin-onnx-asr</code>. That plugin needs
+<code>ovos-plugin-manager</code> 2 or later, so the stable image skips it.</p>
+</div>
+<p>The compose files declare two volumes for the models, so an image update does not download
+them again:</p>
+<table>
+<thead>
+<tr>
+<th>Volume</th>
+<th>Service</th>
+<th>Path in the container</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ovos_stt_models</code></td>
+<td>listener</td>
+<td><code>~/.local/share/ovos_stt_plugin_onnxasr</code></td>
+</tr>
+<tr>
+<td><code>ovos_tts_models</code></td>
+<td>audio</td>
+<td><code>~/.cache/phoonnx</code></td>
+</tr>
+</tbody>
+</table>
+<p>The recognition model needs more memory than the standard limit. Set the limit for each service
+with these variables. Each one falls back to <code>STANDARD_MEMORY_LIMIT</code> when you do not set it:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Service</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LISTENER_MEMORY_LIMIT</code></td>
+<td>listener</td>
+</tr>
+<tr>
+<td><code>AUDIO_MEMORY_LIMIT</code></td>
+<td>audio</td>
+</tr>
+</tbody>
+</table>
+<p>When you choose <code>local</code> speech with the <code>containers</code> method, the
+<a href="../ovos-installer-scenarios/#speech-if-applicable"><code>ovos-installer</code></a> sets
+<code>LISTENER_MEMORY_LIMIT</code> for you.</p>
 <h2 id="containerized-hivemind">Containerized HiveMind<a class="headerlink" href="#containerized-hivemind" title="Permanent link">&para;</a></h2>
 <p><code>ovos-docker</code> does not build or push a HiveMind image itself, but its own
 <code>compose/docker-compose.hivemind.yml</code> already ships a ready-made stack: <code>hivemind_listener</code>

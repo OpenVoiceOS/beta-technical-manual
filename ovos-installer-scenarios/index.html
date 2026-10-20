@@ -709,6 +709,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#speech-if-applicable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Speech (if applicable)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#raspberry-pi-tuning-if-applicable" class="md-nav__link">
     <span class="md-ellipsis">
       Raspberry Pi Tuning (if applicable)
@@ -1528,6 +1537,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#speech-if-applicable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Speech (if applicable)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#raspberry-pi-tuning-if-applicable" class="md-nav__link">
     <span class="md-ellipsis">
       Raspberry Pi Tuning (if applicable)
@@ -1735,6 +1753,35 @@ HiveMind satellite client instead and has no local OVOS core or listener at all.
 <blockquote>
 <p>⚠️ Note: Some features (like the GUI) may be unavailable on lower-end hardware like the Raspberry Pi 3B+.</p>
 </blockquote>
+<hr />
+<h2 id="speech-if-applicable">Speech <em>(if applicable)</em><a class="headerlink" href="#speech-if-applicable" title="Permanent link">&para;</a></h2>
+<p>This screen asks where OVOS processes speech:</p>
+<dl>
+<dt><code>local</code></dt>
+<dd>Recognition and the voice run on this machine. The installer downloads the speech
+models, from hundreds of megabytes to a few gigabytes. If local recognition fails or
+returns no text, OVOS sends that recording to the public servers. If a local model cannot
+be set up, that part uses the public servers, and the installer tells you. This is not a
+fully offline mode.</dd>
+<dt><code>public</code></dt>
+<dd>Community servers process your recordings and the spoken replies over the internet.
+These volunteer-run servers are not a production service and can go offline at any time.</dd>
+</dl>
+<p>The screen preselects <code>local</code>, or <code>public</code> when you run the installer on a device that already
+has OVOS. The installer shows this screen only when all of these are true:</p>
+<ul>
+<li>The channel is <code>alpha</code>.</li>
+<li>The profile has audio: any profile except <code>server</code> with <code>virtualenv</code>, or <code>ovos</code> or
+  <code>listener</code> with <code>containers</code>.</li>
+<li>The machine is a 64-bit Linux on x86-64 or ARM64, or macOS on Apple Silicon, with a CPU
+  that the installer detects as capable.</li>
+<li>The machine has at least 7680 MiB of memory. On a Raspberry Pi, only the Raspberry Pi 5
+  family qualifies.</li>
+</ul>
+<p>In all other cases the installer uses <code>public</code>. With the <code>containers</code> method, the
+listener and audio containers keep the downloaded models in the <code>ovos_stt_models</code> and
+<code>ovos_tts_models</code> volumes, so an image update does not download them again. See
+<a href="../docker-deployment/#speech-on-the-device">Docker deployment</a>.</p>
 <hr />
 <h2 id="raspberry-pi-tuning-if-applicable">Raspberry Pi Tuning <em>(if applicable)</em><a class="headerlink" href="#raspberry-pi-tuning-if-applicable" title="Permanent link">&para;</a></h2>
 <p>On Raspberry Pi boards only, a yes/no prompt offers system performance tweaks

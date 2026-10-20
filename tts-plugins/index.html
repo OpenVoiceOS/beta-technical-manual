@@ -1689,7 +1689,10 @@ or container first, the same way <a href="../first-skill/">Your First Skill</a> 
 a skill.</p>
 </li>
 <li>
-<p>Save the file. It's JSONC (comments allowed). Restart OVOS for the change to take effect.</p>
+<p>Save the file. It's JSONC (comments allowed). <code>ovos-audio</code> sees the change and loads the
+    new voice, with no restart. On the stable and testing channels, a change of <code>module</code> alone, when
+    neither plugin has a settings block, needs a restart. See
+    <a href="../personalize/#change-your-voice">Make It Yours</a>.</p>
 </li>
 </ol>
 <div class="admonition tip">

@@ -1480,13 +1480,16 @@ moment you're done. Read it before you start.</p>
   install does and doesn't send over the network.</li>
 </ul>
 <h2 id="what-setup-actually-looks-like">What setup actually looks like<a class="headerlink" href="#what-setup-actually-looks-like" title="Permanent link">&para;</a></h2>
-<p>There's no pairing screen or app-based wizard. You either:</p>
+<p>There's no pairing screen or phone app. You either:</p>
 <ol>
 <li>Flash the <a href="../install-raspovos/">RaspOVOS</a> image to an SD card and boot a Raspberry Pi with
    it. This is the closest thing to "unbox and go" that exists today.</li>
 <li>Run the <a href="../ovos-installer/">ovos-installer</a> against an existing Linux install (Raspberry Pi
    OS or a regular desktop or laptop). This is a guided, menu-driven wizard, but you run it from
-   a terminal, typically over SSH if the device is headless.</li>
+   a terminal, typically over SSH if the device is headless. The web wizard at
+   <a href="https://start.openvoiceos.org/">start.openvoiceos.org</a> prepares the install command in
+   your browser and shows the progress. You still paste the command into the device's
+   terminal. See <a href="../ovos-installer/#set-up-from-the-web-wizard">Set up from the web wizard</a>.</li>
 </ol>
 <p>If you've never used SSH before, budget extra time for that step. Or use the RaspOVOS image,
 which needs none of it.</p>
