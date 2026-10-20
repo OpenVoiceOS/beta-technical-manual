@@ -301,6 +301,14 @@ nav:
           - QML Worked Examples: qt5-gui-examples.md
           - Home Screen (legacy): homescreen.md
           - GUI Adapters (upcoming): gui-adapters.md
+  - Personas and Memory:
+      - Personas and Memory Overview: personas-and-memory.md
+      - Make a Persona Remember: persona-remember.md
+      - Give Each Person Their Own Memory: persona-family-memory.md
+      - Answer From Your Own Documents: persona-local-documents.md
+      - Use a Persona per Device: persona-per-device.md
+      - Run Several Personas on One Server: persona-several-on-one-server.md
+      - Move From Solver Plugins: persona-solver-migration.md
   - Agents:
       - Agents Overview: agents-overview.md
       - Personas:

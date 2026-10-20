@@ -26,3 +26,4 @@ utcp-http
 mcp
 a2a-sdk
 httpx<1
+ovos-memory-plugins
