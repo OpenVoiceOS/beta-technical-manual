@@ -354,6 +354,14 @@ nav:
           - Wyoming Bridges (OVOS engines for HA): wyoming-bridges.md
           - Wyoming Wake-word Bridge: wyoming-wakeword-bridge.md
       - Music Assistant: music-assistant.md
+  - Drop-in Vendor APIs:
+      - Overview: vendor-apis.md
+      - OpenAI Chat and Function Calling: vendor-api-openai-chat.md
+      - OpenAI Files, Embeddings and RAG: vendor-api-openai-rag.md
+      - Other LLM SDKs: vendor-api-llm-sdks.md
+      - Text-to-Speech Vendor APIs: vendor-api-tts.md
+      - Speech-to-Text Vendor APIs: vendor-api-stt.md
+      - Translation Vendor APIs: vendor-api-translate.md
   - Reference:
       - Reference Overview: reference-overview.md
       - OVOS Repository Index: ecosystem-index.md
