@@ -2205,14 +2205,6 @@
 <td>Deactivate the active persona</td>
 </tr>
 <tr>
-<td><code>recognizer_loop:utterance</code></td>
-<td>Utterance routed in from the pipeline while a persona is active</td>
-</tr>
-<tr>
-<td><code>speak</code></td>
-<td>Persona response delivered back to the user</td>
-</tr>
-<tr>
 <td><code>ovos.persona.query</code> → <code>ovos.persona.answer</code></td>
 <td>Out-of-band, stateless Q&amp;A to a <strong>named</strong> persona (OVOS-PERSONA-1 §8.5). Bypasses the pipeline and session; never touches <code>session.persona_id</code></td>
 </tr>
@@ -2222,6 +2214,7 @@
 </tr>
 </tbody>
 </table>
+<p>The service records each exchange that it answers for <code>persona:query</code>, in the memory of the persona that answered. It does not listen to <code>recognizer_loop:utterance</code> or <code>speak</code>.</p>
 <p>Responses use these dialog keys: <code>activated_persona</code>, <code>release_persona</code>, <code>active_persona</code>, <code>no_active_persona</code>, <code>unknown_persona</code>, <code>no_personas</code>, <code>list_personas</code>, <code>persona_error</code>.</p>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/ovos-persona">OpenVoiceOS/ovos-persona</a>.</em></p>
