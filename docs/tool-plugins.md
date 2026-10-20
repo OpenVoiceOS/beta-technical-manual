@@ -170,7 +170,7 @@ converting the merged list to the OpenAI spec in a single call.
 pip install --pre ovos-PHAL-plugin-tools
 ```
 
-Entry point group: `ovos.plugin.phal`, the legacy name that OPM still aliases to `opm.phal`; plugin name `ovos-phal-plugin-tools`.
+Entry point group: `opm.phal`; plugin name `ovos-phal-plugin-tools`.
 
 ### messagebus event table
 
@@ -232,7 +232,7 @@ Wire them into a persona:
 
 ## Exposing Tools over MCP / UTCP
 
-The Persona Server can bridge any installed ToolBox plugin to MCP and UTCP clients. See [agent-interop.md#persona-server-tool-plugins-via-mcp-utcp](agent-interop.md#persona-server-tool-plugins-via-mcp-utcp).
+The Persona Server can bridge any installed ToolBox plugin to MCP and UTCP clients. See [Use persona tools over MCP and UTCP](ai-agent-persona-tools.md).
 
 ### Function calling: client-side vs server-side tools
 
@@ -263,9 +263,13 @@ pip install ovos-tool-adapters[mcp]     # for ovos-mcp-toolbox
 pip install ovos-tool-adapters[utcp]    # for ovos-utcp-toolbox
 ```
 
-Each takes its own config section, keyed by plugin name in the persona JSON exactly like a
-handler plugin. For `ovos-mcp-toolbox`, `transport` selects the connection kind: `stdio` needs
-`command` (and `args`), `sse` and `http` need a `url`:
+Each takes its own config section, keyed by plugin name **inside the loop's section**, beside
+`toolboxes`. The loop passes `config["<plugin name>"]` from its own section to each toolbox, so a
+section at the top level of the persona never reaches the loop's adapter. The
+[Persona Server](persona-server.md)'s own tool endpoints are the exception: they load every
+installed toolbox and read its section from the top level of the default persona. For
+`ovos-mcp-toolbox`, `transport` selects the connection kind: `stdio` needs `command` (and `args`),
+`sse` and `http` need a `url`:
 
 ```json
 {
@@ -273,15 +277,18 @@ handler plugin. For `ovos-mcp-toolbox`, `transport` selects the connection kind:
   "handlers": ["ovos-react-loop"],
   "ovos-react-loop": {
     "brain": "ovos-chat-openai-plugin",
-    "toolboxes": ["ovos-mcp-toolbox"]
-  },
-  "ovos-mcp-toolbox": {
-    "transport": "stdio",
-    "command": "uvx",
-    "args": ["mcp-server-fetch"]
+    "toolboxes": ["ovos-mcp-toolbox"],
+    "ovos-mcp-toolbox": {
+      "transport": "stdio",
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    }
   }
 }
 ```
+
+`ovos-utcp-toolbox` takes a `utcp_config` whose `manual_call_templates` list names each UTCP
+manual. See [Give a persona MCP and UTCP tools](ai-agent-persona-uses-tools.md).
 
 !!! warning "A ToolBox that fails to connect serves zero tools, silently"
     If the bridged server cannot be reached, or its config is wrong, the failure surfaces during
@@ -306,7 +313,7 @@ bus via `ovos.persona.tools.{toolbox_id}.call`.
 | `ovos-wordnet-tools` | `define_word`, `word_relations` | `ovos-wordnet-plugin` | None, local `wn` (Open English WordNet) corpus, auto-downloaded |
 
 Skills are a natural place for more of these — weather, date and time, the ISS tracker — but
-none of those skills registers an `opm.agents.toolbox` entry point yet. Only the four above
+none of those skills registers an `opm.agents.toolbox` entry point. Only the four above
 exist in the OVOS org.
 
 The [agentic loop](agentic-loop.md) bundles its own toolboxes (`ovos-filesystem-tools`,
@@ -319,7 +326,7 @@ The OpenVoiceOS-org `opm.agents.chat` registrants are `ovos-openai-plugin` and
 `ovos-gguf-plugin` (see the [Agent Plugins catalog](agent-plugins.md#plugin-catalog)),
 `ovos-messagebus-chat-plugin`, the `ovos-agentic-loop` reasoning loops, and
 `ovos-a2a-agent-plugin` (`ovos-a2a-solver`, documented on
-[Agent Interoperability](agent-interop.md)). This manual only documents plugins backed by
+[Answer through a remote A2A agent](ai-agent-a2a-solver.md)). This manual only documents plugins backed by
 an OpenVoiceOS-org repo.
 
 ## Testing Tool Calling Without a GPU
@@ -333,9 +340,9 @@ model requests one, caller or server executes it — without a GPU:
 llama-server -m Qwen3-0.6B-Q4_K_M.gguf --jinja -c 8192
 ```
 
-Qwen3-0.6B at Q4_K_M quantization is a roughly 380 MB download. Recent `llama.cpp` builds
+Qwen3-0.6B at Q4_K_M quantization is a roughly 380 MB download. `llama.cpp` builds b7170 and later
 enable the chat template by default, and `--jinja` above asks for it explicitly, which keeps
-the command working on an older build. Where the template is off, the server produces no
+the command working on a build that does not. Where the template is off, the server produces no
 `tool_calls` at all, and every tool-calling test degrades into an ordinary plain-text
 conversation instead of failing loudly.
 
@@ -363,5 +370,5 @@ different port (`llama-server --port 8081` and adjust `api_url` to match).
     is the wrong key.
 
 ---
-**Read next:** [Interoperability (MCP/UTCP/A2A)](agent-interop.md)
+**Read next:** [AI Agents: MCP, UTCP and A2A](ai-agents.md)
 **Related:** [Agentic Loop Architectures](agentic-loop.md) · [Agent Engine Types](agent-plugins.md)

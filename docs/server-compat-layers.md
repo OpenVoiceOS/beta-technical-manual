@@ -103,7 +103,7 @@ All compat routers are always loaded. No feature flag is needed.
 `create_persona_app()` mounts the routes below.
 It mounts a chat router at prefix `/openai/v1` (`POST /openai/v1/chat/completions`,
 OpenAI-compatible), an Ollama router at prefix `/ollama/api`, and a UTCP router at `/tools`.
-It also mounts `/mcp` when started with the `--mcp` flag (which requires the `mcp` extra — the extra alone no longer exposes the endpoint).
+It also mounts `/mcp` when started with the `--mcp` flag (which requires the `mcp` extra — the extra alone does not expose the endpoint).
 
 | Prefix | Vendor |
 |--------|--------|

@@ -355,4 +355,4 @@ mutates `session.persona_id`.
 
 ---
 **Read next:** [Persona Server](persona-server.md)
-**Related:** [Personas & PersonaService](personas.md) · [Agent Engine Types](agent-plugins.md) · [Agent Tool Plugins](tool-plugins.md) · [Agent Interoperability](agent-interop.md)
+**Related:** [Personas & PersonaService](personas.md) · [Agent Engine Types](agent-plugins.md) · [Agent Tool Plugins](tool-plugins.md) · [AI Agents](ai-agents.md)

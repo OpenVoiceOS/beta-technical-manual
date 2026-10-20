@@ -200,7 +200,7 @@ description, a Pydantic `ToolArguments` schema, a Pydantic `ToolOutput` schema, 
 callable itself. The base class handles everything else: input/output validation
 (`call_tool`), messagebus discovery and remote calls, and export to the OpenAI tool spec
 (`openai_tools`). See [Agent Tool Plugins](tool-plugins.md) for the full walkthrough and
-[Interoperability](agent-interop.md) for how toolboxes map to MCP.
+[Use persona tools over MCP and UTCP](ai-agent-persona-tools.md) for how toolboxes map to MCP.
 
 ---
 

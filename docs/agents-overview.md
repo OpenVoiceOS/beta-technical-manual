@@ -25,7 +25,7 @@ Once a persona can talk, it can also act. This group covers how an agent plans o
 
 - [Agentic Loop Architectures](agentic-loop.md): how an agent plans and acts over multiple steps.
 - [Agent Tool Plugins](tool-plugins.md): giving an agent actions it can call.
-- [Interoperability (MCP/UTCP/A2A)](agent-interop.md): connecting to tools and agents outside OVOS.
+- [AI Agents: MCP, UTCP and A2A](ai-agents.md): connecting to tools and agents outside OVOS, one task for each page.
 
 ## LLM Backends
 

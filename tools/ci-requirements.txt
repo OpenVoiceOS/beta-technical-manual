@@ -21,3 +21,8 @@ ovos-translate-server
 numpy
 uvicorn
 radiosoma
+utcp
+utcp-http
+mcp
+a2a-sdk
+httpx<1

@@ -200,22 +200,22 @@ Beyond the native endpoints above, the app mounts drop-in compatible routers. Cl
 ## MCP Server
 
 A Model Context Protocol endpoint exposes the translate/detect tools to MCP clients, served with
-the third-party `fastmcp` package (`fastmcp>=3,<4`). It requires the `mcp` extra:
+the third-party `fastmcp` package (`fastmcp>=4.1.1`). It requires the `mcp` extra:
 
 ```bash
 pip install --pre 'ovos-translate-server[mcp]>=0.10.0a1'
 ```
 
 !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
-    The extra name is unchanged, but it resolves `fastmcp`, not the official `mcp` SDK — MCP SDK
-    2.0 removed `mcp.server.fastmcp.FastMCP`, so a server still importing that symbol fails to
-    start on the 2.x SDK. This server serves with `fastmcp`; a client consuming a different MCP
+    The extra is called `mcp`. It resolves `fastmcp`, not the official `mcp` SDK. MCP SDK 2.0
+    has no `mcp.server.fastmcp.FastMCP`, so a server that imports that symbol fails to start on
+    the 2.x SDK. This server serves with `fastmcp`; a client consuming a different MCP
     server (like `ovos-mcp-toolbox`, see [Agent Tool Plugins](tool-plugins.md)) uses the official
     `mcp` SDK instead.
 
 With the extra installed **and** the `--mcp` flag passed at startup, the HTTP server mounts
 MCP at `/mcp` on its own port (`0.0.0.0:9686` by default). The flag is required — installing
-the extra alone no longer auto-mounts the endpoint; `--mcp` without the extra logs a warning
+the extra alone does not mount the endpoint; `--mcp` without the extra logs a warning
 and runs without it. A standalone MCP-only process is also available, useful for running
 MCP on its own host/port without exposing the HTTP API:
 
@@ -230,7 +230,7 @@ The standalone process defaults to host `127.0.0.1` and port `9687`, distinct fr
 server's `0.0.0.0:9686`. The `FastMCP` instance can also be embedded into an existing FastAPI app.
 
 Either way it exposes two tools: `translate(text, target_lang, source_lang=None)` returns the
-translated string (omit `source_lang` to auto-detect), and `detect_language(text)` returns a
+translated string (omit `source_lang` and the server detects the source language first), and `detect_language(text)` returns a
 BCP-47 tag. A minimal MCP client call to `translate` looks like:
 
 ```json
@@ -308,10 +308,6 @@ Build and run:
 docker build . -t my-translate-server
 docker run -p 9686:9686 my-translate-server
 ```
-
-!!! note "Upcoming — Docker Compose"
-    A default Docker Compose setup and custom-container documentation are in progress
-    ([ovos-translate-server#33](https://github.com/OpenVoiceOS/ovos-translate-server/pull/33)).
 
 ---
 

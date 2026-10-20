@@ -25,7 +25,7 @@ Install the agent-engine plugin(s) your persona references, e.g.:
 pip install ovos-openai-plugin
 ```
 
-Optional extras: `rag` (file/vector-store endpoints), `mcp` (pulls in `fastmcp>=3,<4` to serve the
+Optional extras: `rag` (file/vector-store endpoints), `mcp` (pulls in `fastmcp>=4.1.1` to serve the
 `/mcp` endpoint below), and `a2a` (Agent-to-Agent endpoint).
 
 !!! warning "Alpha channel only"
@@ -38,13 +38,11 @@ Optional extras: `rag` (file/vector-store endpoints), `mcp` (pulls in `fastmcp>=
     ```
 
 !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
-    The extra is still called `mcp`, so `pip install --pre 'ovos-persona-server[mcp]'` is unchanged,
-    but it resolves the third-party `fastmcp` package (`fastmcp>=3,<4`), not the official `mcp`
-    SDK. The split is deliberate: this server *serves* MCP with `fastmcp`, while a client
-    consuming another MCP server (like [`ovos-mcp-toolbox`](tool-plugins.md)) uses the official
-    `mcp` SDK instead. The two packages diverged because MCP SDK 2.0 removed
-    `mcp.server.fastmcp.FastMCP`, so a server still importing that symbol fails to start on the
-    2.x SDK. `fastmcp` is the maintained standalone project that symbol used to alias.
+    The extra is called `mcp`. It resolves the third-party `fastmcp` package (`fastmcp>=4.1.1`),
+    not the official `mcp` SDK. The split is deliberate: this server *serves* MCP with `fastmcp`,
+    while a client consuming another MCP server (like [`ovos-mcp-toolbox`](tool-plugins.md)) uses
+    the official `mcp` SDK instead. MCP SDK 2.0 has no `mcp.server.fastmcp.FastMCP`, so a server
+    that imports that symbol fails to start on the 2.x SDK. `fastmcp` is the maintained standalone project that symbol used to alias.
 
 ---
 
