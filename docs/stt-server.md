@@ -105,12 +105,12 @@ The short help text leaves out the defaults: the port defaults to `8080` and the
   `--multi` loads one engine instance per language on demand (one model per `lang`), instead of a single shared model.
 
 - **Compatibility routers**  
-  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (`POST /wit/speech`, override the SDK host with the `WIT_URL` env var) and Chromium speech-api (`POST /speech-api/v2/recognize`). The app also routes for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See `/docs` for the authoritative set. A `GET /utcp` manual advertises the endpoints to UTCP agents. An MCP endpoint mounts at `/mcp` on the same port when the server is started with `--mcp` (requires `pip install --pre 'ovos-stt-http-server[mcp]>=0.26.0a1'`). The extra alone no longer auto-mounts it.
+  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (`POST /wit/speech`, override the SDK host with the `WIT_URL` env var) and Chromium speech-api (`POST /speech-api/v2/recognize`). The app also routes for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See `/docs` for the authoritative set. A `GET /utcp` manual advertises the endpoints to UTCP agents. An MCP endpoint mounts at `/mcp` on the same port when the server is started with `--mcp` (requires `pip install --pre 'ovos-stt-http-server[mcp]>=0.26.0a1'`). The extra alone does not mount it.
 
     !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
-        The extra keeps the name `mcp`, but it resolves the third-party `fastmcp>=3,<4` package,
-        not the official `mcp` SDK (MCP SDK 2.0 removed `mcp.server.fastmcp.FastMCP`, so a server
-        still importing that symbol fails on the 2.x SDK). This server *serves* MCP with
+        The extra is called `mcp`. It resolves the third-party `fastmcp>=4.1.1` package, not the
+        official `mcp` SDK. MCP SDK 2.0 has no `mcp.server.fastmcp.FastMCP`, so a server that
+        imports that symbol fails to start on the 2.x SDK. This server *serves* MCP with
         `fastmcp`; a client consuming a different MCP server (like `ovos-mcp-toolbox`, see
         [Agent Tool Plugins](tool-plugins.md)) uses the official `mcp` SDK instead.
 
@@ -207,10 +207,6 @@ To point a OpenVoiceOS (or compatible project) to a STT server you can use the c
 pip install ovos-stt-plugin-server
 
 ```
-
-!!! note "Upcoming — universal server adapter"
-    A `server_type` option is planned for this companion plugin, so a single config shape can
-    target different self-hosted or cloud STT server APIs without a dedicated plugin per vendor.
 
 !!! note "Key name: `urls`, not `host`"
     This STT companion plugin reads the **`urls`** key (a list of strings). The

@@ -201,10 +201,10 @@ These keys go in the per-toolbox config block:
 
 ## External Tool Servers
 
-Use [ovos-tool-adapters](agent-interop.md) to wire any MCP or UTCP server into the loop as a `ToolBox`.
+Use `ovos-tool-adapters` to wire any MCP or UTCP server into the loop as a `ToolBox`. See [Give a persona MCP and UTCP tools](ai-agent-persona-uses-tools.md).
 
 ---
 
 ---
 **Read next:** [Agent Tool Plugins](tool-plugins.md)
-**Related:** [Agent Engine Types](agent-plugins.md) · [Building Agent Plugins](building-agent-plugins.md) · [Interoperability (MCP/UTCP/A2A)](agent-interop.md) · [Personas & PersonaService](personas.md)
+**Related:** [Agent Engine Types](agent-plugins.md) · [Building Agent Plugins](building-agent-plugins.md) · [AI Agents: MCP, UTCP and A2A](ai-agents.md) · [Personas & PersonaService](personas.md)

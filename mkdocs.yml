@@ -50,6 +50,7 @@ plugins:
   - redirects:
       redirect_maps:
         advanced-solvers.md: agent-plugins.md
+        agent-interop.md: ai-agents.md
 
 markdown_extensions:
   - admonition
@@ -312,11 +313,22 @@ nav:
       - Agentic Loops: agentic-loop.md
       - Tools & Interoperability:
           - Agent Tool Plugins: tool-plugins.md
-          - Interoperability (MCP/UTCP/A2A): agent-interop.md
       - LLM Backends:
           - OpenAI-compatible: openai-plugin.md
           - GGUF / Local LLM: gguf-plugin.md
           - LLM Transformers: llm-transformers.md
+  - AI Agents (MCP, UTCP, A2A):
+      - AI Agents Overview: ai-agents.md
+      - Transcribe Audio (STT): ai-agent-transcribe.md
+      - Speak (TTS): ai-agent-speak.md
+      - Translate Text: ai-agent-translate.md
+      - Talk to a Persona over A2A: ai-agent-a2a-server.md
+      - Write a Tool Plugin: ai-agent-tool-plugin.md
+      - Use Persona Tools over MCP and UTCP: ai-agent-persona-tools.md
+      - Share Tools on the Messagebus: ai-agent-bus-tools.md
+      - Give a Persona MCP and UTCP Tools: ai-agent-persona-uses-tools.md
+      - Answer Through a Remote A2A Agent: ai-agent-a2a-solver.md
+      - Connect HiveMind to an A2A Agent: ai-agent-hivemind-a2a.md
   - Production:
       - Production Overview: production-overview.md
       - Privacy & Security: privacy-security.md

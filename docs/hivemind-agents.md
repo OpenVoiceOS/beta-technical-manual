@@ -20,8 +20,10 @@
     for HiveMind itself.
 
     HiveMind is the **voice-satellite transport**: how a mic/speaker device or remote client
-    reaches an OVOS brain. MCP and A2A (see [Agent Interop](agent-interop.md)) are different:
-    LLM/agent tool protocols that let AI systems call each other's tools.
+    reaches an OVOS brain. MCP and A2A (see [AI Agents](ai-agents.md)) are different:
+    LLM/agent tool protocols that let AI systems call each other's tools. The two meet in one
+    place: `hivemind-a2a-agent-plugin` lets a HiveMind master send satellite queries to an
+    A2A agent. See [Connect a HiveMind satellite to an A2A agent](ai-agent-hivemind-a2a.md).
 
     If you are writing a remote or native (non-Python) client that connects over HiveMind,
     this manual is **not** the place to look for the wire details. HiveMind defines its own
@@ -71,8 +73,8 @@ pip install --pre hivemind-core
 !!! warning "Alpha channel only"
 
     `--pre` is not optional here. Without it the install resolves a release that
-    reads its plugins through `pkg_resources`, which recent setuptools no longer
-    ships, so the first command below fails with `ModuleNotFoundError: No module
+    reads its plugins through `pkg_resources`, which setuptools 82.0.0 and later do not
+    ship, so the first command below fails with `ModuleNotFoundError: No module
     named 'pkg_resources'` and nothing warns at install time.
 
     The satellite is installed with `--pre` as well, further down. Use the same
@@ -389,4 +391,4 @@ satellites or untrusted networks.
 
 ---
 **Read next:** [Home Assistant](home-assistant.md)
-**Related:** [Privacy & Security](privacy-security.md) · [Persona Server](persona-server.md) · [Agent Interop](agent-interop.md) · [Production Operations](production-operations.md)
+**Related:** [Privacy & Security](privacy-security.md) · [Persona Server](persona-server.md) · [AI Agents](ai-agents.md) · [Production Operations](production-operations.md)
