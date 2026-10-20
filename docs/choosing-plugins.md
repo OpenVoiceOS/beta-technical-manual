@@ -80,7 +80,7 @@ Listens for the activation phrase. See the [Wake word catalog](wake-word-plugins
 | ⭐ **ovos-ww-plugin-precise-onnx** | Beta | offline | The first `hey_mycroft` engine on the alpha channel: accurate, lightweight always-on ONNX |
 | ovos-ww-plugin-openWakeWord | Stable | offline | Better accuracy than Vosk from open pre-trained models, no training |
 | ovos-ww-plugin-vosk | Stable | offline | Fastest setup for an arbitrary phrase, no model training (good for dev) |
-| ovos-ww-plugin-wakewordlab | Alpha | offline | Very compact (~240 KB) models with a Silero pre-filter (install from source) |
+| ovos-ww-plugin-wakewordlab | Alpha | offline | Very compact (~240 KB) models with a Silero pre-filter (install from source). For comparison only: the `wakewordlab` library and its models are non-commercial, training code not public |
 | ovos-ww-plugin-wakeforge | Alpha | offline | [Ready models](wake-word-plugins.md#ready-wakeforge-models) in English, German, Spanish, Italian and Dutch; a wake word typed as IPA phones; or a custom detector trained from one phrase |
 | ovos-ww-plugin-server | Alpha | hybrid | Thin satellite offloading detection to a self-hosted ww-server. **Not available yet** — repos still private |
 
