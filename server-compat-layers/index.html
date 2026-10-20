@@ -361,6 +361,24 @@
         
   
   
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ai-agents/" class="md-tabs__link">
+          
+  
+  AI Agents (MCP, UTCP, A2A)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
     
   
   
@@ -786,6 +804,48 @@
       
   
   
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ai-agents/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI Agents (MCP, UTCP, A2A)
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -806,10 +866,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" checked>
         
           
-          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -820,8 +880,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_9">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_10">
             <span class="md-nav__icon md-icon"></span>
             Production
           </label>
@@ -1101,10 +1161,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_12" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10_12" checked>
         
           
-          <label class="md-nav__link" for="__nav_9_12" id="__nav_9_12_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_10_12" id="__nav_10_12_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -1115,8 +1175,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_12_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_9_12">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_10_12_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_10_12">
             <span class="md-nav__icon md-icon"></span>
             Self-hosting Servers
           </label>
@@ -1809,7 +1869,7 @@ declare <code>ovos-workshop</code>, so an install from the stable channel import
 <p><code>create_persona_app()</code> mounts the routes below.
 It mounts a chat router at prefix <code>/openai/v1</code> (<code>POST /openai/v1/chat/completions</code>,
 OpenAI-compatible), an Ollama router at prefix <code>/ollama/api</code>, and a UTCP router at <code>/tools</code>.
-It also mounts <code>/mcp</code> when started with the <code>--mcp</code> flag (which requires the <code>mcp</code> extra — the extra alone no longer exposes the endpoint).</p>
+It also mounts <code>/mcp</code> when started with the <code>--mcp</code> flag (which requires the <code>mcp</code> extra — the extra alone does not expose the endpoint).</p>
 <table>
 <thead>
 <tr>

@@ -367,6 +367,24 @@
     
     
       <li class="md-tabs__item">
+        <a href="../ai-agents/" class="md-tabs__link">
+          
+  
+  AI Agents (MCP, UTCP, A2A)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="../production-overview/" class="md-tabs__link">
           
   
@@ -1277,6 +1295,48 @@
         
   
   
+    <a href="../ai-agents/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI Agents (MCP, UTCP, A2A)
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
     <a href="../production-overview/" class="md-nav__link">
       
   
@@ -1538,7 +1598,7 @@ endpoints, a UTCP tool surface, and vendor-compatible routers for <strong>Anthro
 <p>Install the agent-engine plugin(s) your persona references, e.g.:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-openai-plugin
 </span></code></pre></div>
-<p>Optional extras: <code>rag</code> (file/vector-store endpoints), <code>mcp</code> (pulls in <code>fastmcp&gt;=3,&lt;4</code> to serve the
+<p>Optional extras: <code>rag</code> (file/vector-store endpoints), <code>mcp</code> (pulls in <code>fastmcp&gt;=4.1.1</code> to serve the
 <code>/mcp</code> endpoint below), and <code>a2a</code> (Agent-to-Agent endpoint).</p>
 <div class="admonition warning">
 <p class="admonition-title">Alpha channel only</p>
@@ -1550,13 +1610,11 @@ the extra you want:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">The <code>mcp</code> extra installs <code>fastmcp</code>, not the <code>mcp</code> SDK</p>
-<p>The extra is still called <code>mcp</code>, so <code>pip install --pre 'ovos-persona-server[mcp]'</code> is unchanged,
-but it resolves the third-party <code>fastmcp</code> package (<code>fastmcp&gt;=3,&lt;4</code>), not the official <code>mcp</code>
-SDK. The split is deliberate: this server <em>serves</em> MCP with <code>fastmcp</code>, while a client
-consuming another MCP server (like <a href="../tool-plugins/"><code>ovos-mcp-toolbox</code></a>) uses the official
-<code>mcp</code> SDK instead. The two packages diverged because MCP SDK 2.0 removed
-<code>mcp.server.fastmcp.FastMCP</code>, so a server still importing that symbol fails to start on the
-2.x SDK. <code>fastmcp</code> is the maintained standalone project that symbol used to alias.</p>
+<p>The extra is called <code>mcp</code>. It resolves the third-party <code>fastmcp</code> package (<code>fastmcp&gt;=4.1.1</code>),
+not the official <code>mcp</code> SDK. The split is deliberate: this server <em>serves</em> MCP with <code>fastmcp</code>,
+while a client consuming another MCP server (like <a href="../tool-plugins/"><code>ovos-mcp-toolbox</code></a>) uses
+the official <code>mcp</code> SDK instead. MCP SDK 2.0 has no <code>mcp.server.fastmcp.FastMCP</code>, so a server
+that imports that symbol fails to start on the 2.x SDK. <code>fastmcp</code> is the maintained standalone project that symbol used to alias.</p>
 </div>
 <hr />
 <h2 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h2>

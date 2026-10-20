@@ -14,7 +14,7 @@
         <link rel="prev" href="../agentic-loop/">
       
       
-        <link rel="next" href="../agent-interop/">
+        <link rel="next" href="../openai-plugin/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -353,6 +353,24 @@
           
   
   Agents
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ai-agents/" class="md-tabs__link">
+          
+  
+  AI Agents (MCP, UTCP, A2A)
 
         </a>
       </li>
@@ -1169,27 +1187,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../agent-interop/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Interoperability (MCP/UTCP/A2A)
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1243,6 +1240,48 @@
             
           </ul>
         </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ai-agents/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI Agents (MCP, UTCP, A2A)
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
       
     </li>
   
@@ -1698,7 +1737,7 @@ converting the merged list to the OpenAI spec in a single call.</p>
 <p><a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-tools">OpenVoiceOS/ovos-PHAL-plugin-tools</a> is a PHAL plugin that loads all installed <code>ToolBox</code> plugins and registers them on the messagebus. Any component that can emit bus messages can then use them.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-PHAL-plugin-tools
 </span></code></pre></div>
-<p>Entry point group: <code>ovos.plugin.phal</code>, the legacy name that OPM still aliases to <code>opm.phal</code>; plugin name <code>ovos-phal-plugin-tools</code>.</p>
+<p>Entry point group: <code>opm.phal</code>; plugin name <code>ovos-phal-plugin-tools</code>.</p>
 <h3 id="messagebus-event-table">messagebus event table<a class="headerlink" href="#messagebus-event-table" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1787,7 +1826,7 @@ timeout. Make sure the messagebus service is already running before using this r
 </span></code></pre></div>
 <hr />
 <h2 id="exposing-tools-over-mcp-utcp">Exposing Tools over MCP / UTCP<a class="headerlink" href="#exposing-tools-over-mcp-utcp" title="Permanent link">&para;</a></h2>
-<p>The Persona Server can bridge any installed ToolBox plugin to MCP and UTCP clients. See <a href="../agent-interop/#persona-server-tool-plugins-via-mcp-utcp">agent-interop.md#persona-server-tool-plugins-via-mcp-utcp</a>.</p>
+<p>The Persona Server can bridge any installed ToolBox plugin to MCP and UTCP clients. See <a href="../ai-agent-persona-tools/">Use persona tools over MCP and UTCP</a>.</p>
 <h3 id="function-calling-client-side-vs-server-side-tools">Function calling: client-side vs server-side tools<a class="headerlink" href="#function-calling-client-side-vs-server-side-tools" title="Permanent link">&para;</a></h3>
 <p>The <a href="../persona-server/#function-calling-who-executes-what">Persona Server</a> can offer a model two
 different kinds of tools in the same request, and only one of them is a <code>ToolBox</code>:</p>
@@ -1827,23 +1866,29 @@ into the <code>ToolBox</code> interface, so a persona can call it like any nativ
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-tool-adapters<span class="o">[</span>mcp<span class="o">]</span><span class="w">     </span><span class="c1"># for ovos-mcp-toolbox</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-tool-adapters<span class="o">[</span>utcp<span class="o">]</span><span class="w">    </span><span class="c1"># for ovos-utcp-toolbox</span>
 </span></code></pre></div>
-<p>Each takes its own config section, keyed by plugin name in the persona JSON exactly like a
-handler plugin. For <code>ovos-mcp-toolbox</code>, <code>transport</code> selects the connection kind: <code>stdio</code> needs
-<code>command</code> (and <code>args</code>), <code>sse</code> and <code>http</code> need a <code>url</code>:</p>
+<p>Each takes its own config section, keyed by plugin name <strong>inside the loop's section</strong>, beside
+<code>toolboxes</code>. The loop passes <code>config["&lt;plugin name&gt;"]</code> from its own section to each toolbox, so a
+section at the top level of the persona never reaches the loop's adapter. The
+<a href="../persona-server/">Persona Server</a>'s own tool endpoints are the exception: they load every
+installed toolbox and read its section from the top level of the default persona. For
+<code>ovos-mcp-toolbox</code>, <code>transport</code> selects the connection kind: <code>stdio</code> needs <code>command</code> (and <code>args</code>),
+<code>sse</code> and <code>http</code> need a <code>url</code>:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;researcher&quot;</span><span class="p">,</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-react-loop&quot;</span><span class="p">],</span>
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">&quot;ovos-react-loop&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="nt">&quot;brain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ovos-chat-openai-plugin&quot;</span><span class="p">,</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="nt">&quot;toolboxes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-mcp-toolbox&quot;</span><span class="p">]</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="p">},</span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="nt">&quot;ovos-mcp-toolbox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="nt">&quot;transport&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span>
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uvx&quot;</span><span class="p">,</span>
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp-server-fetch&quot;</span><span class="p">]</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="nt">&quot;toolboxes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-mcp-toolbox&quot;</span><span class="p">],</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="nt">&quot;ovos-mcp-toolbox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">      </span><span class="nt">&quot;transport&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uvx&quot;</span><span class="p">,</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp-server-fetch&quot;</span><span class="p">]</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="p">}</span>
 </span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="p">}</span>
 </span></code></pre></div>
+<p><code>ovos-utcp-toolbox</code> takes a <code>utcp_config</code> whose <code>manual_call_templates</code> list names each UTCP
+manual. See <a href="../ai-agent-persona-uses-tools/">Give a persona MCP and UTCP tools</a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">A ToolBox that fails to connect serves zero tools, silently</p>
 <p>If the bridged server cannot be reached, or its config is wrong, the failure surfaces during
@@ -1894,7 +1939,7 @@ bus via <code>ovos.persona.tools.{toolbox_id}.call</code>.</p>
 </tbody>
 </table>
 <p>Skills are a natural place for more of these — weather, date and time, the ISS tracker — but
-none of those skills registers an <code>opm.agents.toolbox</code> entry point yet. Only the four above
+none of those skills registers an <code>opm.agents.toolbox</code> entry point. Only the four above
 exist in the OVOS org.</p>
 <p>The <a href="../agentic-loop/">agentic loop</a> bundles its own toolboxes (<code>ovos-filesystem-tools</code>,
 <code>ovos-shell-tools</code>, <code>ovos-web-search-tools</code>, <code>ovos-clock-tools</code>, <code>ovos-math-tools</code>,
@@ -1904,7 +1949,7 @@ exist in the OVOS org.</p>
 <code>ovos-gguf-plugin</code> (see the <a href="../agent-plugins/#plugin-catalog">Agent Plugins catalog</a>),
 <code>ovos-messagebus-chat-plugin</code>, the <code>ovos-agentic-loop</code> reasoning loops, and
 <code>ovos-a2a-agent-plugin</code> (<code>ovos-a2a-solver</code>, documented on
-<a href="../agent-interop/">Agent Interoperability</a>). This manual only documents plugins backed by
+<a href="../ai-agent-a2a-solver/">Answer through a remote A2A agent</a>). This manual only documents plugins backed by
 an OpenVoiceOS-org repo.</p>
 <h2 id="testing-tool-calling-without-a-gpu">Testing Tool Calling Without a GPU<a class="headerlink" href="#testing-tool-calling-without-a-gpu" title="Permanent link">&para;</a></h2>
 <p>Reviewing tool-calling code needs a model that reliably <em>emits</em> tool calls, not necessarily a
@@ -1913,9 +1958,9 @@ own OpenAI-compatible server is enough to exercise the whole path — server dis
 model requests one, caller or server executes it — without a GPU:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>llama-server<span class="w"> </span>-m<span class="w"> </span>Qwen3-0.6B-Q4_K_M.gguf<span class="w"> </span>--jinja<span class="w"> </span>-c<span class="w"> </span><span class="m">8192</span>
 </span></code></pre></div>
-<p>Qwen3-0.6B at Q4_K_M quantization is a roughly 380 MB download. Recent <code>llama.cpp</code> builds
+<p>Qwen3-0.6B at Q4_K_M quantization is a roughly 380 MB download. <code>llama.cpp</code> builds b7170 and later
 enable the chat template by default, and <code>--jinja</code> above asks for it explicitly, which keeps
-the command working on an older build. Where the template is off, the server produces no
+the command working on a build that does not. Where the template is off, the server produces no
 <code>tool_calls</code> at all, and every tool-calling test degrades into an ordinary plain-text
 conversation instead of failing loudly.</p>
 <p>Point a persona at the running server with the OpenAI-compatible chat engine:</p>
@@ -1939,7 +1984,7 @@ installed</code> — which reads like the package genuinely isn't installed, whe
 is the wrong key.</p>
 </div>
 <hr />
-<p><strong>Read next:</strong> <a href="../agent-interop/">Interoperability (MCP/UTCP/A2A)</a>
+<p><strong>Read next:</strong> <a href="../ai-agents/">AI Agents: MCP, UTCP and A2A</a>
 <strong>Related:</strong> <a href="../agentic-loop/">Agentic Loop Architectures</a> · <a href="../agent-plugins/">Agent Engine Types</a></p>
 
 

@@ -361,6 +361,24 @@
         
   
   
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ai-agents/" class="md-tabs__link">
+          
+  
+  AI Agents (MCP, UTCP, A2A)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
     
   
   
@@ -786,6 +804,48 @@
       
   
   
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ai-agents/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI Agents (MCP, UTCP, A2A)
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -806,10 +866,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" checked>
         
           
-          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -820,8 +880,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_9">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_10">
             <span class="md-nav__icon md-icon"></span>
             Production
           </label>
@@ -1620,8 +1680,10 @@ it. This page covers only how HiveMind relates to OVOS.</p>
 integration. See the <a href="https://jarbashivemind.github.io/HiveMind-community-docs/">community docs</a>
 for HiveMind itself.</p>
 <p>HiveMind is the <strong>voice-satellite transport</strong>: how a mic/speaker device or remote client
-reaches an OVOS brain. MCP and A2A (see <a href="../agent-interop/">Agent Interop</a>) are different:
-LLM/agent tool protocols that let AI systems call each other's tools.</p>
+reaches an OVOS brain. MCP and A2A (see <a href="../ai-agents/">AI Agents</a>) are different:
+LLM/agent tool protocols that let AI systems call each other's tools. The two meet in one
+place: <code>hivemind-a2a-agent-plugin</code> lets a HiveMind master send satellite queries to an
+A2A agent. See <a href="../ai-agent-hivemind-a2a/">Connect a HiveMind satellite to an A2A agent</a>.</p>
 <p>If you are writing a remote or native (non-Python) client that connects over HiveMind,
 this manual is <strong>not</strong> the place to look for the wire details. HiveMind defines its own
 protocol: the connect URL, the access-key auth handshake, the message envelope, and the
@@ -1675,8 +1737,8 @@ You can swap implementations without touching the rest:</p>
 <div class="admonition warning">
 <p class="admonition-title">Alpha channel only</p>
 <p><code>--pre</code> is not optional here. Without it the install resolves a release that
-reads its plugins through <code>pkg_resources</code>, which recent setuptools no longer
-ships, so the first command below fails with <code>ModuleNotFoundError: No module
+reads its plugins through <code>pkg_resources</code>, which setuptools 82.0.0 and later do not
+ship, so the first command below fails with <code>ModuleNotFoundError: No module
 named 'pkg_resources'</code> and nothing warns at install time.</p>
 <p>The satellite is installed with <code>--pre</code> as well, further down. Use the same
 form on both: the server and the satellite negotiate a protocol, and
@@ -1960,7 +2022,7 @@ authenticated</strong>. Keep it on a trusted local network. Use HiveMind for any
 </ul>
 <hr />
 <p><strong>Read next:</strong> <a href="../home-assistant/">Home Assistant</a>
-<strong>Related:</strong> <a href="../privacy-security/">Privacy &amp; Security</a> · <a href="../persona-server/">Persona Server</a> · <a href="../agent-interop/">Agent Interop</a> · <a href="../production-operations/">Production Operations</a></p>
+<strong>Related:</strong> <a href="../privacy-security/">Privacy &amp; Security</a> · <a href="../persona-server/">Persona Server</a> · <a href="../ai-agents/">AI Agents</a> · <a href="../production-operations/">Production Operations</a></p>
 
 
 

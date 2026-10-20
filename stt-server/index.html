@@ -361,6 +361,24 @@
         
   
   
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ai-agents/" class="md-tabs__link">
+          
+  
+  AI Agents (MCP, UTCP, A2A)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
     
   
   
@@ -786,6 +804,48 @@
       
   
   
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../ai-agents/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    AI Agents (MCP, UTCP, A2A)
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -806,10 +866,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" checked>
         
           
-          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -820,8 +880,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_9">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_10">
             <span class="md-nav__icon md-icon"></span>
             Production
           </label>
@@ -1101,10 +1161,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_12" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10_12" checked>
         
           
-          <label class="md-nav__link" for="__nav_9_12" id="__nav_9_12_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_10_12" id="__nav_10_12_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -1115,8 +1175,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_12_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_9_12">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_10_12_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_10_12">
             <span class="md-nav__icon md-icon"></span>
             Self-hosting Servers
           </label>
@@ -1778,12 +1838,12 @@ defaults.</p>
 </li>
 <li>
 <p><strong>Compatibility routers</strong><br />
-  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (<code>POST /wit/speech</code>, override the SDK host with the <code>WIT_URL</code> env var) and Chromium speech-api (<code>POST /speech-api/v2/recognize</code>). The app also routes for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See <code>/docs</code> for the authoritative set. A <code>GET /utcp</code> manual advertises the endpoints to UTCP agents. An MCP endpoint mounts at <code>/mcp</code> on the same port when the server is started with <code>--mcp</code> (requires <code>pip install --pre 'ovos-stt-http-server[mcp]&gt;=0.26.0a1'</code>). The extra alone no longer auto-mounts it.</p>
+  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (<code>POST /wit/speech</code>, override the SDK host with the <code>WIT_URL</code> env var) and Chromium speech-api (<code>POST /speech-api/v2/recognize</code>). The app also routes for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See <code>/docs</code> for the authoritative set. A <code>GET /utcp</code> manual advertises the endpoints to UTCP agents. An MCP endpoint mounts at <code>/mcp</code> on the same port when the server is started with <code>--mcp</code> (requires <code>pip install --pre 'ovos-stt-http-server[mcp]&gt;=0.26.0a1'</code>). The extra alone does not mount it.</p>
 <div class="admonition note">
 <p class="admonition-title">The <code>mcp</code> extra installs <code>fastmcp</code>, not the <code>mcp</code> SDK</p>
-<p>The extra keeps the name <code>mcp</code>, but it resolves the third-party <code>fastmcp&gt;=3,&lt;4</code> package,
-not the official <code>mcp</code> SDK (MCP SDK 2.0 removed <code>mcp.server.fastmcp.FastMCP</code>, so a server
-still importing that symbol fails on the 2.x SDK). This server <em>serves</em> MCP with
+<p>The extra is called <code>mcp</code>. It resolves the third-party <code>fastmcp&gt;=4.1.1</code> package, not the
+official <code>mcp</code> SDK. MCP SDK 2.0 has no <code>mcp.server.fastmcp.FastMCP</code>, so a server that
+imports that symbol fails to start on the 2.x SDK. This server <em>serves</em> MCP with
 <code>fastmcp</code>; a client consuming a different MCP server (like <code>ovos-mcp-toolbox</code>, see
 <a href="../tool-plugins/">Agent Tool Plugins</a>) uses the official <code>mcp</code> SDK instead.</p>
 </div>
@@ -1891,11 +1951,6 @@ plugin. Use the pip name to install, the repo name to find the source.</p>
 <p><strong>Install</strong>  </p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-stt-plugin-server
 </span></code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Upcoming — universal server adapter</p>
-<p>A <code>server_type</code> option is planned for this companion plugin, so a single config shape can
-target different self-hosted or cloud STT server APIs without a dedicated plugin per vendor.</p>
-</div>
 <div class="admonition note">
 <p class="admonition-title">Key name: <code>urls</code>, not <code>host</code></p>
 <p>This STT companion plugin reads the <strong><code>urls</code></strong> key (a list of strings). The
