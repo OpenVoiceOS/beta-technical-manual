@@ -87,7 +87,7 @@ that text. If every matcher rejects it, it's a training-data problem in your int
 sample phrase, wrong vocab), not a bug in the pipeline. Add the phrasing to your `.intent`/`.voc`
 file and retrain.
 
-→ full story: [Troubleshooting: Stage 4](troubleshooting.md#stage-4-which-pipeline-stage-matched-or-didnt), [Pipelines Overview](pipelines-overview.md)
+→ full story: [Debugging Intent Matching](debugging-intent-matching.md), [Troubleshooting: Stage 4](troubleshooting.md#stage-4-which-pipeline-stage-matched-or-didnt), [Pipelines Overview](pipelines-overview.md)
 
 ### Should my skill use Adapt or Padatious for intent matching?
 

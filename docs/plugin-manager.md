@@ -1,4 +1,9 @@
-# OVOS Plugin Manager (OPM)
+---
+search:
+  boost: 2
+---
+
+# OVOS Plugin Manager (OPM): Load and Write Plugins
 
 !!! success "Maturity — Mature ⬤⬤⬤⬤⬤"
     Long-lived and actively maintained. Depend on it freely. Rated by [repository health](maturity.md), not version.
@@ -81,7 +86,7 @@ its entry point group, and its template base class now lives on its own page:
 
 ---
 
-## Writing a Plugin
+## Write a Plugin
 
 ### 1. Implement the base class
 

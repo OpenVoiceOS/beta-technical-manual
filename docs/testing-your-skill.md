@@ -383,4 +383,4 @@ jobs:
 
 ---
 **Read next:** [Testing Skills with `ovoscope`](ovoscope-overview.md)
-**Related:** [Skill Structure](skill-structure.md) · [Developer FAQ](skill-dev-faq.md) · [Fallback Skill](fallbacks.md) · [Skill Development Overview](skills-overview.md)
+**Related:** [Debugging Intent Matching](debugging-intent-matching.md) · [Skill Structure](skill-structure.md) · [Developer FAQ](skill-dev-faq.md) · [Fallback Skill](fallbacks.md) · [Skill Development Overview](skills-overview.md)

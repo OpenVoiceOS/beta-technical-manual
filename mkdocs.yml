@@ -104,12 +104,13 @@ nav:
       - Install with ovos-installer: ovos-installer.md
       - Installer Wizard Walkthrough: ovos-installer-scenarios.md
       - Manual & Advanced Install: release-channels.md
+      - Update or Uninstall OVOS: keep-up-to-date.md
       - Rolling Back an Upgrade: release-rollback.md
       - RaspOVOS image:
           - RaspOVOS: install-raspovos.md
           - RaspOVOS Command Reference: raspovos-commands-reference.md
           - RaspOVOS Troubleshooting: raspovos-troubleshooting.md
-      - Make it yours: personalize.md
+      - "Make It Yours: Wake Word, Voice, Language": personalize.md
       - Fun stuff to try: showcase.md
       - What can I say? (Skills):
           - Overview: skill-examples.md
@@ -228,32 +229,35 @@ nav:
           - Design Guidelines: skill-design-guidelines.md
           - Best Practices: skill-best-practices.md
           - Anatomy of a Skill: skill-structure.md
-      - Logic & Intents:
+      - Respond to Phrases:
           - Intent Design: intents.md
           - Adapt Intents: intents-adapt.md
           - Padatious Intents: intents-padatious.md
-          - Asking the User: prompts.md
+          - Decorators: decorators.md
           - Intent Context (gating): context.md
           - Intent Layers: layers.md
           - Permissions & Activation Control: permissions.md
+      - Ask the User and Hold a Conversation:
+          - Asking the User: prompts.md
           - Continuous Conversation: converse.md
           - Sessions (multi-user state): session.md
+      - Speak Well:
           - Dialog & Statements: statements.md
           - SSML: ssml.md
           - Customization: customization.md
-          - skill.json: skill-json.md
-      - Skill APIs:
-          - ovos-workshop Overview: workshop-overview.md
-          - OVOSSkill API: ovos-skill.md
-          - Skill API (Inter-Skill RPC): skill-api.md
-          - Skill Base Classes: skill-classes.md
-          - Skill Classes Reference: skill-classes-reference.md
-          - Decorators: decorators.md
-          - Advanced Decorators: decorators-advanced.md
+      - Settings, Files and Resources:
           - Skill Settings: skill-settings.md
           - Meta Settings: skill-settings-meta.md
           - Filesystem: skill-filesystem.md
           - Resource Files: resource-files.md
+      - Talk to Other Skills: skill-api.md
+      - skill.json and Publishing: skill-json.md
+      - Skill API Reference:
+          - ovos-workshop Overview: workshop-overview.md
+          - OVOSSkill API: ovos-skill.md
+          - Skill Base Classes: skill-classes.md
+          - Skill Classes Reference: skill-classes-reference.md
+          - Advanced Decorators: decorators-advanced.md
           - GUI Support (legacy): skill-gui.md
           - Runtime Requirements (deprecated): skill-runtime-requirements.md
       - Testing Your Skill: testing-your-skill.md
@@ -266,24 +270,25 @@ nav:
       - Testing Reference (ovoscope): ovoscope-overview.md
   - Plugins:
       - Index & Overview: plugins-index.md
-      - How Plugins Load (Plugin Manager): plugin-manager.md
+      - Write a Plugin (Plugin Manager): plugin-manager.md
       - Plugin Types Reference: plugin-types-reference.md
       - Choosing Plugins (compare & recommend): choosing-plugins.md
       - Plugin Arena (benchmarks): plugin-arena.md
-      - Speech & Audio:
+      - Choose Your Speech Engines:
           - Microphone: mic-plugins.md
-          - Microphone Plugin Development: mic-plugin-development.md
           - VAD: vad-plugins.md
           - Wake Word: wake-word-plugins.md
-          - Wake Word Plugin Development: wake-word-plugin-development.md
           - Wake Word Verifiers: ww-verifier.md
           - STT: stt-plugins.md
           - STT Plugins Reference: stt-plugins-reference.md
-          - STT Plugin Development: stt-plugin-development.md
           - TTS: tts-plugins.md
           - TTS Plugins Reference: tts-plugins-reference.md
-          - Writing a TTS Plugin: tts-plugin-development.md
           - G2P: g2p-plugins.md
+      - Build a Speech Plugin:
+          - Write a Microphone Plugin: mic-plugin-development.md
+          - Write a Wake Word Plugin: wake-word-plugin-development.md
+          - Write an STT Plugin: stt-plugin-development.md
+          - Write a TTS Plugin: tts-plugin-development.md
       - Media Playback:
           - OCP Audio Plugin (legacy default): ocp-audio-plugin.md
           - OCP Extractors: ocp-plugins.md
@@ -300,23 +305,23 @@ nav:
           - GUI Adapters (upcoming): gui-adapters.md
   - Agents:
       - Agents Overview: agents-overview.md
-      - Personas:
+      - Give OVOS a Chat Brain:
           - Personas & PersonaService: personas.md
-          - Persona Memory: persona-memory.md
-          - Persona Server: persona-server.md
-      - Agent Engines:
-          - Agent Engine Types: agent-plugins.md
-          - Agent Plugins Reference: agent-plugins-reference.md
-          - Building Agent Plugins: building-agent-plugins.md
-          - Agent Plugin Walkthroughs: agent-plugin-walkthroughs.md
-      - Agentic Loops: agentic-loop.md
-      - Tools & Interoperability:
-          - Agent Tool Plugins: tool-plugins.md
-          - Interoperability (MCP/UTCP/A2A): agent-interop.md
-      - LLM Backends:
           - OpenAI-compatible: openai-plugin.md
           - GGUF / Local LLM: gguf-plugin.md
-          - LLM Transformers: llm-transformers.md
+          - Persona Memory: persona-memory.md
+      - Let It Use Tools:
+          - Agentic Loops: agentic-loop.md
+          - Agent Tool Plugins: tool-plugins.md
+      - Let Other Agents Use OVOS:
+          - Interoperability (MCP/UTCP/A2A): agent-interop.md
+          - Persona Server: persona-server.md
+      - Write an Agent Engine:
+          - Agent Engine Types: agent-plugins.md
+          - Building Agent Plugins: building-agent-plugins.md
+          - Agent Plugin Walkthroughs: agent-plugin-walkthroughs.md
+          - Agent Plugins Reference: agent-plugins-reference.md
+      - LLM Transformers: llm-transformers.md
   - Production:
       - Production Overview: production-overview.md
       - Privacy & Security: privacy-security.md
@@ -341,8 +346,8 @@ nav:
           - For Device & Fleet Operators: updating-deployers.md
           - For Remote Bus Clients: updating-remote-clients.md
       - Upcoming Changes: upcoming-changes.md
-      - Self-hosting Servers:
-          - Public Server Stack: public-server-stack.md
+      - Run Your Own Speech and Translation Servers:
+          - Stand Up the Full Server Stack: public-server-stack.md
           - STT Server: stt-server.md
           - TTS Server: tts-server.md
           - TTS Server Deployment: tts-server-deployment.md

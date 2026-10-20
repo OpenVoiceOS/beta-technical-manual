@@ -1,3 +1,8 @@
+---
+search:
+  boost: 1.5
+---
+
 # What Can I Say? Default Skills Overview
 
 !!! abstract "In a nutshell"

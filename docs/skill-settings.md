@@ -1,3 +1,8 @@
+---
+search:
+  boost: 2
+---
+
 # Skill Settings
 
 !!! abstract "In a nutshell"

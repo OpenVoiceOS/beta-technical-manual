@@ -3,13 +3,11 @@
 !!! abstract "In a nutshell"
     This tab is for anyone running OVOS beyond a single test device: fleets of devices, self-hosted servers, and deployments that must stay current across upgrades. It is not for a first install on one device; see the Get Started tab for that.
 
-This tab is for anyone running OVOS beyond a single test device: fleets, servers, and long-lived deployments.
-
 ## Start here
 
 1. [Production Operations](production-operations.md): decide whether you need a single hardened device or a fleet of them, and how the two setups differ.
 2. [Privacy & Security](privacy-security.md): what data OVOS handles and how to lock a deployment down.
-3. [Self-hosting Servers](stt-server.md): run your own STT, TTS, or translation backend instead of a third party's.
+3. [Public Server Stack](public-server-stack.md): run your own STT, TTS, and translation servers instead of a third party's.
 4. [Remote Agents with HiveMind](hivemind-agents.md): connect and manage devices remotely.
 
 ## The upgrade trio
@@ -27,6 +25,7 @@ Keeping a production deployment current means reading these together:
 
 Run your own STT, TTS, or translation backend instead of depending on a third party. Each protocol has its own page; Server Compatibility Layers covers keeping them working as OVOS versions change.
 
+- [Public Server Stack](public-server-stack.md): the full three-server deployment, with ports, a shared model cache, and machine size. Start here.
 - [STT Server](stt-server.md), [TTS Server](tts-server.md), [Translate Server](translate-server.md).
 
 ## Home Assistant

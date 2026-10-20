@@ -1,4 +1,9 @@
-# Make It Yours
+---
+search:
+  boost: 2
+---
+
+# Make It Yours: Change the Wake Word, Voice, and Language
 
 !!! abstract "In a nutshell"
     You just installed OVOS and it works. Now you want it to sound like *your* assistant: a

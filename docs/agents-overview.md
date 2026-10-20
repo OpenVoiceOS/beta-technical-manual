@@ -3,13 +3,11 @@
 !!! abstract "In a nutshell"
     This tab covers adding conversational AI or LLM-backed behavior to OVOS through personas, instead of (or alongside) fixed skills. It walks from the persona concept through engine choice, memory, tools, and the LLM backends a persona can run on. For a fixed, deterministic skill instead, see the Skills tab.
 
-This tab is for anyone adding conversational AI or LLM-backed behavior to OVOS, instead of (or alongside) fixed skills.
-
 ## Start here
 
 1. [Personas & PersonaService](personas.md): the entry concept, a persona is a configured AI agent OVOS can talk to.
-2. [Agent Engine Types](agent-plugins.md): the different kinds of engine a persona can run on.
-3. [Choosing an engine](agent-plugins.md#agent-engine-types): specialized agent engines beyond the basics.
+2. [Agent Engine Types](agent-plugins.md): the different kinds of engine a persona can run on, and how to choose one.
+3. [Interoperability (MCP/UTCP/A2A)](agent-interop.md): connect OVOS to other AI agents. Claude Desktop, an A2A agent, or an OpenAI client can use OVOS, and OVOS can use their tools.
 4. [Building Agent Plugins](building-agent-plugins.md): write your own engine when the built-in ones don't fit.
 
 ## Personas

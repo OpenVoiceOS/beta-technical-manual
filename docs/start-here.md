@@ -3,13 +3,19 @@
 !!! abstract "In a nutshell"
     This tab is for anyone new to OpenVoiceOS. It covers picking an install route, getting the assistant running, and fixing the first problems you hit. It is not for developers who want to understand the internals or build a skill; see the Concepts and Skills tabs for that.
 
-This tab is for anyone new to OpenVoiceOS: picking hardware, installing, and getting the assistant talking back.
-
 ## Start here
 
 Pick one of the two install routes below, then move on to the three pages that follow. They cover changing the wake word and voice, trying example projects, and finding out what skills already ship by default.
 
-First, pick your install route:
+Starting from a Raspberry Pi still in its box, do this first. Write Raspberry Pi OS to an
+SD card with [Raspberry Pi Imager](https://www.raspberrypi.com/software/), the official
+tool. In the Imager, open the settings before writing and set a username and password,
+your Wi-Fi network, and **enable SSH**. Without SSH you need a keyboard and monitor
+attached to the Pi. Raspberry Pi's own
+[getting-started guide](https://www.raspberrypi.com/documentation/computers/getting-started.html)
+covers this in full. Then boot the Pi, connect to it, and run the installer.
+
+Then pick your install route:
 
 - **[Install with ovos-installer](ovos-installer.md)** (recommended): the guided path for most hardware, including an existing Raspberry Pi OS setup.
 - **[RaspOVOS image](install-raspovos.md)** (alternative): a flash-and-boot SD card image for a spare Raspberry Pi. Its **stable** images date from mid-2025 and are not receiving updates (newer DEV builds on the [releases page](https://github.com/OpenVoiceOS/raspOVOS/releases) are untested work toward a refreshed image), so check status first. The installer is the supported route meanwhile.
@@ -19,6 +25,8 @@ Once the assistant is installed:
 1. [Make it yours](personalize.md): change the wake word, voice, and language once the assistant is running.
 2. [Fun stuff to try](showcase.md): a tour of things to build once the basics work.
 3. [What can I say? (Skills)](skill-examples.md): a catalog of the default skills you can talk to right away.
+
+To get a newer version later, or to remove OVOS, see [Update or Uninstall OVOS](keep-up-to-date.md).
 
 ## More install options
 

@@ -1,3 +1,8 @@
+---
+search:
+  boost: 2
+---
+
 # Intent Design
 
 !!! abstract "In a nutshell"
@@ -83,4 +88,4 @@ We will now look at each in more detail, including how to use them in a
 
 ---
 **Read next:** [Adapt Intents (Keyword Intents)](intents-adapt.md) · [Padatious Intents (Example-Based Intents)](intents-padatious.md)
-**Related:** [Skill Structure](skill-structure.md) · [Intent Layers](layers.md) · [Permissions & Activation Control](permissions.md) · [OVOS Intent Pipeline](pipelines-overview.md)
+**Related:** [Debugging Intent Matching](debugging-intent-matching.md) · [Skill Structure](skill-structure.md) · [Intent Layers](layers.md) · [Permissions & Activation Control](permissions.md) · [OVOS Intent Pipeline](pipelines-overview.md)

@@ -42,18 +42,8 @@ thinks, and speaks, or teach it brand-new abilities.
 
 If you just want a working voice assistant with the least fuss, install Raspberry Pi OS
 on a Raspberry Pi and run the **[ovos-installer](ovos-installer.md)**, a guided wizard.
-
-Starting from a Raspberry Pi still in its box, do this first. Write Raspberry Pi OS to an
-SD card with [Raspberry Pi Imager](https://www.raspberrypi.com/software/), the official
-tool. In the Imager, open the settings before writing and set a username and password,
-your Wi-Fi network, and **enable SSH**. Without SSH you need a keyboard and monitor
-attached to the Pi. Raspberry Pi's own
-[getting-started guide](https://www.raspberrypi.com/documentation/computers/getting-started.html)
-covers this in full. Then boot the Pi, connect to it, and run the installer.
-
-The flash-and-boot **[raspOVOS](install-raspovos.md)** image is an alternative, but its
-stable images date from mid-2025 and are unmaintained, so check its status first.
-Everyone else, pick your path in the grid below.
+**[Start Here](start-here.md)** takes you through it, from a Raspberry Pi still in its box to
+an assistant that answers. Everyone else, pick your path in the grid below.
 
 ---
 
@@ -108,6 +98,16 @@ Everyone else, pick your path in the grid below.
     [Design guidelines](skill-design-guidelines.md) ·
     [Anatomy of a skill](skill-structure.md)
 
+-   :material-puzzle: __I want to write a plugin__
+
+    ---
+
+    Add a new speech engine, wake word, voice, media source, or agent engine.
+
+    [:octicons-arrow-right-24: Write a plugin](plugins-index.md#write-a-plugin) ·
+    [Plugin Manager](plugin-manager.md#write-a-plugin) ·
+    [Plugin Types Reference](plugin-types-reference.md)
+
 -   :material-cog: __I want to understand how it works__
 
     ---
@@ -135,7 +135,8 @@ Everyone else, pick your path in the grid below.
 
     [:octicons-arrow-right-24: Personas](personas.md) ·
     [Agent engines](agent-plugins.md) ·
-    [Local LLM (GGUF)](gguf-plugin.md)
+    [Local LLM (GGUF)](gguf-plugin.md) ·
+    [Connect OVOS to other AI agents (MCP, A2A)](agent-interop.md)
 
 -   :material-lifebuoy: __It's not behaving__
 
@@ -176,7 +177,8 @@ Everyone else, pick your path in the grid below.
 
     Fleet configuration, staged upgrades, readiness probes, and self-hosting.
 
-    [:octicons-arrow-right-24: Production Operations](production-operations.md)
+    [:octicons-arrow-right-24: Production Operations](production-operations.md) ·
+    [Self-host speech servers](public-server-stack.md)
 
 -   :material-source-pull: __I want to fix a bug or contribute code__
 

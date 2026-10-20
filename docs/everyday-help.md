@@ -1,3 +1,8 @@
+---
+search:
+  boost: 1.5
+---
+
 # It's Not Working - Quick Fixes
 
 !!! abstract "In a nutshell"
@@ -69,7 +74,7 @@ flowchart TD
   routine, or [Accessibility](accessibility.md#installing-without-fighting-a-screen-reader) if
   editing that file interactively (for example with a screen reader) is itself the obstacle.
 
-## "It's not talking back to me" / "It's muted"
+## "It's not talking back to me" / "It's muted" / "No sound"
 
 - **Ask it to check itself.** Say *"what's the volume?"* If you get a spoken answer, audio
   output works and the problem is elsewhere (see the next section).

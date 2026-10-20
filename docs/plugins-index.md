@@ -41,6 +41,36 @@ their config, and install commands.
   Tools](tool-plugins.md).
 - I want hardware or platform integration (LEDs, buttons, displays) → [PHAL](phal.md); to write one, see [Writing PHAL Plugins](phal-authoring.md).
 
+## Write a plugin
+
+Every plugin type shares the same first steps: implement the base class, register an entry
+point, install the package, and check that OVOS finds it. The
+[Plugin Manager](plugin-manager.md#write-a-plugin) walks through these steps. Then follow the
+guide for your plugin type:
+
+| Plugin type | Guide |
+|---|---|
+| Microphone | [Write a Microphone Plugin](mic-plugin-development.md) |
+| VAD | [Creating Your Own VAD Plugin](vad-plugins.md#creating-your-own-vad-plugin) |
+| Wake word | [Write a Wake Word Plugin](wake-word-plugin-development.md) |
+| STT | [Write an STT Plugin](stt-plugin-development.md) |
+| TTS | [Write a TTS Plugin](tts-plugin-development.md) |
+| G2P | [Creating Your Own Plugin](g2p-plugins.md#creating-your-own-plugin) |
+| Translation and language detection | [Creating Your Own Plugin](translation-plugins.md#creating-your-own-plugin) |
+| Pipeline matcher | [Writing a Pipeline Plugin](pipeline-plugin-authoring.md) |
+| Transformer (any stage) | [Writing a Transformer Plugin](transformer-plugin-development.md) |
+| Utterance transformer | [Writing your own Utterance Transformer](utterance-transformers.md#writing-your-own-utterance-transformer) |
+| Dialog transformer | [Writing your own Dialog Transformer](dialog-transformers.md#writing-your-own-dialog-transformer) |
+| Audio transformer | [Writing your own Audio Transformer](audio-transformers.md#writing-your-own-audio-transformer) |
+| OCP stream extractor | [Writing an OCP Stream Extractor Plugin](ocp-plugin-development.md) |
+| Media playback backend | [Writing a Media Playback Backend Plugin](media-plugin-development.md) |
+| PHAL (hardware and platform) | [Writing PHAL Plugins](phal-authoring.md) |
+| Agent engine | [Building Agent Plugins](building-agent-plugins.md) |
+| Agent tools | [Authoring a ToolBox plugin](tool-plugins.md#authoring-a-toolbox-plugin) |
+
+For the entry point group and base class of each type, see the
+[Plugin Types Reference](plugin-types-reference.md).
+
 ## Speech & Audio
 
 About 48 plugins in the catalog, across microphone, VAD, wake word, wake-word verification, STT,

@@ -6,7 +6,8 @@
     point group, its template base class, and (for deprecated types) what to use
     instead. Use it to find the exact entry point group and base class for the kind
     of plugin you're writing. For how discovery and loading actually work, and for a
-    walkthrough of writing a plugin, see [Plugin Manager](plugin-manager.md).
+    walkthrough of writing a plugin, see [Plugin Manager](plugin-manager.md). For the
+    authoring guide of each plugin type, see [Write a plugin](plugins-index.md#write-a-plugin).
 
 ---
 

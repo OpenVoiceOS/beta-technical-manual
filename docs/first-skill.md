@@ -1,4 +1,4 @@
-# Your First Skill
+# Your First Skill: Create a Skill Step by Step
 
 !!! abstract "In a nutshell"
     A **skill** is an add-on that teaches OVOS a new ability. This page is a hands-on

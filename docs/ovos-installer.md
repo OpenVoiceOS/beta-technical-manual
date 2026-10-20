@@ -199,6 +199,13 @@ for the configured language, and the operator confirms to write them into `mycro
 
 ---
 
+## Update or uninstall
+
+To update OVOS or to remove it, run the installer again. See
+[Update or Uninstall OVOS](keep-up-to-date.md).
+
+---
+
 ## Non-interactive (scenario) install
 
 For scripting or fleet deployment, the installer can run without the TUI by reading a

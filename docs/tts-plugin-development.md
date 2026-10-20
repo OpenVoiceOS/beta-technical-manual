@@ -116,7 +116,7 @@ class MyTTSPlugin(TTS):
         super().__init__(*args, **kwargs, validator=MyTTSValidator(self))
 ```
 
-See [OVOS Plugin Manager: Writing a Plugin](plugin-manager.md#writing-a-plugin) for how
+See [OVOS Plugin Manager: Write a Plugin](plugin-manager.md#write-a-plugin) for how
 registration and the `opm.tts` entry point fit together at load time: `find_tts_plugins()`
 scans the `opm.tts` group and `load_tts_plugin(name)` returns one class from it.
 
