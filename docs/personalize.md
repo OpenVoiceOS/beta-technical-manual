@@ -8,7 +8,8 @@
     more detail and more options.
 
 !!! tip "Want to do this by voice instead of editing files?"
-    Everything below needs opening a text file and a restart. If you'd rather change your wake
+    Everything below needs opening a text file, and most of it needs a restart. A voice change
+    does not need a restart: see [Change your voice](#change-your-voice). If you'd rather change your wake
     word, voice, or volume by *talking* to your assistant, see
     [What can I say?](skill-examples.md) and [It's Not Working: Quick Fixes](everyday-help.md)
     for what's already possible hands-free (e.g. volume) versus what still needs a config edit
@@ -68,8 +69,9 @@ load is logged loudly (an `ERROR` with a traceback in the listener log) and simp
 so the assistant stops responding to that wake word.
 
 The shipped default `hey_mycroft`
-behaves differently. Its config chains through `fallback_ww` entries (tflite → precise →
-vosk → pocketsphinx), so a failed primary engine there falls back to the next engine.
+behaves differently. Its config chains through `fallback_ww` entries, so a failed primary
+engine there falls back to the next engine. On the stable and testing channels the chain is
+precise-lite → precise → vosk → pocketsphinx. On the alpha channel it is precise-onnx → WakeForge → vosk.
 The assistant keeps listening, though each failed engine still logs its own `ERROR`
 (see [Wake-word Plugins](wake-word-plugins.md)). Full walkthrough,
 plugin choices, and tuning: [Wake-word Plugins](wake-word-plugins.md#change-your-wake-word).
@@ -99,6 +101,19 @@ note in [TTS Plugins](tts-plugins.md#change-your-voice).
   }
 }
 ```
+
+You do not need to restart OVOS for a voice change. `ovos-audio` watches the configuration
+files. When `tts.module` or the settings block of that plugin changes, it shuts down the old
+voice and loads the new one. A change to another key in the `tts` section, such as `lang`,
+does not reload the voice. The
+log of `ovos-audio` shows `(re)loading TTS engine` when this happens.
+
+!!! warning "Alpha channel only"
+    On the stable channel (`ovos-audio` 0.4.0) and the testing channel (`ovos-audio` 1.2.0),
+    the voice reloads only when the settings block of the plugin changes, for example a new
+    `voice` value. If you change only `module`, and neither plugin has a settings block, the
+    old voice keeps speaking until you restart OVOS. `ovos-audio` 2.2.1a1 and later also
+    reload when `module` changes.
 
 Browse voice samples and see every available plugin: [TTS Plugins](tts-plugins.md#change-your-voice).
 

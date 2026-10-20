@@ -30,8 +30,9 @@
     }
     ```
 
-    The wake word is **not** in the snippet because it already defaults to **precise-onnx**
-    (`hey_mycroft`). See [Wake word](#wake-word) to change the phrase. Prefer one command?
+    The wake word is **not** in the snippet because `hey_mycroft` is already configured as a
+    chain of engines: **precise-onnx** first on the alpha channel, **precise-lite** first on
+    the stable and testing channels. See [Wake word](#wake-word) to change the phrase. Prefer one command?
     `ovos-config autoconfigure -l en-us --offline` writes the language + these defaults for
     you (it needs `ovos-config` already installed, and configures rather than installs plugins).
 
@@ -76,11 +77,11 @@ Listens for the activation phrase. See the [Wake word catalog](wake-word-plugins
 
 | Plugin | Maturity | Runs | Choose this if |
 |---|---|---|---|
-| ⭐ **ovos-ww-plugin-precise-onnx** | Beta | offline | The default `hey_mycroft` engine — accurate, lightweight always-on ONNX |
+| ⭐ **ovos-ww-plugin-precise-onnx** | Beta | offline | The first `hey_mycroft` engine on the alpha channel: accurate, lightweight always-on ONNX |
 | ovos-ww-plugin-openWakeWord | Stable | offline | Better accuracy than Vosk from open pre-trained models, no training |
 | ovos-ww-plugin-vosk | Stable | offline | Fastest setup for an arbitrary phrase, no model training (good for dev) |
 | ovos-ww-plugin-wakewordlab | Alpha | offline | Very compact (~240 KB) models with a Silero pre-filter (install from source) |
-| ovos-ww-plugin-wakeforge | Alpha | offline | Train a custom detector from a single phrase |
+| ovos-ww-plugin-wakeforge | Alpha | offline | [Ready models](wake-word-plugins.md#ready-wakeforge-models) in English, German, Spanish, Italian and Dutch; a wake word typed as IPA phones; or a custom detector trained from one phrase |
 | ovos-ww-plugin-server | Alpha | hybrid | Thin satellite offloading detection to a self-hosted ww-server. **Not available yet** — repos still private |
 
 *`ovos-ww-plugin-precise-lite` is **deprecated**. It is the TFLite predecessor of precise-onnx,
@@ -250,11 +251,11 @@ Hook into the text / audio / dialog / TTS stages. See the [Transformers catalog]
   precise-onnx wake word, onnx-asr STT, phoonnx TTS. Everything runs on-device.
 - **Lowest-power / tiny device:** swap TTS to **pico** or **espeakNG**, VAD to **webrtcvad**,
   STT to **vosk** (small model). Accept lower accuracy for a smaller footprint.
-- **Best accuracy, GPU available:** STT **fasterwhisper** with `use_cuda: true` — what
-  `ovos-config autoconfigure --gpu` configures for the languages that have a GPU
-  recommendation, using `whisper-large-v3-turbo` where no dedicated finetune exists for the
-  language (see [Language Support Tables](lang-support-tables.md)) — or **nemo**. TTS **coqui**. Still fully
-  offline.
+- **Best accuracy, GPU available:** run `ovos-config autoconfigure --gpu`. On the alpha
+  channel it configures **onnx-asr** with `use_cuda: true` for 60 languages. On the testing
+  channel it configures **fasterwhisper** for 10 languages and **HiTZ** for Basque. The
+  stable channel has no GPU tier. See
+  [Language Support Tables](lang-support-tables.md). TTS **coqui**. Still fully offline.
 - **Thin satellite / shared backend:** offload with the `*-server` plugins so the heavy models
   live on one machine. STT and TTS are available today (`ovos-stt-plugin-server`,
   `ovos-tts-plugin-server` — set `urls`/`host`, or they use public community servers); the

@@ -89,7 +89,10 @@ flowchart TD
     or container first, the same way [Your First Skill](first-skill.md) does before installing
     a skill.
 
-3. Save the file. It's JSONC (comments allowed). Restart OVOS for the change to take effect.
+3. Save the file. It's JSONC (comments allowed). `ovos-audio` sees the change and loads the
+    new voice, with no restart. On the stable and testing channels, a change of `module` alone, when
+    neither plugin has a settings block, needs a restart. See
+    [Make It Yours](personalize.md#change-your-voice).
 
 !!! tip
     Don't want to hand-pick a plugin and voice yourself? `ovos-config autoconfigure -l <lang> ...`

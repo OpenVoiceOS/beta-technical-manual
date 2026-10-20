@@ -275,6 +275,35 @@ journalctl -k | grep -iE "oom-kill|Killed process"
 A container that "keeps getting slow" while showing `Up` in `docker ps` is the classic
 presentation of this failure mode.
 
+## Speech on the device
+
+The listener and audio images can run speech recognition and the voice on the device, with no
+STT or TTS server.
+
+!!! warning "Alpha channel only"
+    Only the alpha listener image installs `ovos-stt-plugin-onnx-asr`. That plugin needs
+    `ovos-plugin-manager` 2 or later, so the stable image skips it.
+
+The compose files declare two volumes for the models, so an image update does not download
+them again:
+
+| Volume | Service | Path in the container |
+|---|---|---|
+| `ovos_stt_models` | listener | `~/.local/share/ovos_stt_plugin_onnxasr` |
+| `ovos_tts_models` | audio | `~/.cache/phoonnx` |
+
+The recognition model needs more memory than the standard limit. Set the limit for each service
+with these variables. Each one falls back to `STANDARD_MEMORY_LIMIT` when you do not set it:
+
+| Variable | Service |
+|---|---|
+| `LISTENER_MEMORY_LIMIT` | listener |
+| `AUDIO_MEMORY_LIMIT` | audio |
+
+When you choose `local` speech with the `containers` method, the
+[`ovos-installer`](ovos-installer-scenarios.md#speech-if-applicable) sets
+`LISTENER_MEMORY_LIMIT` for you.
+
 ## Containerized HiveMind
 
 `ovos-docker` does not build or push a HiveMind image itself, but its own

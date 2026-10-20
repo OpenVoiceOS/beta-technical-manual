@@ -166,6 +166,39 @@ A checklist (only shown for the `ovos`/`listener`/`server` profiles, not `satell
 
 ---
 
+## Speech *(if applicable)*
+
+This screen asks where OVOS processes speech:
+
+`local`
+:   Recognition and the voice run on this machine. The installer downloads the speech
+    models, from hundreds of megabytes to a few gigabytes. If local recognition fails or
+    returns no text, OVOS sends that recording to the public servers. If a local model cannot
+    be set up, that part uses the public servers, and the installer tells you. This is not a
+    fully offline mode.
+
+`public`
+:   Community servers process your recordings and the spoken replies over the internet.
+    These volunteer-run servers are not a production service and can go offline at any time.
+
+The screen preselects `local`, or `public` when you run the installer on a device that already
+has OVOS. The installer shows this screen only when all of these are true:
+
+- The channel is `alpha`.
+- The profile has audio: any profile except `server` with `virtualenv`, or `ovos` or
+  `listener` with `containers`.
+- The machine is a 64-bit Linux on x86-64 or ARM64, or macOS on Apple Silicon, with a CPU
+  that the installer detects as capable.
+- The machine has at least 7680 MiB of memory. On a Raspberry Pi, only the Raspberry Pi 5
+  family qualifies.
+
+In all other cases the installer uses `public`. With the `containers` method, the
+listener and audio containers keep the downloaded models in the `ovos_stt_models` and
+`ovos_tts_models` volumes, so an image update does not download them again. See
+[Docker deployment](docker-deployment.md#speech-on-the-device).
+
+---
+
 ## Raspberry Pi Tuning *(if applicable)*
 
 On Raspberry Pi boards only, a yes/no prompt offers system performance tweaks
