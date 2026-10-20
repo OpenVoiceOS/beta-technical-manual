@@ -4,7 +4,7 @@ This page connects an AI agent to the OVOS translate server, so the agent can tr
 
 ## Who this is for
 
-You use Claude Code, Claude Desktop, or your own MCP or UTCP agent. You want translation that goes through a translation plugin that you choose.
+You use Claude Code, Claude Desktop, opencode, Mistral Vibe, or your own MCP or UTCP agent. You want translation that goes through a translation plugin that you choose.
 
 ## What you get
 
@@ -14,11 +14,11 @@ You use Claude Code, Claude Desktop, or your own MCP or UTCP agent. You want tra
 ## Start the server
 
 !!! warning "Alpha channel only"
-    The `mcp` extra has a prerelease floor, so the server installs from the
-    prerelease channel:
+    The `mcp` extra is only in the prerelease channel. Install the server
+    from that channel:
 
     ```bash
-    pip install --pre "ovos-translate-server[mcp]>=0.11.3a3" ovos-google-translate-plugin
+    pip install --pre "ovos-translate-server[mcp]" ovos-google-translate-plugin
     ```
 
 1. Start the server with a translation plugin, a language detection plugin and the `--mcp` flag:
@@ -61,6 +61,49 @@ Add the `mcp-remote` bridge to `claude_desktop_config.json`, then restart Claude
   }
 }
 ```
+
+## Translate from opencode
+
+1. Add the server to `opencode.json` in your project folder:
+
+    ```json
+    {
+      "$schema": "https://opencode.ai/config.json",
+      "mcp": {
+        "ovos-translate": {
+          "type": "remote",
+          "url": "http://localhost:9686/mcp",
+          "enabled": true
+        }
+      }
+    }
+    ```
+
+2. Make sure that opencode can connect:
+
+    ```bash
+    opencode mcp list
+    ```
+
+    ```text
+    ●  ✓ ovos-translate connected
+    │      http://localhost:9686/mcp
+    ```
+
+## Translate from Mistral Vibe
+
+1. Add the server to `~/.vibe/config.toml`:
+
+    ```toml
+    [[mcp_servers]]
+    name = "ovos-translate"
+    transport = "streamable-http"
+    url = "http://localhost:9686/mcp"
+    ```
+
+    Write the entry in the file. Do not use `vibe mcp add` for this server: that command sets OAuth login for an HTTP server, and the OVOS server does not use OAuth.
+
+2. Start `vibe`. Vibe loads the tools of the server when it starts. It gives each tool the server name as a prefix and changes each hyphen to `_`, for example `ovos_translate_translate` and `ovos_translate_detect_language`.
 
 ## Translate from your own MCP client
 

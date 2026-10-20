@@ -22,19 +22,17 @@ pip install --pre ovos-persona-server
 Install the agent-engine plugin(s) your persona references, e.g.:
 
 ```bash
-pip install ovos-openai-plugin
+pip install --pre ovos-openai-plugin
 ```
 
 Optional extras: `rag` (file/vector-store endpoints), `mcp` (pulls in `fastmcp>=4.1.1` to serve the
 `/mcp` endpoint below), and `a2a` (Agent-to-Agent endpoint).
 
 !!! warning "Alpha channel only"
-    The last stable release, `0.5.0`, declares no extras at all, and `a2a` alone arrives
-    with `0.6.0a1`, so an extra needs the prerelease channel and a floor pin that carries
-    the extra you want:
+    The extras are in the prerelease channel only. Install an extra from that channel:
 
     ```bash
-    pip install --pre 'ovos-persona-server[a2a]>=0.17.2a1'
+    pip install --pre 'ovos-persona-server[a2a]'
     ```
 
 !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
@@ -42,7 +40,7 @@ Optional extras: `rag` (file/vector-store endpoints), `mcp` (pulls in `fastmcp>=
     not the official `mcp` SDK. The split is deliberate: this server *serves* MCP with `fastmcp`,
     while a client consuming another MCP server (like [`ovos-mcp-toolbox`](tool-plugins.md)) uses
     the official `mcp` SDK instead. MCP SDK 2.0 has no `mcp.server.fastmcp.FastMCP`, so a server
-    that imports that symbol fails to start on the 2.x SDK. `fastmcp` is the maintained standalone project that symbol used to alias.
+    that imports that symbol fails to start on the 2.x SDK. `fastmcp` is the maintained standalone project.
 
 ---
 
@@ -60,7 +58,7 @@ ovos-persona-server --persona my_persona.json --host 0.0.0.0 --port 8337
 | `--host` | `0.0.0.0` | Host to bind |
 | `--port` | `8337` | TCP port |
 | `--mcp` | off | Mount the MCP endpoint at `/mcp` (requires the `mcp` extra; the extra alone does not expose it) |
-| `--a2a-base-url` | `None` | Mounts an [A2A](https://a2aproject.github.io/A2A/)-compatible endpoint at `/a2a`, using this URL as the public base URL in the Agent Card (e.g. `http://myhost:8337/a2a`). Requires the `a2a` extra (`pip install --pre 'ovos-persona-server[a2a]>=0.17.2a1'`) |
+| `--a2a-base-url` | `None` | Mounts an [A2A](https://a2aproject.github.io/A2A/)-compatible endpoint at `/a2a`, using this URL as the public base URL in the Agent Card (e.g. `http://myhost:8337/a2a`). Requires the `a2a` extra (`pip install --pre 'ovos-persona-server[a2a]'`) |
 
 The console script is `ovos-persona-server` (module `ovos_persona_server.__main__:main`).
 
@@ -295,8 +293,7 @@ instructions added after). Applied once per chat/completions call.
 
 ## Choosing tools with `tool_choice`
 
-The OpenAI route honors `tool_choice` by shaping which tools it offers the engine
-(0.17.4a1+; before that it was accepted and silently ignored):
+The OpenAI route honors `tool_choice` by shaping which tools it offers the engine:
 
 | Value | Effect |
 |---|---|
@@ -308,7 +305,7 @@ The OpenAI route honors `tool_choice` by shaping which tools it offers the engin
 ## Error responses
 
 When every handler in the persona's chain declines to answer, the server returns
-HTTP **422** rather than a 500 or an empty 200 (0.17.3a1+). Every vendor router maps
+HTTP **422** rather than a 500 or an empty 200. Every vendor router maps
 this the same way; on a streaming request it arrives as an in-band SSE error event.
 
 ## Tips

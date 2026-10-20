@@ -251,7 +251,7 @@ Personas are loaded from the XDG persona config directory (typically `~/.config/
 
 ```
 
-Each persona defines a `handlers` list (the older key `solvers` is still accepted as a fallback).
+Each persona defines a `handlers` list (the key `solvers` is an alias for it).
 
 - Handlers are attempted **in order**.
 

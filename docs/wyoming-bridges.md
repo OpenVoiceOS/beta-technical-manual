@@ -30,7 +30,7 @@ entry-point group and re-exposes it over the Wyoming protocol.
 
 All three bridges:
 
-- Are installed via `pip install <package-name>`
+- Are installed via `pip install --pre <package-name>`
 
 
 - Read plugin configuration from `mycroft.conf` (standard OVOS config file)
@@ -77,7 +77,7 @@ Plugin loading happens once at startup. The plugin instance is shared across all
 ### Running
 
 ```bash
-pip install wyoming-ovos-stt
+pip install --pre wyoming-ovos-stt
 wyoming-ovos-stt --plugin-name <ovos-stt-plugin-name> --uri tcp://0.0.0.0:7891
 ```
 
@@ -187,7 +187,7 @@ back as `AudioStart` + `AudioChunk`* + `AudioStop`.
 ### Running
 
 ```bash
-pip install wyoming-ovos-tts
+pip install --pre wyoming-ovos-tts
 wyoming-ovos-tts --plugin-name <ovos-tts-plugin-name> --uri tcp://0.0.0.0:7892
 ```
 
@@ -255,9 +255,9 @@ Server → Info(tts=[TtsProgram(name=plugin_name, voices=[TtsVoice(...)])])
 ## Wake-word Bridge (`wyoming-ovos-wakeword`)
 
 Exposes any OVOS wake-word plugin as a Wyoming wake-word detection server, supporting
-**multiple simultaneous wake-word models** loaded on demand per client session. Its full
-architecture, running instructions, configuration and message-flow reference now live on
-their own page: [Wyoming Wake-word Bridge](wyoming-wakeword-bridge.md).
+**multiple simultaneous wake-word models** loaded on demand per client session. For its
+architecture, running instructions, configuration and message flow, see
+[Wyoming Wake-word Bridge](wyoming-wakeword-bridge.md).
 
 ---
 
@@ -266,7 +266,7 @@ their own page: [Wyoming Wake-word Bridge](wyoming-wakeword-bridge.md).
 Once a bridge is running with a `tcp://` URI, register it in Home Assistant through the
 **Wyoming Protocol** integration: **Settings → Devices & Services → Add Integration**, search
 for "Wyoming Protocol", and enter the bridge machine's host and the port from your `--uri`.
-Repeat once per bridge (STT, TTS, and wake word are three separate Wyoming services). The new
+Repeat once per bridge (STT, TTS, and wake word are three separate Wyoming services). The bridge
 entities then become selectable in **Settings → Voice assistants** when building an Assist
 pipeline. For the HA side in more depth, see the
 [Home Assistant Wyoming integration docs](https://www.home-assistant.io/integrations/wyoming/).

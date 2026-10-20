@@ -5,9 +5,9 @@
 
 ## What you can do
 
-| What you can do | Story | Component | Component docs |
+| What you can do | Task | Component | Component docs |
 |---|---|---|---|
-| Transcribe speech from Claude Code, Claude Desktop or any MCP or UTCP agent | [Transcribe audio from an AI agent](ai-agent-transcribe.md) | `ovos-stt-server` | [AI agent integration](https://github.com/OpenVoiceOS/ovos-stt-server#ai-agent-integration) |
+| Transcribe speech from Claude Code, Claude Desktop, opencode, Mistral Vibe or any MCP or UTCP agent | [Transcribe audio from an AI agent](ai-agent-transcribe.md) | `ovos-stt-server` | [AI agent integration](https://github.com/OpenVoiceOS/ovos-stt-server#ai-agent-integration) |
 | Make speech from an AI agent | [Let an AI agent speak](ai-agent-speak.md) | `ovos-tts-server` | [Agent integration](https://github.com/OpenVoiceOS/ovos-tts-server#agent-integration) |
 | Translate text and detect its language from an AI agent | [Translate text from an AI agent](ai-agent-translate.md) | `ovos-translate-server` | [AI agent integration](https://github.com/OpenVoiceOS/ovos-translate-server#ai-agent-integration) |
 | Let other agents talk to an OVOS persona | [Talk to an OVOS persona over A2A](ai-agent-a2a-server.md) | `ovos-persona-server` | [A2A endpoint](https://github.com/OpenVoiceOS/ovos-persona-server#a2a-endpoint) |
@@ -20,7 +20,7 @@
 
 ## The three protocols
 
-- **MCP** (Model Context Protocol) lets an AI assistant, such as Claude Code or Claude Desktop, find and call the tools of a server.
+- **MCP** (Model Context Protocol) lets an AI assistant, such as Claude Code, Claude Desktop, opencode or Mistral Vibe, find and call the tools of a server.
 - **UTCP** (Universal Tool Calling Protocol) gives an agent a JSON manual at `GET /utcp`. The manual tells the agent how to call the server's own HTTP endpoints, so no wrapper process is necessary.
 - **A2A** (Agent-to-Agent) lets one agent give a full question to another agent and get the answer back.
 
@@ -33,7 +33,7 @@
 ```mermaid
 flowchart LR
     subgraph Outside OVOS
-        Agent["AI agent<br/>Claude Code, Claude Desktop,<br/>UTCP or A2A client"]
+        Agent["AI agent<br/>Claude Code, Claude Desktop,<br/>opencode, Mistral Vibe,<br/>UTCP or A2A client"]
         ExtTools["MCP or UTCP server"]
         ExtA2A["A2A agent"]
     end

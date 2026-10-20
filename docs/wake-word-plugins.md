@@ -25,7 +25,7 @@ Wake-word plugins let Open Voice OS detect specific words or sounds, typically t
 
 --8<-- "snippets/restart-ovos.md"
 
-5. Say the new phrase. The assistant now wakes on it instead of "hey mycroft".
+5. Say the phrase. The assistant wakes on it instead of "hey mycroft".
 
 !!! tip "Pick any phrase, with no training"
     To use your own phrase without recording clips or training a model, see [Change the Wake Word Without Training](change-wake-word-without-training.md). You can try a phrase in the [WakePhoneHuBERT Space](https://huggingface.co/spaces/TigreGotico/wakephonehubert-space) first. To make the assistant answer only the people in your household, see [Make OVOS Answer Only Your Voice](answer-only-your-voice.md).
@@ -38,31 +38,19 @@ The full roster with descriptions and licenses lives in one place: the
 
 The bundled `mycroft.conf` in `ovos-config` defines the `hey_mycroft` wake word as a chain of
 engines. If the engine at the top is not installed or fails to load, the listener uses the next
-engine in the chain. The chain depends on your release channel.
+engine in the chain. The chain is:
 
-On the stable and testing channels, the chain is:
+1. `ovos-ww-plugin-precise-onnx` with the `hey_mycroft.onnx` model
+2. `ovos-ww-plugin-wakeforge` with the `wakehubert_hey_mycroft_streaming` ready model
+3. `ovos-ww-plugin-wakeforge` with the `wakehubert_hey_mycroft` ready model
+4. `ovos-ww-plugin-vosk`
 
-1. `ovos-ww-plugin-precise-lite` (TFLite, **archived**)
-2. `ovos-ww-plugin-precise` (classic Precise, **archived**)
-3. `ovos-ww-plugin-vosk`
-4. `ovos-ww-plugin-pocketsphinx`
-
-!!! warning "Alpha channel only"
-    On the alpha channel, the chain is:
-
-    1. `ovos-ww-plugin-precise-onnx` with the `hey_mycroft.onnx` model
-    2. `ovos-ww-plugin-wakeforge` with the `wakehubert_hey_mycroft_streaming` ready model
-    3. `ovos-ww-plugin-wakeforge` with the `wakehubert_hey_mycroft` ready model
-    4. `ovos-ww-plugin-vosk`
-
-    The alpha `mycroft.conf` also uses WakeForge for two more words. `wake_up` uses the
-    `wakehubert_wake_up` ready model. `stop_recording` uses the zero-shot engine
-    `ovos-ww-plugin-wakeforge-zeroshot` with IPA phones, so it needs no trained model. Both
-    words fall back to `ovos-ww-plugin-vosk`. See [Ready WakeForge models](#ready-wakeforge-models).
+The bundled `mycroft.conf` also uses WakeForge for two more words. `wake_up` uses the
+`wakehubert_wake_up` ready model. `stop_recording` uses the zero-shot engine
+`ovos-ww-plugin-wakeforge-zeroshot` with IPA phones, so it needs no trained model. Both
+words fall back to `ovos-ww-plugin-vosk`. See [Ready WakeForge models](#ready-wakeforge-models).
 
 Everything in the Precise family except `ovos-ww-plugin-precise-onnx` is archived on GitHub.
-The stable and testing chain keeps them for compatibility with older trained models
-(`.tflite` and legacy Precise formats).
 
 Vosk offers the fastest setup for an arbitrary wake phrase without model training.
 
@@ -81,7 +69,7 @@ separate from the recommendation.
 
 !!! tip "Alternative: openWakeWord"
     `ovos-ww-plugin-openWakeWord` runs open, pre-trained neural wake-word models and is a
-    strong alternative when you want better accuracy than Vosk without touching the legacy
+    strong alternative when you want better accuracy than Vosk without touching the deprecated
     Precise training path.
 
 ## Wake-word Configuration
@@ -230,10 +218,10 @@ config with `"enabled": false`.
 Where the authoritative detail lives, and the honest trade-offs:
 
 - **Precise family** ([MycroftAI/mycroft-precise](https://github.com/MycroftAI/mycroft-precise)):
-  a per-phrase GRU network from a now-defunct upstream. **Legacy: do not train new Precise
-  models.** The ONNX exports of the existing community models live on, and one of them is
-  still the shipped `hey_mycroft` default, but the training tooling is deprecated and
-  unmaintained. For a new phrase, train openWakeWord or microWakeWord instead.
+  a per-phrase GRU network from an unmaintained upstream. **Do not train Precise
+  models.** The ONNX exports of the community models work, and one of them is the
+  shipped `hey_mycroft` default, but the training tooling is deprecated and
+  unmaintained. For a custom phrase, train openWakeWord, microWakeWord or WakeForge.
   `sensitivity`/`trigger_level` tuning of the existing models remains real work.
 - **openWakeWord** ([dscripka/openWakeWord](https://github.com/dscripka/openWakeWord)):
   a frozen speech-embedding backbone plus a small per-phrase classifier, trained entirely
@@ -245,8 +233,8 @@ Where the authoritative detail lives, and the honest trade-offs:
 - **WakeForge** ([TigreGotico/wakeforge](https://github.com/TigreGotico/wakeforge)): the
   ecosystem's own training framework, in prerelease. Train a detector from a single typed
   phrase (synthetic data, no recording campaign) and run the exported two-file model with
-  `ovos-ww-plugin-wakeforge` (alpha, on PyPI). The intended long-term replacement for the
-  Precise training path; expect rough edges while it is alpha. The repo's `notebooks/`
+  `ovos-ww-plugin-wakeforge` (alpha, on PyPI). Use it in place of the Precise training
+  path. The repo's `notebooks/`
   folder has worked Kaggle/Colab notebooks for hyperparameter search, tiered-scale
   training (micro/embedded/GPU), HuBERT distillation, and voice-conversion dataset
   bootstrapping. Dataset generation and augmentation for wake-word training also has a
@@ -289,16 +277,16 @@ separately-licensed model, that is called out under "model".
 
 | Plugin | Description | License | Maturity |
 |--------|-------------|---------|----------|
-| [ovos-ww-plugin-precise-lite](#ovos-ww-plugin-precise-lite) | The first `hey_mycroft` engine on the stable and testing channels: a trained Precise wake-word model exported to TFLite. Warning: archived, kept working as installed. `ovos-ww-plugin-precise-onnx` is the maintained successor. | Apache-2.0 | Deprecated |
+| [ovos-ww-plugin-precise-lite](#ovos-ww-plugin-precise-lite) | A trained Precise wake-word model exported to TFLite. Warning: archived. `ovos-ww-plugin-precise-onnx` is the maintained successor. | Apache-2.0 | Deprecated |
 | [ovos-ww-plugin-precise](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise) | Classic Precise wake-word plugin, the predecessor to the TFLite/ONNX rewrites. Warning: archived. | Apache-2.0 | Deprecated |
 | [ovos-ww-plugin-pocketsphinx](https://github.com/OpenVoiceOS/ovos-ww-plugin-pocketsphinx) | Wake-word detection using CMU PocketSphinx. Not archived. | Apache-2.0 | Stable |
 | [ovos-ww-plugin-openWakeWord](#ovos-ww-plugin-openwakeword) | Wake-word detection using the open-source openWakeWord neural models. | Apache-2.0 (model: see model card) | Stable |
 | [ovos-ww-plugin-vosk](#ovos-ww-plugin-vosk) | Mycroft wake-word plugin for [Vosk](https://alphacephei.com/vosk/) | Apache-2.0 (model: see model card) | Stable |
-| [ovos-ww-plugin-precise-onnx](#ovos-ww-plugin-precise-onnx) | The first `hey_mycroft` engine on the alpha channel: a Precise wake-word model exported to ONNX. | Apache-2.0 | Beta |
-| [ovos-ww-plugin-wakewordlab](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakewordlab) | Compact (~240 KB) neural wake-word models with a Silero VAD pre-filter (`.wkw`/`.onnx`). **Not yet on PyPI**, install from source. | Apache-2.0 | Alpha |
+| [ovos-ww-plugin-precise-onnx](#ovos-ww-plugin-precise-onnx) | The first `hey_mycroft` engine in the bundled `mycroft.conf`: a Precise wake-word model exported to ONNX. | Apache-2.0 | Beta |
+| [ovos-ww-plugin-wakewordlab](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakewordlab) | Compact (~240 KB) neural wake-word models with a Silero VAD pre-filter (`.wkw`/`.onnx`). **Not on PyPI**, install from source. | Apache-2.0 | Alpha |
 | [ovos-ww-plugin-microwakeword](https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword) | Runs [microWakeWord](https://github.com/kahrendt/microWakeWord) streaming TFLite models (the ESPHome wake-word engine), `hey_mycroft` included. On PyPI as an alpha. | Apache-2.0 | Alpha |
-| [ovos-ww-plugin-wakeforge](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakeforge) | Runs [ready WakeForge models](#ready-wakeforge-models), zero-shot wake words typed as IPA phones (`ovos-ww-plugin-wakeforge-zeroshot`), and custom models trained with [wakeforge](https://github.com/TigreGotico/wakeforge). A fallback for `hey_mycroft` on the alpha channel. | Apache-2.0 | Alpha |
-| ovos-ww-plugin-server | Remote wake-word detection: streams audio to an `ovos-ww-server` instance (offload detection from a thin satellite). **Not available yet** — not on PyPI, and both repositories are still private. | Apache-2.0 | Alpha |
+| [ovos-ww-plugin-wakeforge](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakeforge) | Runs [ready WakeForge models](#ready-wakeforge-models), zero-shot wake words typed as IPA phones (`ovos-ww-plugin-wakeforge-zeroshot`), and custom models trained with [wakeforge](https://github.com/TigreGotico/wakeforge). A fallback for `hey_mycroft` in the bundled `mycroft.conf`. | Apache-2.0 | Alpha |
+| ovos-ww-plugin-server | Remote wake-word detection: streams audio to an `ovos-ww-server` instance (offload detection from a thin satellite). **Not available**: not on PyPI, and both repositories are private. | Apache-2.0 | Alpha |
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
 
@@ -307,7 +295,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 - **GitHub**: [OpenVoiceOS/ovos-ww-plugin-precise-lite](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite). Warning: archived.
 
 
-- **Description**: Trained Precise wake-word model exported to TFLite. On the stable and testing channels, the bundled `mycroft.conf` uses it as the first engine for `hey_mycroft`. The alpha channel does not use it.
+- **Description**: Trained Precise wake-word model exported to TFLite. The bundled `mycroft.conf` does not use it.
 
 ### Default Configuration
 
@@ -391,7 +379,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 ```
 
 !!! tip "Donating wake word samples"
-    The listener can save wake-word audio samples to local disk (`listener.record_wake_words`, off by default); an opt-in upload mechanism to an open-data server is proposed but not yet merged. See [Privacy & Security](privacy-security.md#wake-word-and-stt-sample-capture).
+    The listener can save wake-word audio samples to local disk (`listener.record_wake_words`, off by default). The listener has no mechanism to upload them. See [Privacy & Security](privacy-security.md#wake-word-and-stt-sample-capture).
 
 ---
 
@@ -401,9 +389,8 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 model from Hugging Face the first time it uses it.
 
 !!! warning "Alpha channel only"
-    The ready models and the zero-shot engine need `ovos-ww-plugin-wakeforge` 0.17.0a1 or
-    later. The `_streaming` models need 0.18.0a1 or later. Install it with
-    `pip install --pre ovos-ww-plugin-wakeforge`.
+    The ready models and the zero-shot engine are in the prerelease channel of the plugin
+    only. Install it with `pip install --pre ovos-ww-plugin-wakeforge`.
 
 To use a ready model, set `model` to its name:
 
@@ -431,8 +418,7 @@ To use a ready model, set `model` to its name:
 The [model card](https://huggingface.co/OpenVoiceOS/wakehubert-wakewords) gives the default
 threshold, the measured recall and the false activations per hour for each model. A model
 named `wakehubert_<word>_streaming` runs the featurizer in streaming mode and uses less CPU.
-Streaming models exist for `alexa`, `hey_jarvis` and `hey_mycroft`. They need plugin
-0.18.0a1 or later.
+Streaming models exist for `alexa`, `hey_jarvis` and `hey_mycroft`.
 
 ### Wake words from IPA phones
 

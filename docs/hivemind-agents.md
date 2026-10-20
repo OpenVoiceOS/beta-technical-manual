@@ -72,9 +72,9 @@ pip install --pre hivemind-core
 
 !!! warning "Alpha channel only"
 
-    `--pre` is not optional here. Without it the install resolves a release that
-    reads its plugins through `pkg_resources`, which setuptools 82.0.0 and later do not
-    ship, so the first command below fails with `ModuleNotFoundError: No module
+    `--pre` is not optional here. Without it the install resolves the stable release,
+    which reads its plugins through `pkg_resources`. Setuptools does not ship
+    that module, so the first command below fails with `ModuleNotFoundError: No module
     named 'pkg_resources'` and nothing warns at install time.
 
     The satellite is installed with `--pre` as well, further down. Use the same
@@ -146,7 +146,7 @@ issued in step 1. This step makes everything else work:
 
 ```bash
 pip install --pre hivemind-bus-client   # repo name is hivemind-websocket-client;
-# the plain PyPI "stable" (0.4.4) predates the current protocol -- --pre is required
+# --pre is required: the satellite and the server must speak the same protocol
 hivemind-client set-identity --key <access_key> --password <password> --host <hostname-or-ip> --port 5678
 ```
 
@@ -189,10 +189,7 @@ Exposes just one [persona](personas.md), with no `ovos-core` and no messagebus, 
 surface stays minimal. It answers straight from the configured persona.
 
 Pointing the persona at an OpenAI-compatible endpoint, as in the example below, is a working
-LLM-fallback deployment: the remote node just forwards chat to that endpoint. Pin
-`ovos-persona>=0.9.0a17`. Versions before that mixed up the `lang` and `system_unit` arguments
-in `Persona.chat`/`Persona.stream`, which could break a retrieval-backed persona or 500 the
-`/v1/chat/completions` endpoint.
+LLM-fallback deployment: the remote node just forwards chat to that endpoint.
 
 ```json
 {
@@ -239,14 +236,14 @@ A server is only useful once something connects to it. On the client side:
 
 - **[`hivemind-websocket-client`](https://github.com/JarbasHiveMind/hivemind-websocket-client)**: the client library and the `hivemind-client` CLI (`set-identity`, send utterances, and more). It installs as `hivemind-bus-client`. The repository and the distribution have different names.
 - **[`hivemind-mic-satellite`](https://github.com/JarbasHiveMind/hivemind-mic-satellite)**: the thinnest device. Only microphone and VAD run locally. Wake word, STT and TTS all run server-side. Run it with the `hivemind-mic-sat` command, and note the server must have `hivemind-audio-binary-protocol` installed (see below).
-- **[`hivemind-audio-binary-protocol`](https://github.com/JarbasHiveMind/hivemind-audio-binary-protocol)**: the server-side audio entry point that performs wake word/STT/TTS for audio satellites, with binary audio moving over the mesh. Plain `hivemind-core` does no audio processing without it. (Formerly named `hivemind-listener`. The old PyPI package name still exists.)
+- **[`hivemind-audio-binary-protocol`](https://github.com/JarbasHiveMind/hivemind-audio-binary-protocol)**: the server-side audio entry point that performs wake word/STT/TTS for audio satellites, with binary audio moving over the mesh. Plain `hivemind-core` does no audio processing without it.
 
-This split is the real "voice satellite" story: cheap devices listen and speak, and the server thinks.
+This split is how a voice satellite deployment works: cheap devices listen and speak, and the server thinks.
 
 HiveMind also ships bridges into existing chat and telephony surfaces.
 Matrix, Mattermost, Telegram, HackChat, and Twitch each have one, and so does VOIP through [HiveMind-baresip-bridge](https://github.com/JarbasHiveMind/HiveMind-baresip-bridge).
 Each bridge is a client like any other, addressing a different end-user surface.
-The community docs list the current [integrations](https://jarbashivemind.github.io/HiveMind-community-docs/gpt_bridges/).
+The community docs list the [integrations](https://jarbashivemind.github.io/HiveMind-community-docs/gpt_bridges/).
 
 ---
 
@@ -275,9 +272,7 @@ unchanged. Reaching the orchestrator's real sessions by name is what admin stand
 
 A client multiplexes several conversations over one connection by declaring a distinct
 `session_id` per message. A chat-room or telephony bridge does this per end-user
-conversation. Each declared name maps to its own isolated session. This needs
-`hivemind-bus-client >= 1.0.16a1`; older clients overwrite a per-message `session_id` with
-the connection-level one. Session contents merge over the established baseline, so a
+conversation. Each declared name maps to its own isolated session. Session contents merge over the established baseline, so a
 bridged peer that omits a field keeps its own last value, never the orchestrator's default.
 
 ---
@@ -366,7 +361,7 @@ delegate at the intent-matching stage, for example as a late, catch-all matcher.
 
 HiveMind and the [persona-server](persona-server.md) cover different trust boundaries:
 
-| Use case | Tools | Secure? | Notes |
+| Deployment | Tools | Secure? | Notes |
 |---|---|---|---|
 | Local interface + persona | `ovos-persona-server` + `persona.json` | ❌ | OpenAI-compatible HTTP, no auth, quick setups only |
 | Local interface + OpenVoiceOS | `ovos-persona-server` + the `ovos-messagebus` handler | ❌ | Exposes the OVOS bus to the persona server; HTTP, no auth |

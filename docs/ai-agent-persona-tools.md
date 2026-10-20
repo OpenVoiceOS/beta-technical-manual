@@ -4,7 +4,7 @@ This page serves every installed OVOS tool plugin to AI agents, through the MCP 
 
 ## Who this is for
 
-You have OVOS tool plugins, your own or the ones that OVOS ships. You want Claude Code, Claude Desktop, or another agent to call them.
+You have OVOS tool plugins, your own or the ones that OVOS ships. You want Claude Code, Claude Desktop, opencode, Mistral Vibe, or another agent to call them.
 
 ## What you get
 
@@ -15,11 +15,11 @@ You have OVOS tool plugins, your own or the ones that OVOS ships. You want Claud
 ## Start the server
 
 !!! warning "Alpha channel only"
-    The `mcp` extra has a prerelease floor, so the server installs from the
-    prerelease channel:
+    The `mcp` extra is only in the prerelease channel. Install the server
+    from that channel:
 
     ```bash
-    pip install --pre "ovos-persona-server[mcp]>=0.18.6a1" ovos-solver-rivescript-plugin
+    pip install --pre "ovos-persona-server[mcp]" ovos-solver-rivescript-plugin
     ```
 
 1. Install the tool plugins in the same environment. This page uses `my-math-tools` from [Write a tool plugin](ai-agent-tool-plugin.md):
@@ -67,10 +67,79 @@ Claude Desktop can start the stdio server directly. `PERSONA_PATH` names the per
 }
 ```
 
-An MCP client that started this command found 15 tools, and the call `add(a=2, b=3)` returned:
+An MCP client that started this command found one tool, `add`. The call `add(a=2, b=3)` returned:
 
 ```json
 {"sum": 5.0}
+```
+
+## Call the tools from opencode
+
+1. Add the server to `opencode.json` in your project folder:
+
+    ```json
+    {
+      "$schema": "https://opencode.ai/config.json",
+      "mcp": {
+        "ovos-persona": {
+          "type": "remote",
+          "url": "http://localhost:8337/mcp",
+          "enabled": true
+        }
+      }
+    }
+    ```
+
+2. Make sure that opencode can connect:
+
+    ```bash
+    opencode mcp list
+    ```
+
+    ```text
+    ●  ✓ ovos-persona connected
+    │      http://localhost:8337/mcp
+    ```
+
+opencode can also start the stdio server directly, with no running persona server. Use a `local` entry with absolute paths:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "ovos-persona": {
+      "type": "local",
+      "command": ["/home/me/venvs/ovos/bin/ovos-persona-tools-mcp"],
+      "environment": {"PERSONA_PATH": "/home/me/helper.json"},
+      "enabled": true
+    }
+  }
+}
+```
+
+## Call the tools from Mistral Vibe
+
+1. Add the server to `~/.vibe/config.toml`:
+
+    ```toml
+    [[mcp_servers]]
+    name = "ovos-persona"
+    transport = "streamable-http"
+    url = "http://localhost:8337/mcp"
+    ```
+
+    Write the entry in the file. Do not use `vibe mcp add` for this server: that command sets OAuth login for an HTTP server, and the OVOS server does not use OAuth.
+
+2. Start `vibe`. Vibe loads the tools of the server when it starts. It gives each tool the server name as a prefix and changes each hyphen to `_`, for example `ovos_persona_add`.
+
+Vibe can also start the stdio server directly, with no running persona server. Use a `stdio` entry with absolute paths:
+
+```toml
+[[mcp_servers]]
+name = "ovos-persona"
+transport = "stdio"
+command = "/home/me/venvs/ovos/bin/ovos-persona-tools-mcp"
+env = { PERSONA_PATH = "/home/me/helper.json" }
 ```
 
 ## Call the tools from your own MCP client

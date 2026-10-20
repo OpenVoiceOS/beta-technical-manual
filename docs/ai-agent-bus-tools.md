@@ -84,7 +84,7 @@ bus.close()
 {'result': {'sum': 5.0}, 'toolbox_id': 'my-math-tools'}
 ```
 
-In `ovos-plugin-manager` 2.12.5a1, a toolbox answers only on its own topic. A call on the shared topic `ovos.persona.tools.call` gets no answer.
+A toolbox answers only on its own topic. A call on the shared topic `ovos.persona.tools.call` gets no answer.
 
 ## If it fails
 

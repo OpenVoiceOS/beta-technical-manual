@@ -11,7 +11,7 @@
     3. **Send unanswered questions to it**: enable the [persona pipeline](persona-pipeline.md)
        with `handle_fallback: true`.
 
-    Now anything no skill handles is answered by the LLM. The rest of this page is the full
+    After these steps, the LLM answers anything that no skill handles. The rest of this page is the full
     architecture. You don't need it to get started.
 
 OpenVoiceOS (OVOS) provides a flexible, modular system for integrating AI agents into voice-first
@@ -74,7 +74,7 @@ configuration inline.
 
 ```
 
-The `"solvers"` key is an alias for `"handlers"` (legacy compat). Plugins are tried in order.
+The `"solvers"` key is an alias for `"handlers"`. Plugins are tried in order.
 The first non-`None` response wins.
 
 ### Available Personas
@@ -96,7 +96,7 @@ LLAMA_DEMO = {
 }
 ```
 
-`Persona.__init__` reads `handlers`, falling back to the legacy `"solvers"` key if `handlers` is
+`Persona.__init__` reads `handlers`, and reads the `"solvers"` key if `handlers` is
 absent, and raises `ValueError` if it finds neither. There is no `chat_engine` key and no
 `system_prompt` key at this level — a persona that names one is not loadable.
 
@@ -307,10 +307,9 @@ enables OVOS to act as an agent inside another system, for example a Docker netw
 
 `timeout` (default `30`) is how long the engine waits for a `speak` reply per utterance; it resets on every `speak` it receives, so a skill that emits several `speak` messages in a row does not time out early. `source_name` (default `messagebus_chat_agent`) is written to `context.source` on every bus message the engine sends, so routing rules on the target `ovos-core` can identify — and exclude — traffic that originated from this engine.
 
-This plugin replaces the removed `OVOSMessagebusSolver` / `ovos-solver-bus-plugin`, which lived
-under the deprecated `neon.plugin.solver` group; install
+To use this engine, install
 [`ovos-messagebus-chat-plugin`](https://github.com/OpenVoiceOS/ovos-messagebus-chat-plugin) and
-migrate any persona that referenced the old solver to the `ovos-messagebus` chat engine.
+name the `ovos-messagebus` chat engine in the persona.
 
 **Note:** routing OVOS back through itself creates an infinite loop if this engine is used inside
 a persona that is *already* loaded by the same running `ovos-core`. It is intended for

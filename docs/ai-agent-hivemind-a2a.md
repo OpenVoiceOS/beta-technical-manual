@@ -1,31 +1,34 @@
 # Connect a HiveMind Satellite to an A2A Agent
 
-This page makes a HiveMind master send the questions of its voice satellites to an A2A agent, in place of an OVOS brain.
+This page makes a HiveMind master send the questions of its clients to an A2A agent, in place of an OVOS brain.
 
 ## Who this is for
 
-You run HiveMind voice satellites. You want their questions to go to an agent that speaks A2A. The answers come back to the satellite as speech.
+You run a HiveMind master. You want the questions of its clients to go to an agent that speaks A2A. The answers come back to the client that asked.
 
 ## What you get
 
-The HiveMind agent protocol `hivemind-a2a-agent-plugin`. The HiveMind master loads it in place of the OVOS agent protocol. The plugin sends each satellite query to the A2A agent and sends the reply back to the satellite that asked.
+The HiveMind agent protocol `hivemind-a2a-agent-plugin`. The HiveMind master loads it in place of the OVOS agent protocol. The plugin answers each `QUERY` and `CASCADE` message: it sends the question to the A2A agent and sends the reply back as `speak` messages.
+
+!!! warning "The plugin answers `QUERY` and `CASCADE` messages"
+    A voice satellite and `hivemind-client terminal` send `BUS` messages. The plugin does not answer them. A client must send the question in a `QUERY` or `CASCADE` message.
 
 ## Steps
 
-1. Install the plugin next to `hivemind-core`. The plugin depends on `hivemind-bus-client` 1.2.11a1, which fails to import with `bitstring` 5. hivemind-a2a-agent-plugin 0.1.1a1 also needs `httpx` 0.x. Install `bitstring` 4 and `httpx` 0.x with it:
+1. Install the plugin next to `hivemind-core`:
 
     ```bash
-    pip install --pre hivemind-a2a-agent-plugin "bitstring<5" "httpx<1"
+    pip install --pre hivemind-a2a-agent-plugin
     ```
 
-2. Set the agent protocol in the HiveMind configuration, usually `~/.config/hivemind/hivemind.conf`:
+2. Set the agent protocol in `~/.config/hivemind-core/server.json`. `agent_protocol.module` names the plugin. The key with the plugin name holds its settings:
 
     ```json
     {
-      "hivemind": {
-        "agent_protocol": "hivemind-a2a-agent-plugin",
-        "a2a_agent": {
-          "agent_url": "http://localhost:9999",
+      "agent_protocol": {
+        "module": "hivemind-a2a-agent-plugin",
+        "hivemind-a2a-agent-plugin": {
+          "agent_url": "http://localhost:8337/a2a",
           "auth_header": "Bearer secret",
           "timeout": 60,
           "streaming": false
@@ -34,25 +37,28 @@ The HiveMind agent protocol `hivemind-a2a-agent-plugin`. The HiveMind master loa
     }
     ```
 
-3. Restart `hivemind-core`.
+3. Restart `hivemind-core`. The log names the plugin:
 
-The keys have the same meaning as for the [A2A solver](ai-agent-a2a-solver.md#steps).
+    ```text
+    INFO - Agent protocol: A2AAgentProtocol
+    ```
+
+The keys have the same meaning as for the [A2A solver](ai-agent-a2a-solver.md#steps). With `streaming` set to `true`, each chunk from the agent becomes one `speak` message.
 
 ## Which agents it can reach
 
-The released plugin, `hivemind-a2a-agent-plugin` 0.1.1a1, uses the same early draft of A2A as the A2A solver. It sends `tasks/send` and `tasks/sendSubscribe` to `agent_url`. Agents that are built on `a2a-sdk` 1.x, the OVOS persona server among them, answer `-32601 Method not found`. A call from the plugin to the persona server stopped with:
-
-```text
-HTTPStatusError Redirect response '307 Temporary Redirect' for url 'http://localhost:8337/a2a'
-```
+The plugin uses the `a2a-sdk` client, the same as the [A2A solver](ai-agent-a2a-solver.md#which-agents-it-can-reach). It speaks A2A 1.0 and A2A 0.3, so the OVOS persona server is a valid agent. `hivemind-core` passes no session id, so each query starts its own A2A conversation.
 
 ## If it fails
 
+When the agent cannot answer, the plugin sends an error sentence to the client, and then the end of the query.
+
 | What you see | Cause | What to do |
 |---|---|---|
-| `ImportError: cannot import name 'BitStream' from 'bitstring'` | `bitstring` 5 is installed, and `hivemind-bus-client` 1.2.11a1 cannot import it | Install `bitstring<5`. |
-| `TypeError: Client.__init__() got an unexpected keyword argument 'timeout'` | An `httpx` 1.0 prerelease is installed | Install `httpx<1`. |
-| The satellite hears an error answer | The A2A agent rejected the call | Read the `hivemind-core` log. Make sure that the agent accepts `tasks/send`. |
+| A voice satellite gets no answer | The satellite sends a `BUS` message, and the plugin answers `QUERY` and `CASCADE` messages | Send the question in a `QUERY` or `CASCADE` message. |
+| `Error validating A2A agent ... (HTTP 404)` | `agent_url` is wrong, or the agent publishes only the A2A 0.2 card path | Make sure that `<agent_url>/.well-known/agent-card.json` answers. |
+| `Error contacting A2A agent: Client Request timed out` | The agent took longer than `timeout` | Increase `timeout`. |
+| `A2A agent not configured` | `agent_url` is not set | Set `agent_url`. |
 
 ## More information
 

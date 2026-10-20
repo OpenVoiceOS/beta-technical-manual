@@ -4,7 +4,7 @@ This page connects an AI agent to the OVOS speech-to-text (STT) server, so the a
 
 ## Who this is for
 
-You use Claude Code, Claude Desktop, or your own MCP or UTCP agent. You want the agent to turn speech into text with an STT engine that runs on your own computer.
+You use Claude Code, Claude Desktop, opencode, Mistral Vibe, or your own MCP or UTCP agent. You want the agent to turn speech into text with an STT engine that runs on your own computer.
 
 ## What you get
 
@@ -15,11 +15,11 @@ You use Claude Code, Claude Desktop, or your own MCP or UTCP agent. You want the
 ## Start the server
 
 !!! warning "Alpha channel only"
-    The `mcp` extra has a prerelease floor, so the server installs from the
-    prerelease channel:
+    The `mcp` extra is only in the prerelease channel. Install the server
+    from that channel:
 
     ```bash
-    pip install --pre "ovos-stt-http-server[mcp]>=0.27.11a1" ovos-stt-plugin-vosk
+    pip install --pre "ovos-stt-http-server[mcp]" ovos-stt-plugin-vosk
     ```
 
 1. Start the server with the `--mcp` flag:
@@ -84,6 +84,49 @@ on the kitchen life
 ```
 
 The transcript comes from the small Vosk English model. A larger model gives better text.
+
+## Transcribe from opencode
+
+1. Add the server to `opencode.json` in your project folder:
+
+    ```json
+    {
+      "$schema": "https://opencode.ai/config.json",
+      "mcp": {
+        "ovos-stt": {
+          "type": "remote",
+          "url": "http://localhost:8080/mcp",
+          "enabled": true
+        }
+      }
+    }
+    ```
+
+2. Make sure that opencode can connect:
+
+    ```bash
+    opencode mcp list
+    ```
+
+    ```text
+    ●  ✓ ovos-stt connected
+    │      http://localhost:8080/mcp
+    ```
+
+## Transcribe from Mistral Vibe
+
+1. Add the server to `~/.vibe/config.toml`:
+
+    ```toml
+    [[mcp_servers]]
+    name = "ovos-stt"
+    transport = "streamable-http"
+    url = "http://localhost:8080/mcp"
+    ```
+
+    Write the entry in the file. Do not use `vibe mcp add` for this server: that command sets OAuth login for an HTTP server, and the OVOS server does not use OAuth.
+
+2. Start `vibe`. Vibe loads the tools of the server when it starts. It gives each tool the server name as a prefix and changes each hyphen to `_`, for example `ovos_stt_transcribe`.
 
 ## Transcribe from your own MCP client
 

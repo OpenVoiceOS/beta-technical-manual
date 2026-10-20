@@ -34,7 +34,7 @@ All compat routers are always loaded. No feature flag is needed.
 
 ## STT Server Compat Routes
 
-`pip install --pre "ovos-stt-http-server>=0.25.1a3"`. Routers are implemented in `ovos_stt_http_server.routers`.
+`pip install --pre ovos-stt-http-server`. Routers are implemented in `ovos_stt_http_server.routers`.
 
 | Prefix | Vendor |
 |--------|--------|
@@ -60,7 +60,7 @@ All compat routers are always loaded. No feature flag is needed.
 
 ## TTS Server Compat Routes
 
-`pip install ovos-tts-server`. Routers are implemented in `ovos_tts_server.routers`.
+`pip install --pre ovos-tts-server`. Routers are implemented in `ovos_tts_server.routers`.
 
 | Prefix | Vendor |
 |--------|--------|
@@ -79,7 +79,7 @@ All compat routers are always loaded. No feature flag is needed.
 
 ## Translate Server Compat Routes
 
-`pip install --pre "ovos-translate-server>=0.10.0a1"`. Routers are implemented in `ovos_translate_server.routers`.
+`pip install --pre ovos-translate-server`. Routers are implemented in `ovos_translate_server.routers`.
 
 | Prefix | Vendor |
 |--------|--------|
@@ -96,9 +96,7 @@ All compat routers are always loaded. No feature flag is needed.
 ## Persona Server Compat Routes
 
 !!! warning "Alpha channel only"
-    `pip install --pre ovos-persona-server`. The last stable `ovos-persona`, `0.7.1`, does not
-    declare `ovos-workshop`, so an install from the stable channel imports with
-    `ModuleNotFoundError: No module named 'ovos_workshop'`.
+    Install the persona server from the prerelease channel: `pip install --pre ovos-persona-server`.
 
 `create_persona_app()` mounts the routes below.
 It mounts a chat router at prefix `/openai/v1` (`POST /openai/v1/chat/completions`,

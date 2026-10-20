@@ -67,7 +67,7 @@ callers do not have to know the name.
     All three loaders in the org (`ovos-persona-server`, `ovos-PHAL-plugin-tools`,
     `ovos-agentic-loop`) construct a toolbox as `cls(config=..., bus=bus)`, and every
     shipped toolbox accepts `__init__(self, config=None, bus=None)`. Plugins own their
-    own `toolbox_id`; no loader passes one. Write new toolboxes with that signature.
+    own `toolbox_id`; no loader passes one. Write your toolbox with that signature.
 
 `ToolBox.__init__` calls `discover_tools()` immediately to populate `self.tools`, and `bind(bus)`
 registers the messagebus handlers described below. The full authoring guide with more
@@ -259,8 +259,8 @@ into the `ToolBox` interface, so a persona can call it like any native toolbox:
 | `ovos-utcp-toolbox` | `ovos-tool-adapters` | A UTCP-manual-advertising HTTP server |
 
 ```bash
-pip install ovos-tool-adapters[mcp]     # for ovos-mcp-toolbox
-pip install ovos-tool-adapters[utcp]    # for ovos-utcp-toolbox
+pip install --pre 'ovos-tool-adapters[mcp]'     # for ovos-mcp-toolbox
+pip install --pre 'ovos-tool-adapters[utcp]'    # for ovos-utcp-toolbox
 ```
 
 Each takes its own config section, keyed by plugin name **inside the loop's section**, beside
@@ -340,9 +340,8 @@ model requests one, caller or server executes it — without a GPU:
 llama-server -m Qwen3-0.6B-Q4_K_M.gguf --jinja -c 8192
 ```
 
-Qwen3-0.6B at Q4_K_M quantization is a roughly 380 MB download. `llama.cpp` builds b7170 and later
-enable the chat template by default, and `--jinja` above asks for it explicitly, which keeps
-the command working on a build that does not. Where the template is off, the server produces no
+Qwen3-0.6B at Q4_K_M quantization is a roughly 380 MB download. The `--jinja` flag turns on the
+model's chat template. Where the template is off, the server produces no
 `tool_calls` at all, and every tool-calling test degrades into an ordinary plain-text
 conversation instead of failing loudly.
 
@@ -364,7 +363,7 @@ different port (`llama-server --port 8081` and adjust `api_url` to match).
 
 !!! warning "Entry-point name vs. package name"
     The entry point is **`ovos-chat-openai-plugin`**, not the package name
-    (`ovos-openai-plugin`, `pip install ovos-openai-plugin`). Writing the package name into
+    (`ovos-openai-plugin`, `pip install --pre ovos-openai-plugin`). Writing the package name into
     `handlers` instead of the entry-point name raises `ImportError: 'ovos-openai-plugin' not
     installed` — which reads like the package genuinely isn't installed, when the actual problem
     is the wrong key.

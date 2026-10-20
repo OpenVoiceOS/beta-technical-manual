@@ -42,31 +42,25 @@ The persona handler `ovos-a2a-solver` from the `ovos-a2a-solver-plugin` package.
 
 ## Which agents it can reach
 
-The released plugin, `ovos-a2a-solver-plugin` 0.0.2a3, uses an early draft of A2A:
+The plugin uses the `a2a-sdk` client. It reads the agent card from `/.well-known/agent-card.json` under `agent_url`, and it uses the transport that the card names. It speaks A2A 1.0 and A2A 0.3. An agent that publishes only `/.well-known/agent.json`, the path of A2A 0.2, is not supported.
 
-- It reads the agent card from `/.well-known/agent.json`.
-- It sends the JSON-RPC method `tasks/send`, or `tasks/sendSubscribe` for streaming.
-- It posts to `agent_url` without a slash at the end.
-
-An agent that is built on `a2a-sdk` 1.x does not accept `tasks/send`. This includes the OVOS persona server from [Talk to an OVOS persona over A2A](ai-agent-a2a-server.md). With the persona server as the remote agent, the persona gives no answer, and the log shows:
+The OVOS persona server from [Talk to an OVOS persona over A2A](ai-agent-a2a-server.md) is a valid remote agent. Set `agent_url` to the value of its `--a2a-base-url` flag, for example `http://localhost:8337/a2a`. A persona that sent "what is the speed of light?" to a persona server with a RiveScript persona gave this answer:
 
 ```text
-A2AChatEngine: task failed: Redirect response '307 Temporary Redirect' for url 'http://localhost:8337/a2a'
+Are such questions much on your mind?
 ```
 
-The same endpoint answers `tasks/send` with:
-
-```json
-{"error":{"code":-32601,"message":"Method not found"},"id":1,"jsonrpc":"2.0"}
-```
+The plugin sends only the newest user message. The remote agent keeps the conversation for each OVOS session.
 
 ## If it fails
 
-| What you see | Cause | What to do |
+The persona speaks one line of its error dialog when the remote agent cannot answer. The log line that starts with `A2AChatEngine: task failed` gives the cause.
+
+| What you see in the log | Cause | What to do |
 |---|---|---|
-| `produced no answer: no handler in its chain returned a response` | The remote agent rejected the call | Read the log line that starts with `A2AChatEngine: task failed`. |
-| `-32601 Method not found` | The agent does not accept `tasks/send` | Use an agent that accepts the early A2A method names. |
-| `307 Temporary Redirect` | The agent serves its endpoint at a URL that ends with `/` | Use an agent that accepts the URL without the slash. |
+| `Network communication error fetching agent card` | The agent is not running, or `agent_url` is wrong | Make sure that `<agent_url>/.well-known/agent-card.json` answers. |
+| `Client Request timed out` | The agent took longer than `timeout` | Increase `timeout`. |
+| `A2A task ended in TASK_STATE_FAILED` | The agent failed the task | Read the log of the agent. |
 
 ## More information
 

@@ -14,11 +14,11 @@ You run an OVOS persona and want agents from other frameworks to use it. The oth
 ## Start the server
 
 !!! warning "Alpha channel only"
-    The `a2a` extra has a prerelease floor, so the server installs from the
-    prerelease channel:
+    The `a2a` extra is only in the prerelease channel. Install the server
+    from that channel:
 
     ```bash
-    pip install --pre "ovos-persona-server[a2a]>=0.18.6a1" ovos-solver-rivescript-plugin
+    pip install --pre "ovos-persona-server[a2a]" ovos-solver-rivescript-plugin
     ```
 
 1. Write the persona file `helper.json`. This persona answers from RiveScript rules, so it needs no language model:
@@ -88,7 +88,7 @@ Give `--persona` once for each persona. Each persona gets its own agent card at 
 | What you see | Cause | What to do |
 |---|---|---|
 | `/a2a/...` returns `404` | The server started without `--a2a-base-url`, or `a2a-sdk` is not installed | Install the `a2a` extra. Start the server with `--a2a-base-url`. |
-| The client gets `-32601 Method not found` | The client sends an early A2A draft method, such as `tasks/send` | Use a client that sends `SendMessage`, or the A2A 0.3 name `message/send`. |
+| The client gets `-32601 Method not found` | The client sends a method name from an A2A draft, such as `tasks/send` | Use a client that sends `SendMessage`, or the A2A 0.3 name `message/send`. |
 | A remote client cannot connect to the URL in the card | `--a2a-base-url` names an address that only the server can reach | Give the public address of the server, or the address of its reverse proxy. |
 
 !!! danger "No authentication"

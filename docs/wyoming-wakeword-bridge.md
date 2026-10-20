@@ -57,7 +57,7 @@ Clients select which to activate with the `Detect` event.
 ### Running
 
 ```bash
-pip install wyoming-ovos-wakeword
+pip install --pre wyoming-ovos-wakeword
 wyoming-ovos-wakeword --uri tcp://0.0.0.0:7893
 ```
 

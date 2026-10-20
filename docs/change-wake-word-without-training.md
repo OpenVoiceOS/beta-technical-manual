@@ -1,7 +1,7 @@
 # Change the Wake Word Without Training
 
 !!! abstract "In a nutshell"
-    You want the assistant to answer to a name you choose, like "Hey Jarvis" or "Hey Computer". Usually a new wake word needs a trained model and many recordings. Two plugins skip that step: you type the wake word in the config and the assistant listens for it. WakePhoneHuBERT is the better choice. Vosk is simpler but works for fewer phrases.
+    You want the assistant to answer to a name you choose, like "Hey Jarvis" or "Hey Computer". Usually a custom wake word needs a trained model and many recordings. Two plugins skip that step: you type the wake word in the config and the assistant listens for it. WakePhoneHuBERT is the better choice. Vosk is simpler but works for fewer phrases.
 
 ## Try it in your browser first
 
@@ -14,7 +14,7 @@ The [WakeHuBERT wake words Space](https://huggingface.co/spaces/OpenVoiceOS/wake
 [WakePhoneHuBERT](https://huggingface.co/TigreGotico/wakephonehubert) is a small speech model that hears the sounds of speech, written as IPA phones. The zero-shot engine of `ovos-ww-plugin-wakeforge` compares those sounds with the phones of your wake word. You give the phones; no recordings and no training are necessary.
 
 !!! warning "Alpha channel only"
-    The zero-shot engine `ovos-ww-plugin-wakeforge-zeroshot` is in `ovos-ww-plugin-wakeforge` 0.11.0a1 and later. The stable release of the plugin does not have it.
+    The zero-shot engine `ovos-ww-plugin-wakeforge-zeroshot` is in the prerelease channel of `ovos-ww-plugin-wakeforge` only. Install the plugin with `--pre`, as in step 1.
 
 1. Install the plugin into the environment that OVOS runs in:
 
@@ -82,12 +82,12 @@ Two listener features also cut false activations with any wake-word engine. The 
 
 ## Option 2: Vosk
 
-`ovos-ww-plugin-vosk` runs the Vosk speech recognizer on short pieces of audio and compares the text with your wake word. It is on the stable channel.
+`ovos-ww-plugin-vosk` runs the Vosk speech recognizer on short pieces of audio and compares the text with your wake word.
 
 1. Install the plugin:
 
     ```bash
-    pip install ovos-ww-plugin-vosk
+    pip install --pre ovos-ww-plugin-vosk
     ```
 
 2. Add the wake word to `~/.config/mycroft/mycroft.conf`. Set `time_between_checks` to 3:

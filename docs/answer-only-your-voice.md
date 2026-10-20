@@ -6,7 +6,7 @@
 The speaker verifier is the plugin `ovos-ww-verifier-plugin-speaker`. It runs after the wake-word engine fires and before the assistant starts to listen. It compares the voice in the wake-word audio with the voices you enrolled. If no enrolled voice matches, the listener drops the activation. See [Wake-word Verifiers](ww-verifier.md) for how verifiers fit into the listener. The listener can run more than one verifier: the Silero VAD verifier `ovos-ww-verifier-silero`, from `ovos-vad-plugin-silero`, rejects wake words with no speech in them. The blog post [Only you can order the cheeseburgers: Speaker verification comes to OVOS](https://blog.openvoiceos.org/posts/2026-09-26-speaker-verifier) shows the verifier in use.
 
 !!! warning "Alpha channel only"
-    The listener runs verifiers from `ovos-dinkum-listener` 0.6.0a1. The stable release of the listener does not load them.
+    Only the prerelease channel of `ovos-dinkum-listener` loads verifiers. Install the listener with `pip install --pre ovos-dinkum-listener`.
 
 ## Before you start
 
@@ -85,7 +85,7 @@ A rejected speaker removes the wake word event itself. The bus gets no `recogniz
 
 The `threshold` is a cosine similarity between 0 and 1. A higher value rejects more guests and also more of your own wake words. A lower value does the opposite. Lower it for a distant or noisy microphone.
 
-The default of 0.45 is for the default model, `wespeaker-resnet34`. **Each model has its own score scale.** If you change `model`, find a new threshold: compare the scores in the log for your own voice and for a guest, and choose a value between them. Set a different value for one person with `per_profile_thresholds`, for example `{"Bob": 0.5}`.
+The default of 0.45 is for the default model, `wespeaker-resnet34`. **Each model has its own score scale.** If you change `model`, find the threshold for that model: compare the scores in the log for your own voice and for a guest, and choose a value between them. Set a different value for one person with `per_profile_thresholds`, for example `{"Bob": 0.5}`.
 
 ## Configuration keys
 

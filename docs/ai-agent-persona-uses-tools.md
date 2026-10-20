@@ -22,7 +22,7 @@ You need:
     The loop and the adapters install from the prerelease channel:
 
     ```bash
-    pip install --pre "ovos-persona-server>=0.18.6a1" "ovos-agentic-loop>=0.2.4a1" "ovos-tool-adapters[mcp,utcp]>=0.1.9a1" ovos-openai-plugin
+    pip install --pre ovos-persona-server ovos-agentic-loop "ovos-tool-adapters[mcp,utcp]" ovos-openai-plugin
     ```
 
 ## Use tools from an MCP server
@@ -134,7 +134,7 @@ Each adapter also takes `timeout` (seconds for each call, default `30`) and `too
 |---|---|---|
 | `MCPToolBox: failed to connect to MCP server: 'command'` in the log | The toolbox settings are at the top level of the persona, so the loop gives the adapter an empty config | Move the `ovos-mcp-toolbox` section into the section of the loop. |
 | The answer comes but the tool server logs no call | The model answered from its own knowledge, or it cannot call tools | Use a model that supports tool calls. Start `llama-server` with `--jinja`. |
-| A `tool_providers` config loads no tools | `tool_providers` is the key of UTCP before 1.0 | Use `manual_call_templates`. |
+| A `tool_providers` config loads no tools | `tool_providers` is not a UTCP key | Use `manual_call_templates`. |
 | The UTCP adapter registers no tools for `http` | `utcp-http` is not installed | Install `ovos-tool-adapters[utcp]`, which installs `utcp-http`. |
 
 ## More information
