@@ -1,7 +1,7 @@
 # Building Agent Plugins
 
 !!! abstract "In a nutshell"
-    This page teaches you how to write your own agent engine plugin: which base class to
+    To write your own agent engine plugin, you choose a base class to
     subclass, what each method contract expects, how to register the entry point, and how
     to test the result. If you only want to *use* existing plugins, read
     [Agent Engine Types](agent-plugins.md) and [Agents & Personas](personas.md) instead.

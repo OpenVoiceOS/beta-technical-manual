@@ -2,13 +2,13 @@
 
 !!! abstract "In a nutshell"
     OVOS ships several network services, and most bind to `127.0.0.1` by default, but not all of
-    them do. This page lists every port, its default bind, and whether it has auth or TLS, plus
+    them do. The table below lists every port, its default bind, and whether it has auth or TLS, plus
     the rules to follow before you open any of them on a shared network.
 
-!!! tip "Is this page for you?"
+!!! tip "Looking for operations instead?"
     Looking for systemd units, readiness probes, log locations, backups, or staged upgrades
-    instead? See [Production Operations](production-operations.md). This page is the
-    security-hardening slice of that material.
+    instead? See [Production Operations](production-operations.md). The hardening rules
+    below are the security slice of that material.
 
 ---
 
@@ -20,7 +20,7 @@ each one before you open a port on a shared network.
 | Service | Port | Default bind | Auth? | TLS? |
 |---|---|---|---|---|
 | [Messagebus](bus-service.md) | 8181 | `127.0.0.1` | None | Optional (`websocket.ssl`) |
-| [GUI WebSocket](gui-service.md#configuration) | 18181 | `127.0.0.1` (older configs may carry `0.0.0.0`) | None | None |
+| [GUI WebSocket](gui-service.md#configuration) | 18181 | `127.0.0.1` (a config written before the loopback default may carry `0.0.0.0`) | None | None |
 | [Skill Settings web UI](skill-settings.md) | 8000 | `0.0.0.0` (all interfaces) | Basic auth, default `ovos`/`ovos` | None (put a proxy in front for TLS) |
 | [STT server](stt-server.md) | 8080 | `0.0.0.0` | None | None (put a proxy in front for TLS) |
 | [TTS server](tts-server.md) | 9666 | `0.0.0.0` | None | None (put a proxy in front for TLS) |
@@ -33,7 +33,7 @@ each one before you open a port on a shared network.
     authentication, no origin check, and no TLS option at all, and anything it receives is
     forwarded straight onto the core bus. Widen `gui_websocket.host` to `0.0.0.0` only if a
     remote display genuinely needs network access, and re-check configs from before the
-    loopback default, which may still carry `0.0.0.0`. See
+    loopback default, which may carry `0.0.0.0`. See
     [GUI Service: Configuration](gui-service.md#configuration) for the full warning and the
     VPN/reverse-proxy alternative.
 

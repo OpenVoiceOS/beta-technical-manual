@@ -3,32 +3,32 @@
 !!! abstract "In a nutshell"
     Every OVOS component talks to every other one by sending small named messages over the
     shared [messagebus](bus-service.md). It works a bit like a group chat where each service
-    watches for the message types it cares about. This page collects the message types
+    watches for the message types it cares about. This reference collects the message types
     documented elsewhere in the manual into one place, grouped by which stage of the
     [utterance lifecycle](life-of-an-utterance.md) they belong to, so you don't have to hunt
     through six different pages to find one event name. Each row links back to the page that
-    documents that event in context. This page does not introduce anything new.
+    documents that event in context.
 
-!!! tip "Looking for a message this page does not list?"
-    This page is curated. It covers the events the manual explains in context, not every event
+!!! tip "Looking for a message that is not in this list?"
+    This list is curated. It covers the events the manual explains in context, not every event
     that exists. For the exhaustive machine-generated catalog, browse the
     [MessageBus Protocol Reference](https://openvoiceos.github.io/ovos-pydantic-models/), built
     from [`ovos-pydantic-models`](core-libraries.md#ovos-pydantic-models). It is searchable and
-    grouped by subsystem, and it includes deprecated subsystems that this page leaves out.
+    grouped by subsystem, and it includes deprecated subsystems that this list leaves out.
 
     Its models are generated semi-automatically from source, so entries can be incomplete or out
     of date. Check the behavior against the code or the
     [formal specifications](architecture-specs.md) before you depend on it.
 
 !!! note
-    Many events have a legacy `mycroft.*`/bare name alongside a newer `ovos.*` name. Only
+    Many events have a legacy `mycroft.*`/bare name alongside a spec `ovos.*` name. Only
     one of the two goes on the wire, and each connected client's bus library locally
     re-dispatches it under the other name too, so a handler on either name receives it
     (see [Bus Service: namespace migration](bus-namespace-migration.md#namespace-migration)). Use the
-    spec name in new code: an open kill-switch pull request
-    ([ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272))
-    removes the legacy bridge once the fleet has migrated. The tables below show both
-    names where applicable.
+    spec name in the code you write. The legacy bridge is a transition layer, and the
+    kill-switch pull request
+    [ovos-bus-client#272](https://github.com/OpenVoiceOS/ovos-bus-client/pull/272)
+    removes it. The tables below show both names where applicable.
 
 ## Listener / wake word
 
@@ -316,20 +316,9 @@ directly.
 On `ovos.intent.register.keyword` / `.template`, `ovos.intent.deregister`, `ovos.skill.deregister`, and `ovos.intent.enable` / `.disable`, the payload `skill_id` names the **target**: the skill whose registration is created, removed, suppressed or re-armed (INTENT-4 §3.2). The context `skill_id` names the **source** and is provenance only. A consumer logs the two at DEBUG when they differ and never substitutes one for the other, never rejects on a difference, and never treats an absent context `skill_id` as malformed. A skill built on `ovos-workshop` never emits these directly, since the base class already fills both fields.
 
 !!! warning "Alpha channel only"
-    The orchestrator manifest that answers them first shipped in `ovos-core`
-    `2.4.0a1`, and every release carrying it is a prerelease. The stable channel
-    pins `ovos-core>=1.3.1,<1.4.0` and the testing channel pins `>=2.1.1,<3.0.0`
-    without prereleases, so neither has the manifest, these topics, or the
-    identity rule below. This is not a change a reader on those channels can be
-    on either side of.
-
-    The payload became authoritative in `3.4.4a1`, and session-scoped enable and
-    disable route through the same helper from `3.5.2a1`. Four alpha releases in
-    between behaved differently: `3.4.1a1`, `3.4.2a1`, `3.4.3a1` and `3.4.3a2`
-    treated the context as authoritative and dropped a message whose payload
-    named a different skill, logging at WARNING. Before and after that window the
-    payload is preferred, so only a tool built against those four releases, and
-    only one relying on the drop as a guard, changes meaning on upgrade.
+    Only `ovos-core` prereleases ship the orchestrator manifest that answers these topics.
+    The stable and testing channels do not have the manifest, these topics, or the
+    identity rule below.
 
 Write `ovos.skill.deregister` for a skill removing its own registrations. Sending it with a payload `skill_id` naming a different skill is not a supported operation, and the deregistration messages a skill emits for itself are unaffected by that.
 
@@ -356,10 +345,9 @@ in the producer and consumer, not a topic swap:
   migration map carries the two that have a legacy counterpart (`mycroft.stop` → `ovos.stop`,
   `skill.stop.pong` → `ovos.stop.pong`).
 
-    Today the skill base class subscribes to the per-skill forms only — `{skill_id}.stop` and
-    `{skill_id}.stop.ping`, plus the bridged `mycroft.stop`. It does **not** subscribe to
-    `ovos.stop.ping`. A skill that adopts the broadcast ping alone stops answering the stop
-    handshake, so keep the per-skill subscriptions until the base class moves.
+    The skill base class subscribes to the broadcast `ovos.stop.ping` and to the per-skill
+    forms `{skill_id}.stop` and `{skill_id}.stop.ping`, plus the bridged `mycroft.stop`. When a
+    core emits both pings in one round, the skill answers with one pong.
 
 ---
 **Read next:** [Command-line Tools](cli-tools.md)

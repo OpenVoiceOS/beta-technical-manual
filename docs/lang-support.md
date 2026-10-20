@@ -3,10 +3,10 @@
 !!! abstract "In a nutshell"
     Making OVOS truly work in a given language takes more than translating menu text. It
     needs translated skill phrases, a speech-to-text engine that understands that language,
-    and a text-to-speech voice that can speak it. This page explains the current state of
+    and a text-to-speech voice that can speak it. The sections below cover the state of
     language support, how to get a working setup quickly with the `ovos-config autoconfigure`
     command, and how you can help improve your language by translating phrases or testing
-    real speech. If you just want it running now, jump to
+    real speech. For a quick setup, jump to
     [Auto-Configuration](#auto-configuration). See also
     [Customizing Language Resources](lang-customization.md) and the [Glossary](glossary.md).
 
@@ -15,10 +15,7 @@ recognition, speech-to-text ([STT](stt-plugins.md)), text-to-speech ([TTS](tts-p
 and skill dialogs. However, full language support requires more than translation of interface
 text.
 
-This document outlines the current state of language support, known limitations, and
-how contributors can help improve multilingual performance in OVOS.
-
-**Want it working now?** Jump to [Auto-Configuration](#auto-configuration).
+**Want a quick setup?** Jump to [Auto-Configuration](#auto-configuration).
 `ovos-config autoconfigure -l <lang> ...` sets up recommended STT/TTS plugins in one command.
 **Want to make your language work better?** See [How to Improve Language Support](#how-to-improve-language-support).
 
@@ -155,13 +152,13 @@ repositories. It replaces the retired third-party *GitLocalize* service. This in
 
 OVOS Localize scans skill data and exports a language × skill coverage matrix to
 [`data/coverage.json`](https://openvoiceos.github.io/ovos-localize/data/coverage.json),
-refreshed alongside the translation app. This is the current source of translation progress.
+refreshed alongside the translation app. It is the source of translation progress.
 
-> Warning: the older [lang-support-tracker](https://github.com/OpenVoiceOS/lang-support-tracker)
+> Warning: the [lang-support-tracker](https://github.com/OpenVoiceOS/lang-support-tracker)
 > is a **frozen GitLocalize-era snapshot** (superseded by OVOS Localize). Its percentages
-> are no longer updated and should not be treated as current.
+> are not updated. Do not use them.
 
-> Note: if your language is missing from [OVOS Localize](https://openvoiceos.github.io/ovos-localize/), [open an issue on ovos-localize](https://github.com/OpenVoiceOS/ovos-localize/issues) to request it. Currently, languages must be added manually.
+> Note: if your language is missing from [OVOS Localize](https://openvoiceos.github.io/ovos-localize/), [open an issue on ovos-localize](https://github.com/OpenVoiceOS/ovos-localize/issues) to request it. A maintainer adds each language manually.
 
 See **[Contribute Translations with OVOS Localize](ovos-localize-tutorial.md)** for the step-by-step translator guide.
 
@@ -278,7 +275,7 @@ Briefly: offline STT comes from [`ovos-stt-plugin-onnx-asr`](stt-plugins-referen
 and offline TTS from [`ovos-tts-plugin-phoonnx`](tts-plugins-reference.md#ovos-tts-plugin-phoonnx)
 wherever a recommendation is bundled. Several regional variants, including **EN-GB**,
 **PT-BR**, **AR-SA**, and three of the four Catalan variants, ship a TTS voice but no
-bundled offline STT recommendation yet. A language absent from both tables, such as
+bundled offline STT recommendation. A language absent from both tables, such as
 Japanese, has no bundled recommendation at all: that is an honest gap to fill, not a
 deliberate exclusion. See [Language Support Tables](lang-support-tables.md) for the
 exact per-language breakdown.

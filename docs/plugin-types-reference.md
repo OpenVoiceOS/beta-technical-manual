@@ -1,7 +1,7 @@
 # Plugin Types Reference
 
 !!! abstract "In a nutshell"
-    This page is the exhaustive lookup table of every plugin type the
+    The exhaustive lookup table of every plugin type the
     [OVOS Plugin Manager](plugin-manager.md) (OPM) knows how to discover: its entry
     point group, its template base class, and (for deprecated types) what to use
     instead. Use it to find the exact entry point group and base class for the kind
@@ -121,12 +121,6 @@ A pipeline plugin is a matcher exposing `match(utterances, lang, session) → Ma
 |---|---|---|
 | Pipeline | `opm.pipeline` | `PipelinePlugin` |
 
-!!! note "Minimum OPM version"
-    The transformer (`opm.transformer.*`) and solver (`opm.solver.*`) groups require
-    `ovos-plugin-manager>=2.1.0`. The agent groups (`opm.agents.*`) require
-    `ovos-plugin-manager>=2.4.0a1` (the option-matcher group arrived last). Pin
-    accordingly in your plugin's dependencies (cap below `<3.0.0`).
-
 ### Media Plugins
 
 | Plugin type | Entry point group |
@@ -136,7 +130,7 @@ A pipeline plugin is a matcher exposing `match(utterances, lang, session) → Ma
 | Video Player | `opm.media.video` |
 | Web Player | `opm.media.web` |
 | Media Provider | `opm.media.provider` |
-| Legacy audio backend | `mycroft.plugin.audioservice` — deprecated but still discovered at runtime; it has no `opm.*` rename (`opm.media.audio` is a distinct newer type, not its replacement). Used by the classic [audio backends](ocp-audio-plugin.md) |
+| Legacy audio backend | `mycroft.plugin.audioservice` — deprecated but still discovered at runtime; it has no `opm.*` rename (`opm.media.audio` is a distinct type, not its replacement). Used by the classic [audio backends](ocp-audio-plugin.md) |
 
 ### Agent Plugins
 
@@ -216,14 +210,12 @@ plugin/repository was retired in favor of a different package, see
 
 This table mirrors `ovos_plugin_manager.utils.DEPRECATED_ENTRYPOINTS`. This is the source of truth OPM
 uses at runtime to silently rewrite a plugin's old entry-point group to its canonical one, so
-plugins published under any of the names above still load correctly today.
+plugins published under any of the names above load correctly.
 
 The `opm.agents.*` types above supersede the legacy **solver** groups
 (`opm.solver.question`, `opm.solver.chat`, `opm.solver.summarization`,
 `opm.solver.entailment`, `opm.solver.multiple_choice`, `opm.solver.reading_comprehension`)
-and `opm.coreference`. The next major release removes these legacy groups. That release is
-the same `ovos-plugin-manager` major-version boundary as the `<3.0.0` cap noted above under
-[Minimum OPM version](#plugin-types).
+and `opm.coreference`. OPM marks these legacy groups for removal in its next major release. Do not use them in a plugin you write.
 
 ---
 

@@ -1,10 +1,6 @@
 # Give a Persona MCP and UTCP Tools (Agentic Loop and Tool Adapters)
 
-This page gives an OVOS persona tools from an MCP server or a UTCP manual, so that its language model can call them while it answers.
-
-## Who this is for
-
-You build an OVOS persona with a language model. You want the persona to use tools that another server offers, such as the [translate server](ai-agent-translate.md) or any third-party MCP server.
+Give an OVOS persona tools from an MCP server or a UTCP manual, so that its language model can call them while it answers. Use this setup when an OVOS persona with a language model must use tools that another server offers, such as the [translate server](ai-agent-translate.md) or any third-party MCP server.
 
 ## What you get
 
@@ -16,7 +12,7 @@ You build an OVOS persona with a language model. You want the persona to use too
 You need:
 
 - A language model with an OpenAI-compatible API that can call tools. A small local model is enough. For example, `llama-server -m Qwen3-0.6B-Q4_K_M.gguf --jinja --port 8081` from [llama.cpp](https://github.com/ggml-org/llama.cpp) serves one at `http://localhost:8081/v1`.
-- A tool server. This page uses the translate server from [Translate text from an AI agent](ai-agent-translate.md), started with `--mcp` on port `9686`.
+- A tool server. The steps below use the translate server from [Translate text from an AI agent](ai-agent-translate.md), started with `--mcp` on port `9686`.
 
 !!! warning "Alpha channel only"
     The loop and the adapters install from the prerelease channel:

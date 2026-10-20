@@ -38,7 +38,7 @@ emitting `mycroft.ready`. (The listener reports readiness under `voice`, not
 resolve.) Each setup can customize this list based on its
 needs. An offline install will not want to wait on internet-dependent skills, and a
 headless server will not want to wait on an audio stack. If `ready_settings`
-is not set, the skill defaults to waiting for `skills` plus every currently
+is not set, the skill defaults to waiting for `skills` plus every
 installed skill_id.
 
 ### Step 2: Define `RuntimeRequirements` in your skill
@@ -99,7 +99,7 @@ class MySkill(OVOSSkill):
 Any other name is treated generically: the skill waits for a `mycroft.<name>.is_ready` response, so third-party services can plug into the same mechanism.
 
 > ⚠️ **Note**: If `ready_settings` is not configured, the skill defaults to
-> waiting for `skills` plus every currently installed skill_id. Because OVOS
+> waiting for `skills` plus every installed skill_id. Because OVOS
 > supports dynamic skill loading (skills can load and unload after startup),
 > timing can impact anything that depends on the `mycroft.ready` message.
 
@@ -122,7 +122,7 @@ default configuration (`use_deferred_loading` unset/`false`), all installed skil
 unconditionally at startup regardless of their declared requirements.
 
 `gui_before_load` exists on the same dataclass but is declared-only: no consumer in
-`ovos-core` currently reads it, so setting it has no effect. A GUI connecting triggers a
+`ovos-core` reads it, so setting it has no effect. A GUI connecting triggers a
 load sweep for all pending skills, not a per-skill gate.
 
 ```json
@@ -145,7 +145,7 @@ load sweep for all pending skills, not a per-skill gate.
 - Simplifies skill logic (e.g., no need to check for connectivity manually before doing network I/O in `initialize()`).
 
 `requires_internet`, `requires_network`, and `requires_gui` are also present on
-`RuntimeRequirements`, but they do not currently trigger an unload. `SkillManager`'s
+`RuntimeRequirements`, but they do not trigger an unload. `SkillManager`'s
 connection-loss handlers exist as no-op placeholders, so a running skill is **not** unloaded
 when a required resource disappears. Only the before-load gate above is active.
 
@@ -154,8 +154,6 @@ when a required resource disappears. Only the before-load gate above is active.
 ## RuntimeRequirements (`@classproperty`)
 
 The `RuntimeRequirements` class property lets a skill declare its connectivity/GUI needs.
-
-> ⚠️ Replaces the older, now-removed `"priority_skills"` config option.
 
 ### Key fields:
 
@@ -166,7 +164,7 @@ The `RuntimeRequirements` class property lets a skill declare its connectivity/G
 | `no_internet_fallback` | Declares the skill can keep working without internet |
 | `network_before_load`  | Wait for network before loading (requires `skills.use_deferred_loading: true`) |
 | `requires_network`     | Declares the skill needs network to work |
-| `gui_before_load`      | Declared, but not currently read by any consumer in `ovos-core` — setting it has no effect |
+| `gui_before_load`      | Declared, but not read by any consumer in `ovos-core` — setting it has no effect |
 | `requires_gui`         | Declares the skill needs a GUI to work |
 | `no_gui_fallback`      | Declares the skill can keep working without a GUI |
 
@@ -279,7 +277,7 @@ Consider a skill with both graphical user interface (GUI) and internet dependenc
 
 The skill declares both GUI and internet requirements. With `skills.use_deferred_loading: true`,
 loading waits until internet is available. `gui_before_load` has no effect (see the note
-above); GUI-readiness gating isn't currently possible this way.
+above); GUI-readiness gating is not possible this way.
 
 If the user asks "show me the picture of the day" and we have both internet and a GUI, our skill will match the intent. If we do not have internet but have a GUI, the skill can still operate using a cached picture. That is what `no_internet_fallback=True` documents.
 

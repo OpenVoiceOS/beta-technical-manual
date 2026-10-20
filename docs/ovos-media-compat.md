@@ -9,13 +9,13 @@
 
 ### ClassicAudioServiceInterface
 
-When `ovos-media` is not running (i.e., the system still uses `ovos-ocp-audio-plugin` inside
+When `ovos-media` is not running (i.e., the system uses `ovos-ocp-audio-plugin` inside
 `ovos-audio`), the pipeline plugin falls back to emitting `mycroft.audio.service.*` bus messages
 to control the classic audio service via `ovos_bus_client.apis.ocp.ClassicAudioServiceInterface`.
 
 ### LegacyCommonPlay Bridge
 
-For skills that still use the old Mycroft `CommonPlaySkill` base class (pre-OCP), the pipeline
+For skills that use the old Mycroft `CommonPlaySkill` base class (pre-OCP), the pipeline
 plugin includes a bridge:
 
 - Emits `play:query` instead of `ovos.common_play.query`
@@ -26,10 +26,9 @@ plugin includes a bridge:
 
 - Emits `play:start` to tell the winning skill to handle playback itself
 
-The bridge's own docstring carries a removal note targeting `ovos-core 0.1.0`, a version
-number from before `ovos-core` adopted its current numbering and never reconciled since —
-treat the bridge as legacy-support code with no confirmed removal date, not as scheduled
-for a specific upcoming release.
+The bridge is legacy-support code with no confirmed removal date. Its docstring names
+`ovos-core 0.1.0` as a removal target, a number from an earlier `ovos-core` numbering scheme
+that does not map to a release.
 
 ---
 
@@ -39,7 +38,7 @@ for a specific upcoming release.
 
 `OCPVoiceSkill` in `ovos_media/skill.py` inherits from `OVOSCommonPlaybackSkill`, constructed
 separately from the player and given a reference to its `MediaCatalog` (`OCPMediaCatalog` is
-now just a back-compat alias for the plain, skill-free catalog object). `OCPVoiceSkill` registers
+a back-compat alias for the plain, skill-free catalog object). `OCPVoiceSkill` registers
 `ovos-media` as a skill on the bus and loads skill infrastructure (settings, locale, etc.). It
 registers `@ocp_search()` to expose liked songs as a search result. There is no
 `@ocp_featured_media()` handler.

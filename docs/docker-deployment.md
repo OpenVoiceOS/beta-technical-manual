@@ -4,8 +4,8 @@
     [`ovos-docker`](https://github.com/OpenVoiceOS/ovos-docker) publishes one container image
     per OVOS service, plus reference `docker-compose.yml` files that wire them together. Every
     compose service uses `network_mode: host`, so containers reach each other and the bus over
-    the host's own loopback and network interfaces, not a private bridge network. This page
-    covers the compose layout, audio device passthrough, networking, and the headless-server
+    the host's own loopback and network interfaces, not a private bridge network. The sections below
+    cover the compose layout, audio device passthrough, networking, and the headless-server
     pattern for STT/TTS.
 
 ## What ovos-docker ships

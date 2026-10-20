@@ -1,10 +1,6 @@
 # Answer Through a Remote A2A Agent (A2A Solver)
 
-This page makes an OVOS persona hand each question to an agent on another server, over the A2A protocol.
-
-## Who this is for
-
-You have an agent that speaks A2A, for example one built with LangGraph, CrewAI or Google ADK. You want OVOS to use that agent as the brain of a persona. A voice question then gets the answer of the remote agent.
+The A2A solver makes an OVOS persona hand each question to an agent on another server, over the A2A protocol. Use the A2A solver when OVOS must use an agent that speaks A2A as the brain of a persona, for example an agent built with LangGraph, CrewAI or Google ADK. A voice question then gets the answer of the remote agent.
 
 ## What you get
 

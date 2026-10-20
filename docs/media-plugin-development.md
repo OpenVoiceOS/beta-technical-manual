@@ -1,11 +1,11 @@
 # Writing a Media Playback Backend Plugin
 
 !!! abstract "In a nutshell"
-    This page teaches you how to write an [`ovos-media`](ovos-media.md) playback backend:
+    Write an [`ovos-media`](ovos-media.md) playback backend:
     which base class to subclass, what each method contract expects, how to register the
-    entry point, and how to test the result. It covers the `opm.media.*` family only. The
+    entry point, and how to test the result. The guide covers the `opm.media.*` family only. The
     old audio service (`mycroft.plugin.audioservice`) is a separate, deprecated interface.
-    See [OCP Audio Plugin](ocp-audio-plugin.md) if you still need to target it. Looking for
+    See [OCP Audio Plugin](ocp-audio-plugin.md) if you must target it. Looking for
     a plugin to use instead of writing one? Go to [Media Plugins](media-plugins.md).
 
 A media backend plays **one track at a time**. OCP owns the playlist. Your plugin only

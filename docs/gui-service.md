@@ -1,7 +1,7 @@
 # GUI Service (ovos-gui)
 
 !!! danger "Maturity: Beta ⬤⬤⬤◯◯ — but the stack is deprecated"
-    The `ovos-gui` repository is active, but the GUI **stack this page documents is legacy** and being superseded. There is no generally usable OVOS GUI, and a replacement is **Upcoming**. See [Screens on OVOS Today](gui-status.md) for the full picture and what to use now. The badge rates [repository health](maturity.md), not the stack's status.
+    The `ovos-gui` repository is active, but the GUI **stack it runs is legacy** and being superseded. There is no generally usable OVOS GUI, and a replacement is not released. See [Screens on OVOS](gui-status.md) for the full picture and what to use. The badge rates [repository health](maturity.md), not the stack's status.
 
 !!! abstract "In a nutshell"
     `ovos-gui` is the part of OpenVoiceOS that decides what shows up on a screen: text, images, a music player, or an idle home screen. Skills never draw to the display themselves. They send a request to this service, which keeps track of what each skill wants shown and passes it on to whatever screen is connected. Think of it as a stage manager that decides which scene is in front of the audience at any moment. To learn more, see the [Home Screen](homescreen.md) and the [Glossary](glossary.md).
@@ -13,8 +13,8 @@
     **what** to show using a **closed `SYSTEM_*` template vocabulary**, and any
     number of interchangeable **render backends** decide **how** to draw it
     (pixels, a character grid, a synthesized face…), each routed solely by the
-    message's `session_id`. The `ovos-gui` daemon described on this page is the
-    current ("legacy") implementation. Read GUI-1 for the target contract this
+    message's `session_id`. The `ovos-gui` daemon described below is the
+    "legacy" implementation. Read GUI-1 for the target contract this
     subsystem is converging on. For the full set see the
     **[spec index](architecture-specs.md)**.
 
@@ -144,7 +144,7 @@ clock times out    → music player namespace at position 0
 music ends         → stack empty → idle view shown
 ```
 
-> **Note:** GUI does not yet track namespaces per [Session](session.md). Today all clients
+> **Note:** GUI does not track namespaces per [Session](session.md). All clients
 > share one global display stack.
 
 ---
@@ -180,8 +180,8 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
     socket into `wss://`.
 
     It ships bound to `127.0.0.1` (loopback only). Widen `gui_websocket.host` to `0.0.0.0`
-    only if a remote display genuinely needs network access — and check configs from older
-    installs, which may still carry `0.0.0.0`. Never leave `0.0.0.0` on an
+    only if a remote display genuinely needs network access, and check that your config does
+    not carry `0.0.0.0` by accident. Never leave `0.0.0.0` on an
     untrusted network, and never expose port `18181` beyond a trusted network. If a display
     really must run on another machine, put it behind a VPN or a reverse proxy that
     authenticates and terminates TLS. Or use
@@ -191,8 +191,8 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
 ---
 
 !!! warning "Alpha channel only"
-    The following describes a **plugin-based rendering rework** that is **not yet
-    released** and not present on any published package. It is specified by the
+    The following describes a **plugin-based rendering rework** that is **unreleased**
+    and not present on any published package. It is specified by the
     [OVOS-GUI-1](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md) spec
     and implemented in `ovos-gui`, with adapters in
     `ovos-legacy-mycroft-gui-plugin` and `pyhtmx-gui-client`.
@@ -212,7 +212,7 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
 
     **Templates instead of QML page names.** Skills display one of a **closed vocabulary of
     22 `SYSTEM_*` templates** (`SYSTEM_weather`, `SYSTEM_text`, `SYSTEM_list`, and more) defined by
-    the spec. Custom QML page names are no longer accepted by the router. The template-based
+    the spec. The router does not accept custom QML page names. The template-based
     `GUIInterface` moves into the standalone `ovos-gui-api-client` package (separate from the
     current `ovos_bus_client.apis.gui.GUIInterface`).
 
@@ -222,7 +222,7 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
     design, not a regression.
 
     See [GUI Adapter Plugins](gui-adapters.md) for the adapter API and the full template
-    list, and the Upcoming section of [GUI Protocol](gui-protocol.md) for the routing
+    list, and the [OVOS-GUI-1 spec](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md) for the routing
     messages.
 
 ---
@@ -233,4 +233,4 @@ application, and [Home Screen](homescreen.md) for idle-screen skills.
 
 ---
 **Read next:** [PHAL](phal.md) · [Concepts Overview](concepts-overview.md)
-**Related:** [Screens on OVOS Today](gui-status.md) · [GUI Adapter Plugins](gui-adapters.md) · [GUI Protocol](gui-protocol.md) · [Skill GUI Support](skill-gui.md)
+**Related:** [Screens on OVOS](gui-status.md) · [GUI Adapter Plugins](gui-adapters.md) · [GUI Protocol](gui-protocol.md) · [Skill GUI Support](skill-gui.md)

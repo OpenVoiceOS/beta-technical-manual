@@ -13,8 +13,6 @@ The `skill.json` file is an optional way to describe your Open Voice OS (OVOS) s
 - Enhances GUI experiences with visuals and usage examples.
 
 
-- Lays the foundation for future help dialogs and skill documentation features.
-
 ---
 
 ## Usage Guide
@@ -92,7 +90,7 @@ Ecosystem lint tooling (the `check_skill.py` compliance check used in CI) treats
     listings, and older, auto-generated `skill.json` files
     (from the legacy skills-manager tooling) carry many more fields
     (`version`, `url`, `requirements`, `platforms`, and more). Stick to the
-    fields above for new skills. Anything extra is ignored by `ovos-workshop`.
+    fields above when you write a skill. Anything extra is ignored by `ovos-workshop`.
 
 ---
 
@@ -126,7 +124,7 @@ The entry-point name is the `skill_id` and the value points at the skill class. 
 
 ## Tips & Caveats
 
-- This metadata format is a **standard** part of the OVOS skill discovery process and continues to evolve to support new ecosystem features.
+- This metadata format is a **standard** part of the OVOS skill discovery process.
 
 
 - `extra_plugins` allows for declaring companion plugins your skill may require, but that aren't direct Python dependencies.
@@ -189,7 +187,7 @@ a package name:
 `dependencies` in `pyproject.toml` (for example `ovos-workshop>=0.0.1` in the [first-skill
 tutorial](first-skill.md#step-5-make-it-installable)) pin a floor, not an exact version. If a
 release relies on behavior only present from a newer `ovos-workshop` (or another dependency)
-than what's currently declared, raise that floor in the same release. An outdated floor lets
+than the declared floor, raise that floor in the same release. An outdated floor lets
 an installer set up a combination the skill was never tested against, which shows up later as
 a hard-to-diagnose bug report rather than a clean install failure. The same applies to the
 `pip_spec` field in `skill.json` itself if it carries a version constraint: keep it aligned

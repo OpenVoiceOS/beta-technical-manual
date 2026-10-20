@@ -1,7 +1,7 @@
 # Writing a Transformer Plugin
 
 !!! abstract "In a nutshell"
-    This page is the tutorial for building your own transformer plugin: how to inherit from
+    This tutorial builds your own transformer plugin: how to inherit from
     the right base class, register the entry point, package it, and test it. Looking for a
     plugin to use instead of writing one? Go to [Transformer Plugins](transformer-plugins.md).
 

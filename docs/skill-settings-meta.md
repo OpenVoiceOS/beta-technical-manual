@@ -11,15 +11,15 @@
 !!! warning "Legacy — specified but not used by OVOS itself"
     `settingsmeta.json` / `.yaml` is a **legacy format inherited from the Mycroft backend
     server**, which presented a web form to edit skill settings. **OVOS does not run that backend**,
-    so nothing in OVOS core consumes this file, and it is **optional and usually absent** in modern
+    so nothing in OVOS core consumes this file, and it is **optional and usually absent** in OVOS
     skills. Your skill reads and writes its settings perfectly well without it — see
     [Skill Settings](skill-settings.md).
 
-    It is still *specified*, and `ovos-workshop` can auto-generate a basic version from a skill's
-    settings. Some **community tools still consume it to render a settings UI**, most notably
+    It is *specified*, and `ovos-workshop` can auto-generate a basic version from a skill's
+    settings. Some **community tools consume it to render a settings UI**, most notably
     [`ovos-skill-config-tool`](https://github.com/OscillateLabsLLC/ovos-skill-config-tool) by
     Oscillate Labs. Provide a `settingsmeta` file only if you specifically target such a tool. The
-    rest of this page documents the format for that case.
+    sections below document the format for that case.
 
 ## Define settings UI for a [Skill](skill-design-guidelines.md)
 
@@ -54,7 +54,7 @@ To see it in action, here is a simple example, similar to what a legacy date-and
 
 ```
 
-Now, here is the same settings, as it would be defined with YAML in a `settingsmeta.yaml` file:
+Here are the same settings, as defined with YAML in a `settingsmeta.yaml` file:
 
 ```yaml
 skillMetadata:
@@ -134,7 +134,7 @@ Each section has one or more `fields`. Each field is a setting available to the 
 
     Semicolon-separated `Label|value` pairs, e.g. `Option 1|option_one;Option 2|option_two`.
 
-Examples for each type of field are provided in JSON and YAML at the end of this page.
+The end of this reference gives JSON and YAML examples for each type of field.
 
 
 ## SettingsMeta Examples

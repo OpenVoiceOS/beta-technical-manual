@@ -3,7 +3,7 @@
 > Entries marked `???` (or with a partial year like `202?`) have dates that could not be confirmed from a public source; they are left explicit rather than guessed.
 
 !!! abstract "In a nutshell"
-    OVOS did not appear out of nowhere; it grew out of an earlier voice assistant called Mycroft, and other projects branched off along the way. This page is the family tree showing where everything came from and how the pieces relate. It is background reading for anyone curious about the project's history. See the [Glossary](glossary.md).
+    OVOS did not appear out of nowhere; it grew out of an earlier voice assistant called Mycroft, and other projects branched off along the way. The family tree below shows where everything came from and how the pieces relate. It is background reading for anyone curious about the project's history. See the [Glossary](glossary.md).
 
 ## Family Tree
 
@@ -351,7 +351,6 @@
 - Jul 2025 - [Transcription Validator](https://blog.openvoiceos.org/posts/2025-07-22-ovos-transcription-validator-plugin) utterance plugin introduced, filtering STT nonsense before intent matching
 - Oct 2025 - `ovos-core` reaches the **2.x** line (`2.1.0`), a major release formalizing the multi-intent-pipeline architecture.
 - Oct 2025 - [phoonnx](https://blog.openvoiceos.org/posts/2025-10-06-phoonnx) introduced: OVOS's own ONNX-based multilingual neural TTS engine and the recommended on-device voice
-- Oct 2025 - OpenVoiceOS [selected for an NGI Zero Commons Fund grant](https://blog.openvoiceos.org/posts/2025-10-20-ngi) by the [NLnet Foundation](https://nlnet.nl/project/OpenVoiceOS/), funding the road to a first stable version, onboarding, language support, and documentation
 - Nov 2025 - [Precise wake-word engine ported to ONNX](https://blog.openvoiceos.org/posts/2025-11-03-precise-onnx), dropping the tensorflow dependency
 - Dec 2025 - Speech support for minority languages expands: [TTS voices for Asturian and Aragonese](https://blog.openvoiceos.org/posts/2025-12-09-ast) and the [first phonemizer for Barranquenho](https://blog.openvoiceos.org/posts/2025-12-14-barranquenho)
 - ??? 2025 - OVOS prototype selected as a demonstrator of the [ILENIA project](http://web.archive.org/web/20251008035516/https://proyectoilenia.es/): an open voice assistant in all co-official languages of Spain, runnable on a PC or Raspberry Pi
@@ -368,7 +367,7 @@
 - Mar 2026 - [ovos-pydantic-models](https://github.com/OpenVoiceOS/ovos-pydantic-models) reaches its first tagged release, packaging the ecosystem-wide data structures first committed in October 2025.
 - Mar 2026 - `ovos-bus-client` version **1.5.0** released.
 - May 2026 - [architecture](https://github.com/OpenVoiceOS/architecture) repo introduced: formal written specifications for the OVOS protocols, with [ovos-spec-tools](https://github.com/OpenVoiceOS/ovos-spec-tools) as their dependency-free reference implementation
-- Jun 2026 - **MediaProvider plugin family** introduced (bandcamp, youtube, tunein, somafm, pyradios, soundcloud, spotify, news, mass) as repositories, intended to eventually supersede the legacy OCP media skills; the in-process loading is not yet wired into `ovos-media`, see [ovos-media](ovos-media.md#mediaprovider-plugins-replace-ocp-skills)
+- Jun 2026 - **MediaProvider plugin family** introduced (bandcamp, youtube, tunein, somafm, pyradios, soundcloud, spotify, news, mass) as repositories, intended to supersede the legacy OCP media skills, see [ovos-media](ovos-media.md#mediaprovider-plugins-replace-ocp-skills)
 - Jun 2026 - [ovos-test-harness](https://github.com/OpenVoiceOS/ovos-test-harness) introduced: an executable conformance suite proving the running stack against the formal specs, covering every published spec
 - Jul 2026 - OVOS speech servers gain [UTCP/MCP endpoints](https://blog.openvoiceos.org/posts/2026-07-15-mcp-utcp-speech-servers), callable from any AI agent
 - Jul 2026 - Bus topics migrate to the canonical `ovos.*` spec namespace, with transparent bridging so legacy and spec components interoperate during the transition — see [Bus namespace migration](bus-namespace-migration.md)

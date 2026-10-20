@@ -2,7 +2,7 @@
 # Reusable Workflow Reference: Release Workflows
 
 !!! abstract "In a nutshell"
-    This page documents the three shared workflows that move a package through its release lifecycle: bumping the version and opening a release PR, publishing the stable tag, and previewing the next version number on an open PR. For the PR-gate checks that run before a merge, see [PR Workflows](gh-automations-pr-workflows.md). For lint, coverage, security scans, and notifications, see [Quality Workflows](gh-automations-quality-workflows.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
+    Three shared workflows move a package through its release lifecycle: bumping the version and opening a release PR, publishing the stable tag, and previewing the next version number on an open PR. For the PR-gate checks that run before a merge, see [PR Workflows](gh-automations-pr-workflows.md). For lint, coverage, security scans, and notifications, see [Quality Workflows](gh-automations-quality-workflows.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
 
 All reusable workflows are in `.github/workflows/` and are called via:
 
@@ -13,7 +13,7 @@ uses: OpenVoiceOS/gh-automations/.github/workflows/<name>.yml@dev
 
 > **Ref:** Always use `@dev`.
 
-**Workflows on this page:**
+**Release workflows:**
 
 - [`publish-alpha.yml`](#publish-alphayml)
 - [`publish-stable.yml`](#publish-stableyml)
@@ -34,7 +34,7 @@ Runs on PR merge to `dev`. Bumps the version, optionally updates changelog and c
 |-------|------|---------|-------------|
 | `runner` | string | `ubuntu-latest` |  |
 | `version_file` | string | `""` | Path to version.py (relative to repo root). If empty, auto-detects root or pkg/version.py. |
-| `setup_py` | string | `setup.py` | Deprecated. Version is now read from version_file directly. |
+| `setup_py` | string | `setup.py` | Deprecated. The workflow reads the version from version_file. |
 | `branch` | string | `dev` | Development branch where changes are made |
 | `base_branch` | string | `master` | Target branch for the release PR (e.g. master/main). |
 | `publish_prerelease` | boolean | `false` |  |
@@ -136,7 +136,7 @@ Runs on push to `master` (typically triggered by merging the release PR). Remove
 |-------|------|---------|-------------|
 | `runner` | string | `ubuntu-latest` |  |
 | `version_file` | string | `""` | Path to version.py (relative to repo root). If empty, auto-detects root or pkg/version.py. |
-| `setup_py` | string | `setup.py` | Deprecated. Version is now read from version_file directly. |
+| `setup_py` | string | `setup.py` | Deprecated. The workflow reads the version from version_file. |
 | `branch` | string | `master` | Stable branch where the release happens (e.g. master/main). If 'master' is requested but missing, detects default branch. |
 | `publish_release` | boolean | `true` |  |
 | `publish_pypi` | boolean | `false` | Publish to PyPI after declaring stable |

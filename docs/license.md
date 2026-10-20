@@ -14,9 +14,6 @@ Individual plugins or skills may carry their own license when they wrap a depend
 This also means avoiding LGPL code, for the reasons explained in
 [this discussion of the GPL classpath exception](https://softwareengineering.stackexchange.com/questions/119436/what-does-gpl-with-classpath-exception-mean-in-practice/326325#326325).
 
-Padatious used to be listed here. It was ported from libfann to pure numpy, so
-it is Apache-2.0 with no reservations and is no longer an exception.
-
 ## Policy properties
 
 The license policy has the following properties:

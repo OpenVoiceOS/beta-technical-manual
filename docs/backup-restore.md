@@ -2,7 +2,7 @@
 
 !!! abstract "In a nutshell"
     Two kinds of state matter on an OVOS device: installed packages and everything under a
-    user's config/data directories. This page covers backing up and restoring the config/data
+    user's config/data directories. The steps below back up and restore the config/data
     directories. See [Staged Upgrades and Rollback](staged-upgrades.md#staged-upgrades-and-rollback)
     for the package side.
 
@@ -54,8 +54,7 @@ systemctl --user start ovos.service
     `mycroft.conf` on disk is half-written. A `cp` that lands in that window copies a
     truncated file, and the backup then looks fine until the day you restore it. Per-skill
     `settings.json` is safe to copy live: `JsonStorage.store()` in `json_database` writes to
-    a temporary file in the same directory and swaps it in with `os.replace` (atomic, since
-    `1.0.4a1`), so a reader always sees either the old file or the new one.
+    a temporary file in the same directory and swaps it in with `os.replace` (atomic), so a reader always sees either the old file or the new one.
 
     A skill writes its settings whenever `self.settings` changes — a `settings.json` edit,
     a settings-meta change from the web UI, or the skill's own code. That is rare, so a

@@ -2,11 +2,10 @@
 
 !!! abstract "In a nutshell"
     OVOS ships **dozens** of interchangeable plugins for each job. That's useful, but
-    it's easy to feel lost picking one. This page is the shortcut: for every plugin type
-    it names a **recommended default**, then a small **comparison table** so you can see at
+    it's easy to feel lost picking one. For every plugin type, the sections below name a **recommended default**, then a small **comparison table** so you can see at
     a glance which option fits your situation (offline vs cloud, hardware budget, licence,
     maturity). Want the full config and every option? Each section links to its detailed
-    catalog. New here? Start with the [Plugins Index](plugins-index.md).
+    catalog. For an overview of plugin types, start with the [Plugins Index](plugins-index.md).
 
 !!! tip "Don't want to choose? Use the recommended offline stack"
     Every ⭐ below is a sensible, **fully-offline, on-device** default. It forms a complete
@@ -82,10 +81,10 @@ Listens for the activation phrase. See the [Wake word catalog](wake-word-plugins
 | ovos-ww-plugin-vosk | Stable | offline | Fastest setup for an arbitrary phrase, no model training (good for dev) |
 | ovos-ww-plugin-wakewordlab | Alpha | offline | Very compact (~240 KB) models with a Silero pre-filter (install from source) |
 | ovos-ww-plugin-wakeforge | Alpha | offline | [Ready models](wake-word-plugins.md#ready-wakeforge-models) in English, German, Spanish, Italian and Dutch; a wake word typed as IPA phones; or a custom detector trained from one phrase |
-| ovos-ww-plugin-server | Alpha | hybrid | Thin satellite offloading detection to a self-hosted ww-server. **Not available yet** — repos still private |
+| ovos-ww-plugin-server | Alpha | hybrid | Thin satellite offloading detection to a self-hosted ww-server. **Not published**: the repositories are private |
 
 *`ovos-ww-plugin-precise-lite` is **deprecated**. It is the TFLite predecessor of precise-onnx,
-kept working as a fallback but not a pick for new setups.*
+kept as a fallback. Do not pick it for a fresh setup.*
 
 ### STT (Speech-to-Text)
 
@@ -257,9 +256,9 @@ Hook into the text / audio / dialog / TTS stages. See the [Transformers catalog]
   stable channel has no GPU tier. See
   [Language Support Tables](lang-support-tables.md). TTS **coqui**. Still fully offline.
 - **Thin satellite / shared backend:** offload with the `*-server` plugins so the heavy models
-  live on one machine. STT and TTS are available today (`ovos-stt-plugin-server`,
+  live on one machine. STT and TTS servers are on PyPI (`ovos-stt-plugin-server`,
   `ovos-tts-plugin-server` — set `urls`/`host`, or they use public community servers); the
-  wake-word one is not released yet, so keep wake-word detection on the satellite.
+  wake-word one is not published, so keep wake-word detection on the satellite.
 - **Cloud is acceptable (coverage/quality first):** STT **azure**, TTS **edge-tts**/**polly**,
   translation **google**. Each adds the vendor's separate terms.
 

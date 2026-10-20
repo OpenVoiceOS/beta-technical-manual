@@ -1,18 +1,18 @@
 # Mycroft-GUI QT5
 
 !!! abstract "In a nutshell"
-    Some OVOS devices have a screen, and this page describes the older way of drawing on it: a graphical toolkit called Qt5/QML, where you describe what a screen should look like (text, images, animations, cards) in a markup language. This is the **legacy** screen path. It is deprecated, and a ground-up replacement is being built (see [GUI Adapters](gui-adapters.md)), so treat the examples here as reference rather than something to build new work on. Voice, not the screen, is meant to be the main way you interact with OVOS. See the [Glossary](glossary.md) for terms.
+    Some OVOS devices have a screen. Qt5/QML is the legacy way to draw on it: a graphical toolkit where you describe what a screen should look like (text, images, animations, cards) in a markup language. This is the **legacy** screen path. It is deprecated, and a ground-up replacement is being built (see [GUI Adapters](gui-adapters.md)), so treat the examples here as reference rather than something to build new work on. Voice, not the screen, is meant to be the main way you interact with OVOS. See the [Glossary](glossary.md) for terms.
 
-!!! danger "The OVOS GUI is deprecated: see [Screens on OVOS Today](gui-status.md) for the full picture"
+!!! danger "The OVOS GUI is deprecated: see [Screens on OVOS](gui-status.md) for the full picture"
     The Qt5/QML client described here is part of the legacy stack. There is no generally
-    usable OVOS GUI, and a replacement is **Upcoming**.
+    usable OVOS GUI. A replacement is in development.
 
     The [Qt5 gui-client](https://github.com/OpenVoiceOS/mycroft-gui-qt5) is the **only client
-    that currently runs**, but **Qt5 itself has been deprecated upstream for a long time** and
-    this client **will not be updated**. It is kept solely so existing (e.g. Mark 2) devices
+    that runs**. **Qt5 itself is deprecated upstream**, and
+    this client **gets no updates**. It is kept solely so existing (e.g. Mark 2) devices
     keep a screen.
 
-    Two replacement GUI clients are being built, **both unreleased / WIP**. Neither is usable yet:
+    Two replacement GUI clients are in development, **both unreleased**. Neither is usable:
 
     - **Qt6/Kirigami**: [mycroft-gui-qt6](https://github.com/OpenVoiceOS/mycroft-gui-qt6)
       (`feat/gui-protocol-rework`), still needs a human C++/Qt6 build review.
@@ -42,7 +42,7 @@ A collection of resources to familiarize you with QML and Kirigami Framework.
 
 A QML module provides versioned types and JavaScript resources in a type namespace which may be used by clients who import the module. Modules make use of the QML versioning system which allows modules to be independently updated. More in-depth information about QML modules can be found here [Qt QML Modules Documentation](http://doc.qt.io/qt-5/qtqml-modules-topic.html)
 
-The code snippet example below imports some of the common modules that provide the components required to get started with a visual user interface. Every other QML example on this page starts from this same import block (dropping `org.kde.lottie` when Lottie animations aren't used); later snippets only show what changes below the imports.
+The code snippet example below imports some of the common modules that provide the components required to get started with a visual user interface. Every other QML example below starts from this same import block (dropping `org.kde.lottie` when Lottie animations aren't used); later snippets only show what changes below the imports.
 
 ```qml
 import QtQuick 2.4
@@ -329,9 +329,9 @@ Mycroft.Delegate {
 ## Advanced skill displays using QML
 
 Worked examples of Lottie animations, sliding images, paginated text, card list views,
-proportional/auto-fit layouts, slideshows, event handling, and resting (idle) faces have
-moved to their own page: **[QML Worked Examples](qt5-gui-examples.md)**.
+proportional/auto-fit layouts, slideshows, event handling, and resting (idle) faces are
+in **[QML Worked Examples](qt5-gui-examples.md)**.
 
 ---
 **Read next:** [Home Screen](homescreen.md)
-**Related:** [QML Worked Examples](qt5-gui-examples.md) · [OVOS Shell](ovos-shell.md) · [GUI Protocol](gui-protocol.md) · [Screens on OVOS Today](gui-status.md) · [GUI Service](gui-service.md)
+**Related:** [QML Worked Examples](qt5-gui-examples.md) · [OVOS Shell](ovos-shell.md) · [GUI Protocol](gui-protocol.md) · [Screens on OVOS](gui-status.md) · [GUI Service](gui-service.md)

@@ -74,7 +74,7 @@ config section is never loaded, no matter what it calls itself internally.
 `ovos-keyword-template-matcher` registers itself under the shorter name
 `keyword-templates` (`super().__init__("keyword-templates", 1, config)`). That
 internal name only matters when the plugin is instantiated with no config passed
-in at all. The deployer-facing config key is still the entry-point name.
+in at all. The deployer-facing config key is the entry-point name.
 
 
 ---

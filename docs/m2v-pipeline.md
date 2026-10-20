@@ -8,7 +8,7 @@
 
 Shipped in the default pipeline.
 
-The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
+The sections below are for people who deploy or customize OVOS.
 
 ??? info "📐 Formal specification"
     Model2Vec is a **pipeline plugin** under **[OVOS-PIPELINE-1 — Utterance Lifecycle & Pipeline](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. It serves the same **template-intent** role as Padatious in **[OVOS-INTENT-3 — Intent Definition §5](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)**: a classifier paired with a slot extractor (INTENT-3 §6.2). Only the matching strategy (static embeddings) differs, and INTENT-3 §8 leaves that strategy unconstrained. Skill resources are written in the **[OVOS-INTENT-1 grammar](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md)**. See the [spec index](architecture-specs.md).
@@ -67,7 +67,7 @@ For an utterance it:
 
 1. Embeds the text with the configured Model2Vec model.
 2. Scores every label the model knows about.
-3. Keeps only labels that belong to **currently registered** Adapt/Padatious
+3. Keeps only labels that belong to **registered** Adapt/Padatious
    intents (the pipeline tracks them over the bus via
    `intent.service.adapt.manifest` / `intent.service.padatious.manifest` and the
    `register_intent` / `padatious:register_intent` / `detach_intent` /
@@ -200,10 +200,10 @@ utterances, music-query templates, and per-language skill intents.
 
 ## Training your own model
 
-!!! warning "Training is currently on hold"
+!!! warning "Training is on hold"
     Upstream `.intent`-scheme refactors (renamed/merged intents across the
     default skills) mean a classifier's frozen label head goes stale the day
-    those land. Build the dataset and read the manifest freely; run `train.py`
+    those land. Build the dataset and read the manifest freely. Run `train.py`
     only once the refactors are merged and `sources.yaml`'s pins are
     regenerated against them.
 
@@ -229,7 +229,7 @@ train/
 2. **Train**: `python train/train.py --dataset train/dataset --base-model <model>`
    fits a classifier on the built corpus.
 3. **Optional distillation**: `distill.py` turns a Sentence Transformer that
-   has no Model2Vec distillate yet into a usable base model.
+   has no Model2Vec distillate into a usable base model.
 4. **Smoke-test**: `predict.py` runs inference against a saved model before
    publishing it.
 
@@ -238,10 +238,10 @@ path to the saved pipeline directory once you are happy with it. See the
 `ovos-m2v-pipeline` repository's own `docs/training.md` and `docs/labels.md`
 for the full dataset schema, label scheme, and script options.
 
-A separate, exploratory notebook trio covers the same ground interactively —
-benchmarking, monolingual, and multilingual classifier training — in
+A separate, exploratory notebook trio covers the same ground interactively:
+benchmarking, monolingual, and multilingual classifier training. It is in
 [`m2v/`](https://github.com/TigreGotico/ml-notebooks) under `TigreGotico/ml-notebooks`.
-It is not the canonical `train/` toolchain above; use it for experimentation, not
+It is not the canonical `train/` toolchain above. Use it for experimentation, not
 for producing the published `Jarbas/ovos-model2vec-intents-*` models.
 
 ---

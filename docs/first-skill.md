@@ -1,7 +1,7 @@
 # Your First Skill
 
 !!! abstract "In a nutshell"
-    A **skill** is an add-on that teaches OVOS a new ability. This page is a hands-on
+    A **skill** is an add-on that teaches OVOS a new ability. Here is a hands-on
     walkthrough. You'll create a tiny skill from scratch, install it, and talk to it, in about
     ten minutes. You only need to be comfortable creating a few text files. New to the words
     here? Keep the [Glossary](glossary.md) open.

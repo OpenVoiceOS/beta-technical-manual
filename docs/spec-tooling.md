@@ -14,7 +14,7 @@
     - [**ovos-test-harness**](spec-test-harness.md): an executable test suite
       that proves a running stack obeys the specs.
 
-    A related, separate mechanism lets the ecosystem adopt the new `ovos.*`
+    A related, separate mechanism lets the ecosystem adopt the `ovos.*`
     topic names without a flag day: see
     [Bus namespace migration](bus-namespace-migration.md).
 
@@ -47,8 +47,8 @@ pre-flight a change.
 ## Adopting the spec namespace: without a flag day
 
 The specs rename many bus topics into the `ovos.*` namespace. Migrating an
-ecosystem of independently-released repos to new topic names all at once is
-impossible, so `ovos-bus-client` bridges old and new names automatically and
+ecosystem of independently-released repos to different topic names all at once is
+impossible, so `ovos-bus-client` bridges legacy and spec names automatically and
 incrementally. `ovos-spec-tools` owns the **vocabulary** of that mapping
 (`SpecMessage` / `MIGRATION_MAP`). The runtime bridge itself lives in
 `ovos-bus-client`. See [Bus namespace migration](bus-namespace-migration.md)

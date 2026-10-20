@@ -263,9 +263,8 @@ dependencies = ["ovos-plugin-manager"]
 An `opm.transformer.audio.config` group is also available, for a dict of config
 metadata an installer or GUI can read. It is optional. Add it once the plugin has
 settings worth advertising. The legacy alias `neon.plugin.audio` is still recognized
-for the entry-point group by the plugin loader, but new plugins should use
-`opm.transformer.audio` (the GGWave and SpeechBrain transformers above both already
-do).
+for the entry-point group by the plugin loader. Plugins you write must use
+`opm.transformer.audio`, as the GGWave and SpeechBrain transformers above do.
 
 ### Configuration Example
 

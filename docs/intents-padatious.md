@@ -104,7 +104,7 @@ pale
 ```
 
 Every `.entity` file shipped under the skill's locale resources auto-registers when the
-skill's resources load for a language (since ovos-workshop 9.5.0a1; opt out with
+skill's resources load for a language (opt out with
 `"skills": {"auto_register_entity_files": false}`). An explicit call is only needed for
 entity files outside the locale resources, and still works:
 
@@ -141,15 +141,15 @@ that means in practice.
     back to neural-only matching. Past 64 options, use a slot with an `.entity` file instead.
 
 !!! note "Out-of-list matches land in the medium stage"
-    In `ovos-padatious-pipeline-plugin` (2.0.3a1+), an out-of-list value is floored at
+    In `ovos-padatious-pipeline-plugin`, an out-of-list value is floored at
     `ENTITY_HINT_FLOOR = 0.8` rather than collapsing the candidate. A listed value scores
-    exactly `1.0` through a deterministic exact-match fast path (2.0.5a1+), the same as if
+    exactly `1.0` through a deterministic exact-match fast path, the same as if
     no entity were attached at all. That floor lands in the plugin's **medium**-confidence band
     (`conf_med = 0.8`, `conf_high = 0.95` by default), below `conf_high`. The floor applies to
     the per-slot entity contribution, not the final confidence, so the exact final score
     varies with the rest of the match, but in practice an out-of-list value drags the match
     below `conf_high`. The stock `mycroft.conf` pipeline includes
-    `ovos-padatious-pipeline-plugin-medium` (since ovos-config `2.3.9a1`) precisely so these
+    `ovos-padatious-pipeline-plugin-medium` so these
     matches still fire. On a deployment that trims the pipeline to the high stage only,
     out-of-list slot values silently produce no match at all.
 
@@ -182,12 +182,11 @@ free-form numeric slot like this.
 > **Engine-specific, deprecated:** an inline `#` digit token (matching only bare digit runs) and
 > the `:0` unknown-token below are **Padatious extensions**, not part of the
 > [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md) Sentence
-> Template Grammar, so they're not portable to other pipeline plugins. Since
-> `ovos-padatious-pipeline-plugin` `2.0.8a2`, an unescaped inline `#` in a template line logs a
-> one-time deprecation warning (`#` still matches digits exactly as before — nothing breaks this
-> cycle). Prefer the `{slot}` pattern above for new skills. A non-normative spec note on this is
-> **pending** [OpenVoiceOS/architecture#166](https://github.com/OpenVoiceOS/architecture/pull/166),
-> not yet merged.
+> Template Grammar, so they're not portable to other pipeline plugins. In
+> `ovos-padatious-pipeline-plugin`, an unescaped inline `#` in a template line logs a
+> one-time deprecation warning, and `#` still matches digits. Prefer the `{slot}` pattern above
+> for new skills. A non-normative spec note covers this:
+> [OpenVoiceOS/architecture#166](https://github.com/OpenVoiceOS/architecture/pull/166).
 
 ### Typed slots
 
@@ -234,8 +233,8 @@ A typed slot does not make the slot required. An utterance that matches
 the template without producing a `{date:when}` still fires the handler,
 with `typed_slot` returning `None` for `when`. Forcing a match to fail
 unless a given slot bound something is a separate, orchestrator-level
-`required_slots` check tied to an intent's registration; there is no
-skill-facing API yet to declare it directly, so a handler that truly
+`required_slots` check tied to an intent's registration; no
+skill-facing API declares it directly, so a handler that truly
 cannot proceed without a value still validates for `None` itself, as in
 the example above.
 
@@ -263,7 +262,7 @@ San Francisco
 
 ```
 
-The problem is that now anything that is not specifically a mix of New York City, San
+The problem is that anything that is not specifically a mix of New York City, San
 Francisco, or something on Georgia Street won't match. Instead, we can specify an unknown word
 with `:0`. This would be written as:
 
@@ -275,11 +274,11 @@ with `:0`. This would be written as:
 
 ```
 
-Now, while this will still match quite a lot, it will match things like "Directions to
+This still matches quite a lot, but it matches things like "Directions to
 Baldwin City" more than "How do I get to the boss in my game?"
 
-_NOTE: Currently, the number of `:0` words is not fully taken into account, so the above might
-match quite liberally. This will change in the future._
+_NOTE: The engine does not fully count the number of `:0` words, so the above can
+match quite liberally._
 
 ### Parentheses Expansion
 
@@ -340,7 +339,7 @@ The `intent_handler()` decorator can create an examples-based intent handler by 
 filename of the `.intent` file as a string.
 
 You may also see the `@intent_file_handler` decorator used in skills. This is deprecated. You
-can now replace any instance of this with the simpler `@intent_handler` decorator.
+can replace any instance of this with the simpler `@intent_handler` decorator.
 
 From our first example above, we created a file `locale/en-us/what.is.a.tomato.intent`. To
 register an intent using this file we can use the following decorator, shown on its own.

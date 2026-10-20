@@ -23,8 +23,8 @@ For day-to-day, per-device debugging, use:
 - The [readiness probe](production-operations.md#knowing-when-the-assistant-is-actually-ready) as a synthetic check you
   can run from outside the device (cron, a monitoring agent, a CI job) on a schedule.
 
-There is no supported way to scrape per-request latency or error rates across a fleet today.
-If you need that, you will need to build it on top of the bus messages yourself.
+OVOS has no supported way to scrape per-request latency or error rates across a fleet.
+If you need that, build it on top of the bus messages yourself.
 
 ### Building fleet-wide alerting yourself
 

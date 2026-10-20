@@ -1,7 +1,7 @@
 # Customization
 
 !!! abstract "In a nutshell"
-    You don't have to be a programmer to make a skill behave the way you like. This page shows how to change what an existing skill says, to give your assistant its own personality, or to add a language it doesn't yet support, all by dropping a few text files into a folder on your device. The original skill stays untouched. Your changes simply override it. The later sections are a reference for developers. For more on those text files, see [Resource Files](resource-files.md). For term definitions, see the [Glossary](glossary.md).
+    You don't have to be a programmer to make a skill behave the way you like. You can change what an existing skill says, give your assistant its own personality, or add a language the skill does not ship, all by dropping a few text files into a folder on your device. The original skill stays untouched. Your changes simply override it. The later sections are a reference for developers. For more on those text files, see [Resource Files](resource-files.md). For term definitions, see the [Glossary](glossary.md).
 
 ## Resource Files
 
@@ -33,20 +33,17 @@ speaks.
 
 ### Customizing Dialogs
 
-`.dialog` user overrides are honored since `ovos-workshop` `9.5.3a1` — the dialog renderer
-checks the user override directory first, then falls back to the skill's own `locale/`
+The dialog renderer checks the user override directory first, then falls back to the skill's own `locale/`
 directory. The override only takes effect if that directory already exists when the skill
 loads; create it before starting/restarting the skill, not after.
 
 Replace one dialog file of an installed [skill](skill-design-guidelines.md) with your own
-wording. This example replaces `time_current.dialog` in `ovos-skill-date-time.openvoiceos`
-(ovos-skill-date-time 1.3.2a1 or later; older releases, including the current stable 1.1.5,
-ship `time.current.dialog` instead).
+wording. This example replaces `time_current.dialog` in `ovos-skill-date-time.openvoiceos`.
 
-An override matches a resource file by its **current** base name in the skill, so check the
+An override matches a resource file by its base name in the installed skill, so check the
 skill's own `locale` folder for that name first: a rename inside the skill (for example a
 base-name change to meet [OVOS-INTENT-2](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md)'s
-lowercase-underscore rule) leaves an override written against the old name unmatched, with no
+lowercase-underscore rule) leaves an override written against the previous name unmatched, with no
 warning.
 
 1. Find the skill ID and the dialog file you want to replace. The file lives in the skill's
@@ -63,9 +60,7 @@ warning.
 
 4. Restart OpenVoiceOS so the skill reloads its resources, then ask for the current time.
 
-Once `.dialog` overrides are honored (see the warning above), you will hear your own wording
-instead of the skill's built-in text. For the resource types where overrides already work, a
-non-effective override usually means the path, the file name, the extension, or the language
+You hear your own wording instead of the skill's built-in text. An override that has no effect usually means the path, the file name, the extension, or the language
 folder casing doesn't match exactly.
 
 !!! warning "Your file REPLACES the original, it does not merge with it"
@@ -79,7 +74,7 @@ folder casing doesn't match exactly.
 
 ### Local Language support
 
-Add a language to a skill that does not ship one yet, without waiting for an upstream release.
+Add a language to a skill that does not ship it, without waiting for an upstream release.
 This example adds Spanish (`es-es`) to the same skill.
 
 1. Find the skill ID and the language code you want to add.
@@ -90,8 +85,7 @@ This example adds Spanish (`es-es`) to the same skill.
     ```
 
 3. Copy the resource files from an existing language folder, such as `en-us`, into it. This
-   covers vocabularies and regex files, depending on what the skill uses (translated
-   `.dialog` files placed here are ignored for now — see the warning above). Keep the
+   covers dialogs, vocabularies and regex files, depending on what the skill uses. Keep the
    same subdirectory structure.
 4. Translate the copied files.
 5. Restart OpenVoiceOS, then test the skill in the new language.
@@ -133,7 +127,7 @@ my-skill/
 
 ```
 
-Legacy skills may use separate `dialog/`, `vocab/`, `regex/` subdirectories. These are still supported.
+Legacy skills may use separate `dialog/`, `vocab/`, `regex/` subdirectories. These also load.
 
 ### Resource Types
 

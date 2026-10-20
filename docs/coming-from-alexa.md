@@ -2,20 +2,20 @@
 
 !!! abstract "In a nutshell"
     OVOS is a voice assistant you run yourself, not a product you buy off a shelf. So the
-    on-ramp looks different from Alexa or Google Assistant. This page gives an honest
+    on-ramp looks different from Alexa or Google Assistant. Here is an honest
     comparison: what's the same, what's missing, what setup looks like, and what works the
     moment you're done. Read it before you start.
 
 ## The short version
 
-- There is **no retail OVOS device** you can buy today and plug in. The closest equivalent is
+- There is **no retail OVOS device** you can buy and plug in. The closest equivalent is
   flashing the [RaspOVOS](install-raspovos.md) image onto a Raspberry Pi and its SD card. That
   is a half-hour, one-time setup, not an unbox-and-go experience.
 - There is **no companion phone app** for pairing or day-to-day control, the way the Alexa or
   Google Home apps work. You set up and configure OVOS over SSH in a terminal, or by editing a
   text file. See [Make It Yours](personalize.md).
 - There is **no generally usable on-screen visual assistant**. See
-  [Screens on OVOS Today](gui-status.md) for the honest state of that. OVOS is voice-first. A
+  [Screens on OVOS](gui-status.md) for the honest state of that. OVOS is voice-first. A
   screen, where present, is a bonus, not the primary interface.
 - **Smart-home control isn't automatic.** Alexa and Google devices come with smart-home skills
   built in. OVOS needs a one-time Home Assistant setup. See
@@ -33,7 +33,7 @@
 There's no pairing screen or phone app. You either:
 
 1. Flash the [RaspOVOS](install-raspovos.md) image to an SD card and boot a Raspberry Pi with
-   it. This is the closest thing to "unbox and go" that exists today.
+   it. This is the closest thing to "unbox and go" that exists.
 2. Run the [ovos-installer](ovos-installer.md) against an existing Linux install (Raspberry Pi
    OS or a regular desktop or laptop). This is a guided, menu-driven wizard, but you run it from
    a terminal, typically over SSH if the device is headless. The web wizard at
@@ -56,7 +56,7 @@ expect from Alexa or Google Assistant out of the box:
 - Jokes and small talk
 
 See [What can I say?](skill-examples.md) for the full, browsable list. See
-[Screens on OVOS Today](gui-status.md) if you're wondering about visual responses on a device
+[Screens on OVOS](gui-status.md) if you're wondering about visual responses on a device
 with a screen.
 
 ## What needs extra setup
@@ -91,4 +91,4 @@ None of it arrives working the way it does on an Echo.
 ---
 
 **Read next:** [Install with ovos-installer](ovos-installer.md) · [RaspOVOS](install-raspovos.md)
-**Related:** [OVOS & Home Assistant](home-assistant.md) · [What can I say?](skill-examples.md) · [Privacy & Security](privacy-security.md) · [Screens on OVOS Today](gui-status.md)
+**Related:** [OVOS & Home Assistant](home-assistant.md) · [What can I say?](skill-examples.md) · [Privacy & Security](privacy-security.md) · [Screens on OVOS](gui-status.md)

@@ -2,7 +2,7 @@
 # Reusable Workflow Reference: Build Checks
 
 !!! abstract "In a nutshell"
-    This page documents the shared workflows that verify a package builds, installs, and still runs where it has to: `build-tests.yml` across Python versions, `channel-compat.yml` against an OVOS distro release channel, and the deprecated `python-support.yml`. For OVOS-plugin (OPM) detection, license, and repo-health checks, see [Plugin, License, and Repo Checks](gh-automations-plugin-repo-checks.md). For skill and locale packaging checks, see [Skill and Locale Checks](gh-automations-repo-skill-checks.md). For end-to-end skill test execution, see [Skill Test Workflows](gh-automations-skill-test-workflows.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
+    These shared workflows verify a package builds, installs, and still runs where it has to: `build-tests.yml` across Python versions, `channel-compat.yml` against an OVOS distro release channel, and the deprecated `python-support.yml`. For OVOS-plugin (OPM) detection, license, and repo-health checks, see [Plugin, License, and Repo Checks](gh-automations-plugin-repo-checks.md). For skill and locale packaging checks, see [Skill and Locale Checks](gh-automations-repo-skill-checks.md). For end-to-end skill test execution, see [Skill Test Workflows](gh-automations-skill-test-workflows.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
 
 All reusable workflows are in `.github/workflows/` and are called via:
 
@@ -13,7 +13,7 @@ uses: OpenVoiceOS/gh-automations/.github/workflows/<name>.yml@dev
 
 > **Ref:** Always use `@dev`.
 
-**Workflows on this page:**
+**Workflows:**
 
 - [`build-tests.yml`](#build-testsyml)
 - [`channel-compat.yml`](#channel-compatyml)

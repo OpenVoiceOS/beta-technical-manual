@@ -195,7 +195,7 @@ the string users put in their config:
 [project]
 name = "ovos-g2p-plugin-example"
 version = "0.1.0"
-dependencies = ["ovos-plugin-manager>=0.5.0,<1.0.0"]
+dependencies = ["ovos-plugin-manager>=0.5.0"]
 
 [project.entry-points."opm.g2p"]
 ovos-g2p-plugin-example = "ovos_g2p_plugin_example:MyG2P"
@@ -208,8 +208,8 @@ ovos-g2p-plugin-example.config = "ovos_g2p_plugin_example:MY_G2P_CONFIGS"
 plugin family: optional, and only worth adding once the plugin has settings worth advertising to
 installers and GUIs.
 
-> **Backward compatibility**: `ovos-plugin-manager` still loads legacy `ovos.plugin.g2p` entry
-> points, but new plugins should register under `opm.g2p`.
+> **Backward compatibility**: `ovos-plugin-manager` loads legacy `ovos.plugin.g2p` entry
+> points, but a plugin you write should register under `opm.g2p`.
 
 ### 2. Test it without OVOS
 
@@ -264,16 +264,16 @@ calls; there is nothing analogous to `StreamingTTS`. Do not add one.
 
 ### Package and publish
 
-1. **Pin the dependency version.** Put a floor and a ceiling on `ovos-plugin-manager` in
-   `pyproject.toml`, for example `ovos-plugin-manager>=0.5.0,<1.0.0`.
+1. **Pin the dependency version.** Put a floor on `ovos-plugin-manager` in
+   `pyproject.toml`, for example `ovos-plugin-manager>=0.5.0`.
 2. **Install for local development.** Run `pip install -e .` from the plugin's own repository, then
    confirm `find_g2p_plugins()` sees it, as in [Verify discovery](#3-verify-discovery) above.
 3. **Publish to PyPI.** OVOS deployments install plugins from PyPI, not from a git checkout, so a
    plugin needs a PyPI release before it can be installed by `pip install <plugin-name>` on a
    real deployment.
-4. **Remember this is alpha, Mark 1-era territory.** As the top of this page explains, G2P only
+4. **Remember this is alpha, Mark 1-era territory.** As the introduction explains, G2P only
    matters if something consumes its viseme output for lip-sync. Confirm that use case exists
-   before investing in a new plugin; most new TTS voices need no G2P plugin at all.
+   before investing in a new plugin. Most TTS voices need no G2P plugin at all.
 
 ---
 **Read next:** [OCP Audio Plugin](ocp-audio-plugin.md)

@@ -4,7 +4,7 @@
     You just installed OVOS and it works. Now you want it to sound like *your* assistant: a
     different name to wake it up, a different voice answering you, or a different language
     altogether. All three are small edits to the same file, `~/.config/mycroft/mycroft.conf`.
-    This page is a quick-reference for all three. Each section links to the full page with
+    Each section below is a quick reference for one of them, and links to the full page with
     more detail and more options.
 
 !!! tip "Want to do this by voice instead of editing files?"
@@ -80,8 +80,8 @@ plugin choices, and tuning: [Wake-word Plugins](wake-word-plugins.md#change-your
 
 ## Change your voice
 
-Install the plugin's package first. Unlike most tweaks on this page, this one does
-require a terminal today. There is no on-device UI for installing plugins yet. `phoonnx`
+Install the plugin's package first. Unlike most tweaks here, this one needs a terminal.
+OVOS has no on-device UI to install plugins. `phoonnx`
 ships the `ovos-tts-plugin-phoonnx` plugin,
 so without it OVOS has nothing to load and the voice won't actually change. Activate the
 same Python [virtual environment](glossary.md) OVOS runs in
@@ -114,8 +114,8 @@ log of `ovos-audio` shows `(re)loading TTS engine` when this happens.
     On the stable channel (`ovos-audio` 0.4.0) and the testing channel (`ovos-audio` 1.2.0),
     the voice reloads only when the settings block of the plugin changes, for example a new
     `voice` value. If you change only `module`, and neither plugin has a settings block, the
-    old voice keeps speaking until you restart OVOS. `ovos-audio` 2.2.1a1 and later also
-    reload when `module` changes.
+    old voice keeps speaking until you restart OVOS. On the alpha channel, `ovos-audio` also
+    reloads when `module` changes.
 
 Browse voice samples and see every available plugin: [TTS Plugins](tts-plugins.md#change-your-voice).
 

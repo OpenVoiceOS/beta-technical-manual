@@ -4,7 +4,7 @@
     OVOS is built on a handful of shared Python libraries that the services and skills all depend
     on, including the messagebus client, general utilities, and typed message models. Their detailed
     API reference lives **in each library's own repository** (every one ships a `docs/` folder), so
-    this page is a **map**: what each library is for, and a direct link to its source and docs.
+    the manual gives a **map**: what each library is for, and a direct link to its source and docs.
     Keeping the API reference at the source avoids it drifting out of sync with the code. See the
     [Glossary](glossary.md) for terms.
 

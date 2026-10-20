@@ -1,7 +1,7 @@
 # STT Plugins Reference
 
 !!! abstract "In a nutshell"
-    This page holds the full technical entry for each STT plugin in the roster: repository link, license notes, and a default configuration snippet where one exists. Start at [STT Plugins](stt-plugins.md) to pick a plugin; come here for the exact settings.
+    Each section holds the full technical entry for an STT plugin in the roster: repository link, license notes, and a default configuration snippet where one exists. Start at [STT Plugins](stt-plugins.md) to pick a plugin; come here for the exact settings.
 
 ## ovos-stt-plugin-wav2vec
 
@@ -102,7 +102,7 @@ languages resolve to different pretrained models.
 ```
 
 Leaving `urls` unset falls back to a shuffled pick from the plugin's own hardcoded public
-community-run server list, currently `stt.openvoiceos.pt` and `stt.smartgic.io`, rather than
+community-run server list (`stt.openvoiceos.pt` and `stt.smartgic.io`), rather than
 failing. See [stt-server](stt-server.md#companion-plugin) for a self-hosted alternative, or
 pick a fully offline engine from the table above.
 
@@ -122,7 +122,7 @@ pick a fully offline engine from the table above.
 ## ovos-stt-plugin-whisper
 
 - **GitHub**: [TigreGotico/ovos-stt-plugin-whisper](https://github.com/TigreGotico/ovos-stt-plugin-whisper)
-  (the identically named `OpenVoiceOS/ovos-stt-plugin-whisper` repo is an older, different
+  (the identically named `OpenVoiceOS/ovos-stt-plugin-whisper` repo is a different
   plugin wrapping the `whisper` pip package, default model `base`, no CUDA switch)
 
 

@@ -8,7 +8,7 @@
 
 This is a flow stage: part of every standard pipeline rather than a matcher you choose between.
 
-The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
+The sections below are for people who deploy or customize OVOS.
 
 ??? info "📐 Formal specification"
     The converse plugin is specified by **[OVOS-CONVERSE-1 — Active Handlers & Interactive Response](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. It is the imperative complement to **[OVOS-CONTEXT-1 — Intent Context](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md)** (the declarative gating primitive, see [Follow up questions](context.md)). See the [spec index](architecture-specs.md).
@@ -24,7 +24,7 @@ The **Converse Pipeline** in **OpenVoiceOS (OVOS)** manages active conversationa
     |---|---|
     | `session.converse_handlers` — the recency-ordered eligibility list the plugin polls | `Session.active_handlers` (the deprecated `Session.active_skills` view is a legacy projection of it) |
     | `session.response_mode` `{skill_id, expires_at}` — the single-shot response window for `get_response` | per-session `UtteranceState.RESPONSE` lock |
-    | poll round-trip `<skill_id>.converse.ping` / `.pong` (non-dispatch, dotted form) | since ovos-core 3.0.5a1, a broadcast `ovos.converse.ping` (OVOS-CONVERSE-1 §4.2) is emitted alongside a legacy per-skill `{skill_id}.converse.ping`, and pongs are heard on both `ovos.converse.pong` and `skill.converse.pong`; dispatch via `converse:skill` → `{skill_id}.converse.request` |
+    | poll round-trip `<skill_id>.converse.ping` / `.pong` (non-dispatch, dotted form) | a broadcast `ovos.converse.ping` (OVOS-CONVERSE-1 §4.2) is emitted alongside a legacy per-skill `{skill_id}.converse.ping`, and pongs are heard on both `ovos.converse.pong` and `skill.converse.pong`; dispatch via `converse:skill` → `{skill_id}.converse.request` |
     | reserved-name dispatch `<skill_id>:converse` / `<skill_id>:response` | `converse:skill` handler |
 
     The mechanics below describe the current code. The spec names are the target. Note that the two lists are distinct in the spec: `converse_handlers` (converse eligibility) is drained independently of `active_handlers` (the stop cascade's recency record, PIPELINE-1 §7.1).
@@ -144,7 +144,7 @@ sequenceDiagram
 2. `ConverseService.match()` iterates active skills in priority order
 
 
-3. It first polls the active skills: since ovos-core 3.0.5a1 it emits one broadcast `ovos.converse.ping` (OVOS-CONVERSE-1 §4.2) plus a legacy per-skill `{skill_id}.converse.ping`, and waits up to `0.5s` for acknowledgements on `ovos.converse.pong` or the legacy `skill.converse.pong` (`can_handle`) to learn which skills are willing to converse. Each poll round is correlated by `context.utterance_id` (a per-utterance uuid the orchestrator stamps per OVOS-PIPELINE-1 §9.1.1, propagated by `Message.reply`/`forward`): a pong carrying a different `utterance_id` belongs to an earlier round and is discarded, so a slow skill's stale answer can never decide the wrong round
+3. It first polls the active skills: it emits one broadcast `ovos.converse.ping` (OVOS-CONVERSE-1 §4.2) plus a legacy per-skill `{skill_id}.converse.ping`, and waits up to `0.5s` for acknowledgements on `ovos.converse.pong` or the legacy `skill.converse.pong` (`can_handle`) to learn which skills are willing to converse. Each poll round is correlated by `context.utterance_id` (a per-utterance uuid the orchestrator stamps per OVOS-PIPELINE-1 §9.1.1, propagated by `Message.reply`/`forward`): a pong carrying a different `utterance_id` belongs to an earlier round and is discarded, so a slow skill's stale answer can never decide the wrong round
 
 
 4. The first willing skill (highest priority) is matched; the actual dispatch is sent as `{skill_id}.converse.request` (emitted by the `converse:skill` handler)

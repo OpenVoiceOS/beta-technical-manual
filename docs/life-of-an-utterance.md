@@ -1,7 +1,7 @@
 # The Life of an Utterance
 
 !!! abstract "In a nutshell"
-    This page follows a single spoken utterance on its whole journey through OpenVoiceOS, from
+    Follow a single spoken utterance on its whole journey through OpenVoiceOS, from
     the instant sound reaches the microphone to the moment you hear a reply. Along the way the
     system notices the wake word, records what you say, turns it into text, works out what you
     meant, does the task, and speaks back. It's a guided tour of the assembly line that handles
@@ -18,7 +18,7 @@
     Dialog, TTS, and playback come from
     **[OVOS-AUDIO-1 — Audio Output Service](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md)**.
     See also the [spec index](architecture-specs.md). Spec topic names are canonical below. The
-    legacy name is noted once where current code still emits it.
+    legacy name is noted once where the code emits it.
 
 This guide gives a technical, step-by-step walkthrough of how an utterance is processed by
 OpenVoiceOS, from the moment sound hits the microphone to the final spoken response.
@@ -205,7 +205,7 @@ If the skill requested a follow-up question (e.g., `expect_response=True` / `lis
 ## Further reading
 
 - [Pipelines Overview](pipelines-overview.md): the full default pipeline order and how to customize it.
-- [Formal Specifications](architecture-specs.md): the OVOS-PIPELINE-1, OVOS-TRANSFORM-1, and companion specs cited throughout this page.
+- [Formal Specifications](architecture-specs.md): the OVOS-PIPELINE-1, OVOS-TRANSFORM-1, and companion specs cited above.
 - [Voice-first](https://blog.openvoiceos.org/posts/2026-01-25-voice-first) — why the assistant's design centers this same utterance journey.
 
 ---

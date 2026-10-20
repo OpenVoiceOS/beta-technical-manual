@@ -4,7 +4,7 @@
     This package is long-lived, tested in production, and actively maintained. You can depend on it freely. It is rated by [repository health](maturity.md), not by version number.
 
 !!! abstract "In a nutshell"
-    A "skill" is an add-on that teaches OVOS to do one thing. It can tell the weather, set a timer, or play music. `ovos-workshop` is the starter kit that gives skill makers the building blocks, so they do not have to start from scratch. This page is for people who want to build their own skills. If you just use OVOS, you can skip it. See [Skill Design Best Practices](skill-best-practices.md) and the [Glossary](glossary.md).
+    A "skill" is an add-on that teaches OVOS to do one thing. It can tell the weather, set a timer, or play music. `ovos-workshop` is the starter kit that gives skill makers the building blocks, so they do not have to start from scratch. The sections below are for people who want to build their own skills. If you just use OVOS, you can skip it. See [Skill Design Best Practices](skill-best-practices.md) and the [Glossary](glossary.md).
 
 `ovos-workshop` provides all base classes, decorators, and helpers needed to write skills and applications for OpenVoiceOS.
 
@@ -177,7 +177,7 @@ my-skill-id = "my_skill.skill:MySkill"
 
 ```
 
-`ovos-plugin-manager` scans the `opm.skill` group at runtime (via `find_skill_plugins()`) and loads the matching classes. It still accepts the older `ovos.plugin.skill` group name as a deprecated alias.
+`ovos-plugin-manager` scans the `opm.skill` group at runtime (via `find_skill_plugins()`) and loads the matching classes. It also accepts the legacy `ovos.plugin.skill` group name as a deprecated alias.
 
 ---
 

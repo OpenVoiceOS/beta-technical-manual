@@ -18,7 +18,7 @@ These go deeper than the service page, for when you are debugging traffic
 rather than learning the model.
 
 - [Bus Restart & Reconnect](bus-reconnect.md): what happens to a client when the bus goes away.
-- [Bus Namespace Migration](bus-namespace-migration.md): the old and new topic names, and which to emit.
+- [Bus Namespace Migration](bus-namespace-migration.md): the legacy and spec topic names, and which to emit.
 - [Bus Recipes](bus-recipes.md): worked examples of common message exchanges.
 - [Bus Bridges](bus-bridge.md): connecting one bus to another without merging them.
 - [Scheduled Events](scheduler-service.md): asking for something to happen later.
@@ -65,7 +65,7 @@ These run as their own processes on the bus, separate from `ovos-core`. Each pag
 
 - [Speech Service](speech-service.md), [Audio Service](audio-service.md), [Media Service](ovos-media.md).
 - Media internals: [OCP Pipeline Plugin](ovos-media-pipeline.md), [MPRIS Integration](ovos-media-mpris.md), [Legacy Compatibility](ovos-media-compat.md).
-- [Screens on OVOS Today](gui-status.md), [GUI Service (legacy)](gui-service.md).
+- [Screens on OVOS](gui-status.md), [GUI Service (legacy)](gui-service.md).
 - [PHAL](phal.md) for hardware access, and [Writing PHAL Plugins](phal-authoring.md).
 
 Digging into how intents get matched? That's the Pipeline tab. Building a skill? That's the Skills tab.

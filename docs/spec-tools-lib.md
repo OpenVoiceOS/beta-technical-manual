@@ -20,9 +20,9 @@
 
 [**ovos-spec-tools**](https://github.com/OpenVoiceOS/ovos-spec-tools) is the
 **single conformant implementation** of the low-level primitives the specs
-describe. OVOS components used to reimplement template expansion, resource
-loading, and language matching in several places, and the copies drifted.
-Rather than reimplement (and re-introduce the bugs), depend on this package. It
+describe. Do not reimplement template expansion, resource
+loading, or language matching: copies drift and bring back old bugs.
+Depend on this package. It
 is dependency-light (the core has **no dependencies**) and tracks the specs
 clause-for-clause.
 

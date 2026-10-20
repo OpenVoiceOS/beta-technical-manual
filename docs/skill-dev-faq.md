@@ -2,9 +2,7 @@
 
 !!! abstract "In a nutshell"
     Short, direct answers to the questions that come up most often while building an OVOS skill.
-    They come from real questions asked in the community and from the sticking points people hit
-    while working through this manual. Each answer routes you to the full page for the depth you
-    need. Skim this page when you hit one of these, then open the linked page. It assumes you have
+    Each answer links to the full page for the depth you need. The answers assume you have
     already built a basic skill. Start with [Your First Skill](first-skill.md) if not.
 
 ---
@@ -22,7 +20,7 @@ mic entirely:
 ovos-say-to "what time is it"
 ```
 
-→ full story: [Troubleshooting & Debugging](troubleshooting.md)
+→ details: [Troubleshooting & Debugging](troubleshooting.md)
 
 ### How do I test a skill without talking into a microphone?
 
@@ -32,7 +30,7 @@ message live, including a button to inject arbitrary messages yourself. And
 [`ovoscope`](ovoscope-overview.md) runs a real in-process assistant (`MiniCroft`) with no audio
 hardware at all, so you can write pytest assertions instead of speaking out loud every time.
 
-→ full story: [Test Your Skill](testing-your-skill.md), [Troubleshooting](troubleshooting.md#stage-3-did-stt-produce-text)
+→ details: [Test Your Skill](testing-your-skill.md), [Troubleshooting](troubleshooting.md#stage-3-did-stt-produce-text)
 
 ### How do I restart just my skill while I'm iterating on it, without restarting all of OVOS?
 
@@ -47,7 +45,7 @@ ovos-skill-launcher my-first.youruser /path/to/ovos-skill-my-first
 Pass just the `skill_id` if the skill is already discoverable on the standard skill directories.
 Pass a second argument to point at an arbitrary local path instead.
 
-→ full story: [Command-line Tools](cli-tools.md)
+→ details: [Command-line Tools](cli-tools.md)
 
 ### Why isn't my skill loading at all?
 
@@ -66,7 +64,7 @@ The left-hand side (`<skill-name>.<author>`) becomes the `skill_id`. The right-h
 `package:ClassName`. `find_skill_plugins()` in `ovos-plugin-manager` enumerates this exact group.
 A typo here means the skill is invisible, not broken.
 
-→ full story: [Your First Skill](first-skill.md#step-5-make-it-installable), [Skill Manager](skill-manager.md)
+→ details: [Your First Skill](first-skill.md#step-5-make-it-installable), [Skill Manager](skill-manager.md)
 
 ---
 
@@ -87,7 +85,7 @@ that text. If every matcher rejects it, it's a training-data problem in your int
 sample phrase, wrong vocab), not a bug in the pipeline. Add the phrasing to your `.intent`/`.voc`
 file and retrain.
 
-→ full story: [Troubleshooting: Stage 4](troubleshooting.md#stage-4-which-pipeline-stage-matched-or-didnt), [Pipelines Overview](pipelines-overview.md)
+→ details: [Troubleshooting: Stage 4](troubleshooting.md#stage-4-which-pipeline-stage-matched-or-didnt), [Pipelines Overview](pipelines-overview.md)
 
 ### Should my skill use Adapt or Padatious for intent matching?
 
@@ -96,7 +94,7 @@ across paraphrasing and localizes easily to other languages. Reach for Adapt ins
 personal/private skill where you need strict, predictable command-and-control matching in a single
 language you fully control.
 
-→ full story: [Adapt Pipeline](adapt-pipeline.md#when-to-use-adapt-in-ovos), [Padatious Pipeline](padatious-pipeline.md#when-to-use)
+→ details: [Adapt Pipeline](adapt-pipeline.md#when-to-use-adapt-in-ovos), [Padatious Pipeline](padatious-pipeline.md#when-to-use)
 
 ### My skill needs a follow-up question. How do multi-turn conversations work?
 
@@ -117,7 +115,7 @@ class MySkill(ConversationalSkill):
         return False
 ```
 
-→ full story: [Converse](converse.md)
+→ details: [Converse](converse.md)
 
 ### I implemented `converse()` but it never fires. Why?
 
@@ -129,7 +127,7 @@ session (typically the last skill that spoke or handled an intent). An unrelated
 idle won't get a chance either. Check both before assuming your `converse()` logic itself is
 broken.
 
-→ full story: [Permissions & Activation Control](permissions.md), [Converse](converse.md)
+→ details: [Permissions & Activation Control](permissions.md), [Converse](converse.md)
 
 ---
 
@@ -141,7 +139,7 @@ Put per-language `.intent`/`.voc`/dialog files under `locale/<lang>/`, and a tra
 in the same folder if you want a localized store listing. Padatious intents localize with the least
 friction since they're trained from example phrases rather than hand-written grammar rules.
 
-→ full story: [Skill Structure](skill-structure.md), [Language Support](lang-support.md), [Skill Metadata File](skill-json.md#language-support)
+→ details: [Skill Structure](skill-structure.md), [Language Support](lang-support.md), [Skill Metadata File](skill-json.md#language-support)
 
 ### Where do my skill's settings and files actually live on disk?
 
@@ -159,7 +157,7 @@ with self.file_system.open("cache.json", "w") as f:
     ...
 ```
 
-→ full story: [Skill Settings](skill-settings.md), [Filesystem Access](skill-filesystem.md), [Locations](locations-ref.md)
+→ details: [Skill Settings](skill-settings.md), [Filesystem Access](skill-filesystem.md), [Locations](locations-ref.md)
 
 ---
 
@@ -172,7 +170,7 @@ dependency mechanism. `skill.json` only carries `extra_plugins`, for companion O
 voice, a G2P engine) your skill expects to be present but doesn't import as a Python dependency.
 `ovos-workshop` never reads `skill.json` to install anything.
 
-→ full story: [Skill Metadata File](skill-json.md#installation-behavior)
+→ details: [Skill Metadata File](skill-json.md#installation-behavior)
 
 ### How do I share or publish my skill?
 
@@ -182,7 +180,7 @@ release is still installable straight from git via `pip_spec`. From there, list 
 [OVOS Skill store](https://openvoiceos.github.io/OVOS-skills-store). The store reads `name`, `description`,
 `examples`, `tags`, `icon`, and `images` from `skill.json` to build the listing card.
 
-→ full story: [Skill Metadata File: Sharing your skill](skill-json.md#sharing-your-skill)
+→ details: [Skill Metadata File: Sharing your skill](skill-json.md#sharing-your-skill)
 
 ---
 
@@ -218,7 +216,7 @@ reply = engine.continue_chat([AgentMessage(role=MessageRole.USER, content="summa
 is the same method every `ChatEngine` implements, regardless of backend, so swapping providers
 doesn't touch your skill's logic.
 
-→ full story: [Agent Plugins](agent-plugins.md), [Agent Engine Types](agent-plugins.md#agent-engine-types), [Personas](personas.md)
+→ details: [Agent Plugins](agent-plugins.md), [Agent Engine Types](agent-plugins.md#agent-engine-types), [Personas](personas.md)
 
 ---
 

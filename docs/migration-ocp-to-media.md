@@ -8,7 +8,7 @@
     `enable_mpris` explicitly if you want MPRIS on.
 
 !!! note "Legacy audioservice and ovos-media are alternatives — pick one"
-    Moving to `ovos-media` is an opt-in choice today. It takes two steps.
+    Moving to `ovos-media` is an opt-in choice. It takes two steps.
     Set `enable_old_audioservice: false` (the [switch](audio-service.md) that
     turns the legacy half off). Also install and run the separate
     `ovos-media` daemon. The flag alone leaves you with no media playback at

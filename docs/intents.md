@@ -4,8 +4,8 @@
     People ask for the same thing in many different ways: "what's the weather?", "weather in
     Melbourne", or just "weather" all mean roughly the same thing. An *intent* is what the
     user is actually trying to do. The part of OVOS that figures it out is a *pipeline
-    plugin* (older docs call this an "intent parser" or "intent engine"; see the
-    [Glossary](glossary.md)). This page explains what an intent is and helps you choose
+    plugin* (also called an "intent parser" or "intent engine"; see the
+    [Glossary](glossary.md)). Read on to learn what an intent is and to choose
     between the two engines OVOS ships by default. See [Intent Service](intent-service.md)
     for how OVOS routes an utterance through the pipeline plugins described here. New terms
     are explained in the [Glossary](glossary.md).
@@ -78,7 +78,7 @@ including confidence thresholds and entry points:
   whole phrases (template intents). See [Padatious Intents](intents-padatious.md) for how to
   write `.intent`/`.entity` files and build example-based intents in a skill.
 
-We will now look at each in more detail, including how to use them in a
+The sections below look at each in more detail, including how to use them in a
 [Skill](skill-design-guidelines.md).
 
 ---

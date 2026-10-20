@@ -1,7 +1,7 @@
 # Writing a TTS Plugin
 
 !!! abstract "In a nutshell"
-    This page is the tutorial for building your own TTS plugin: the `TTS` base class, the
+    A tutorial for building your own TTS plugin: the `TTS` base class, the
     `StreamingTTS` variant, the entry point that makes a plugin installable, and how to test
     it. Looking for a plugin to use instead of writing one? Go to [TTS Plugins](tts-plugins.md).
 
@@ -233,7 +233,7 @@ flowchart TD
 
 **Sentence chunking ("fake streaming").** Long replies are split into sentences before
 synthesis, so the first sentence plays while the rest still synthesizes. This works with
-EVERY TTS plugin because the chunking happens before the engine runs. It is opt-in today:
+EVERY TTS plugin because the chunking happens before the engine runs. It is opt-in:
 set `"sentence_tokenize": true` in the plugin's config block (`TTS.preprocess_sentence`
 splits with `quebra_frases`, with a newline-split fallback). This is the mechanism to
 reach for in practice.
@@ -293,9 +293,9 @@ wrapping a synchronous, whole-file engine in an async generator that yields one 
 
 ### Package and publish
 
-1. **Pin the dependency version.** Put a floor and a ceiling on `ovos-plugin-manager` in
-   `pyproject.toml`, for example `ovos-plugin-manager>=2.3.0a1,<3.0.0`. A floor alone lets a future
-   breaking release slip in unnoticed. A ceiling alone lets an old install miss a needed feature.
+1. **Pin the dependency version.** Put a floor on `ovos-plugin-manager` in
+   `pyproject.toml`, for example `ovos-plugin-manager>=2.3.0a1`. The floor stops an old install
+   from missing a feature the plugin needs.
 2. **Install for local development.** Run `pip install -e .` from the plugin's own repository so
    changes to the source take effect without reinstalling. See
    [OVOS Plugin Manager: Install and verify](plugin-manager.md#3-install-and-verify) for the

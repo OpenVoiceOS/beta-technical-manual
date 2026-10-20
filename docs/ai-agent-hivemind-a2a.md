@@ -1,10 +1,6 @@
 # Connect a HiveMind Satellite to an A2A Agent
 
-This page makes a HiveMind master send the questions of its clients to an A2A agent, in place of an OVOS brain.
-
-## Who this is for
-
-You run a HiveMind master. You want the questions of its clients to go to an agent that speaks A2A. The answers come back to the client that asked.
+Make a HiveMind master send the questions of its clients to an A2A agent, in place of an OVOS brain. Use the HiveMind A2A agent plugin when the questions of the clients of a HiveMind master must go to an agent that speaks A2A. The answers come back to the client that asked.
 
 ## What you get
 

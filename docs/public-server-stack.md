@@ -1,8 +1,8 @@
 # Public Server Stack
 
 !!! abstract "In a nutshell"
-    This page describes how the community's public speech and translation servers
-    are put together, so you can build the same thing yourself. Three services,
+    The community's public speech and translation servers
+    are put together as described below, so you can build the same thing yourself. Three services,
     text-to-speech, speech-to-text, and translation, each run as a small HTTP
     server in its own container, sharing one machine and one model cache. It is a
     reference deployment, not a product. Everything here is ordinary Docker and

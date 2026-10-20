@@ -241,7 +241,7 @@ different kinds of tools in the same request, and only one of them is a `ToolBox
 
 - **Client-side tools** are whatever the API caller put in the request's `tools` field. The
   caller executes them itself; the server only relays the model's `tool_calls`.
-- **Server-side tools** are the persona's own `ToolBox` plugins (documented on this page). The
+- **Server-side tools** are the persona's own `ToolBox` plugins (documented here). The
   server executes these in a bounded agentic loop and the client never sees the call.
 
 If a client tool shares a name with one of the persona's `ToolBox` tools, the persona's tool

@@ -1,7 +1,7 @@
 # The `ovos-installer` Wizard, Screen by Screen
 
 !!! abstract "In a nutshell"
-    This page walks through every screen the `ovos-installer` TUI shows you, in order, from
+    Every screen the `ovos-installer` TUI shows you is described below, in order, from
     language selection to the final telemetry prompts. Use it as a reference while the
     installer is running, or to see what a screen means before you get to it. For the
     commands that launch the installer, see [How to Install Open Voice OS](ovos-installer.md).
@@ -106,8 +106,8 @@ already in use is offered (you can't switch method in place).
 ## Choose Channel
 
 `testing`
-:   Recommended for most users. Generally stable with newer features, but may
-    occasionally contain regressions — distinct from the `stable` channel, which
+:   Recommended for most users. Generally stable with more recent features, but may
+    occasionally contain regressions. The `stable` channel
     pins an older snapshot (see [Release Channels](release-channels.md)).
 
 `alpha`
@@ -122,7 +122,7 @@ already in use is offered (you can't switch method in place).
 A radio-button list of installation profiles:
 
 `ovos`
-:   The classic, all-in-one experience. Voice pipeline, skills, and (optionally) GUI all run locally. It is the default and the profile the rest of this page assumes.
+:   The classic, all-in-one experience. Voice pipeline, skills, and (optionally) GUI all run locally. It is the default, and the other sections use it as the base profile.
 
 `satellite`
 :   A microphone/speaker endpoint that talks to a separate OVOS core over the network. See [composable deployments](composable-deployments.md). It skips the feature-selection screen (no local skills/GUI/LLM/Home Assistant to configure), but adds four HiveMind connection prompts: host, port, access key, and password.
@@ -295,7 +295,7 @@ The recording shows a full run of the wizard on a fresh machine, from launching
 message — in order: the language screen, installation method, release channel,
 profile, feature selection, Raspberry Pi tuning, the two telemetry prompts, the
 summary confirmation, and then the unattended install itself. Each of those screens
-is described with a screenshot earlier on this page, so the recording adds pacing,
+is described with a screenshot above, so the recording adds pacing,
 not information.
 
 [![Terminal recording of the full installer wizard run described above](https://asciinema.org/a/710286.svg)](https://asciinema.org/a/710286)

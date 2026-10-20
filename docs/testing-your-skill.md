@@ -1,7 +1,7 @@
 # Test Your Skill
 
 !!! abstract "In a nutshell"
-    This page continues [Your First Skill](first-skill.md), and picks up right after it: the
+    This tutorial continues [Your First Skill](first-skill.md), and picks up right after it: the
     `ovos-skill-my-first` skill you just wrote. Here you'll add an automated test for it. It
     sends the skill the utterance "hello" and checks it replies correctly, without needing a
     microphone, speakers, or a running assistant. By the end you'll have a test you can run
@@ -124,7 +124,7 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest test/test_hello.py -v
 ```
 
 `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1` avoids autoloading unrelated pytest plugins that some OVOS
-dependencies register. It fits the hand-built examples on this page, but it also disables
+dependencies register. It fits the hand-built examples here, but it also disables
 `ovoscope`'s own `pytest11` plugin: with it set, the `minicroft` fixture from the tip above
 is not found unless you re-enable the plugin explicitly with `-p ovoscope.pytest_plugin`.
 A real run looks like this (trimmed of the framework's own deprecation-warning noise):

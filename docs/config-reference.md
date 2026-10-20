@@ -1,7 +1,7 @@
 # Configuration Reference
 
 !!! abstract "In a nutshell"
-    This is the settings catalog for OVOS: a lookup table of the main options you can adjust (your language, units, microphone, wake word, and which speech and voice engines to use), with each option's default value and a short note on what it does. You don't need to set most of them. Use this page when you want to find the name of a particular setting and what it controls. For how to apply these settings, see [Configuration Management](config.md). For unfamiliar terms, see the [Glossary](glossary.md).
+    This is the settings catalog for OVOS: a lookup table of the main options you can adjust (your language, units, microphone, wake word, and which speech and voice engines to use), with each option's default value and a short note on what it does. You don't need to set most of them. Use it to find the name of a particular setting and what it controls. For how to apply these settings, see [Configuration Management](config.md). For unfamiliar terms, see the [Glossary](glossary.md).
 
 OVOS uses a layered configuration system, typically stored in `mycroft.conf`.
 
@@ -250,7 +250,7 @@ stock install keys placed under `intents.OCP` change nothing (see
 
 | Key | Default | Description |
 |---|---|---|
-| `intents.ovos-ocp-pipeline-plugin.legacy` | `false` | Force the old audio-service bus API instead of OCP. |
+| `intents.ovos-ocp-pipeline-plugin.legacy` | `false` | Force the legacy audio-service bus API instead of OCP. |
 | `intents.ovos-ocp-pipeline-plugin.min_score` | `40` | Minimum confidence score, 0-100, for OCP to accept an utterance as a media request. |
 | `intents.ovos-ocp-pipeline-plugin.filter_media` | `true` | Filter out results OCP judges not to be playable media. |
 | `intents.ovos-ocp-pipeline-plugin.filter_SEI` | `true` | Filter results by Search Engine Index compatibility. |
@@ -288,7 +288,7 @@ All of these live under the top-level `skills` key.
 
 | Key | Default | Description |
 |---|---|---|
-| `skills.blacklisted_skills` | `["skill-ovos-stop.openvoiceos"]` | Skill IDs that never load, even if installed. The stop skill is blacklisted because stop handling is now built into core. |
+| `skills.blacklisted_skills` | `["skill-ovos-stop.openvoiceos"]` | Skill IDs that never load, even if installed. The stop skill is blacklisted because stop handling is built into core. |
 | `skills.fallbacks.fallback_mode` | `"accept_all"` | Which skills may act as a fallback handler: `accept_all`, `whitelist`, or `blacklist`. |
 | `skills.fallbacks.fallback_whitelist` | `[]` | Skill IDs allowed as fallback handlers when `fallback_mode` is `whitelist`. |
 | `skills.fallbacks.fallback_blacklist` | `[]` | Skill IDs excluded from fallback handling when `fallback_mode` is `blacklist`. |
@@ -300,7 +300,7 @@ All of these live under the top-level `skills` key.
 | `skills.converse.converse_activation` | `"accept_all"` | How a skill may activate itself: `accept_all`, `priority`, `whitelist`, or `blacklist`. |
 | `skills.converse.max_activations` | `-1` | Times per minute a skill may self-activate. `-1` means no limit. `0` disables self-activation. |
 | `skills.converse.cross_activation` | `true` | If `true`, any skill may activate any other skill, not only itself. |
-| `skills.converse.cross_deactivation` | `true` | **Currently unused** — nothing in `ovos-core` reads this key (the shipped `mycroft.conf` comment says skill deactivation is not yet implemented); in practice cross-skill *deactivation* permission is gated by the same `cross_activation` flag above. |
+| `skills.converse.cross_deactivation` | `true` | **Unused**: nothing in `ovos-core` reads this key (the shipped `mycroft.conf` comment says skill deactivation is not implemented); in practice cross-skill *deactivation* permission is gated by the same `cross_activation` flag above. |
 
 Source: the `skills` section of `mycroft.conf` in [OpenVoiceOS/ovos-config](https://github.com/OpenVoiceOS/ovos-config).
 

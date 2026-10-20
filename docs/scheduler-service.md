@@ -7,8 +7,8 @@
     scheduler remembers the request on disk, fires the event even if the
     device rebooted in between, and tells the owner when it missed one. From
     a skill, this is `self.schedule_event` and friends. See [Scheduling
-    Events](ovos-skill.md#scheduling-events) for that API. This page
-    describes what the scheduler itself guarantees underneath it.
+    Events](ovos-skill.md#scheduling-events) for that API. The sections below
+    describe what the scheduler itself guarantees underneath it.
 
 ??? info "📐 Formal specification"
     **[OVOS-SCHEDULER-1 — Scheduled Events](https://github.com/OpenVoiceOS/architecture/blob/dev/scheduler-1.md)** is prescriptive: where the shipped scheduler differs from it, the implementation is wrong. See also the [spec index](architecture-specs.md).

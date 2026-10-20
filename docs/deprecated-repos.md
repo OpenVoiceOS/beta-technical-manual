@@ -1,16 +1,16 @@
 # Deprecated & Archived Repositories
 
 !!! abstract "In a nutshell"
-    This page is a reference list of old OVOS code projects that are no longer maintained, together with what replaced each one. It exists so that if you run into an old package name or an out-of-date guide online, you can look it up here, see that it has been retired, and find the current thing to use instead. You do not need to read it top to bottom: treat it as a lookup table. See the [Glossary](glossary.md) for terms.
+    A reference list of retired OVOS code projects, together with what replaced each one. If you run into a retired package name or an out-of-date guide online, look it up here, see that it is retired, and find the replacement. You do not need to read it top to bottom: treat it as a lookup table. See the [Glossary](glossary.md) for terms.
 
 Looking for an answer to a skill-development question instead? Start at
-[Your First Skill](first-skill.md) or the [Developer FAQ](skill-dev-faq.md). This page is only
-about retired repositories, not how to write skills today.
+[Your First Skill](first-skill.md) or the [Developer FAQ](skill-dev-faq.md). The list below covers only
+retired repositories, not how to write skills.
 
 !!! warning "These repositories are archived"
-    The repositories below are **archived** in the [OpenVoiceOS GitHub organization](https://github.com/OpenVoiceOS). They are read-only and no longer maintained. They are listed here so you can recognize them and find the current replacement. Do **not** start new work against them.
+    The repositories below are **archived** in the [OpenVoiceOS GitHub organization](https://github.com/OpenVoiceOS). They are read-only and not maintained. Use the list to recognize them and find the replacement. Do **not** start new work against them.
 
-This page covers **repo-level** deprecations (an entire repository retired). For
+The list covers **repo-level** deprecations (an entire repository retired). For
 **entry-point-level** deprecations, an old OPM entry point group renamed to a
 canonical one while the plugin itself keeps working, see
 [Plugin Types Reference: Deprecated Types](plugin-types-reference.md#deprecated-types).
@@ -20,7 +20,7 @@ There are roughly **85** archived repositories (the exact count drifts as more g
 
 ## Backend services (removed architecture) (5)
 
-*OVOS no longer uses a central backend. These are removed, not replaced.*
+*OVOS uses no central backend. These are removed, not replaced.*
 
 | Repository | What it was | Replacement / status |
 |---|---|---|
@@ -66,7 +66,7 @@ There are roughly **85** archived repositories (the exact count drifts as more g
 
 | Repository | What it was | Replacement / status |
 |---|---|---|
-| [ovos-tts-plugin-cotovia-remote](https://github.com/OpenVoiceOS/ovos-tts-plugin-cotovia-remote) | TTS plugin calling a remote demo server for Cotovia TTS (Galician) | Removed, unofficial demo server, now gone. No replacement |
+| [ovos-tts-plugin-cotovia-remote](https://github.com/OpenVoiceOS/ovos-tts-plugin-cotovia-remote) | TTS plugin calling a remote demo server for Cotovia TTS (Galician) | Removed, unofficial demo server is offline. No replacement |
 | [ovos-tts-plugin-matxa-multispeaker-cat](https://github.com/OpenVoiceOS/ovos-tts-plugin-matxa-multispeaker-cat) | TTS plugin for the Matxa multispeaker/multidialect Catalan voices | [phoonnx](https://github.com/TigreGotico/phoonnx): runs the same Matxa Catalan models |
 | [ovos-tts-plugin-mimic2](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic2) | TTS plugin for Mimic2, MycroftAI's proprietary cloud-hosted Tacotron voice | Removed: proprietary cloud-hosted Tacotron model, never released. The `kusal` voice in [phoonnx](https://github.com/TigreGotico/phoonnx) was trained on the same dataset and can be used instead. |
 | [ovos-tts-plugin-mimic3](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic3) | Text to speech plugin for OVOS using Mimic 3 | [phoonnx](https://github.com/TigreGotico/phoonnx): directly supports the Mimic3 voices (as it does Larynx and Piper voices) |

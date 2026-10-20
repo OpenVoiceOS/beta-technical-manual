@@ -1,7 +1,7 @@
 # Writing an OCP Stream Extractor Plugin
 
 !!! abstract "In a nutshell"
-    This page is the tutorial for building your own OCP stream extractor: the
+    A tutorial for building your own OCP stream extractor: the
     `OCPStreamExtractor` base class, its abstract methods, the entry point that makes a
     plugin installable, and how to test it. Looking for a plugin to use instead of writing
     one? Go to [OCP Plugins Reference](ocp-plugins.md).

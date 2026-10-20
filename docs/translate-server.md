@@ -23,7 +23,7 @@ The companion client plugin `ovos-translate-server-plugin` can point an OVOS dev
 ## Installation
 
 !!! warning "Alpha channel only"
-    This page documents the prerelease channel. Install the server from that channel:
+    Install the server from the prerelease channel:
 
     ```bash
     pip install --pre ovos-translate-server

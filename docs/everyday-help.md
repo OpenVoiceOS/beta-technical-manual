@@ -2,7 +2,7 @@
 
 !!! abstract "In a nutshell"
     Something is wrong and you just want your assistant talking again. No terminal, no
-    programming. This page lists the most common everyday problems ("it won't
+    programming. Below are the most common everyday problems ("it won't
     listen", "I can't hear it", "it doesn't understand me") and plain fixes for each. Use
     voice, or a couple of taps in a settings screen. If your problem isn't here, go to
     [What can I say?](skill-examples.md) to check the exact words to use, or to

@@ -10,7 +10,7 @@
 
 Shipped in the default pipeline.
 
-The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
+The sections below are for people deploying or customizing OVOS.
 
 ??? info "📐 Formal specification"
     The media player this pipeline drives is specified by **[OVOS-OCP-1 — OVOS Common Playback](https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md)**: the per-session *Virtual Media Player* and its `ovos.common_play.*` control surface. The matching/classification side is a **pipeline plugin** under **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)** (OCP-1 explicitly leaves the NLU to PIPELINE-1). Media stop is one subscriber to the **[OVOS-STOP-1](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md)** cascade. See the [spec index](architecture-specs.md).
@@ -53,7 +53,7 @@ early and the low tier last:
 ```
 
 The older short names `ocp_high` / `ocp_medium` / `ocp_low` / `ocp_legacy` still work
-as **deprecated aliases** (ovos-core rewrites them to the canonical IDs above), but new
+as **deprecated aliases** (ovos-core rewrites them to the canonical IDs above), but
 configs should use the canonical names.
 
 Then install OCP-enabled media skills and ask to play something.
@@ -64,7 +64,7 @@ Then install OCP-enabled media skills and ask to play something.
 
 The matcher class is `OCPPipelineMatcher`, registered under the single OPM entry point
 `ovos-ocp-pipeline-plugin`. Because it is a `ConfidenceMatcherPipeline`, OVOS derives three
-tier matchers from it at runtime via `match_high` / `match_medium` / `match_low` — you reference
+tier matchers from it at runtime via `match_high` / `match_medium` / `match_low`. You reference
 them in the pipeline by the IDs below (the short `ocp_*` aliases are deprecated):
 
 | Pipeline ID  | Legacy alias | Tier   | When to use |
@@ -111,7 +111,7 @@ OCP combines several signals:
 * **Keyword matching** (`ocp_medium` / `ocp_low`): `classify_media()` delegates
   to a `ContextAwareClassifier` backed by the `ovos-media-classifier` package
   (a hard dependency), which feeds player status and registered NER entities
-  into the classification. The classifier backend is pluggable — the default
+  into the classification. The classifier backend is pluggable. The default
   is a keyword/vocab matcher, but other `opm.media.classifier` entry points can
   be selected via config. `is_ocp_query()` treats any non-GENERIC media type as
   a playback query.
@@ -126,11 +126,12 @@ used with full confidence.
 
 In-process `MediaProvider` plugins (entry-point group `opm.media.provider`) run
 alongside the legacy bus `@ocp_search` window rather than replacing it —
-results from both are merged, bounded by the same timeout. A provider that
-declares no media types is demoted (confidence capped at 50); each provider's
-results are capped at 50. With no `MediaProvider` plugins installed, behavior
-is unchanged from the legacy bus-only flow. Settings live under
-`intents.ovos-ocp-pipeline-plugin.media_providers` in `mycroft.conf`; set
+results from both are merged, bounded by the same timeout. A provider entry is
+dropped when a legacy result already has the same URI. Playlists are never
+dropped this way. A provider that
+declares no media types is demoted (confidence capped at 50). Each provider's
+results are capped at 50. With no `MediaProvider` plugins installed, only the legacy bus flow runs. Settings live under
+`intents.ovos-ocp-pipeline-plugin.media_providers` in `mycroft.conf`. Set
 `media_providers.enabled: false` to turn the mechanism off entirely.
 
 Supported media types include `music`, `podcast`, `movie`, `radio`, `audiobook`,

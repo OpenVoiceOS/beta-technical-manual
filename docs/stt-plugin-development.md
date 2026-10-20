@@ -1,7 +1,7 @@
 # Writing an STT Plugin
 
 !!! abstract "In a nutshell"
-    This page is the tutorial for building your own STT plugin: the `STT` and `StreamingSTT` base classes, the entry point that makes a plugin installable, and how to test it. Looking for a plugin to use instead of writing one? Go to [STT Plugins](stt-plugins.md).
+    Build your own STT plugin: the `STT` and `StreamingSTT` base classes, the entry point that makes a plugin installable, and how to test it. Looking for a plugin to use instead of writing one? Go to [STT Plugins](stt-plugins.md).
 
 ## Writing your own STT plugin
 
@@ -226,7 +226,7 @@ ovos-stt-plugin-mymodel = "ovos_stt_plugin_mymodel:MySTTPlugin"
 
 ```
 
-> **Backward Compatibility**: `ovos-plugin-manager` still supports legacy `mycroft.plugin.stt` entry points, but new plugins should use the `opm.*` namespace.
+> **Backward Compatibility**: `ovos-plugin-manager` supports legacy `mycroft.plugin.stt` entry points, but a plugin you write should use the `opm.*` namespace.
 
 ### Test it without OVOS
 

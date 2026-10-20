@@ -2,7 +2,7 @@
 # Reusable Workflow Reference: Skill and Locale Checks
 
 !!! abstract "In a nutshell"
-    This page documents the shared workflows that check OVOS skill packaging: `skill-check.yml`, `locale-check.yml`, and `spec-lint.yml`. For build and OVOS-plugin (OPM) checks, see [Build Checks](gh-automations-build-checks.md) and [Plugin, License, and Repo Checks](gh-automations-plugin-repo-checks.md). For end-to-end skill test execution, see [Skill Test Workflows](gh-automations-skill-test-workflows.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
+    Three shared workflows check OVOS skill packaging: `skill-check.yml`, `locale-check.yml`, and `spec-lint.yml`. For build and OVOS-plugin (OPM) checks, see [Build Checks](gh-automations-build-checks.md) and [Plugin, License, and Repo Checks](gh-automations-plugin-repo-checks.md). For end-to-end skill test execution, see [Skill Test Workflows](gh-automations-skill-test-workflows.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
 
 All reusable workflows are in `.github/workflows/` and are called via:
 
@@ -13,7 +13,7 @@ uses: OpenVoiceOS/gh-automations/.github/workflows/<name>.yml@dev
 
 > **Ref:** Always use `@dev`.
 
-**Workflows on this page:**
+**Workflows:**
 
 - [`skill-check.yml`](#skill-checkyml)
 - [`locale-check.yml`](#locale-checkyml)
@@ -39,7 +39,7 @@ Analyses an OVOS skill repository for locale structure, language coverage, and `
 | `skip_if_not_skill` | boolean | `true` | Silently pass if no ovos.plugin.skill entry point found |
 | `fail_on_missing_en_us` | boolean | `true` | Fail if en-US locale directory is absent |
 | `fail_on_invalid_skill_json` | boolean | `false` | Fail if en-US skill.json is missing or invalid |
-| `pr_comment` | boolean | `true` | Post a '🎙️ Skill' section in the shared 'OVOS PR Checks' comment on the PR. Only runs when the workflow is triggered by a pull_request event. |
+| `pr_comment` | boolean | `true` | Post a '🎙️ Skill' section in the shared 'OVOS PR Checks' comment on the PR. Only runs when a pull_request event triggers the workflow. |
 | `spec_lint` | boolean | `true` | Also run ovos-spec-lint (spec-lint.yml) against the skill's locale folder. Every ovos-skill-* repo already calls this workflow, so this is how spec-lint reaches the fleet without a per-repo caller PR. Set to false to opt a repo out. |
 | `spec_lint_locale_path` | string | `locale` | Path passed to spec-lint.yml's locale_path input. |
 <!-- END GENERATED -->
@@ -64,7 +64,7 @@ Follows the canonical 3-phase pattern (`continue-on-error` → format → post �
 | Fail if skill.json is invalid | Exits 1 if JSON malformed or required fields missing and `fail_on_invalid_skill_json: true` |
 | Fail job if skill check failed | Re-raises error after comment is posted |
 
-Since the `spec_lint` input landed (default `true`), the workflow also runs a **second job**. It calls [`spec-lint.yml`](#spec-lintyml) as a nested reusable workflow against the skill's locale folder (`spec_lint_locale_path`, default `locale`).
+With the `spec_lint` input (default `true`), the workflow also runs a **second job**. It calls [`spec-lint.yml`](#spec-lintyml) as a nested reusable workflow against the skill's locale folder (`spec_lint_locale_path`, default `locale`).
 
 Calling `skill-check.yml` therefore also runs spec-lint, with its own check, its own PR-comment section, and its own failure gate. Opt a repo out with `spec_lint: false`.
 
@@ -156,7 +156,7 @@ Runs `ovos-spec-lint` against a skill's locale folder to validate it against OVO
 | `strict` | boolean | `false` | Treat warnings as errors (passes --strict to ovos-spec-lint) |
 | `skip_if_no_locale` | boolean | `true` | Silently pass if locale_path does not exist |
 | `ovos_spec_tools_spec` | string | `ovos-spec-tools` | Pip requirement spec for the linter. Override to pin a version or install from a git URL during alpha. |
-| `pr_comment` | boolean | `true` | Post a '🧪 Spec Lint' section in the shared 'OVOS PR Checks' comment. Only runs when the workflow is triggered by a pull_request event. |
+| `pr_comment` | boolean | `true` | Post a '🧪 Spec Lint' section in the shared 'OVOS PR Checks' comment. Only runs when a pull_request event triggers the workflow. |
 <!-- END GENERATED -->
 
 ---

@@ -47,16 +47,6 @@ self.enclosure.mouth_display_png('/path/to/image.png', invert=False, x=0, y=0, r
 
 ```
 
-!!! warning "`self.enclosure` may leave the skill base class"
-    No tracked issue or PR currently documents a concrete plan for this, unlike the
-    [GUI adapter rework](gui-adapters.md), which does have open tracked work. Treat the
-    following as a possible future direction, not a scheduled change: `self.enclosure`
-    could stop being a built-in `OVOSSkill` property, following the same direction
-    [`self.gui`](skill-gui.md) is going, with the `EnclosureAPI` moving into the
-    **[`ovos-mark1-utils`](https://github.com/OpenVoiceOS/ovos-mark1-utils)** library
-    instead. This page documents the current, actually-shipped API for existing Mark 1
-    skills.
-
 ---
 
 ## Mark 1 Utilities (`ovos-mark1-utils`)
@@ -157,13 +147,6 @@ for grid in a:
     spec message namespace rather than legacy topic names. See the
     [PHAL Mark 1 message spec](https://openvoiceos.github.io/message_spec/phal_mk1/) for the
     current topic names.
-
-!!! note "Upcoming: enclosure protocol mixin"
-    The Mark 1 PHAL plugin is expected to adopt a shared `EnclosureProtocolListener` mixin for
-    handling the enclosure protocol, aligning it with how other enclosure PHAL plugins are
-    structured. Tracked in
-    [ovos-PHAL-plugin-mk1#39](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk1/pull/39),
-    still open, so the mixin does not exist in any released version yet.
 
 ---
 

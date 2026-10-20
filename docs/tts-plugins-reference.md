@@ -1,7 +1,7 @@
 # TTS Plugins Reference
 
 !!! abstract "In a nutshell"
-    This page holds the full technical entry for each TTS plugin in the roster: repository link, license notes, and a default configuration snippet where one exists. Start at [TTS Plugins](tts-plugins.md) to pick a plugin, come here for the exact settings.
+    Each section holds the full technical entry for a TTS plugin in the roster: repository link, license notes, and a default configuration snippet where one exists. Start at [TTS Plugins](tts-plugins.md) to pick a plugin, come here for the exact settings.
 
 ## ovos-tts-server
 
@@ -343,8 +343,8 @@ the table doesn't cover.
 
 ### Per-language default voices
 
-A configured `voice` pins one voice regardless of request language. For multilingual serving
-(1.86.0a1+), the `lang2voice` config map, e.g. `{"pt-br": "...", "gl": "..."}`, and
+A configured `voice` pins one voice regardless of request language. For multilingual serving,
+the `lang2voice` config map, e.g. `{"pt-br": "...", "gl": "..."}`, and
 `PHOONNX_DEFAULT_VOICE_<LANG>` env vars resolve the default voice per request language. Keys
 are BCP-47 tags, full tag tried before primary subtag, and resolution is table-major: the
 whole `lang2voice` table wins outright for any language it names before env vars are consulted
@@ -363,7 +363,7 @@ not equivalent:
 | `max_loaded_voices` | Count of resident voices, LRU-evicted. | unset (no limit) |
 | `load_wait_timeout` | Seconds a load waits for resident memory to free up before proceeding anyway. | `300` |
 
-`max_loaded_voices` is the older setting and a poor bound on this catalog: a Piper voice is
+`max_loaded_voices` is a poor bound on this catalog: a Piper voice is
 around 60 MB while an omnivoice voice is around 2.2 GB, roughly a 40x spread, so a count that is
 safe for small voices is fatal for large ones. `max_loaded_bytes` bounds by the actual resident
 size instead, and is the one to reach for on a mixed catalog. (Mirrors `max_loaded_mb` on the

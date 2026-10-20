@@ -1,31 +1,27 @@
 # Upcoming Changes
 
 !!! abstract "In a nutshell"
-    This page tracks open pull requests across the OVOS repositories that will
-    change behavior once merged. It is written for **skill, plugin, and fleet
-    maintainers** planning ahead. Just curious what shipped recently? The
-    [project timeline](timeline.md) is the readable what's-new list, and
+    The tables below list open pull requests across the OVOS repositories that
+    change behavior when they merge. They are for **skill, plugin, and fleet
+    maintainers** who plan ahead. The [project timeline](timeline.md) lists
+    what shipped, and
     [checking what you have installed](release-channels.md#checking-what-you-have-installed)
-    tells you which of it is already on your machine. Everything on this page is **unreleased and
-    subject to change**: PR scope, target version, and even whether a PR lands
-    at all can shift before release. Once a PR merges or closes, its content
-    graduates to [Updating from Older OVOS](updating-from-older-ovos.md), which
-    tracks shipped history. If a PR number below is already merged or closed by
-    the time you read this, treat this page as stale for that entry and check
-    the linked PR directly.
+    tells you which of it is on your machine. Each entry is **unreleased and
+    subject to change**: PR scope, target version, and whether a PR lands
+    at all can change before release. When a PR merges or closes, its content
+    goes to [Updating from Older OVOS](updating-from-older-ovos.md).
 
-Swept: 2026-08-01. Before relying on an entry, open its PR link: if the
-PR is merged or closed, the entry has already graduated to
-[Updating from Older OVOS](updating-from-older-ovos.md) or been dropped.
+Before you rely on an entry, open its PR link. If the PR is merged or closed,
+read [Updating from Older OVOS](updating-from-older-ovos.md) instead.
 
-## The new GUI
+## The GUI rework {#the-new-gui}
 
 [OVOS-GUI-1](architecture-specs.md) is a ground-up rework of how OVOS renders a
 screen: interchangeable render-backend plugins instead of one built-in
-WebSocket/QML renderer. See [Screens on OVOS Today](gui-status.md) for the full
-picture. Until this work lands, the current GUI stack (`ovos-gui` +
-`ovos-shell` + `mycroft-gui-qt5`) stays **deprecated but shipped**, since it is
-the only screen stack that runs today.
+WebSocket/QML renderer. See [Screens on OVOS](gui-status.md) for the full
+picture. Until this work merges, the GUI stack (`ovos-gui` +
+`ovos-shell` + `mycroft-gui-qt5`) stays **deprecated but shipped**, because it is
+the only screen stack that runs.
 
 | PR | What it changes | Audience | Breaking | Version |
 |---|---|---|---|---|
@@ -33,7 +29,6 @@ the only screen stack that runs today.
 | [ovos-gui#117](https://github.com/OpenVoiceOS/ovos-gui/pull/117) | Adds `SYSTEM_` template-name gate, partitions display state per session | skill authors emitting GUI pages, GUI-adapter authors | No | 1.5.0 |
 | [opm#377](https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377) | Adds `AbstractGUIPlugin` framework (text, image, video, audio, weather, map, interactive) | GUI-adapter plugin authors, OVOS-GUI integrators | No | 2.12.0 |
 | [opm#406](https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/406) | Drops legacy Mark-1 `enclosure.*` wiring from `PHALPlugin` | PHAL/enclosure plugin authors, GUI integration maintainers | Yes | 3.0.0 |
-| [ovos-bus-client#238](https://github.com/OpenVoiceOS/ovos-bus-client/pull/238) | Stops emitting null GUI keys, base64-encodes local image paths | GUI render-backend implementers, GUI wire-protocol consumers | No | not yet released |
 | [ovos-bus-client#197](https://github.com/OpenVoiceOS/ovos-bus-client/pull/197) | Deprecates `EnclosureAPI`, adds `PageTemplates` constants | consumers of `EnclosureAPI` and `GUIInterface` | Yes | 3.0.0 |
 | [ovos-workshop#420](https://github.com/OpenVoiceOS/ovos-workshop/pull/420) | Binds `OVOSSkill.gui` to `ovos-gui-api-client`, drops `ui_directories` | skill authors | Yes | 10.0.0 |
 | [ovos-workshop#421](https://github.com/OpenVoiceOS/ovos-workshop/pull/421) | Deletes the skill-side resting-screen API | skill authors, plus downstream skills listed below | Yes | 10.0.0 |
@@ -51,8 +46,8 @@ things are changing on top of that baseline: the legacy audio service is
 starting to shed its OCP integration, and the intended role of an OCP skill is
 shifting.
 
-MediaProvider plugins (`opm.media.provider`) are meant to own catalog search
-once `ovos-media` loads them in-process. OCP skills stay fully supported, but
+The OCP pipeline loads MediaProvider plugins (`opm.media.provider`) in-process,
+and searches them alongside OCP skills. OCP skills stay fully supported, but
 their intended role narrows: a skill whose job is "answer catalog search
 queries" (a station list, a podcast feed) is expected to become a
 MediaProvider plugin over time, while a skill where **the skill itself is the
@@ -64,7 +59,6 @@ playable media** (a voice game, an ebook reader) stays an OCP skill. See
 | [ovos-workshop#423](https://github.com/OpenVoiceOS/ovos-workshop/pull/423) | Deprecates `OVOSCommonPlaybackSkill` toward `opm.media.provider` | OCP skill authors | No | not yet released |
 | [ovos-workshop#428](https://github.com/OpenVoiceOS/ovos-workshop/pull/428) | Makes OCP playback state per-session (stacked on #427) | OCP/game-skill authors, HiveMind/remote deployers | No | not yet released |
 | [ovos-audio#115](https://github.com/OpenVoiceOS/ovos-audio/pull/115) | Drops OCP integration and `disable_ocp` from `ovos-audio` | skill authors/deployers using OCP in `ovos-audio` | Yes | 3.0.0 |
-| [ovos-ocp-pipeline-plugin#156](https://github.com/OpenVoiceOS/ovos-ocp-pipeline-plugin/pull/156) | Dispatches search in-process to installed MediaProvider plugins, merged with the existing bus-only OCP-skill search rather than replacing it (dedup only drops a provider entry whose URI a legacy result already covers). No bus message types change. Enabled by default, with an explicit `media_providers.enabled: false` off-switch under the OCP pipeline config; with no MediaProvider plugins installed, behavior is byte-identical to today | deployers running MediaProvider plugins, OCP pipeline config authors | No | not yet released |
 
 ## Official spec adoption
 
@@ -171,4 +165,4 @@ already landed on that repo's `dev`.
 
 ---
 **Read next:** [Server Compatibility Layers](server-compat-layers.md)
-**Related:** [Updating from Older OVOS](updating-from-older-ovos.md) · [Version Compatibility Guide](version-compat-guide.md) · [Screens on OVOS Today](gui-status.md) · [Formal Specifications](architecture-specs.md)
+**Related:** [Updating from Older OVOS](updating-from-older-ovos.md) · [Version Compatibility Guide](version-compat-guide.md) · [Screens on OVOS](gui-status.md) · [Formal Specifications](architecture-specs.md)

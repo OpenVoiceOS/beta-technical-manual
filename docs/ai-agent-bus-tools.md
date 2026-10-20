@@ -1,10 +1,6 @@
 # Share Tools on the OVOS Messagebus (PHAL Tools Plugin)
 
-This page shares every installed tool plugin on the OVOS messagebus, so that skills, services and other programs on the device can list and call the tools.
-
-## Who this is for
-
-You run an OVOS device. You want a skill, a GUI or a script on the messagebus to use tool plugins. You do not want an HTTP server or an MCP client.
+The PHAL tools plugin shares every installed tool plugin on the OVOS messagebus, so that skills, services and other programs on the device can list and call the tools. Use the PHAL tools plugin when a skill, a GUI or a script on the messagebus of an OVOS device must use tool plugins, with no HTTP server and no MCP client.
 
 ## What you get
 

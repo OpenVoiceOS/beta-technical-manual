@@ -5,8 +5,8 @@
     kiosk, that listens and talks using OVOS. Most of the software underneath does not care
     what board you run it on. The part that does care about hardware is a small layer called
     [PHAL](phal.md) (Platform/Hardware Abstraction Layer). PHAL is also where you plug in
-    your own LEDs, buttons, and sensors. This page maps what is generic and what is
-    Raspberry-Pi-specific. It shows how to write a driver for your own LED ring or button
+    your own LEDs, buttons, and sensors. The sections below map what is generic and what is
+    Raspberry-Pi-specific. They show how to write a driver for your own LED ring or button
     panel, what resources your device needs, and what OVOS does and does not do for
     over-the-air updates and on-screen UI.
 
@@ -234,12 +234,12 @@ fits the model alone.
 
 ---
 
-## Screens: where things stand today
+## Screens: where things stand {#screens-where-things-stand-today}
 
 If your device has a display, [`ovos-gui`](gui-service.md) provides the protocol.
 [`ovos-shell`](ovos-shell.md), or a Qt5/QML client speaking the same
 [GUI protocol](gui-protocol.md), renders it, with a [homescreen](homescreen.md) skill as the
-default idle view. This works today on Linux desktops and the
+default idle view. This works on Linux desktops and the
 [GUI-capable installer path](ovos-installer.md), but the legacy Qt5 stack is deprecated
 pending the GUI rework. If you are starting a from-scratch hardware design, plan for a
 voice-first experience with an optional screen, not the other way around. Treat the GUI

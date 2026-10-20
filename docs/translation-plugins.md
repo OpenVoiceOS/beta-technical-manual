@@ -4,7 +4,7 @@
     These add-ons give OVOS two related abilities. They work out *what language* some text is in, and they *rewrite* text from one language into another. They power features like [Bidirectional Translation](bidirectional-translation.md), so your assistant can understand and reply across languages. Some run entirely offline on your device. Others call an online service. You pick which ones to use in the configuration file. See the [Glossary](glossary.md) for terms.
 
 !!! tip
-    Just want translation to work? See [Bidirectional Translation](bidirectional-translation.md). This page covers the plugin internals.
+    Just want translation to work? See [Bidirectional Translation](bidirectional-translation.md). The plugin internals follow.
 
 Language detection and translation plugins let OVOS identify the language of a piece of text and translate it between languages. They are the building blocks used by features like [Bidirectional Translation](bidirectional-translation.md), and they can also be called directly from your own code.
 
@@ -153,7 +153,7 @@ my-translator = "my_package.module:MyTranslator"
 my-detector = "my_package.module:MyDetector"
 ```
 
-> The legacy Neon groups `neon.plugin.lang.translate` / `neon.plugin.lang.detect` are still honoured as aliases by `ovos-plugin-manager` (this is why a plugin like `ovos-lang-detector-fasttext-plugin` keeps working), but new plugins **should** register under the `opm.lang.*` groups.
+> The legacy Neon groups `neon.plugin.lang.translate` / `neon.plugin.lang.detect` are honoured as aliases by `ovos-plugin-manager` (this is why a plugin like `ovos-lang-detector-fasttext-plugin` keeps working), but a plugin you write **should** register under the `opm.lang.*` groups.
 
 ## Standalone Usage
 

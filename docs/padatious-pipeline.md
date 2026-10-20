@@ -8,7 +8,7 @@
 
 Shipped in the default pipeline.
 
-The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
+The sections below are for people who deploy or customize OVOS.
 
 ??? info "📐 Formal specification"
     Padatious is a **pipeline plugin** under **[OVOS-PIPELINE-1 — Utterance Lifecycle & Pipeline](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. It is a **template-intent** engine in the sense of **[OVOS-INTENT-3 — Intent Definition §5](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)**: the `.intent` example sentences are *training data*, written in the **[OVOS-INTENT-1 — Sentence Template Grammar](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md)** with `{slot}` placeholders the engine fills at match time. See the [spec index](architecture-specs.md).
@@ -70,7 +70,7 @@ Each stage runs at a different point in the pipeline and applies a different con
 
 ## Configuration
 
-Configure Padatious thresholds in your `mycroft.conf` under `intents` → `ovos-padatious-pipeline-plugin` (the canonical, plugin-id-keyed section. The older `padatious` key is read as a fallback if the canonical one is absent). The defaults are:
+Configure Padatious thresholds in your `mycroft.conf` under `intents` → `ovos-padatious-pipeline-plugin` (the canonical, plugin-id-keyed section. OVOS reads the `padatious` key as a fallback if the canonical one is absent). The defaults are:
 
 ```json
 {
@@ -210,9 +210,6 @@ Every registration schedules a background training pass off the utterance-handli
 `mycroft.skills.trained` only fires once every container a training pass touched is fully compiled, both the neural model and the padaos regex layer. A registration that lands mid-pass defers the signal to the next pass instead of firing early, so a caller waiting on this event can rely on exact matches being live when it fires.
 
 **Per-domain training.** Setting `domain_engine: true` in the plugin's config trains a separate model per skill domain (using the same `ovos-padatious-pipeline-plugin` entry point) instead of one flat model across all skills, reducing cross-skill collisions at the cost of extra memory.
-
-!!! note "Upcoming"
-    A dedicated `DomainPadatiousPipeline` OPM entry point (a first-class plugin ID for the per-domain training mode, instead of the `domain_engine` config flag on the flat plugin) is **Upcoming**.
 
 ---
 **Read next:** [Model2Vec Pipeline](m2v-pipeline.md)

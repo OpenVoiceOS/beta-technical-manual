@@ -2,7 +2,7 @@
 
 !!! abstract "In a nutshell"
     Sometimes a skill needs to ask the user something back: "which flavor?", "are you sure?",
-    "pick one of these". This page shows the four built-in ways an OVOS skill does that: an
+    "pick one of these". An OVOS skill has four built-in ways to do that: an
     open-ended question, a specific question that captures the reply (`get_response`), a yes/no
     question (`ask_yesno`), and a multiple-choice question (`ask_selection`). OVOS keeps the
     microphone open and parses the answer for you. For the *design* side, when to ask versus

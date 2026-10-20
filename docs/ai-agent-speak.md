@@ -1,10 +1,6 @@
 # Let an AI Agent Speak: Text to Speech (TTS) over MCP and UTCP
 
-This page connects an AI agent to the OVOS text-to-speech (TTS) server, so the agent can turn text into a WAV file.
-
-## Who this is for
-
-You use Claude Code, Claude Desktop, opencode, Mistral Vibe, or your own MCP or UTCP agent. You want the agent to make speech with a TTS voice that runs on your own computer.
+Connect an AI agent to the OVOS text-to-speech (TTS) server, so the agent can turn text into a WAV file. Use the TTS server when Claude Code, Claude Desktop, opencode, Mistral Vibe, or your own MCP or UTCP agent must make speech with a TTS voice that runs on your own computer.
 
 ## What you get
 

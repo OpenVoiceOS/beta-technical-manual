@@ -114,12 +114,12 @@ Every spec header carries three fields, for example
 - **Spec ID**: what you cite, always with a section number — `OVOS-MSG-1 §2.1.1`.
 - **Version**: the spec's compatibility class (see the README registry below). It changes only
   when an edit breaks compatibility with the prior class.
-- **Status**: where the document stands. **Every spec is currently `Draft`.** Nothing here is
-  ratified, so a requirement can still change. That is the reason the specs and the code are
+- **Status**: where the document stands. **Every spec has the status `Draft`.** Nothing here is
+  ratified, so a requirement can change. That is the reason the specs and the code are
   audited against each other continuously rather than once.
 
 The versioning policy also speaks of a revision number for editorial changes within a class.
-No spec header carries one today, so cite the spec ID and section, not a revision.
+No spec header carries one, so cite the spec ID and section, not a revision.
 
 - **Newcomers:** read the scope and the worked examples. Skip the conformance
   tables until you need them. Start with
@@ -157,7 +157,7 @@ implementation ([`ovos-spec-tools`](https://github.com/OpenVoiceOS/ovos-spec-too
 the executable conformance suite
 ([`ovos-test-harness`](https://github.com/OpenVoiceOS/ovos-test-harness)), and the
 [bus-client namespace migration](bus-namespace-migration.md#namespace-migration) that lets the
-ecosystem adopt the new `ovos.*` topics without a flag day.
+ecosystem adopt the `ovos.*` topics without a flag day.
 
 ---
 **Read next:** [Specification Tooling](spec-tooling.md) · [Maturity Scale](maturity.md)

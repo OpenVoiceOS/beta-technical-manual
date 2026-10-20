@@ -1,7 +1,7 @@
 # Decorators
 
 !!! abstract "In a nutshell"
-    A "decorator" is a small label you place on a line just above one of your skill's functions (it starts with an `@`). The label tells OVOS what that function is for, for example, "run this when the user asks about the weather" or "run this only if nothing else understood the request." It's like sticking a labeled note on a drawer, so the system knows what's inside without opening it. This page lists the available labels and what each one does. New to skills? See [Skill Classes](skill-classes.md) or the [Glossary](glossary.md).
+    A "decorator" is a small label you place on a line just above one of your skill's functions (it starts with an `@`). The label tells OVOS what that function is for, for example, "run this when the user asks about the weather" or "run this only if nothing else understood the request." It's like sticking a labeled note on a drawer, so the system knows what's inside without opening it. The sections below list the available labels and what each one does. New to skills? See [Skill Classes](skill-classes.md) or the [Glossary](glossary.md).
 
 All decorators are importable from `ovos_workshop.decorators`.
 
@@ -193,7 +193,7 @@ They are documented on [Advanced Decorators](decorators-advanced.md).
 !!! warning "Homescreens are being deprecated"
     Skill-provided home/idle screens are on their way out. In the GUI rework, the
     idle screen becomes a job for the display backend rather than a skill (see
-    [Home Screen](homescreen.md) and [Screens on OVOS Today](gui-status.md)). The
+    [Home Screen](homescreen.md) and [Screens on OVOS](gui-status.md)). The
     decorators below still work on the legacy stack but should not be treated as
     the forward-looking way to build a home screen.
 
@@ -303,7 +303,7 @@ def handle_confirm(self, message):
     mycroft-core split intent registration into two separate decorators:
     `@intent_handler` for Adapt intents and a second `@intent_file_handler`
     for Padatious `.intent` files. In `ovos-workshop`, **`@intent_file_handler`
-    no longer exists**. Both cases are handled by the single
+    does not exist**. Both cases are handled by the single
     [`@intent_handler`](#intent_handler) shown above, which accepts either an
     `.intent` filename (Padatious) or an `IntentBuilder` (Adapt). If you are
     porting an old skill, replace every `@intent_file_handler("x.intent")`

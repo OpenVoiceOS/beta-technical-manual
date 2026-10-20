@@ -3,7 +3,7 @@
 !!! abstract "In a nutshell"
     OVOS ships as a dozen independently versioned packages, not one product with one
     version number. If you maintain a skill or plugin that must run on more than one
-    of those version combinations at once, this page lists the four sanctioned ways to
+    of those version combinations at once, use one of the four sanctioned ways to
     write that compatibility, with a worked example for each drawn from a real break
     described in [Updating From Older OVOS](updating-from-older-ovos.md). It also says
     when to stop shimming and pin a dependency floor instead.

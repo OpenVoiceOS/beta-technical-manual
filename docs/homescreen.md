@@ -3,22 +3,22 @@
 !!! abstract "In a nutshell"
     The home screen (or "resting screen") is what a device with a display shows when it sits
     idle. It typically shows the clock, date, weather, and small widgets, much like a smart
-    speaker's standby face. When nothing else is shown, OVOS falls back to this screen. This
-    page covers the **legacy** screen stack, which is deprecated today and mainly relevant to
-    **Mark 2** devices. In the upcoming rework, the home screen becomes a job for the display
+    speaker's standby face. When nothing else is shown, OVOS falls back to this screen. The
+    sections below cover the **legacy** screen stack, which is deprecated and mainly relevant to
+    **Mark 2** devices. In the unreleased GUI rework, the home screen is a job for the display
     backend rather than a skill. See the [Glossary](glossary.md) for terms.
 
-!!! danger "The OVOS GUI is deprecated. See [Screens on OVOS Today](gui-status.md) for the full picture"
-    The home screen is part of the legacy stack. There is no generally usable OVOS GUI right
-    now, and a replacement is **Upcoming**.
+!!! danger "The OVOS GUI is deprecated. See [Screens on OVOS](gui-status.md) for the full picture"
+    The home screen is part of the legacy stack. OVOS has no generally usable GUI, and the
+    replacement is not released.
 
 The home screen is what a device with a display shows when it is idle: clock, date, weather,
 widgets, and so on. It is an ordinary **skill** that registers a *resting screen*. When the
 [GUI](gui-service.md) namespace stack is empty, the configured homescreen skill is asked to
 display its idle page.
 
-On the current (legacy) stack, `ovos-gui` tracks the configured homescreen via its
-`HomescreenManager` (`ovos_gui/homescreen.py`). Today that manager only handles **skill
+On the legacy stack, `ovos-gui` tracks the configured homescreen via its
+`HomescreenManager` (`ovos_gui/homescreen.py`). That manager only handles **skill
 selection and lifecycle**: which homescreen skill is active, registering or removing candidate
 homescreens, and asking the active one to display itself (`homescreen.manager.*` messages). It
 does **not** push clock, weather, or widget data over the bus. A homescreen skill fetches or
@@ -61,9 +61,9 @@ Select a homescreen skill in `mycroft.conf` (or via [ovos-shell](ovos-shell.md))
     The `homescreen.data.*` / `homescreen.widget.*` messages below belong to
     `ovos-legacy-mycroft-gui-plugin` (`ovos_legacy_mycroft_gui/homescreen.py`), part of the
     [GUI adapter](gui-adapters.md) rework described in [GUI Service](gui-service.md). That
-    rework is not yet released and not present on any published package — do not rely on any
-    of this on a stable install. Once shipped, it will let a display render a live idle screen
-    without a skill polling its own data. The legacy stack described elsewhere on this page
+    rework is not in any published package. Do not rely on any
+    of it on an installed system. It lets a display render a live idle screen
+    without a skill polling its own data. The legacy stack in the other sections
     does not carry it.
 
 
@@ -104,7 +104,7 @@ Select a homescreen skill in `mycroft.conf` (or via [ovos-shell](ovos-shell.md))
     below (`@resting_screen_handler`, `homescreen_app`, and the `IdleDisplaySkill` base class)
     is deprecated in `ovos-workshop`. The resting display is owned by the
     [GUI plugin / render backend](gui-adapters.md). It is documented here for skills that
-    still use it. Do not build new skills against it.
+    that use it. Do not build a skill against it.
 
 The resting face API lets skill authors extend their skills with customized idle screens.
 These screens display when there is no activity on the screen.

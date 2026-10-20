@@ -8,7 +8,7 @@
     intuitive and respects the user's intent. This guide outlines the best practices for
     developing skills that feel "native" to the OVOS ecosystem.
 
-    This page is about **how to write the code** of a skill: which API to call, which method to implement, how to structure error handling. For guidance on **how to design the voice interaction itself** (when to ask for confirmation, how to phrase prompts, how much to say), see [Skill Design Guidelines](skill-design-guidelines.md).
+    The subject is **how to write the code** of a skill: which API to call, which method to implement, how to structure error handling. For guidance on **how to design the voice interaction itself** (when to ask for confirmation, how to phrase prompts, how much to say), see [Skill Design Guidelines](skill-design-guidelines.md).
 
 ---
 

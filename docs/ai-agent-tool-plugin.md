@@ -1,10 +1,6 @@
 # Write a Tool Plugin (OPM ToolBox)
 
-This page writes a tool plugin: a Python package that gives AI agents a typed tool, which every OVOS agent component can find and call.
-
-## Who this is for
-
-You write Python. You want an AI agent to do a task of your own, such as read a sensor or call a service. You write the tool one time, and three OVOS components use it. The persona server serves it over MCP and UTCP. The PHAL plugin shares it on the messagebus. The agentic loop gives it to a language model.
+Write a tool plugin: a Python package that gives AI agents a typed tool, which every OVOS agent component can find and call. Use a tool plugin when an AI agent must do a task of your own in Python, such as read a sensor or call a service. You write the tool one time, and three OVOS components use it. The persona server serves it over MCP and UTCP. The PHAL plugin shares it on the messagebus. The agentic loop gives it to a language model.
 
 ## What you get
 

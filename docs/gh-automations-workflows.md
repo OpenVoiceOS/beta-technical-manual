@@ -2,7 +2,7 @@
 # Reusable Workflow Reference
 
 !!! abstract "In a nutshell"
-    This page is the index to the detailed reference for every shared automation recipe ("workflow") that OVOS projects can plug in. The full specs are split by lifecycle stage: [release](gh-automations-release-workflows.md) (publish, version bump), [PR](gh-automations-pr-workflows.md) (build, test, and check gates run on pull requests, itself an index to several topic pages), and [quality](gh-automations-quality-workflows.md) (lint, coverage, security scans, notifications). This index is aimed at maintainers wiring up a project's testing and release machinery; if you just want the big picture of what these automations are for, start with the [gh-automations overview](gh-automations-overview.md). See also the [Glossary](glossary.md).
+    An index to the detailed reference for every shared automation recipe ("workflow") that OVOS projects can plug in. The full specs are split by lifecycle stage: [release](gh-automations-release-workflows.md) (publish, version bump), [PR](gh-automations-pr-workflows.md) (build, test, and check gates run on pull requests, itself an index to several topic pages), and [quality](gh-automations-quality-workflows.md) (lint, coverage, security scans, notifications). This index is aimed at maintainers wiring up a project's testing and release machinery; if you just want the big picture of what these automations are for, start with the [gh-automations overview](gh-automations-overview.md). See also the [Glossary](glossary.md).
 
 All reusable workflows are in `.github/workflows/` and are called via:
 

@@ -3,7 +3,7 @@
 !!! abstract "In a nutshell"
     Installing OVOS also installs a handful of **terminal commands**: small programs you run from
     a shell to configure the assistant, poke a running system ("say this", "listen now"), read the
-    logs, or launch the individual services by hand. This page is a catalog of the ones the core
+    logs, or launch the individual services by hand. Below is a catalog of the ones the core
     OVOS packages provide, what each does, and which package ships it. (These are the *core* CLIs.
     The [RaspOVOS image](install-raspovos.md) adds its own extra convenience commands on top.) See
     the [Glossary](glossary.md) for unfamiliar terms.
@@ -11,14 +11,6 @@
 Each command below is a console-script entry point declared by a core OVOS package, so it lands on
 your `PATH` when that package is installed. Most take `--help`, which is the authoritative,
 version-correct list of options.
-
-!!! warning "`--help` is not safe on older bus clients"
-    `ovos-speak`, `ovos-say-to`, `ovos-listen` and `ovos-simple-cli` gained `--help` in
-    `ovos-bus-client` 2.7.3. Before that they read the first argument as the utterance, so
-    `ovos-speak --help` made the device **say "--help" out loud**, and `ovos-say-to --help` injected
-    it as if you had spoken it
-    ([ovos-bus-client#274](https://github.com/OpenVoiceOS/ovos-bus-client/pull/274)). On an older
-    install, use the usage lines documented on this page instead.
 
 ---
 
@@ -31,7 +23,7 @@ Shipped by **[`ovos-config`](config.md)**. Inspect and edit the layered
 |---|---|
 | `ovos-config show` | Print the merged configuration as a table. |
 | `ovos-config get -k <key>` | Read the value(s) at a key or key path (e.g. `-k /tts/module`). A loose key name lists every match. |
-| `ovos-config set -k <key> -v <value>` | Write a value. Omit `-v` to be prompted (useful when the key is ambiguous). Before `ovos-config` `3.1.1a1` this wrote to the wrong file — see [Configuration](config.md#config-layer-stack). |
+| `ovos-config set -k <key> -v <value>` | Write a value. Omit `-v` to be prompted (useful when the key is ambiguous). See [Configuration](config.md#config-layer-stack) for the file it writes. |
 | `ovos-config autoconfigure -l <lang>` | Pick sensible default STT/TTS plugins for a language. `--lang`/`-l` is required. Select `--online`/`-on`, `--offline`/`-off`, or `--hybrid`/`-hy` (offline TTS + online STT: the default when none is given). Optionally add `--male`/`-m` or `--female`/`-f` for the TTS voice (TTS is left unconfigured if neither is passed), `--platform`/`-p` to optimize for a device (`rpi3`/`rpi4`/`rpi5`/`linux`/`mac`/`termux`), or `--gpu`/`-g` for GPU plugin variants (offline only, not on Raspberry Pi). |
 | `ovos-config telemetry --enable` / `--disable` | Opt in or out of anonymous intent telemetry. |
 
@@ -308,7 +300,7 @@ service from an editable checkout of its own repo while fixing a bug in it, see
 
 !!! note "About the `ovos-config autoconfigure` telemetry text"
     The generated help output above is the tool's own text, reproduced verbatim. The
-    opendata dashboard domain it mentions no longer resolves; the telemetry upload
+    opendata dashboard domain it mentions does not resolve; the telemetry upload
     endpoints themselves are whatever `open_data.intent_urls` is set to
     (see [Privacy & Security](privacy-security.md)).
 

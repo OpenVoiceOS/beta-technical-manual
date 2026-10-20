@@ -6,7 +6,7 @@
 ??? info "📐 Formal specification"
     The utterance lifecycle and the pipeline-plugin contract are specified by **[OVOS-PIPELINE-1 — Utterance Lifecycle & Pipeline](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. The intents these plugins consume are specified by **[OVOS-INTENT-3 — Intent Definition](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)** (keyword and template intents) over the **[OVOS-INTENT-1 — Sentence Template Grammar](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md)**. See the [spec index](architecture-specs.md) for the full set.
 
-The OpenVoiceOS (OVOS) Intent Pipeline is a modular, extensible system that interprets user utterances and maps them to actions or responses. It orchestrates pipeline plugins and fallback mechanisms to produce accurate, contextually relevant responses. This layered, rule-based approach tries plain keyword and template matchers before any statistical or LLM-backed stage. This is a deliberate design choice. See the [blog post](https://blog.openvoiceos.org/posts/2025-11-25-gofai) for why classic Adapt/Padatious matching still earns the first checkpoints.
+The OpenVoiceOS (OVOS) Intent Pipeline is a modular, extensible system that interprets user utterances and maps them to actions or responses. It orchestrates pipeline plugins and fallback mechanisms to produce accurate, contextually relevant responses. This layered, rule-based approach tries plain keyword and template matchers before any statistical or LLM-backed stage. This is a deliberate design choice. See the [blog post](https://blog.openvoiceos.org/posts/2025-11-25-gofai) for why classic Adapt/Padatious matching earns the first checkpoints.
 
 When the entry utterance carries no authoritative language tag, the orchestrator resolves the language **once**, from session evidence. It passes that same resolved tag into every plugin's `match` call for the utterance. A plugin may refine it locally but must not silently re-derive its own answer. Otherwise different stages could match the same utterance in different languages depending on ordering.
 
@@ -39,7 +39,7 @@ yourself.
 ---
 
 !!! note "Spec vocabulary in one paragraph"
-    In OVOS-PIPELINE-1 terms, every stage on this page is a **pipeline plugin** identified by an opaque `pipeline_id`. Each one exposes exactly one operation to the **orchestrator**: `match(utterances, lang, session) → Match | None`, where `session` is the session carrier the orchestrator extracts from the utterance's `context.session` (PIPELINE-1 §4). Note a known spec/implementation divergence: the shipped `ovos-plugin-manager` base classes currently pass the full `Message` as the third argument, and plugins read the session from `message.context["session"]` themselves.
+    In OVOS-PIPELINE-1 terms, every stage below is a **pipeline plugin** identified by an opaque `pipeline_id`. Each one exposes exactly one operation to the **orchestrator**: `match(utterances, lang, session) → Match | None`, where `session` is the session carrier the orchestrator extracts from the utterance's `context.session` (PIPELINE-1 §4). Note a known spec/implementation divergence: the shipped `ovos-plugin-manager` base classes pass the full `Message` as the third argument, and plugins read the session from `message.context["session"]` themselves.
 
     The orchestrator iterates the plugins in the order given by `session.pipeline` and stops at the **first** one that returns a `Match`. **First match wins.** There is *no* cross-plugin confidence comparison. The per-stage `conf_high/medium/low` thresholds below are each plugin's *own* internal accept/reject gate, not a score the orchestrator ranks between plugins.
 
@@ -111,13 +111,13 @@ print([d.metadata['Name'] for d in distributions()
        for e in d.entry_points if e.group == 'opm.pipeline'])"
 ```
 
-The older short names (`adapt_high`, `common_qa`, …) are **deprecated aliases**. ovos-core still accepts them and rewrites them to the canonical plugin IDs via the `_PIPELINE_MIGRATION_MAP`, so existing configs keep working this way. The bundled default configuration and new configs alike should use the canonical names shown below.
+The short names (`adapt_high`, `common_qa`, …) are **deprecated aliases**. ovos-core accepts them and rewrites them to the canonical plugin IDs via the `_PIPELINE_MIGRATION_MAP`, so existing configs keep working this way. The bundled default configuration uses the canonical names shown below. Use them in your config too.
 
 ---
 
 ## Available Pipeline Components
 
-Below is a list of available pipeline components, grouped by confidence level. The **Pipeline ID** column shows the canonical name to put in your `pipeline` config. The **Legacy alias** column shows the older short name that some existing configs may still use. ovos-core rewrites it to the canonical ID at load time. New configs should use the canonical names.
+Below is a list of available pipeline components, grouped by confidence level. The **Pipeline ID** column shows the canonical name to put in your `pipeline` config. The **Legacy alias** column shows the deprecated short name that some configs use. ovos-core rewrites it to the canonical ID at load time. Use the canonical names.
 
 !!! note "The bundled default pipeline"
     The default `pipeline` list shipped in `mycroft.conf` uses the canonical plugin IDs, in

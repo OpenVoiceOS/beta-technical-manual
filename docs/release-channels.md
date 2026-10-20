@@ -1,12 +1,12 @@
 # OVOS Release Channels & Installation Options
 
 !!! abstract "In a nutshell"
-    OVOS is built from many small swappable pieces. This page explains the different ways to install them and how to pick how new (or how stable) your version is. A "release channel" is like choosing between a tested, stable edition or an early-preview edition with the newest features but more rough edges. Most people should ignore the details and just use the guided [`ovos-installer`](ovos-installer.md). The manual steps here are for tinkerers who want precise control (see the [Glossary](glossary.md) for terms).
+    OVOS is built from many small swappable pieces. You can install them in different ways, and you pick how new (or how stable) your version is. A "release channel" is like choosing between a tested, stable edition or an early-preview edition with the newest features but more rough edges. Most people should ignore the details and just use the guided [`ovos-installer`](ovos-installer.md). The manual steps here are for tinkerers who want precise control (see the [Glossary](glossary.md) for terms).
 
 !!! tip "Just want it working? Use the installer."
     Most people should install OVOS with the **[`ovos-installer`](ovos-installer.md)**, a guided
     wizard that handles everything. The manual `pip` commands and version bounds below are for
-    people who want fine-grained control (custom/headless setups). A few terms used on this page:
+    people who want fine-grained control (custom/headless setups). Terms:
     **extras** = optional add-on bundles you list in brackets, e.g. `ovos-core[mycroft]`.
     **constraints file** = a version "filter" that bounds which package versions may be installed.
     **headless** = a device with no monitor/keyboard (e.g. a Raspberry Pi you SSH into).
@@ -50,9 +50,8 @@ Not every release exposes a `--version` flag on the CLI.
 
 ## Before you upgrade: see what changed
 
-This manual intentionally never hardcodes a current version number. By the time you
-read this page, any number here would already be stale. Before upgrading, check the
-**source of truth** for what actually changed in the version you're moving to:
+Before upgrading, check the **source of truth** for what changed in the version you
+move to:
 
 - Each repository's **GitHub Releases** page (e.g.
   [ovos-core/releases](https://github.com/OpenVoiceOS/ovos-core/releases)). Swap
@@ -95,13 +94,11 @@ source .venv/bin/activate
     harden it.
 
 !!! warning "Stable pins an older snapshot than Testing"
-    Formal codename releases have not landed yet. `constraints-stable.txt` pins the versions
-    from the last stable release (ovos-core `1.3.1`), an older, unmaintained snapshot.
+    `constraints-stable.txt` pins an older, unmaintained snapshot of the stack.
     `constraints-testing.txt` tracks newer versions. Check
     [the constraints files themselves](https://github.com/OpenVoiceOS/ovos-releases) for the
-    exact pins. Until the next codename release ships, use **Testing** as the recommended
-    channel for most distros and users. This matches upstream guidance in
-    [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases).
+    exact pins. Use **Testing** as the recommended channel for most distros and users. This
+    matches the guidance in [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases).
 
 ```bash
 uv pip install ovos-core[mycroft] -c https://raw.githubusercontent.com/OpenVoiceOS/ovos-releases/refs/heads/main/constraints-stable.txt
@@ -191,7 +188,7 @@ Rather than using a full distro, you can manually pick which components to insta
 
 Media playback (music, podcasts, video) is a separate concern from the components above.
 By default it is handled by a bundled backend inside `ovos-audio`
-(`enable_old_audioservice: true`). See [ovos-media](ovos-media.md) for the upcoming
+(`enable_old_audioservice: true`). See [ovos-media](ovos-media.md) for the
 standalone player and how to opt into it.
 
 This is useful if you are building something like a **Hivemind node** or **headless device**, where you might not need audio output or a GUI.
@@ -235,7 +232,7 @@ uv pip install "ovos-core[mycroft,plugins,skills-essential]" \
 
 ## Offline and mirrored installs
 
-Every `-c https://...` command on this page fetches the constraints file over HTTPS at install
+Every `-c https://...` command above fetches the constraints file over HTTPS at install
 time. On an isolated or bandwidth-constrained network, keep local copies instead.
 
 **1. Use a local constraints file.** Download the channel file once on a connected machine, copy

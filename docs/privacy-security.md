@@ -6,14 +6,14 @@
     synthesis unless you change the plugins, and the [messagebus](bus-service.md)
     that skills use to talk to each other has **no authentication**. Anything
     that can reach it, or any skill you install, has full control of the
-    assistant. This page inventories what a stock install actually sends over
+    assistant. The sections below list what a stock install sends over
     the network, who you're trusting when you install a skill, and how to
     lock things down. See the [Glossary](glossary.md) for unfamiliar terms.
 
-This page describes the **`ovos` profile installed by the [`ovos-installer`](ovos-installer.md)
+The scope is the **`ovos` profile installed by the [`ovos-installer`](ovos-installer.md)
 with its bundled defaults**, the most common path. Anything below can be
 changed by picking different plugins or a different [profile](composable-deployments.md),
-so where behavior depends on a choice you made, this page says so instead of
+so where behavior depends on a choice you made, the text says so instead of
 guessing.
 
 None of this is unusual for a local-only Linux service. The trust model below is the same
@@ -296,8 +296,8 @@ There is no secrets manager or encryption layer.
       [TTS plugins](tts-plugins.md)).
 - [ ] Keep the messagebus bound to `127.0.0.1`. Never expose port `8181`
       directly to the internet ([Bus Service](bus-service.md)).
-- [ ] Keep `gui_websocket.host` at `127.0.0.1` (the shipped default) and re-check
-      configs from older installs, which may still carry `0.0.0.0`. Widen it only
+- [ ] Keep `gui_websocket.host` at `127.0.0.1` (the shipped default) and make sure
+      your config does not carry `0.0.0.0`. Widen it only
       behind a VPN or an authenticating proxy. That socket carries the same
       authority as the bus ([GUI Service](gui-service.md)).
 - [ ] Point `network_tests` at your own infrastructure if the default connectivity

@@ -1,7 +1,7 @@
 # Agent Plugins Reference
 
 !!! abstract "In a nutshell"
-    This page holds the full technical entry for each agent plugin in the catalog: repository
+    The full technical entry for each agent plugin in the catalog: repository
     link, description, entry-point group where it differs from the obvious one, and config keys.
     Start at [Agent Plugins](agent-plugins.md) to pick a plugin, come here for the exact settings.
 

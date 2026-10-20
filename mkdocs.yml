@@ -162,7 +162,7 @@ nav:
           - ovos-media OCP Pipeline Plugin: ovos-media-pipeline.md
           - ovos-media MPRIS Integration: ovos-media-mpris.md
           - ovos-media Legacy Compatibility: ovos-media-compat.md
-          - Screens on OVOS Today: gui-status.md
+          - Screens on OVOS: gui-status.md
           - GUI Service (legacy): gui-service.md
           - PHAL (Hardware Abstraction): phal.md
           - Writing PHAL Plugins: phal-authoring.md

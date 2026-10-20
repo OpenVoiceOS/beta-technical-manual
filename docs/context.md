@@ -17,12 +17,12 @@
     | **intent context** (the term) | the decaying key/value state itself — the entries in that field | (entries of the above) |
     | `Match.slots` | the slot map produced *at match time* for one dispatch | `data.slots` |
 
-    This page is about the third (and the field that holds it). It is not `Message.context`, and a context entry is not a `Match.slot`. CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a `requires_context` key also names a slot, its value fills that slot if the utterance did not. This is exactly the "remember which person" mechanism below.
+    The sections below cover the third (and the field that holds it). It is not `Message.context`, and a context entry is not a `Match.slot`. CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a `requires_context` key also names a slot, its value fills that slot if the utterance did not. This is exactly the "remember which person" mechanism below.
 
     **A capped store.** CONTEXT-1 §2 says the orchestrator SHOULD enforce a maximum
     live-entry count per session, evicting the entry closest to natural expiry when a write
     would exceed it. `ovos-spec-tools` ships the eviction helper with
-    `DEFAULT_MAX_ENTRIES = 1024`, but the shipped core does not call it yet — today the only
+    `DEFAULT_MAX_ENTRIES = 1024`, but `ovos-core` does not call it. The only
     bound on the store is entry expiry. Either way this is a safety bound, not a limit a
     skill author needs to plan around.
 
@@ -32,7 +32,7 @@
 
 Conversational context makes voice interactions feel more natural. The assistant keeps track of the subject you are discussing, so you do not have to repeat it.
 
-**What works in a skill today**: the declarative `requires_context=`/`excludes_context=`
+**What works in a skill**: the declarative `requires_context=`/`excludes_context=`
 kwargs on `@intent_handler` (file-registered/Padatious intents, see below), a blocking prompt,
 `ask_yesno()`/`get_response()` (see [Statements and Prompts](prompts.md)), keeping the skill in
 the conversation with [`converse()`](converse.md), or the Adapt path: `self.set_context()` plus
@@ -59,7 +59,7 @@ The private/shared scoping rules are identical on both sides: a bare key gates p
 against the registering `skill_id`, and reading a shared key needs the explicit
 `{"key": "person", "scope": "shared"}` form.
 
-Since `ovos-workshop` `9.6.0a1`, `@intent_handler` carries the declaration side too, on any
+`@intent_handler` carries the declaration side too, on any
 intent, adapt or file-registered:
 
 ```python
@@ -77,7 +77,7 @@ engines (Padatious, Padacioso, M2V) filter candidates against `session.intent_co
 time, and so does Adapt, whose keyword matcher stores each intent's declared
 `requires_context`/`excludes_context` at registration and admits a candidate only when the gate
 is satisfied (OVOS-CONTEXT-1 §6/§6.1). Adapt also keeps its own separate legacy mechanism
-(`.require()` on a context keyword, the TeaSkill example below) for gating today, so a skill can
+(`.require()` on a context keyword, the TeaSkill example below) for gating, so a skill can
 use either the declarative kwargs or `.require()`.
 
 !!! danger "A bare-string entry silently never matches a shared entry"
@@ -92,10 +92,10 @@ Context lives on the per-conversation [Session](session.md), in `Session.intent_
 is **session-scoped**, not a single global store, so concurrent users and devices keep
 separate context.
 
-`Session.context` still resolves as a read/write view projected over `intent_context`, kept
-for older code: reads project from the canonical map and legacy writes
+`Session.context` resolves as a read/write view projected over `intent_context`, kept
+for legacy code: reads project from the canonical map and legacy writes
 (`inject_context`, `update_context`, `remove_context`, `clear_context`) fold back into it,
-so old mutation calls still take effect. Touching it warns. New code writes to
+so legacy mutation calls take effect. Touching it warns. Write to
 `intent_context` directly.
 
 ---
@@ -158,7 +158,7 @@ To get a more natural response the functions can be changed to let OVOS know whi
 
 ```
 
-When either method is called, OVOS adds the `PythonPerson` keyword to its context. If there is a match with `Length` but `PythonPerson` is missing, OVOS assumes the last mention of that keyword. The interaction can now become the one described at the top of the page.
+When either method is called, OVOS adds the `PythonPerson` keyword to its context. If there is a match with `Length` but `PythonPerson` is missing, OVOS assumes the last mention of that keyword. The interaction can then become the one described at the top of the page.
 
 > User: How tall is John Cleese?
 
@@ -250,14 +250,14 @@ class TeaSkill(OVOSSkill):
 The full, worked-through version of this `TeaSkill`, with every handler, is in
 [Using context to enable Intents](#using-context-to-enable-intents) below.
 
-> **NOTE**: cross skill context is not yet exposed via decorators
+> **NOTE**: decorators do not expose cross skill context.
 
 
 ## Using context to enable **Intents**
 
 Context can create "bubbles" of available intent handlers, so certain **intents** can't trigger unless some previous stage in a conversation has occurred.
 
-> This is the *idea* behind the **`requires_context`** gate of CONTEXT-1 §6, expressed through the legacy mechanism that works today: `MilkContext` is a private flag (the `@adds_context` decorator stores it under the skill's own prefix), and an intent that `.require('MilkContext')` declares it as an Adapt keyword precondition, so the `yes`/`no` intents are invisible except in the narrow window between the question and the reply, with no skill-side state machine. Note that `.require()` keyword matching and the declarative `requires_context=` / `excludes_context=` intent kwargs are **different code paths**: the declarative gate looks entries up under the resolved `<skill_id>:<key>` shape, which `set_context` / `@adds_context` also write (see "Both spellings are written, with one decay policy" below). The complementary `excludes_context` gate (CONTEXT-1 §6.1) handles fire-once intents (for example, "greet only once per session").
+> This is the *idea* behind the **`requires_context`** gate of CONTEXT-1 §6, expressed through the legacy mechanism: `MilkContext` is a private flag (the `@adds_context` decorator stores it under the skill's own prefix), and an intent that `.require('MilkContext')` declares it as an Adapt keyword precondition, so the `yes`/`no` intents are invisible except in the narrow window between the question and the reply, with no skill-side state machine. Note that `.require()` keyword matching and the declarative `requires_context=` / `excludes_context=` intent kwargs are **different code paths**: the declarative gate looks entries up under the resolved `<skill_id>:<key>` shape, which `set_context` / `@adds_context` also write (see "Both spellings are written, with one decay policy" below). The complementary `excludes_context` gate (CONTEXT-1 §6.1) handles fire-once intents (for example, "greet only once per session").
 
 ```text
 User: Hey Mycroft, bring me some Tea
@@ -355,7 +355,7 @@ CONTEXT-1's declarative `requires_context` / `excludes_context` gate (above) exp
     Separately, the legacy `add_context` bus message is also emitted, for pre-spec
     orchestrators that only understand `Session.context`. This is a different consumer, not
     a second write path into `intent_context`. The two live in different session fields.
-    The legacy emit now logs a deprecation warning once per process; it is scheduled for
+    The legacy emit logs a deprecation warning once per process; it is scheduled for
     removal at `ovos-workshop` 10.0.0.
 
 !!! note "Writing a key replaces it wholesale; there is no read-back"

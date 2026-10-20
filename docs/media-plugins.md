@@ -2,8 +2,8 @@
 
 !!! abstract "In a nutshell"
     These plugins are the **playback backends** that actually push audio/video to your
-    speakers or screen (VLC, MPV, Chromecast, Spotify…). OVOS is mid-migration between the
-    legacy audio-service backend and the upcoming [`ovos-media`](ovos-media.md) daemon, and a
+    speakers or screen (VLC, MPV, Chromecast, Spotify…). OVOS has two playback systems, the
+    legacy audio-service backend and the [`ovos-media`](ovos-media.md) daemon, and a
     single plugin **package is meant to ship a version for both**. See
     [Media playback: legacy vs. ovos-media](ovos-media.md).
 
@@ -15,7 +15,7 @@ A playback plugin can implement **two separate entry-point families**:
 
 - **Old audio service**: `mycroft.plugin.audioservice` (used by the deprecated
   [`ovos-ocp-audio-plugin`](#ovos-ocp-audio-plugin) / "old audio service", the shipped default).
-- **[`ovos-media`](ovos-media.md)**: `opm.media.{audio,video,web}` (the upcoming daemon).
+- **[`ovos-media`](ovos-media.md)**: `opm.media.{audio,video,web}` (the standalone daemon).
 
 Media *classifiers* are a separate concern from playback backends: they recognize the
 media intent and entities (artist, title, station, …) in an utterance before a stream is
@@ -24,7 +24,7 @@ resolved and played. See [ovos-media-classifier](#ovos-media-classifier) below.
 These two families are **separate** (different entry-point groups and base classes), **but a
 plugin package is meant to ship a version for *both***. This way a single `pip install` gives
 you a backend that works whichever playback system you run. Packages are not required to ship
-both families. See the table below for what each currently supports.
+both families. The table below shows what each package supports.
 
 | Package | Player | Ships for | License | Maturity |
 |---|---|---|---|---|
@@ -37,7 +37,7 @@ both families. See the table below for what each currently supports.
 | [ovos-media-plugin-cli](#ovos-media-plugin-cli) | generic CLI-command player (audio) | yes: both | Apache-2.0 | Alpha |
 | [ovos-plugin-vlc](#ovos-plugin-vlc) | VLC | old audio service only (legacy). Use ovos-media-plugin-vlc for ovos-media | Apache-2.0 | Stable |
 | [ovos-media-plugin-mass](#ovos-media-plugin-mass) | Music Assistant server (audio) | yes: both (old audio service + ovos-media) | Apache-2.0 | Alpha |
-| ovos-media-plugin-mpris | external MPRIS player (audio + video) | ovos-media only | — | Not yet published |
+| ovos-media-plugin-mpris | external MPRIS player (audio + video) | ovos-media only | — | Unpublished |
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
 
@@ -242,8 +242,7 @@ ovos-media](ovos-media.md).
 
 ## ovos-media-plugin-mpris
 
-- **Status**: not yet published — no public repository or PyPI package exists, so it cannot be
-  installed today.
+- **Status**: unpublished. No public repository or PyPI package exists, so you cannot install it.
 - **Description**: Drives an already-running external MPRIS player (e.g. a desktop media app)
   rather than playing the stream itself. `opm.media.audio` and `opm.media.video`, `ovos-media`
   only. Complements (but is separate from) `ovos-media`'s own MPRIS exporter/reflector — see

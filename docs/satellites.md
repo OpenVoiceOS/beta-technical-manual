@@ -3,9 +3,9 @@
 !!! abstract "In a nutshell"
     A satellite deployment puts one capable server in the middle and several small
     devices around the house. The server runs the messagebus, `ovos-core`, and skills.
-    Each satellite only listens and speaks. This page is the build guide. It has two
-    paths: a raw shared bus for a trusted LAN, and HiveMind for anything that needs
-    auth or crosses an untrusted network. Terminology: this page says *satellite*.
+    Each satellite only listens and speaks. The build guide has two paths: a raw shared
+    bus for a trusted LAN, and HiveMind for anything that needs auth or crosses an
+    untrusted network. Terminology: this guide says *satellite*.
     HiveMind pages say *client* or *node* for the same thing: the device that
     connects to the central server.
 
@@ -41,7 +41,7 @@ listener and an audio service, and both connect back to the server's messagebus.
 Keep the raw shared bus on a trusted LAN only. Never forward its port to the internet.
 Use HiveMind for anything off your own network, or when you need to tell satellites apart.
 
-Both paths on this page share one `ovos-core` brain across every satellite. If you instead
+Both paths share one `ovos-core` brain across every satellite. If you instead
 want each device to run its own independent `ovos-core` and only share the heavy STT/TTS
 inference, see [Thin clients + a shared speech backend](#thin-clients-a-shared-speech-backend)
 below.
@@ -143,7 +143,7 @@ separate project with its own protocol and docs.
     !!! warning "Alpha channel only"
         Install both sides from the prerelease channel. The two sides negotiate a protocol
         version, and the stable `hivemind-bus-client` release, `0.4.4`, predates the protocol
-        this page documents, so a satellite from the stable channel connects to nothing here.
+        described here, so a satellite from the stable channel connects to nothing here.
         [HiveMind agents](hivemind-agents.md) explains why.
 
 2. Provision each satellite with its own access key: `hivemind-core add-client`. A new client's message-type whitelist is empty and denies everything, so grant what the satellite sends and what it receives with `hivemind-core allow-msg`, or it will connect and stay mute. See [HiveMind agents](hivemind-agents.md) for the list.
@@ -300,13 +300,13 @@ resource limit and healthcheck spelled out.
     one. Every container and process on that host shares it. A bus bound to `127.0.0.1` is
     reachable by any of them, not just `ovos_messagebus`.
 
-    "Bound to localhost" no longer means "only reachable by this one process" once host
+    "Bound to localhost" does not mean "only reachable by this one process" once host
     networking is in play. Treat the whole host as the trust boundary, not the individual
     container.
 
     Host networking also exposes any service that binds `0.0.0.0` straight onto the LAN, not
     just the host's own loopback. `gui_websocket.host` ships as `127.0.0.1`. If you widen
-    it to `0.0.0.0` for a remote display, or an older config still carries that value, then
+    it to `0.0.0.0` for a remote display, or a config carries that value, then
     with `network_mode: host` the GUI WebSocket lands on the LAN, not just the device. Keep
     the loopback default unless a remote display client genuinely needs LAN access.
 

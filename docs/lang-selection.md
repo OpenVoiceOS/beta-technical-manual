@@ -4,7 +4,7 @@
     Long-lived, well-tested, and actively maintained. This is `ovos-core` internals. You can depend on it. Rated by [repository health](maturity.md), not version.
 
 !!! tip "Just want to change your language?"
-    See [Language Support](lang-support.md) instead. This page covers internals: how
+    See [Language Support](lang-support.md) instead. The sections below cover internals: how
     `ovos-core` picks a language for a given utterance internally, not how to configure one.
 
 !!! abstract "In a nutshell"
@@ -13,7 +13,7 @@
     default, before it tries to match an intent. If you only ever use one language, the
     default `lang` in `mycroft.conf` is all that matters, and you can skip the details below.
 
-OpenVoiceOS is designed to be multi-language from the ground up. This page explains the technical logic used by `ovos-core` to determine which language should be used for a given user utterance.
+OpenVoiceOS is designed to be multi-language from the ground up. `ovos-core` uses the logic below to determine which language should be used for a given user utterance.
 
 To switch your assistant's language, set `lang` in `mycroft.conf` to the new default. To
 understand a second language as well, without replacing the primary one, list it under
@@ -77,9 +77,9 @@ Developers should use the language helpers from **`ovos_spec_tools`** — `stand
 language). These are what `ovos-core` itself uses.
 
 !!! note
-    The older `ovos_utils.lang` helpers below (`standardize_lang_tag`, `get_language_dir`) are
+    The legacy `ovos_utils.lang` helpers below (`standardize_lang_tag`, `get_language_dir`) are
     **deprecated** in favor of the `ovos_spec_tools` helpers above. They are documented here
-    because existing skills still reference them.
+    because existing skills reference them.
 
 ### `standardize_lang_tag(lang_code, macro=True)`
 Normalizes a language tag to a canonical form (e.g., `"en-us"` -> `"en-US"`). It is used internally to ensure comparisons are reliable. With `macro=True` it can also collapse a tag to its macro-language.

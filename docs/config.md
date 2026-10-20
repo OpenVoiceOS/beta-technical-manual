@@ -1,7 +1,7 @@
 # Configuration Management
 
 !!! abstract "In a nutshell"
-    This page covers how you change OVOS's settings, such as your language, voice, and
+    You change OVOS's settings, such as your language, voice, and
     microphone. OVOS ships with a complete set of defaults you never touch. You write a
     small personal file listing only the things you want different. OVOS stacks your file
     on top of the defaults, so the rest stays as-is, like adding a sticky note over a
@@ -38,10 +38,9 @@ by hand. Write to it programmatically with `update_assistant_config(config, bus)
 
 It is not the file you edit. See the [Config Layer Stack](#config-layer-stack) below.
 
-!!! note "Remote configuration is gone"
-    The old Mycroft Home / `home.mycroft.ai` backend layer (`RemoteConf`,
-    `disable_remote_config`, `protected_keys.remote`) was removed as a breaking change
-    (`ovos-config` `5a7d1a3`, #194, first tag `3.0.0a1`). `Configuration.remote` now raises
+!!! note "No remote configuration"
+    OVOS has no Mycroft Home / `home.mycroft.ai` backend layer. `RemoteConf`,
+    `disable_remote_config` and `protected_keys.remote` have no effect. `Configuration.remote` raises
     `AttributeError`; `RemoteConf` stays importable only as a deprecated, warn-on-construction
     class.
 
@@ -97,12 +96,8 @@ The layers merge left to right, so the last one wins. `$XDG_CONFIG_HOME`
 (`~/.config/mycroft/mycroft.conf`) is last, and therefore overrides a system-wide
 `/etc/xdg/mycroft/mycroft.conf`, as the XDG base-directory spec requires.
 
-!!! warning "Older versions had this backwards"
-    Before `ovos-config` 2.3.7, `get_xdg_config_locations()` returned the list reversed, so
-    `/etc/xdg/mycroft/mycroft.conf` silently overrode the user's own file
-    ([ovos-config#284](https://github.com/OpenVoiceOS/ovos-config/pull/284)). If you deploy to
-    devices that may still run an older release, check which order they use before relying on
-    either:
+!!! tip "Check the merge order on a device"
+    Print the XDG config paths in merge order:
 
     ```bash
     python3 -c "from ovos_config.locations import get_xdg_config_locations as f; print(f())"
@@ -191,10 +186,7 @@ ovos-config set -k /tts/module -v ovos-tts-plugin-phoonnx
 See the **Secrets and permissions** warning above. `ovos-config set` does not restrict the file's permissions itself.
 
 `ovos-config set` writes to `~/.config/mycroft/mycroft.conf` (the User layer), and
-`ovos-config show -u`/`show -a` read the User/Assistant layers respectively. A mis-indexed
-config-layer table swapped these before `ovos-config` `3.1.1a1`
-([`ovos-config#305`](https://github.com/OpenVoiceOS/ovos-config/pull/305)); update if
-you're on an older release.
+`ovos-config show -u`/`show -a` read the User/Assistant layers respectively.
 
 **Restart and verify**
 
@@ -225,9 +217,9 @@ The system config (`/etc/mycroft/mycroft.conf`) can enforce constraints:
 | `protected_keys` | Dict of `{"user": [...], "assistant": [...]}`: keys stripped from the matching layer before merging |
 | `disable_user_config` | If `true`, every layer except `default`, `system`, and `assistant` is ignored — see the warning below |
 
-Since `ovos-config` `3.0.1a1`, the **assistant** layer (`runtime.conf`) has its own protection
-list (`protected_keys.assistant`) and is no longer classified as a "user" layer for merge
-purposes — `disable_user_config` does **not** drop it, unlike earlier releases.
+The **assistant** layer (`runtime.conf`) has its own protection
+list (`protected_keys.assistant`). It is not a "user" layer for merge
+purposes, so `disable_user_config` does **not** drop it.
 
 !!! danger "`disable_user_config` drops more than the user layer"
     The merge filter treats every layer whose path is neither the bundled default, the
@@ -238,7 +230,7 @@ purposes — `disable_user_config` does **not** drop it, unlike earlier releases
     So an OEM that ships a distribution config and then locks the device with
     `disable_user_config` erases its own settings and silences every runtime config update
     that goes through the patch layer. The device falls back to stock defaults, with no
-    error and no log line. Verified against `ovos-config` `3.0.1a1`: with `lang` set to
+    error and no log line. For example, with `lang` set to
     `pt-PT` in the distribution layer, turning the flag on returns `en-US`.
 
     To lock a device, put the values in `/etc/mycroft/mycroft.conf` (the system layer), which
@@ -360,7 +352,7 @@ ovos-config telemetry --disable   # opt out
 
 - Use `disable_user_config` with caution. It silently skips the distribution layer and
   in-memory runtime patches too, not only the user layer. The assistant layer
-  (`runtime.conf`) is exempt since `3.0.1a1`.
+  (`runtime.conf`) is exempt.
 
 
 - For the package layout, entry points, and other internals, see

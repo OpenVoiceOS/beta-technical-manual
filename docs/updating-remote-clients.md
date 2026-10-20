@@ -2,11 +2,11 @@
 
 ## In a nutshell
 
-This page is for anyone connecting to the bus as a separate process:
+The entries below are for code that connects to the bus as a separate process:
 HiveMind satellites, custom dashboards, external automation, or any code
 that parses raw wire messages instead of going through a skill. Entries
-are in date order: start at the version you are currently running and
-read forward to your target version. For the Big-ticket migrations (the
+are in date order: start at the version you run and
+read forward to your target version. For the big-ticket migrations (the
 changes with the widest blast radius, including the bus-client dual-emit
 bridge), see
 [Updating from Older OVOS](updating-from-older-ovos.md#big-ticket-migrations).
@@ -25,8 +25,8 @@ package-level ancestor of the topic-level migration above.
   `from ovos_bus_client import MessageBusClient`).
 
     !!! warning "Alpha channel only"
-        `pip install --pre ovos-bus-client`. The plain PyPI stable, `1.5.0`, predates the
-        dual-emit bridge this page documents.
+        `pip install --pre ovos-bus-client`. The stable release does not have the
+        dual-emit bridge.
 Lifecycle:
 
 | Phase | Version | Notes |
@@ -43,11 +43,10 @@ The ecosystem-wide dependency swap landed at `b1a9d39e16` (2023-04-11) in
 
 A template-based GUI wire protocol (OVOS-GUI-1 §3-4: `gui.value.set` +
 `gui.page.show` with a `PageTemplates` enum and `show_*` helpers) is being
-built on unmerged `ovos-bus-client` branches. None of it is on `dev`: the
-shipping `GUIInterface` and `EnclosureAPI` wire behavior is unchanged, and
-no migration is needed yet. Watch the `ovos-bus-client` release notes
-before depending on either the old primitives staying public or the new
-templates existing.
+built on unmerged `ovos-bus-client` branches. None of it is on `dev`. The
+`GUIInterface` and `EnclosureAPI` wire behavior does not change, and
+no migration is necessary. Read the `ovos-bus-client` release notes
+before you depend on the template primitives.
 
 ### HiveMind agent protocol and messagebus-solver removed from ovos-bus-client
 
@@ -92,8 +91,8 @@ twins for canonical emits), not from any per-service config flag:
   legacy producers and consumers working in the meantime (its own flags are
   `OVOS_BUS_MODERNIZE` / `OVOS_BUS_EMIT_LEGACY` / `OVOS_BUS_WIRE_LEGACY_TWINS`,
   see [Bus Namespace Migration](bus-namespace-migration.md)). Prefer
-  `ovos_spec_tools.SpecMessage.*` constants over hardcoded topic strings
-  going forward, since their literal values are not always the same as
+  `ovos_spec_tools.SpecMessage.*` constants over hardcoded topic strings,
+  because their literal values are not always the same as
   the legacy strings they replace.
 Lifecycle:
 

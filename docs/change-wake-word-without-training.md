@@ -122,7 +122,7 @@ Two listener features also cut false activations with any wake-word engine. The 
 
 ## How they compare
 
-The table shows one measurement of each engine with the config on this page, with `ovos-ww-plugin-wakeforge` 0.18.0a1 and `ovos-ww-plugin-vosk` 0.1.10. The audio was fed as the listener feeds it, in 4096-byte chunks.
+The table shows one measurement of each engine with the config above, with `ovos-ww-plugin-wakeforge` 0.18.0a1 and `ovos-ww-plugin-vosk` 0.1.10. The audio was fed as the listener feeds it, in 4096-byte chunks.
 
 - **Detections:** "hey jarvis" and "hey computer", each spoken by 7 synthetic neural voices (US, UK, Australian and Indian English), with 1 second of silence before and after.
 - **False activations:** 1 hour of English read speech that does not contain the wake word (LibriSpeech dev-other, 545 files).

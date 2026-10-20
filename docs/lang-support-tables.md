@@ -1,7 +1,7 @@
 # Language Support Tables
 
 !!! abstract "In a nutshell"
-    This page holds the per-language STT/TTS/parser coverage tables for OVOS: which languages have a bundled offline speech model, and which have a number/date parser module. Use it to look up one language. For the narrative on how language support works and how to improve it, see [Language Support](lang-support.md).
+    The per-language STT/TTS/parser coverage tables for OVOS: which languages have a bundled offline speech model, and which have a number/date parser module. Use it to look up one language. For the narrative on how language support works and how to improve it, see [Language Support](lang-support.md).
 
 ---
 
