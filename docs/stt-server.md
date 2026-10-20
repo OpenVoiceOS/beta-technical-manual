@@ -127,11 +127,16 @@ Native endpoints:
 | -------------- | ------ | ---------------------------------------------------------- |
 | `/status`      | GET    | Returns `{status, plugin, lang_plugin}`.                  |
 | `/stt`         | POST   | Raw audio bytes in the body (query: `lang`, `sample_rate` default `16000`, `sample_width` default `2`) → plain‑text transcript. With `lang=auto`, language is detected first. |
+| `/stt/json`    | POST   | JSON body `{"audio_b64", "lang", "sample_rate", "sample_width"}` → JSON `{"text", "lang"}`, with the language the engine used. A WAV file in `audio_b64` is read with its own format; other bytes are raw PCM. Returns 400 for empty or invalid base64 or an unreadable WAV, and 422 for an impossible `sample_rate` (above 384000) or `sample_width` (outside 1–4). This is the endpoint UTCP and other tool-calling clients use, because they send JSON and cannot send a raw byte body. |
 | `/lang_detect` | POST   | Raw audio bytes (query: `valid_langs`) → JSON `{ "lang": "en", "conf": 0.83 }`. |
 | `/utcp`        | GET    | UTCP tool-discovery manual (JSON).                        |
 | `/docs`        | GET    | Interactive FastAPI OpenAPI docs.                         |
 
-Compatibility routers (selection): `POST /wit/speech` (Wit.ai), `POST /speech-api/v2/recognize` (Chromium), plus OpenAI/Deepgram/Google/etc. See `/docs` for the full list.
+Compatibility routers (selection): `POST /wit/speech` (Wit.ai), `POST /speech-api/v2/recognize` (Chromium), `POST /openai/v1/audio/transcriptions` (OpenAI Whisper, `multipart/form-data` as the `openai` SDK sends it; point the SDK's `base_url` at `http://<host>:8080/openai/v1`), and the vosk-server WebSocket at `/vosk`, plus Deepgram, Google and others. See `/docs` for the full list.
+
+!!! warning "Alpha channel only"
+    `/stt/json` is in `ovos-stt-http-server` 0.28.0a1 and later prerelease versions. The
+    stable 0.1.4 does not have it.
 
 ### OpenAI-Compatible Translation Endpoint
 

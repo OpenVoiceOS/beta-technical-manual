@@ -38,9 +38,11 @@ while disconnected. Nothing is stored and re-sent once the socket reopens. Any `
 allowed through only unblocks (and actually sends) after reconnection, but nothing produced by a
 process that isn't running a client at all during the gap is retried later. Downstream services
 should treat a bus restart as a full session reset for anything time-sensitive: session state
-communicated over the bus is fine (a fresh `ovos.session.sync` happens automatically once the
-socket reopens), but any request/response pair straddling the restart is simply lost from the
-requester's point of view until it emits again.
+communicated over the bus is fine (the client does not send `ovos.session.sync` when the socket
+reopens; each process derives its default session from its own configuration, and adopts the
+session of the next message it acts on), but any request/response pair straddling the restart is
+lost from the requester's point of view until it emits again. The stable `ovos-bus-client` 1.5.0
+sends an `ovos.session.sync` request on every connect.
 
 **Malformed frames don't trigger a reconnect.** A frame that fails to deserialize, or whose
 session carrier isn't a JSON object, is dropped and logged. It does not tear the connection down

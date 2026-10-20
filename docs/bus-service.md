@@ -292,7 +292,7 @@ Topic names below are the canonical spec names ([OVOS-PIPELINE-1 §9](https://gi
 
 | Message type | Publisher | Consumers |
 |---|---|---|
-| `ovos.session.sync` | new client | `ovos-core` |
+| `ovos.session.sync` | legacy clients (`ovos-bus-client` 1.5.0 sends it on connect; prerelease clients do not) | `ovos-core` |
 | `ovos.session.update_default` | `ovos-core` | all clients (legacy default-session echo, deprecated) |
 
 ### Connectivity / [PHAL](phal.md)

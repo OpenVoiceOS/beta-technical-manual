@@ -105,10 +105,10 @@ canonical/alias relationship exists only inside the line that produced it. Separ
 are independent keywords with no aliasing between them, so write alternatives on one line if you
 want them collapsed into a single canonical form plus aliases:
 
-!!! warning "A bare `a|b` is not alternation"
-    The parentheses are required. A `|` outside a `(...)` group is not split at all. It is
-    kept as a literal character in a single keyword line, almost never what you want. Either
-    wrap it, `(a|b)`, or drop the `|` and put each alternative on its own line.
+!!! warning "A bare `a|b` is malformed"
+    The brackets are required. A `|` outside a `(...)` or `[...]` group is malformed
+    (OVOS-INTENT-1 §3.6), and `ovos-spec-tools` rejects the line with `MalformedTemplate`.
+    Either wrap it, `(a|b)`, or drop the `|` and put each alternative on its own line.
 
 ```text
 
@@ -134,7 +134,9 @@ what[ is] the time
 ```
 
 A line that is a bare slot and nothing else, `{location}`, is malformed: an intent needs
-at least one literal word to anchor the match (OVOS-INTENT-1 §3.6).
+at least one literal word to anchor the match (OVOS-INTENT-1 §3.6). A `|` outside a
+`(...)` or `[...]` group, such as `turn on|off the light`, is malformed too. Write
+`turn (on|off) the light` instead.
 
 ## Regex Files (Adapt)
 

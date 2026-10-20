@@ -72,9 +72,16 @@
 - **GitHub**: [OpenVoiceOS/ovos-wikipedia-plugin](https://github.com/OpenVoiceOS/ovos-wikipedia-plugin)
 
 
-- **Description**: Answers factual questions by querying Wikipedia.
+- **Description**: Answers factual questions from Wikipedia. The package registers two plugins:
+    - a retrieval engine, `ovos-wikipedia-plugin` (`WikipediaRetrievalEngine`, entry-point group `opm.agents.retrieval`). A [persona](personas.md) lists it in `handlers` by that name, and RAG pipelines query it for passages.
+    - a toolbox, `ovos-wikipedia-tools` (`WikipediaToolbox`, group `opm.agents.toolbox`), with one tool, `search_wikipedia`, for LLM tool calling. See [Agent Tool Plugins](tool-plugins.md).
 
-- **Config**: `"extractive_qa"`: module name of the `ExtractiveQAEngine` plugin used to pull the exact answering passage out of a Wikipedia summary.
+    It is not a solver plugin: it registers nothing under `opm.solver.*`.
+
+- **Config** (all optional, each the module name of another plugin):
+    - `"extractive_qa"`: the `ExtractiveQAEngine` that pulls the exact answering passage out of a Wikipedia summary.
+    - `"reranker"`: the `ReRankerEngine` that reorders the search results.
+    - `"keyword_extractor"`: the `KeywordExtractor` that turns a question into a search query.
 
 ---
 

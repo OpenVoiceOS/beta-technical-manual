@@ -39,7 +39,7 @@ Add a matcher to your pipeline in `mycroft.conf`:
 {
   "intents": {
     "ovos-m2v-pipeline": {
-      "model": "Jarbas/ovos-model2vec-intents-LaBSE"
+      "model": "OpenVoiceOS/ovos-m2v-intents-multilingual"
     },
     "pipeline": [
       "ovos-converse-pipeline-plugin",
@@ -117,7 +117,7 @@ The pipeline has a `mode` config key:
 
 * **`classifier`** (default): loads a `StaticModelPipeline` (embedding model plus
   a trained linear classifier head). Scores are softmax probabilities. This is the
-  mode used by the published `Jarbas/ovos-model2vec-intents-*` models.
+  mode used by the published `OpenVoiceOS/ovos-m2v-intents-*` models.
 * **`prototype`**: loads a bare `StaticModel` (embeddings only, no trained head)
   and builds a prototype store from the example utterances skills provide when
   they register Padatious intents. Scores are cosine similarities. Adapt intents
@@ -125,6 +125,12 @@ The pipeline has a `mode` config key:
   mode. An unchanged registration is loaded from an on-disk cache instead of
   re-encoded on every boot; the cache clears itself when a skill or intent
   detaches (see `prototype_cache` below).
+
+In classifier mode, the `-low` stage (`ovos-m2v-pipeline-low`) does not use the
+trained head by default. It matches against the skills' own example utterances in
+prototype mode, with the same model (`low_tier: "prototype"`). Set
+`low_tier: "classifier"` to score the `-low` stage with the trained head at
+`conf_low` instead.
 
 A second entry point, `ovos-m2v-prototype-pipeline`
 (`Model2VecPrototypePipeline`), is the prototype mode exposed as a standalone
@@ -139,7 +145,7 @@ plugin so it can run alongside the classifier one. It reads its config from
 {
   "intents": {
     "ovos-m2v-pipeline": {
-      "model": "Jarbas/ovos-model2vec-intents-LaBSE",
+      "model": "OpenVoiceOS/ovos-m2v-intents-multilingual",
       "mode": "classifier",
       "conf_high": 0.7,
       "conf_medium": 0.5,
@@ -155,15 +161,19 @@ plugin so it can run alongside the classifier one. It reads its config from
 | `model` | `OpenVoiceOS/ovos-m2v-intents-multilingual` (`DEFAULT_MULTILINGUAL`, used when no `models` entry matches the language) | Local path or Hugging Face repo of the Model2Vec model; an explicit value always wins over any per-language default. See `models` below for a per-language override map. |
 | `models` | *(unset)* | `{locale_or_lang: repo_id}` map, matched first against the full locale (`"pt-BR"`), then against the primary subtag (`"pt"`); case-insensitive. Falls back to a built-in per-language default table, then to `model`/`DEFAULT_MULTILINGUAL` if no entry matches. |
 | `mode` | `classifier` | `classifier` (trained head, softmax) or `prototype` (runtime prototypes, cosine). |
-| `conf_high` | `0.7` | Threshold for `match_high`. |
-| `conf_medium` | `0.5` | Threshold for `match_medium`. |
-| `conf_low` | `0.15` | Threshold for `match_low`. |
+| `subfolder` | `int8` for the two `OpenVoiceOS/ovos-m2v-intents-*` repos when no `revision` is set | Folder of the model repo to load, such as `int8`, `fp16` or a per-language folder. `""` loads the repo root. |
+| `revision` | *(unset)* | Git revision of the model repo to pin. |
+| `conf_high` | `0.7` classifier, `0.85` prototype | Threshold for `match_high`. |
+| `conf_medium` | `0.5` classifier, `0.7` prototype | Threshold for `match_medium`. |
+| `conf_low` | `0.15` classifier, `0.65` prototype | Threshold for `match_low`. |
 | `ignore_intents` | `[]` | Intent labels to never match. |
 | `renormalize` | `false` | Classifier mode: renormalize probabilities over the surviving (registered) labels. |
+| `low_tier` | `prototype` | Classifier mode: the engine behind the `-low` stage, `prototype` (skill examples) or `classifier` (trained head at `conf_low`). |
+| `low_prototype` | `{}` | Classifier mode: prototype-mode keys for the `-low` stage, such as `conf_low` or `prototype_k`. |
 | `timeout` | `1` | Seconds to wait for the Adapt/Padatious manifest sync at startup. |
 
-Prototype mode adds six more keys controlling how prototype embeddings are
-selected per label and cached on disk:
+Prototype mode adds seven more keys controlling how prototype embeddings are
+selected per label, cached on disk and loaded prebuilt:
 
 | Key | Default | Description |
 |-----|---------|-------------|
@@ -173,6 +183,7 @@ selected per label and cached on disk:
 | `prototype_tau` | `0.1` | Softmax temperature for prototype score aggregation. |
 | `prototype_cache` | `true` | Cache encoded prototypes on disk per skill, keyed on the registration's example utterances, instead of re-encoding on every boot. |
 | `prototype_cache_dir` | `{XDG_DATA_HOME}/mycroft/m2v_prototypes/` | Where the per-skill cache files live. |
+| `prebuilt_prototypes` | *(unset)* | Local directory or Hugging Face repo id of a prebuilt prototype artifact, made with `ovos-m2v-prototypes export`. A matching artifact skips the encoding step at boot, which shortens start-up on a Raspberry Pi. An artifact built for another model or `model2vec` version is ignored. |
 
 > The model is **pretrained**. It does not learn new skills at runtime. The
 > registered-intent filter just decides which of the model's known labels are
@@ -183,37 +194,55 @@ selected per label and cached on disk:
 
 ## Models
 
-Two families are published on Hugging Face:
+`OpenVoiceOS/ovos-m2v-intents-multilingual` is the default for every language with
+no `models` entry. It is an embedding model plus a trained classifier head, fit on
+the OVOS skill intent corpus. The plugin loads its `int8` folder by default.
 
-* **Multilingual**: distilled from LaBSE, larger, supports many languages and
-  partially translated skills (as long as their **dialogs** are localized).
-* **Language-specific**: roughly 10x smaller and nearly as accurate for a single
-  language, well suited to constrained hardware (e.g. Raspberry Pi).
+`OpenVoiceOS/ovos-m2v-intents-en` is an English-only alternative with smaller
+folders down to about 8 MB. It is not the default for any language. Select it with
+`models["en"]`.
 
-Browse them here:
-[OVOS Model2Vec Models on Hugging Face](https://huggingface.co/collections/Jarbas/ovos-model2vec-intents-681c478aecb9979e659b17f8)
+For devices with little memory, such as a Raspberry Pi, the multilingual repository
+also holds one folder per language (`pt`, `es`, `ca`, `da`, `de`, `nl`, `sv`, `gl`,
+`eu`). Each folder is an int8 copy with its vocabulary cut to that language. Select
+one with a `models` entry:
 
-The models are trained on aggregated intent examples: LLM-augmented OVOS
-utterances, music-query templates, and per-language skill intents.
+```json
+{
+  "intents": {
+    "ovos-m2v-pipeline": {
+      "models": {
+        "pt": {"model": "OpenVoiceOS/ovos-m2v-intents-multilingual", "subfolder": "pt"}
+      }
+    }
+  }
+}
+```
+
+A cut folder can misread words of another language, for example an English request
+on a Portuguese install.
+
+!!! warning "Alpha channel only"
+    The `OpenVoiceOS/ovos-m2v-intents-*` defaults, the `-low` prototype stage,
+    `subfolder` and `prebuilt_prototypes` are in the prerelease channel only. The stable
+    `ovos-m2v-pipeline` 0.0.9 loads
+    `Jarbas/ovos-model2vec-intents-distiluse-base-multilingual-cased-v2` by default.
 
 ---
 
 ## Training your own model
 
-!!! warning "Training is currently on hold"
-    Upstream `.intent`-scheme refactors (renamed/merged intents across the
-    default skills) mean a classifier's frozen label head goes stale the day
-    those land. Build the dataset and read the manifest freely; run `train.py`
-    only once the refactors are merged and `sources.yaml`'s pins are
-    regenerated against them.
-
-The published `Jarbas/ovos-model2vec-intents-*` models are built from a
+The published `OpenVoiceOS/ovos-m2v-intents-*` models are built from a
 `train/` toolchain shipped inside the `ovos-m2v-pipeline` source repository
-(it is not part of the installed pip package):
+(it is not part of the installed pip package). The dataset builder reads every
+skill at its `dev` branch head when a build starts and records each resolved
+commit in `manifest.json`. A classifier's label head is frozen at fit time, so a
+skill that renames or merges an intent needs a refit before its labels are
+correct again.
 
 ```
 train/
-├── sources.yaml        # every source, pinned to an immutable revision
+├── sources.yaml        # every source: a repository and its branch
 ├── build_dataset.py    # resolve, normalise, dedup, split, write the manifest
 ├── train.py            # fit a classifier on the built corpus
 ├── distill.py          # distill a Sentence Transformer into a Model2Vec base
@@ -221,11 +250,12 @@ train/
 ```
 
 1. **Build the dataset**: `python train/build_dataset.py --workspace <repos> --out train/dataset`
-   resolves every pinned source in `sources.yaml`, deduplicates rows, and
+   fetches every source in `sources.yaml` at its branch head, deduplicates rows, and
    writes `train.parquet`/`test.parquet` (plus JSONL twins), `labels.json`,
    and `manifest.json`. Labels are `<skill_id>:<intent_name>`, exactly as the
-   pipeline registers them at runtime. A pinned revision that has moved fails
-   the build rather than quietly changing the corpus.
+   pipeline registers them at runtime. A branch that does not exist stops the
+   build. `train/build_from_skills.py --from-manifest <manifest.json>` rebuilds a
+   corpus at exactly the commits a manifest records.
 2. **Train**: `python train/train.py --dataset train/dataset --base-model <model>`
    fits a classifier on the built corpus.
 3. **Optional distillation**: `distill.py` turns a Sentence Transformer that
@@ -242,7 +272,7 @@ A separate, exploratory notebook trio covers the same ground interactively —
 benchmarking, monolingual, and multilingual classifier training — in
 [`m2v/`](https://github.com/TigreGotico/ml-notebooks) under `TigreGotico/ml-notebooks`.
 It is not the canonical `train/` toolchain above; use it for experimentation, not
-for producing the published `Jarbas/ovos-model2vec-intents-*` models.
+for producing the published `OpenVoiceOS/ovos-m2v-intents-*` models.
 
 ---
 

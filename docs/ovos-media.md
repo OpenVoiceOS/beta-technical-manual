@@ -232,7 +232,7 @@ the Role A / Role B reflection-and-takeover behavior have moved to their own pag
 ```jsonc
 {
   "media": {
-    "enable_mpris": false,       // expose OVOS playback on the MPRIS D-Bus interface
+    "enable_mpris": true,        // expose OVOS playback on the MPRIS D-Bus interface (default true)
     "mpris_poll_interval": 1,    // seconds between MPRIS state polls (when enable_mpris)
     "ignored_players": [],       // MPRIS player names OVOS should not track/adopt
     "dbus_type": "session",      // "session" (per-user, default) or "system" D-Bus

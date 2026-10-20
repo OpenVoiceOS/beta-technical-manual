@@ -42,12 +42,21 @@ container.calc_intent('say something, whatever')
 ```
 
 Both `padacioso.IntentContainer.add_intent()`, called directly as above, and the OVOS
-pipeline's `.intent`-file path share the same `ovos-spec-tools` slot-name validator, which
-enforces the OVOS grammar (`{lowercase_with_underscores}`) — `simplematch`'s colon-typed
-slot syntax (`{number:int}`) is **not** supported by either path, and fails with
+pipeline's `.intent`-file path share the same `ovos-spec-tools` template validator, which
+enforces the OVOS grammar: slot names are `{lowercase_with_underscores}`, and a slot can
+carry a type prefix, `{type:name}` (OVOS-INTENT-1 §5.6). `add_intent('t', ['remind me at
+{date:when}'])` registers, and `calc_intent('remind me at tomorrow')` binds `when` to
+`tomorrow`. In the pipeline, a typed slot binds to the span the typed-slot map lists for
+that type, when one fits; see [Typed slots](intents-padatious.md#typed-slots). A template
+that breaks the grammar, such as `{a:b:c}` or a `|` outside a group, fails with
 `MalformedTemplate`.
 
-The two paths differ only in how they handle that failure. Calling `add_intent()` directly
+!!! warning "Alpha channel only"
+    Typed slots in Padacioso are in the prerelease channel only. The stable `padacioso`
+    1.0.0 does not support the `{type:name}` form: a template that uses it raises
+    `KeyError` when an utterance matches.
+
+The two paths differ only in how they handle a malformed template. Calling `add_intent()` directly
 propagates the exception — it crashes. The pipeline plugin catches it per sample instead:
 the malformed line is skipped with a `LOG.warning`, and registration only fails outright if
 every sample in the file was malformed.

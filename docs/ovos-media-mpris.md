@@ -11,8 +11,10 @@
     Plugin](ocp-audio-plugin.md).
 
     Note the two stacks spell the setting differently and with opposite polarity: legacy
-    `disable_mpris` (shipped `true`) versus `ovos-media`'s `media.enable_mpris` (default
-    `false`).
+    `disable_mpris` (shipped `true`, so MPRIS is off) versus `ovos-media`'s
+    `media.enable_mpris` (default `true`, so MPRIS is on). Set `media.enable_mpris: false`
+    to turn it off in `ovos-media`. A machine with no D-Bus session bus logs one warning
+    and keeps playing.
 
 ---
 

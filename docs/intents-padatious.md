@@ -201,11 +201,21 @@ Remind me to {task} at {date:when}.
 Set the lights to {color:shade}.
 ```
 
-Four types are recognized: `number`, `duration`, `date`, and `color`.
-Each normalizes to a fixed shape: `number` and `duration` to a plain
-number (`duration` in seconds), `date` to an RFC 3339 timestamp resolved
-in the session's timezone, and `color` to `{"hex": "#rrggbb", "name":
-...}`. A prefix outside this list, or on a loader that does not support
+Seven types are registered (OVOS-INTENT-1 §5.6). Each normalizes to a fixed
+shape:
+
+| Type | Normalized value | Example surface |
+|---|---|---|
+| `number` | a number | "twenty" |
+| `duration` | a number of seconds | "five minutes" |
+| `date` | an RFC 3339 timestamp in the session's timezone | "tomorrow" |
+| `color` | `{"hex": "#rrggbb", "name": ...}` | "dark red" |
+| `language` | `{"code": "de", "name": "Deutsch"}`: a lowercase BCP-47 tag and the language's own name | "German" |
+| `location` | `{"name": "Lisbon", "kind": "city"}`: `kind` is `city`, `country`, `region` or `null` | "Lisbon" |
+| `timezone` | `{"tz": "Europe/Paris"}`: an IANA zone name | "Central European Time" |
+
+A surface that names a place is a `location`, not a `timezone`, also when
+the place has one zone. A prefix outside this list, or on a loader that does not support
 typed slots at all, degrades silently to the plain `{name}` form — a
 typed placeholder never breaks a template that reads it as untyped, and
 `message.data["when"]` always holds the surface text either way.

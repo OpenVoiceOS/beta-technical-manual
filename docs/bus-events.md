@@ -268,7 +268,7 @@ See [Bus Service: common message types](bus-service.md#key-message-categories).
 | `mycroft.skills.initialized` | `ovos-core` | GUI clients, tools |
 | `skillmanager.list` | any client | `ovos-core` |
 | `ovos.skills.install` | any client | `ovos-core` |
-| `ovos.session.sync` | new client | `ovos-core` |
+| `ovos.session.sync` | legacy clients (`ovos-bus-client` 1.5.0 sends it on connect; prerelease clients do not) | `ovos-core` |
 | `ovos.session.update_default` | `ovos-core` | all clients (legacy default-session echo, deprecated) |
 | `mycroft.network.connected` / `mycroft.internet.connected` | `ovos-PHAL` | `ovos-core`, skills |
 

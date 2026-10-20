@@ -129,13 +129,30 @@ The (potentially modified) utterance is now evaluated against the **Intent Pipel
 
 (Other matchers such as [Model2Vec](m2v-pipeline.md) and, if installed, [Common Query](cq-pipeline.md) for general-knowledge questions, slot into this order too — see [Pipelines](pipelines-overview.md) for the full default and how to customize it.)
 
-Each `match` call is invoked directly inside a `try/except`. If a matcher **raises**, the orchestrator logs it and moves on to the next matcher as a no-match. A matcher that merely *hangs* (never returns, never raises) is a different story: keep matchers fast.
+Each `match` call runs inside a `try/except`. If a matcher **raises**, the orchestrator logs it and moves on to the next matcher as a no-match. Each `match` call also has a time limit. A call that does not return within `match_timeout` seconds (default 10) counts as a no-match, and the orchestrator moves on to the next matcher. The late call cannot be stopped. It keeps its worker until it returns. Each pipeline plugin has its own pool of `match_workers` workers (default 4). When all of a plugin's workers are held by late calls, the orchestrator skips that plugin at once and logs a warning, so other plugins keep working.
+
+```json
+{
+  "intents": {
+    "match_timeout": 10,
+    "match_workers": 4,
+    "ovos-m2v-pipeline": {"match_timeout": 3},
+    "blacklisted_pipelines": ["ovos-adapt-pipeline-plugin"]
+  }
+}
+```
+
+`intents.<plugin_id>.match_timeout` and `intents.<plugin_id>.match_workers` override the deployment-wide values for one plugin. `intents.blacklisted_pipelines` lists plugin ids (without the `-high`/`-medium`/`-low` suffix) that `ovos-core` never loads. A blacklisted plugin that is also in `intents.pipeline` stays disabled, and `ovos-core` logs a warning.
+
+!!! warning "Alpha channel only"
+    `match_timeout`, `match_workers` and `blacklisted_pipelines` are in the prerelease channel only. On the stable `ovos-core` 2.1.1, a match call has no time limit, and a matcher that hangs blocks the pipeline until it returns.
 
 !!! warning "Operational limits"
     | Limit | Detail |
     |---|---|
     | Default pipeline order | See [Pipelines Overview](pipelines-overview.md) for the full default and how to customize it |
-    | Per-match timeout | **None.** A hung matcher blocks the pipeline until it returns |
+    | Per-match timeout | 10 s by default (`intents.match_timeout`, or `intents.<plugin_id>.match_timeout`). A late call counts as no-match. Stable `ovos-core` 2.1.1 has no timeout |
+    | Match workers | 4 per plugin by default (`intents.match_workers`). A plugin with every worker held by late calls is skipped |
     | Handler timeout | 5 minutes by default (`intents.handler_timeout`). Bounds the *skill handler* invoked after a match, not the match calls themselves |
     | `websocket.shared_connection: true` (default) | `ovos-core` runs on a single shared bus connection, and that same thread services the bus. A hung matcher stalls the whole service |
     | Self-blocking `match()` calls | A matcher that does its own bus round-trip inside `match()` (e.g. a stop plugin gathering `stop.pong` replies) waits on the same thread that would deliver the replies. Such reply-collection waits (e.g. the stop pipeline's ~0.5 s pong wait) usually expire without receiving any replies, because the thread that would deliver them is the one doing the waiting. Only `websocket.shared_connection: false` gives skills their own connections and threads, and even then the orchestrator and pipeline plugins stay on the one shared bus |

@@ -109,6 +109,13 @@ plus the bus-client bridge. Shipped `ovos-core` listens only on the spec topics;
 a legacy `recognizer_loop:utterance` from an old satellite reaches it through the
 bridge, not through any core-side compatibility flag.
 
+`ovos-simple-listener` is the exception on the emitting side. It reads a top-level
+`legacy_namespace` key from `mycroft.conf`, and the default is `true`. With the default,
+it emits each transcription on `recognizer_loop:utterance`, and the bus-client bridge
+delivers it to `ovos-core`. Set `"legacy_namespace": false` to make it emit
+`ovos.utterance.handle`, the topic OVOS-AUDIO-IN §5 requires. `ovos-dinkum-listener` has
+no such key and always emits `ovos.utterance.handle`.
+
 ### SESSION-1 spec adoption: shipped
 
 `SessionManager` enforces one live `Session` object per id (singleton, `7a2e39f`,

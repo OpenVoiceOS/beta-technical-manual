@@ -4,8 +4,8 @@
     Deployers and plugin maintainers with an `OCP` config block are
     affected. Splitting audio-service responsibility into a dedicated
     `ovos-media` daemon renamed the config root key and flipped the MPRIS
-    toggle's polarity. Fix it by moving `OCP` to `media` and setting
-    `enable_mpris` explicitly if you want MPRIS on.
+    toggle's polarity. Fix it by moving `OCP` to `media`. MPRIS is on by
+    default in `ovos-media`; set `enable_mpris: false` to turn it off.
 
 !!! note "Legacy audioservice and ovos-media are alternatives — pick one"
     Moving to `ovos-media` is an opt-in choice today. It takes two steps.
@@ -48,12 +48,10 @@ New, `mycroft.conf`, `89a50c0` onward:
 
 The config root key `OCP` was renamed to `media`. Anything still under
 `"OCP"` is silently ignored by `ovos-media`. The MPRIS toggle was also
-polarity-flipped. `disable_mpris` (default off, meaning MPRIS was **on** by
-default) became `enable_mpris` (default `False`, meaning MPRIS is **off**
-by default). A deployment that never touched this key gets a behavior
-change. MPRIS integration silently turns off after upgrading past
-`89a50c0` (ovos-media `89a50c0`, #19, 2024-03-29), unless `media.enable_mpris: true`
-is set explicitly.
+polarity-flipped: `disable_mpris` became `enable_mpris`. In `ovos-media`,
+`enable_mpris` defaults to `true`, so MPRIS is on when the key is absent.
+Set `media.enable_mpris: false` to turn it off. A headless machine with no
+D-Bus session bus logs one warning, and playback continues.
 
 On the `ovos-audio` side, `AudioService.find_ocp()` stopped
 auto-discovering OCP from the generic plugin list and instead instantiates
@@ -66,7 +64,7 @@ Lifecycle:
 | Change | Active | Deprecated but functional | Dropped |
 |---|---|---|---|
 | Config root `OCP` (ovos-media) | before `89a50c0` (2024-03-29) | n/a | `89a50c0` (now `media`) |
-| `disable_mpris` (MPRIS on by default) | before `89a50c0` | n/a | `89a50c0` (now `enable_mpris`, off by default) |
+| `disable_mpris` (MPRIS on by default) | before `89a50c0` | n/a | `89a50c0` (`enable_mpris`, on by default) |
 
 ---
 **Read next:** [Updating From Older OVOS](updating-from-older-ovos.md)

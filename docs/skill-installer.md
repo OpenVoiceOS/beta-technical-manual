@@ -135,7 +135,10 @@ into core's environment would not reach the target process.
 
 ## Post-Install Discovery
 
-After a successful skill installation, `ovos-plugin-manager`'s entry point cache is reloaded. This ensures the new skill is discovered on the next `SkillManager` scan cycle (which occurs every 30 seconds by default).
+After a successful skill installation, `ovos-plugin-manager`'s entry point cache is reloaded. The `SkillManager` listens for `ovos.skills.install.complete` and `ovos.pip.install.complete`. On either message it reloads any skill whose package the install upgraded, then runs one discovery pass at once and loads the new skills. A client can also ask for a discovery pass with `skillmanager.rescan`; the response carries `loaded`, the list of skill ids that pass loaded.
+
+!!! warning "Alpha channel only"
+    The immediate load on `install.complete` and `skillmanager.rescan` are in the prerelease channel only. On the stable `ovos-core` 2.1.1, a new skill loads on the next periodic `SkillManager` scan, which runs every 30 seconds.
 
 ## InstallError Types
 

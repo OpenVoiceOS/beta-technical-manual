@@ -11,22 +11,26 @@
 
 !!! warning "OCP skills are giving way to MediaProvider plugins"
     OCP **skills** (media-provider skills built on `OVOSCommonPlaybackSkill` /
-    [`@ocp_search`](#search-results)) still work and remain fully supported. The intended
-    successor is a dedicated **MediaProvider** plugin type (`opm.media.provider`). The
-    entry-point group is defined in `ovos-plugin-manager`, and the design is for the
-    [`ovos-media`](ovos-media.md) player to load such plugins **in-process** and call
-    `search()` on them directly, instead of broadcasting a query over the bus to skills.
-    That in-process loading is not wired up in `ovos-media` yet, so writing an OCP skill
-    remains the way to provide media today, and stays the simpler path for setups still on
-    the legacy audio service.
+    [`@ocp_search`](#search-results)) still work and remain supported. The successor for a
+    searchable catalog is a **MediaProvider** plugin (entry-point group
+    `opm.media.provider`, defined in `ovos-plugin-manager`). The
+    [OCP pipeline](ocp-pipeline.md#mediaprovider-plugins) loads MediaProvider plugins
+    **in-process** and calls `search()` on them directly. It runs them beside the bus
+    `@ocp_search` query to skills and merges both result sets.
 
-    The split also changes what OCP *skills* are for. Once MediaProvider plugins own
-    catalog search, an OCP skill is for the case where **the skill itself is the playable
-    media**: a voice game (see `ovos-skill-moon-game`, a VoiceGamez title not currently public),
-    an ebook reader, any experience the player can start, pause, and resume like a track.
-    If your skill is only a searchable catalog of external media (a station list, a
-    podcast feed), plan to ship it as a MediaProvider plugin when that lands. If the
-    skill is the thing being played, it stays an OCP skill.
+    The catalog skills for Bandcamp, Music Assistant, YouTube Music and SomaFM are
+    archived. Their catalogs ship as MediaProvider plugins, for example
+    `ovos-media-provider-bandcamp` and `ovos-media-provider-mass`.
+
+    An OCP skill remains the right choice when **the skill itself is the playable
+    media**: a voice game, an ebook reader, or any experience the player can start, pause
+    and resume like a track. If your skill is only a searchable catalog of external media
+    (a station list, a podcast feed), write a MediaProvider plugin instead.
+
+!!! warning "Alpha channel only"
+    MediaProvider loading is in the prerelease channel only: `ovos-ocp-pipeline-plugin`
+    1.1.18 and `ovos-plugin-manager` 2.2.0 do not have it. A stable install provides media
+    through OCP skills.
 
 ??? info "📐 Formal specification"
     OCP is specified by **[OVOS-OCP-1: OVOS Common Playback: the Virtual Media Player](https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md)** (a formal [architecture spec](architecture-specs.md)). The spec defines a single **per-session Virtual Media Player**. It is one arbitration point that owns the session's now-playing track, queue, and transport state. It is addressed over the `ovos.common_play.*` bus surface with an MPRIS-style control set (play / search / pause / resume / next / previous / seek / stop) and a three-axis state model (`PlayerState`, `MediaState`, loop/shuffle). It can even be bridged to host-OS MPRIS players so voice controls media OVOS did not start.
