@@ -137,20 +137,41 @@ The retrieval backends (`local-rag`, `lexical`) and the `composite` share a `Bas
 !!! warning "The default mode loses the context on an OpenAI chat engine"
 
     `ovos-openai-plugin` removes every `system` message from a request unless
-    `allow_system_prompts` is set, and that setting is off by default. A memory
-    plugin left on the default `inject_mode` hands its recalled text over as a
-    `system` message, so the engine discards it before the request is sent. The
-    modes `system` and `system_prompt` both lose it this way; `developer`, `user`
-    and `tool` all keep it.
+    `allow_system_prompts` is set, and that setting is off by default. The
+    `entity` and `longterm` backends always hand their recalled text over as a
+    `system` message. The retrieval backends `local-rag`, `lexical` and
+    `composite` do the same in their default `inject_mode`. The engine discards
+    the message before the request is sent. The modes `system` and
+    `system_prompt` both lose the text this way.
 
-    Nothing reports the loss. The reply comes back fluent and the persona simply
-    answers as though it recalled nothing, which reads as a memory plugin that
-    found nothing rather than a request that arrived without it.
+    The engine logs one warning for each engine instance, the first time it
+    drops a `system` message:
 
-    Set `inject_mode` to `developer` for a persona that needs memory on this
-    engine. Setting `allow_system_prompts` also works, and costs more than it
-    looks: it lets a caller's own system message through the chat API, which is
-    what the setting exists to prevent.
+    ```text
+    dropped 1 system message(s) before the request: 'allow_system_prompts' is off. Context a memory plugin injects as a system message is discarded with it; set 'allow_system_prompts', or set the memory plugin's 'inject_mode' to one this engine keeps.
+    ```
+
+    The reply still comes back fluent, and the persona answers as though it
+    recalled nothing. Read the log to tell this case from a memory plugin that
+    found nothing.
+
+    Set `allow_system_prompts` to `true`. This works for every backend. The
+    `entity` and `longterm` backends do not read `inject_mode`, so this is the
+    only fix for them. For `local-rag`, `lexical` and `composite`, you can
+    instead set `inject_mode` to `user`.
+    In a `composite`, this moves only the retrieved passages. The blocks of
+    `entity` and `longterm` members stay `system` messages and still need
+    `allow_system_prompts`. The `user` mode needs no change to the
+    system-message policy: it adds the text to the user message, and the engine
+    keeps that message. The `allow_system_prompts` setting also lets the
+    caller's own system message through the chat API, which is what the
+    setting exists to prevent.
+
+    The engine keeps `developer` and `tool` messages, so no warning appears for
+    them. A model can still ignore them. On the public demo server with the
+    `qwen2.5:7b` model, the `developer` mode delivered no context, and the
+    model answered as if the documents did not exist. Test these modes with
+    your own model before you rely on them.
 
 ### Retrieval knobs
 
