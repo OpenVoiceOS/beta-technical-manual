@@ -1737,8 +1737,7 @@ common protocol, the <a href="../bus-service/">messagebus</a>. Because of that, 
 "all of OVOS" as one blob.</p>
 <p>You can start a single service on its own machine, load a single
 skill as its own process, or <code>pip install</code> a speech plugin into a separate Python
-project and call it directly, with no bus and no assistant around it at all. This page
-covers that second use case: OVOS the <strong>library</strong>, not OVOS the <strong>product</strong>.</p>
+project and call it directly, with no bus and no assistant around it at all. The second use case is the subject here: OVOS the <strong>library</strong>, not OVOS the <strong>product</strong>.</p>
 </div>
 <h2 id="the-principle">The principle<a class="headerlink" href="#the-principle" title="Permanent link">&para;</a></h2>
 <p>Every OVOS service, including the bus, the voice pipeline, the audio player, the hardware abstraction
@@ -1771,7 +1770,7 @@ prototype. This makes the two deployment styles below equally valid:</p>
 </table>
 <p>Nothing in the code enforces the first style. It is a packaging convenience (<code>ovos-core</code> is a
 metapackage), not an architectural requirement. The <a href="../architecture-overview/">Architecture Overview</a>
-covers how these services cooperate at runtime. This page covers how to run them apart.</p>
+covers how these services cooperate at runtime. The sections below show how to run them apart.</p>
 <h2 id="the-standard-split-one-console-script-per-service">The standard split: one console script per service<a class="headerlink" href="#the-standard-split-one-console-script-per-service" title="Permanent link">&para;</a></h2>
 <p>Each core service is its own PyPI package with its own console-script entry point. Installing a
 package makes the script available on <code>PATH</code>. Running it starts that one process and nothing else.</p>

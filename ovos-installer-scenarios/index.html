@@ -1626,7 +1626,7 @@
 <h1 id="the-ovos-installer-wizard-screen-by-screen">The <code>ovos-installer</code> Wizard, Screen by Screen<a class="headerlink" href="#the-ovos-installer-wizard-screen-by-screen" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page walks through every screen the <code>ovos-installer</code> TUI shows you, in order, from
+<p>Every screen the <code>ovos-installer</code> TUI shows you is described below, in order, from
 language selection to the final telemetry prompts. Use it as a reference while the
 installer is running, or to see what a screen means before you get to it. For the
 commands that launch the installer, see <a href="../ovos-installer/">How to Install Open Voice OS</a>.</p>
@@ -1709,8 +1709,8 @@ already in use is offered (you can't switch method in place).</p>
 <h2 id="choose-channel">Choose Channel<a class="headerlink" href="#choose-channel" title="Permanent link">&para;</a></h2>
 <dl>
 <dt><code>testing</code></dt>
-<dd>Recommended for most users. Generally stable with newer features, but may
-occasionally contain regressions — distinct from the <code>stable</code> channel, which
+<dd>Recommended for most users. Generally stable with more recent features, but may
+occasionally contain regressions. The <code>stable</code> channel
 pins an older snapshot (see <a href="../release-channels/">Release Channels</a>).</dd>
 <dt><code>alpha</code></dt>
 <dd>Bleeding-edge/pre-release packages. <strong>Required</strong> (and the only option offered) on macOS and on Mark II/DevKit hardware.</dd>
@@ -1721,7 +1721,7 @@ pins an older snapshot (see <a href="../release-channels/">Release Channels</a>)
 <p>A radio-button list of installation profiles:</p>
 <dl>
 <dt><code>ovos</code></dt>
-<dd>The classic, all-in-one experience. Voice pipeline, skills, and (optionally) GUI all run locally. It is the default and the profile the rest of this page assumes.</dd>
+<dd>The classic, all-in-one experience. Voice pipeline, skills, and (optionally) GUI all run locally. It is the default, and the other sections use it as the base profile.</dd>
 <dt><code>satellite</code></dt>
 <dd>A microphone/speaker endpoint that talks to a separate OVOS core over the network. See <a href="../composable-deployments/">composable deployments</a>. It skips the feature-selection screen (no local skills/GUI/LLM/Home Assistant to configure), but adds four HiveMind connection prompts: host, port, access key, and password.</dd>
 <dt><code>listener</code></dt>
@@ -1936,7 +1936,7 @@ The recording shows a full run of the wizard on a fresh machine, from launching
 message — in order: the language screen, installation method, release channel,
 profile, feature selection, Raspberry Pi tuning, the two telemetry prompts, the
 summary confirmation, and then the unattended install itself. Each of those screens
-is described with a screenshot earlier on this page, so the recording adds pacing,
+is described with a screenshot above, so the recording adds pacing,
 not information.</p>
 <p><a href="https://asciinema.org/a/710286"><img alt="Terminal recording of the full installer wizard run described above" src="https://asciinema.org/a/710286.svg" /></a></p>
 <hr />

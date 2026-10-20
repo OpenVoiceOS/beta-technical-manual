@@ -1908,18 +1908,18 @@
 
 <h1 id="updating-skills-from-older-ovos">Updating Skills From Older OVOS<a class="headerlink" href="#updating-skills-from-older-ovos" title="Permanent link">&para;</a></h1>
 <h2 id="in-a-nutshell">In a nutshell<a class="headerlink" href="#in-a-nutshell" title="Permanent link">&para;</a></h2>
-<p>This page is for skill maintainers moving a skill forward from an older
-OVOS install. Entries are in date order: start at the version you are
-currently running and read forward to your target version. For the
-Big-ticket migrations (the changes with the widest blast radius, including
+<p>The entries below move a skill forward from an older OVOS install.
+They are in date order: start at the version you run and read forward to
+your target version. For the
+big-ticket migrations (the changes with the widest blast radius, including
 the <code>ovos-workshop</code> 4.0.0 → 7.0.0 release train), see
 <a href="../updating-from-older-ovos/#big-ticket-migrations">Updating from Older OVOS</a>.</p>
 <h2 id="if-you-maintain-skills">If you maintain skills<a class="headerlink" href="#if-you-maintain-skills" title="Permanent link">&para;</a></h2>
 <h3 id="intent-dispatch-topics-dropped-the-intent-suffix-2026-08-workshop-9311a2">Intent dispatch topics dropped the <code>.intent</code> suffix (2026-08, workshop 9.3.11a2)<a class="headerlink" href="#intent-dispatch-topics-dropped-the-intent-suffix-2026-08-workshop-9311a2" title="Permanent link">&para;</a></h3>
-<p>Per-intent dispatch topics are now the canonical <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code> — the filename-leaked
+<p>Per-intent dispatch topics use the canonical <code>&lt;skill_id&gt;:&lt;intent_name&gt;</code> form. The filename-leaked
 <code>.intent</code> suffix is gone from the wire. Nothing breaks: the <code>ovos-bus-client</code> 2.8 bridge (and
 <code>FakeBus</code> in current <code>ovos-utils</code> alphas, for tests) keeps literal <code>.intent</code> listeners working
-in both directions. New code should compute the topic with
+in both directions. Compute the topic with
 <code>ovos_spec_tools.intent_topics.canonical_intent_topic</code> instead of hard-coding either spelling.
 Details and the either-side-modernizes rule:
 <a href="../bus-namespace-migration/#intent-dispatch-topics-the-intent-suffix-is-gone">Bus namespace migration</a>.</p>
@@ -2039,7 +2039,7 @@ load.</p>
 <ul>
 <li>Migration: subclass <code>ovos_workshop.skills.ovos.OVOSSkill</code> directly, following the
   <a href="../skill-design-guidelines/">skill design guidelines</a>.
-  Skill lifecycle is now entirely <code>SkillLoader</code>-driven: <code>bus</code>/<code>skill_id</code>
+  <code>SkillLoader</code> drives the whole skill lifecycle: <code>bus</code>/<code>skill_id</code>
   are passed to <code>__init__</code>, not injected via metaclass into a later
   <code>initialize()</code> call.
 Lifecycle:</li>
@@ -2262,7 +2262,7 @@ Lifecycle:</li>
 <p>Module-level <code>_get_dialog()</code> on <code>ovos_workshop.skills.ovos</code> no longer
 exists. Locale lookups (<code>_get_dialog</code>, <code>_get_word</code>,
 <code>CommonQuerySkill.__init__</code>, <code>translated_noise_words</code>) all route through
-<code>CoreResources</code>/<code>self.resources</code> now.</p>
+<code>CoreResources</code>/<code>self.resources</code>.</p>
 <ul>
 <li>Migration: use <code>self.speak_dialog(key)</code> or
   <code>CoreResources(lang).load_dialog_file(...)</code> instead of importing

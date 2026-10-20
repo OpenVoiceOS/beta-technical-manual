@@ -2084,7 +2084,7 @@ this the same way; on a streaming request it arrives as an in-band SSE error eve
 <li>
 <p><strong>Mind the prefix.</strong> Clients must hit <code>/openai/v1</code> (OpenAI) or <code>/ollama/api</code> (Ollama), not the
   bare host root. Pointing a client at <code>http://localhost:8337</code> alone will 404. The legacy
-  <code>/v1</code> and <code>/api</code> aliases still work but are deprecated.</p>
+  <code>/v1</code> and <code>/api</code> aliases work but are deprecated.</p>
 </li>
 <li>
 <p>Make sure your persona file's <code>handlers</code> and their config are complete. A missing plugin or model means the persona cannot answer.</p>

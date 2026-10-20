@@ -1646,9 +1646,9 @@ proxies, and <a href="../persona-server/"><code>ovos-persona-server</code></a>.<
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-openai-plugin">OpenVoiceOS/ovos-openai-plugin</a></p>
 <div class="admonition note">
 <p class="admonition-title">Removed legacy solver</p>
-<p>The old <code>ovos-solver-openai-plugin</code> entry point and the <code>OpenAIChatCompletionsSolver</code> /
-<code>OpenAICompletionsSolver</code> classes no longer exist. Personas that referenced them must
-switch to the <code>ovos-chat-openai-plugin</code> agent engine (still listed under a persona's
+<p>The package has no <code>ovos-solver-openai-plugin</code> entry point and no <code>OpenAIChatCompletionsSolver</code> /
+<code>OpenAICompletionsSolver</code> classes. Personas that reference them must
+use the <code>ovos-chat-openai-plugin</code> agent engine (listed under a persona's
 <code>handlers</code> key).</p>
 </div>
 <hr />

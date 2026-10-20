@@ -1824,7 +1824,7 @@
 <h1 id="advanced-decorators">Advanced Decorators<a class="headerlink" href="#advanced-decorators" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Beyond the everyday intent and context decorators, three advanced families cover interruption handling, modal intent groups, and media playback. This page gathers the killable/abortable decorators, the intent layer decorators, and the OCP decorators. Looking for the everyday ones? See <a href="../decorators/">Decorators</a>.</p>
+<p>Beyond the everyday intent and context decorators, three advanced families cover interruption handling, modal intent groups, and media playback. They are the killable/abortable decorators, the intent layer decorators, and the OCP decorators. Looking for the everyday ones? See <a href="../decorators/">Decorators</a>.</p>
 </div>
 <hr />
 <h2 id="killable-abortable-decorators">Killable / Abortable Decorators<a class="headerlink" href="#killable-abortable-decorators" title="Permanent link">&para;</a></h2>
@@ -2003,14 +2003,13 @@
 <hr />
 <h2 id="ocp-decorators">OCP Decorators<a class="headerlink" href="#ocp-decorators" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
-<p class="admonition-title">Media search is moving out of skills</p>
+<p class="admonition-title">Media search belongs in MediaProvider plugins</p>
 <p>The <strong>media search/provider</strong> role (a skill implementing <code>@ocp_search</code> to
-return media results) is being deprecated. A new class of <strong>media-search
-plugins</strong>, consumed directly by the <a href="../ocp-pipeline/">OCP pipeline plugin</a>, is
-replacing it (PRs in progress). Other OCP skill uses are <strong>not</strong> going away.
-Voice games (<code>OVOSGameSkill</code>), ebook readers, and playback handlers remain
-supported. The decorators below still work today. New media-search
-integrations should target the upcoming media-search plugin type rather than an
+return media results) is deprecated. <strong>MediaProvider plugins</strong>
+(<code>opm.media.provider</code>), loaded in-process by the <a href="../ocp-pipeline/">OCP pipeline plugin</a>,
+replace it. Other OCP skill uses stay supported:
+voice games (<code>OVOSGameSkill</code>), ebook readers, and playback handlers. The decorators
+below work. Write a media-search integration as a MediaProvider plugin rather than an
 <code>@ocp_search</code> skill.</p>
 </div>
 <p>OCP (OpenVoiceOS <a href="../ocp-pipeline/">Common Play</a>) decorators are used with <code>OVOSCommonPlaybackSkill</code> and <code>OVOSGameSkill</code>.</p>

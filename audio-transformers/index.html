@@ -2003,9 +2003,8 @@ transformers should see, and a high priority for anything that should run last.<
 <p>An <code>opm.transformer.audio.config</code> group is also available, for a dict of config
 metadata an installer or GUI can read. It is optional. Add it once the plugin has
 settings worth advertising. The legacy alias <code>neon.plugin.audio</code> is still recognized
-for the entry-point group by the plugin loader, but new plugins should use
-<code>opm.transformer.audio</code> (the GGWave and SpeechBrain transformers above both already
-do).</p>
+for the entry-point group by the plugin loader. Plugins you write must use
+<code>opm.transformer.audio</code>, as the GGWave and SpeechBrain transformers above do.</p>
 <h3 id="configuration-example">Configuration Example<a class="headerlink" href="#configuration-example" title="Permanent link">&para;</a></h3>
 <p>Add your transformer to <code>mycroft.conf</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&quot;audio_transformers&quot;: {

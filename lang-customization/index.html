@@ -1366,7 +1366,7 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>Every skill ships small text files that say what phrases to listen for and what to say
-back. This page shows how to swap in your own versions of those files, to reword a
+back. You can swap in your own versions of those files, to reword a
 reply, fix wording for your accent or dialect, or add a language a skill doesn't
 include, all without editing the skill's actual code. You drop your edited copy into a
 personal folder, and OVOS loads yours instead, falling back to the skill's original for
@@ -1382,7 +1382,7 @@ of any one of those files into a user folder, and OVOS loads yours instead of th
 You only override the files you care about. Everything else falls back to the skill.</p>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>Locale resource layout and file formats are defined by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2: Locale Resource Formats</a></strong> (companion to <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a>, the sentence-template grammar). See the <a href="../architecture-specs/">spec index</a>. This page describes how OVOS implements that spec. The spec is the normative reference.</p>
+<p>Locale resource layout and file formats are defined by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md">OVOS-INTENT-2: Locale Resource Formats</a></strong> (companion to <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a>, the sentence-template grammar). See the <a href="../architecture-specs/">spec index</a>. The sections below describe how OVOS implements that spec. The spec is the normative reference.</p>
 </details>
 <hr />
 <h2 id="resource-roles">Resource Roles<a class="headerlink" href="#resource-roles" title="Permanent link">&para;</a></h2>
@@ -1448,7 +1448,7 @@ You only override the files you care about. Everything else falls back to the sk
 <p>A language directory <strong>may</strong> contain subdirectories. A loader resolves a resource by searching the language directory and all its subdirectories recursively. Subdirectory names are an authoring convenience and carry no meaning to the loader.</p>
 <div class="admonition note">
 <p class="admonition-title">Legacy layouts</p>
-<p>Older skills used <code>vocab/&lt;lang&gt;/</code> and <code>dialog/&lt;lang&gt;/</code> directories instead of <code>locale/&lt;lang&gt;/</code>. OVOS still searches these for backwards compatibility, but new skills and overrides should use <code>locale/</code>.</p>
+<p>Some skills use <code>vocab/&lt;lang&gt;/</code> and <code>dialog/&lt;lang&gt;/</code> directories instead of <code>locale/&lt;lang&gt;/</code>. OVOS also searches these for backwards compatibility. Skills you write and overrides should use <code>locale/</code>.</p>
 </div>
 <hr />
 <h2 id="resolution-precedence">Resolution Precedence<a class="headerlink" href="#resolution-precedence" title="Permanent link">&para;</a></h2>
@@ -1462,7 +1462,7 @@ resolves it in this order (<strong>first match wins</strong>):</p>
 <p>Overrides apply at <strong>whole-file granularity</strong>: an override file replaces the corresponding
 lower-precedence file entirely. You do <strong>not</strong> merge line-by-line, and you do <strong>not</strong> need to
 copy files you aren't changing.</p>
-<p><code>.dialog</code> files are honored by the user-override tier since <code>ovos-workshop</code> <code>9.5.3a1</code>,
+<p>The user-override tier honors <code>.dialog</code> files,
 the same as <code>.intent</code>, <code>.voc</code>, <code>.entity</code>, <code>.rx</code> (regex), and the other resource roles. The
 override only takes effect if the user directory already exists when the skill loads.</p>
 <h3 id="where-the-user-override-folder-lives">Where the user override folder lives<a class="headerlink" href="#where-the-user-override-folder-lives" title="Permanent link">&para;</a></h3>

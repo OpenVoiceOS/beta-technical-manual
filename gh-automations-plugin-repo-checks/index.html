@@ -1953,7 +1953,7 @@
 <h1 id="reusable-workflow-reference-plugin-license-and-repo-checks">Reusable Workflow Reference: Plugin, License, and Repo Checks<a class="headerlink" href="#reusable-workflow-reference-plugin-license-and-repo-checks" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page documents the shared workflows that verify a package is a valid OVOS plugin and keeps its repo in good order: <code>opm-check.yml</code>, <code>license-check.yml</code>, and <code>repo-health.yml</code>. For the build-matrix checks, see <a href="../gh-automations-build-checks/">Build Checks</a>. For skill and locale packaging checks, see <a href="../gh-automations-repo-skill-checks/">Skill and Locale Checks</a>. For end-to-end skill test execution, see <a href="../gh-automations-skill-test-workflows/">Skill Test Workflows</a>. Start with the <a href="../gh-automations-overview/">gh-automations overview</a> for the big picture, or the full <a href="../gh-automations-workflows/">Workflow Reference index</a>.</p>
+<p>Three shared workflows verify that a package is a valid OVOS plugin and keep its repo in good order: <code>opm-check.yml</code>, <code>license-check.yml</code>, and <code>repo-health.yml</code>. For the build-matrix checks, see <a href="../gh-automations-build-checks/">Build Checks</a>. For skill and locale packaging checks, see <a href="../gh-automations-repo-skill-checks/">Skill and Locale Checks</a>. For end-to-end skill test execution, see <a href="../gh-automations-skill-test-workflows/">Skill Test Workflows</a>. Start with the <a href="../gh-automations-overview/">gh-automations overview</a> for the big picture, or the full <a href="../gh-automations-workflows/">Workflow Reference index</a>.</p>
 </div>
 <p>All reusable workflows are in <code>.github/workflows/</code> and are called via:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenVoiceOS/gh-automations/.github/workflows/&lt;name&gt;.yml@dev</span>
@@ -1961,7 +1961,7 @@
 <blockquote>
 <p><strong>Ref:</strong> Always use <code>@dev</code>.</p>
 </blockquote>
-<p><strong>Workflows on this page:</strong></p>
+<p><strong>Workflows:</strong></p>
 <ul>
 <li><a href="#opm-checkyml"><code>opm-check.yml</code></a></li>
 <li><a href="#license-checkyml"><code>license-check.yml</code></a></li>
@@ -2024,7 +2024,7 @@
 <td><code>entry_point</code></td>
 <td>string</td>
 <td><code>""</code></td>
-<td>Legacy: a single entry point ID to verify. For packages that ship multiple OPM plugins from one wheel, prefer <code>entry_points</code> (plural) or leave both empty — auto-detection enumerates every <code>opm.*</code> entry point declared in pyproject.toml.</td>
+<td>Legacy: a single entry point ID to verify. For packages that ship multiple OPM plugins from one wheel, prefer <code>entry_points</code> (plural) or leave both empty. Auto-detection enumerates every <code>opm.*</code> entry point declared in pyproject.toml.</td>
 </tr>
 <tr>
 <td><code>entry_points</code></td>

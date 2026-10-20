@@ -1174,7 +1174,7 @@
         <li class="md-nav__item">
   <a href="#the-new-gui" class="md-nav__link">
     <span class="md-ellipsis">
-      The new GUI
+      The GUI rework
     </span>
   </a>
   
@@ -1500,7 +1500,7 @@
         <li class="md-nav__item">
   <a href="#the-new-gui" class="md-nav__link">
     <span class="md-ellipsis">
-      The new GUI
+      The GUI rework
     </span>
   </a>
   
@@ -1632,29 +1632,25 @@
 <h1 id="upcoming-changes">Upcoming Changes<a class="headerlink" href="#upcoming-changes" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page tracks open pull requests across the OVOS repositories that will
-change behavior once merged. It is written for <strong>skill, plugin, and fleet
-maintainers</strong> planning ahead. Just curious what shipped recently? The
-<a href="../timeline/">project timeline</a> is the readable what's-new list, and
+<p>The tables below list open pull requests across the OVOS repositories that
+change behavior when they merge. They are for <strong>skill, plugin, and fleet
+maintainers</strong> who plan ahead. The <a href="../timeline/">project timeline</a> lists
+what shipped, and
 <a href="../release-channels/#checking-what-you-have-installed">checking what you have installed</a>
-tells you which of it is already on your machine. Everything on this page is <strong>unreleased and
-subject to change</strong>: PR scope, target version, and even whether a PR lands
-at all can shift before release. Once a PR merges or closes, its content
-graduates to <a href="../updating-from-older-ovos/">Updating from Older OVOS</a>, which
-tracks shipped history. If a PR number below is already merged or closed by
-the time you read this, treat this page as stale for that entry and check
-the linked PR directly.</p>
+tells you which of it is on your machine. Each entry is <strong>unreleased and
+subject to change</strong>: PR scope, target version, and whether a PR lands
+at all can change before release. When a PR merges or closes, its content
+goes to <a href="../updating-from-older-ovos/">Updating from Older OVOS</a>.</p>
 </div>
-<p>Swept: 2026-08-01. Before relying on an entry, open its PR link: if the
-PR is merged or closed, the entry has already graduated to
-<a href="../updating-from-older-ovos/">Updating from Older OVOS</a> or been dropped.</p>
-<h2 id="the-new-gui">The new GUI<a class="headerlink" href="#the-new-gui" title="Permanent link">&para;</a></h2>
+<p>Before you rely on an entry, open its PR link. If the PR is merged or closed,
+read <a href="../updating-from-older-ovos/">Updating from Older OVOS</a> instead.</p>
+<h2 id="the-new-gui">The GUI rework<a class="headerlink" href="#the-new-gui" title="Permanent link">&para;</a></h2>
 <p><a href="../architecture-specs/">OVOS-GUI-1</a> is a ground-up rework of how OVOS renders a
 screen: interchangeable render-backend plugins instead of one built-in
-WebSocket/QML renderer. See <a href="../gui-status/">Screens on OVOS Today</a> for the full
-picture. Until this work lands, the current GUI stack (<code>ovos-gui</code> +
-<code>ovos-shell</code> + <code>mycroft-gui-qt5</code>) stays <strong>deprecated but shipped</strong>, since it is
-the only screen stack that runs today.</p>
+WebSocket/QML renderer. See <a href="../gui-status/">Screens on OVOS</a> for the full
+picture. Until this work merges, the GUI stack (<code>ovos-gui</code> +
+<code>ovos-shell</code> + <code>mycroft-gui-qt5</code>) stays <strong>deprecated but shipped</strong>, because it is
+the only screen stack that runs.</p>
 <table>
 <thead>
 <tr>
@@ -1695,13 +1691,6 @@ the only screen stack that runs today.</p>
 <td>3.0.0</td>
 </tr>
 <tr>
-<td><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/238">ovos-bus-client#238</a></td>
-<td>Stops emitting null GUI keys, base64-encodes local image paths</td>
-<td>GUI render-backend implementers, GUI wire-protocol consumers</td>
-<td>No</td>
-<td>not yet released</td>
-</tr>
-<tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/197">ovos-bus-client#197</a></td>
 <td>Deprecates <code>EnclosureAPI</code>, adds <code>PageTemplates</code> constants</td>
 <td>consumers of <code>EnclosureAPI</code> and <code>GUIInterface</code></td>
@@ -1734,8 +1723,8 @@ the production audio service, and stock installs keep
 things are changing on top of that baseline: the legacy audio service is
 starting to shed its OCP integration, and the intended role of an OCP skill is
 shifting.</p>
-<p>MediaProvider plugins (<code>opm.media.provider</code>) are meant to own catalog search
-once <code>ovos-media</code> loads them in-process. OCP skills stay fully supported, but
+<p>The OCP pipeline loads MediaProvider plugins (<code>opm.media.provider</code>) in-process,
+and searches them alongside OCP skills. OCP skills stay fully supported, but
 their intended role narrows: a skill whose job is "answer catalog search
 queries" (a station list, a podcast feed) is expected to become a
 MediaProvider plugin over time, while a skill where <strong>the skill itself is the
@@ -1772,13 +1761,6 @@ playable media</strong> (a voice game, an ebook reader) stays an OCP skill. See
 <td>skill authors/deployers using OCP in <code>ovos-audio</code></td>
 <td>Yes</td>
 <td>3.0.0</td>
-</tr>
-<tr>
-<td><a href="https://github.com/OpenVoiceOS/ovos-ocp-pipeline-plugin/pull/156">ovos-ocp-pipeline-plugin#156</a></td>
-<td>Dispatches search in-process to installed MediaProvider plugins, merged with the existing bus-only OCP-skill search rather than replacing it (dedup only drops a provider entry whose URI a legacy result already covers). No bus message types change. Enabled by default, with an explicit <code>media_providers.enabled: false</code> off-switch under the OCP pipeline config; with no MediaProvider plugins installed, behavior is byte-identical to today</td>
-<td>deployers running MediaProvider plugins, OCP pipeline config authors</td>
-<td>No</td>
-<td>not yet released</td>
 </tr>
 </tbody>
 </table>
@@ -2131,7 +2113,7 @@ already landed on that repo's <code>dev</code>.</p>
 </table>
 <hr />
 <p><strong>Read next:</strong> <a href="../server-compat-layers/">Server Compatibility Layers</a>
-<strong>Related:</strong> <a href="../updating-from-older-ovos/">Updating from Older OVOS</a> · <a href="../version-compat-guide/">Version Compatibility Guide</a> · <a href="../gui-status/">Screens on OVOS Today</a> · <a href="../architecture-specs/">Formal Specifications</a></p>
+<strong>Related:</strong> <a href="../updating-from-older-ovos/">Updating from Older OVOS</a> · <a href="../version-compat-guide/">Version Compatibility Guide</a> · <a href="../gui-status/">Screens on OVOS</a> · <a href="../architecture-specs/">Formal Specifications</a></p>
 
 
 

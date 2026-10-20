@@ -1543,7 +1543,7 @@ all installed plugins of a given type at runtime. No manual registration is requ
 grouped into core voice-pipeline, system/hardware, transformer, language-processing,
 intent-pipeline, media, agent, embeddings/knowledge, and skill/persona plugins, plus a
 table of deprecated entry-point groups. The full, exhaustive table of every plugin type,
-its entry point group, and its template base class now lives on its own page:
+its entry point group, and its template base class is on its own page:
 <strong><a href="../plugin-types-reference/">Plugin Types Reference</a></strong>.</p>
 <hr />
 <h2 id="writing-a-plugin">Writing a Plugin<a class="headerlink" href="#writing-a-plugin" title="Permanent link">&para;</a></h2>
@@ -1611,8 +1611,8 @@ its entry point group, and its template base class now lives on its own page:
 </span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>        <span class="k">return</span> <span class="kc">False</span>
 </span></code></pre></div>
 <h3 id="2-register-the-entry-point">2. Register the entry point<a class="headerlink" href="#2-register-the-entry-point" title="Permanent link">&para;</a></h3>
-<p>Use <code>pyproject.toml</code> (older plugins may still register the same groups through a legacy
-<code>setup.py</code> <code>entry_points</code> dict, but new plugins should not):</p>
+<p>Use <code>pyproject.toml</code> (a legacy <code>setup.py</code> <code>entry_points</code> dict registers the same groups,
+but do not use it in a plugin you write):</p>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.stt&quot;</span><span class="k">]</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">my-engine-stt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_stt_plugin:MySTTPlugin&quot;</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
@@ -1705,7 +1705,7 @@ error to trace back.</p>
 </div>
 <p>Override <code>runtime_requirements</code> to declare connectivity needs. See
 <a href="../skill-runtime-requirements/">Runtime Requirements</a> for what OVOS actually does with this
-declaration today.</p>
+declaration.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span> <span class="nn">ovos_utils.process_utils</span> <span class="kn">import</span> <span class="n">RuntimeRequirements</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">from</span> <span class="nn">ovos_utils</span> <span class="kn">import</span> <span class="n">classproperty</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>

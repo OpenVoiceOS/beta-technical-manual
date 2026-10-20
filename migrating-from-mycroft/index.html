@@ -1546,17 +1546,17 @@
 purpose: "skills", "intents", "dialog files", even the wake word "Hey Mycroft". This lets
 skills and habits carry over. The underlying Python API was cleaned up along the way. Class
 names moved, one central cloud account went away entirely, and a couple of decorators
-merged into one. This page is a one-stop diff for anyone arriving with old
+merged into one. The diff below is for anyone arriving with
 <code>mycroft-core</code> knowledge (a skill, a config file, a habit) who wants to know exactly what
 changed and why. New to the words here? See the <a href="../glossary/">Glossary</a>.</p>
 </div>
-<p>This page is for skill authors and integrators. If you just used a Mycroft device and
+<p>The diff is for skill authors and integrators. If you just used a Mycroft device and
 want to know what daily use looks like on OVOS, read
 <a href="../coming-from-mycroft/">Coming from Mycroft</a> instead.</p>
 <h2 id="the-short-version">The short version<a class="headerlink" href="#the-short-version" title="Permanent link">&para;</a></h2>
 <p>OVOS is a <strong>backendless</strong>, community-maintained continuation of the ideas behind Mycroft AI.
-There is no cloud account, no pairing step, and no <code>home.mycroft.ai</code>. Everything that used to
-require the Mycroft backend now runs locally or through swappable, self-hosted plugins. The
+There is no cloud account, no pairing step, and no <code>home.mycroft.ai</code>. Everything that the
+Mycroft backend did runs locally or through swappable, self-hosted plugins. The
 skill-writing model (intent files, dialog files, <code>locale/</code> folders) is the same model you already
 know. Only a handful of import paths and class/decorator names changed.</p>
 <h2 id="before-after-writing-a-skill">Before / after: writing a skill<a class="headerlink" href="#before-after-writing-a-skill" title="Permanent link">&para;</a></h2>
@@ -1594,7 +1594,7 @@ know. Only a handful of import paths and class/decorator names changed.</p>
 <ul>
 <li><code>from mycroft import MycroftSkill</code> → <code>from ovos_workshop.skills import OVOSSkill</code>. The
   <code>mycroft</code> package and its <code>MycroftSkill</code> class do not exist in the current OVOS stack.
-  <code>OVOSSkill</code> (in <code>ovos-workshop</code>) is the base class every skill subclasses today.</li>
+  <code>OVOSSkill</code> (in <code>ovos-workshop</code>) is the base class every skill subclasses.</li>
 <li>No <code>__init__</code> / <code>create_skill()</code> boilerplate is required. A skill is loaded from a Python
   package that declares itself through an <code>opm.skill</code> entry point (see
   <a href="../first-skill/">Your First Skill</a>). OVOS instantiates the class directly.</li>
@@ -1610,7 +1610,7 @@ know. Only a handful of import paths and class/decorator names changed.</p>
 <thead>
 <tr>
 <th>mycroft-core concept</th>
-<th>OVOS today</th>
+<th>OVOS</th>
 <th>Notes</th>
 </tr>
 </thead>
@@ -1623,7 +1623,7 @@ know. Only a handful of import paths and class/decorator names changed.</p>
 <tr>
 <td><code>@intent_file_handler</code></td>
 <td><a href="../decorators/"><code>@intent_handler</code></a></td>
-<td>Now handles both Padatious <code>.intent</code> files and Adapt <code>IntentBuilder</code>s.</td>
+<td>Handles both Padatious <code>.intent</code> files and Adapt <code>IntentBuilder</code>s.</td>
 </tr>
 <tr>
 <td><code>self.translate()</code> / <code>translate_list()</code> / <code>translate_namedvalue()</code> / <code>translate_template()</code></td>
@@ -1698,8 +1698,8 @@ know. Only a handful of import paths and class/decorator names changed.</p>
 <ul>
 <li><a href="../deprecated-repos/">Deprecated &amp; Archived Repositories</a>: full list of retired
   mycroft-core-era repositories and their current replacements.</li>
-<li><a href="../first-skill/">Your First Skill</a>: a from-scratch walkthrough using today's API.</li>
-<li><a href="../decorators/">Decorators</a>: every decorator available today, including the note on
+<li><a href="../first-skill/">Your First Skill</a>: a from-scratch walkthrough of the skill API.</li>
+<li><a href="../decorators/">Decorators</a>: every decorator available, including the note on
   <code>@intent_file_handler</code>.</li>
 <li><a href="../glossary/">Glossary</a>: unfamiliar terms, including <a href="../glossary/"><code>home.mycroft.ai</code></a>.</li>
 </ul>

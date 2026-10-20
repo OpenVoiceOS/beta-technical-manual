@@ -1764,7 +1764,7 @@
 <hr />
 <div class="admonition warning">
 <p class="admonition-title">Alpha channel only</p>
-<p>The following super-resolution transformers exist in their repos but are <strong>not yet published to PyPI</strong>, so <code>pip install</code> will not find them. They upsample/enhance the TTS audio before playback.</p>
+<p>The following super-resolution transformers exist in their repos but are <strong>not published to PyPI</strong>, so <code>pip install</code> will not find them. They upsample/enhance the TTS audio before playback.</p>
 <ul>
 <li><strong>OVOS FlashSR TTS Transformer</strong> (<code>FlashSRTTSTransformer</code>): ONNX-based audio super-resolution, downloads its model from the Hugging Face Hub. Entry point <code>ovos-tts-transformer-FlashSR</code> under <code>opm.transformer.tts</code>. Source: <a href="https://github.com/OpenVoiceOS/ovos_tts_transformer_FlashSR">ovos_tts_transformer_FlashSR</a>.</li>
 <li><strong>OVOS NovaSR TTS Transformer</strong> (<code>NovaSRTTSTransformer</code>): torch-based super-resolution upsampler. Entry point <code>ovos-tts-transformer-NovaSR</code> under <code>opm.transformer.tts</code>. Source: <a href="https://github.com/OpenVoiceOS/ovos_tts_transformer_NovaSR">ovos_tts_transformer_NovaSR</a>.</li>
@@ -1773,10 +1773,9 @@
 <hr />
 <h3 id="ovos-audiosr-tts-transformer"><strong>OVOS AudioSR TTS Transformer</strong><a class="headerlink" href="#ovos-audiosr-tts-transformer" title="Permanent link">&para;</a></h3>
 <div class="admonition warning">
-<p class="admonition-title">Not yet on PyPI</p>
-<p>Like FlashSR and NovaSR above, <code>ovos-tts-transformer-audiosr</code> has no PyPI release yet
-(only prerelease tags on GitHub) — the config below is for when it ships, or a
-from-source install.</p>
+<p class="admonition-title">Not on PyPI</p>
+<p>Like FlashSR and NovaSR above, <code>ovos-tts-transformer-audiosr</code> has no PyPI release
+(only prerelease tags on GitHub). The config below is for a from-source install.</p>
 </div>
 <p>Engine-agnostic ONNX audio super-resolution transformer (<code>opm.transformer.tts</code>). It upscales
 <strong>any</strong> TTS engine's output to 48 kHz just before playback, rather than being tied to one voice

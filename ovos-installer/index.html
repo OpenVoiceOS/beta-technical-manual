@@ -1648,11 +1648,11 @@ installer also asks you to opt into two separate telemetry reports along the way
 you're unsure about either prompt, declining is always safe. Nothing else about the install
 depends on them.</p>
 <p><strong>Looking for a no-terminal option?</strong> The <strong><a href="../install-raspovos/">raspOVOS</a></strong> image is the
-flash-and-boot alternative: no terminal, no SSH. Its <strong>stable</strong> images date from mid-2025
-and are not receiving updates (the newer DEV builds on its
+flash-and-boot alternative: no terminal, no SSH. Its <strong>stable</strong> images get
+no updates (the DEV builds on its
 <a href="https://github.com/OpenVoiceOS/raspOVOS/releases">releases page</a> are untested
 work-in-progress toward a refreshed image), so check status before choosing it. This
-installer is the supported route meanwhile, and the recommended path on the Pi and
+installer is the supported route, and the recommended path on the Pi and
 everywhere else.</p>
 <p><strong>This runs in a terminal, not an app.</strong> There's no phone app. You type commands into a
 terminal, usually over SSH into a headless device. The <a href="#set-up-from-the-web-wizard">web setup wizard</a>
@@ -1714,7 +1714,7 @@ instead and work at its own terminal.</p>
 </span></code></pre></div>
 <hr />
 <h3 id="4-run-the-ovos-installer">4. Run the OVOS Installer<a class="headerlink" href="#4-run-the-ovos-installer" title="Permanent link">&para;</a></h3>
-<p>Now you're ready to start the installation process:</p>
+<p>Start the installation:</p>
 <p>This is the official <code>ovos-installer</code> script, straight from the project's <code>main</code> branch. You
 can read it yourself first at
 <a href="https://raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main/installer.sh">raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main/installer.sh</a>
@@ -1728,7 +1728,7 @@ They install the same thing.</strong></p>
 <div class="admonition warning">
 <p class="admonition-title">Piping straight to root, without reading it first</p>
 <p>The one-liner below runs as <strong>root</strong> and executes whatever the <code>main</code> branch of
-<code>ovos-installer</code> currently holds. It is not pinned to a release, and you never see the
+<code>ovos-installer</code> holds. It is not pinned to a release, and you never see the
 script before it runs with root privileges. Prefer the download-then-inspect version above
 unless you're already comfortable with that trade-off.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/OpenVoiceOS/ovos-installer/main/installer.sh<span class="k">)</span><span class="s2">&quot;</span>
@@ -1749,7 +1749,7 @@ unless you're already comfortable with that trade-off.</p>
 <p>Launch a <strong>text-based user interface (TUI)</strong> to guide you through the setup</p>
 </li>
 </ul>
-<p>This can take anywhere from <strong>5 to 20 minutes</strong>, depending on your hardware, internet speed, and storage performance. Now let's walk through the installer screens!</p>
+<p>This can take anywhere from <strong>5 to 20 minutes</strong>, depending on your hardware, internet speed, and storage performance. The installer screens follow.</p>
 <hr />
 <h2 id="the-installer-wizard">The Installer Wizard<a class="headerlink" href="#the-installer-wizard" title="Permanent link">&para;</a></h2>
 <p>The wizard walks you through language, installation method,
@@ -1765,7 +1765,7 @@ with no prompts at all. Useful for fleets or CI.</p>
 </div>
 <hr />
 <h2 id="installation-complete">Installation Complete!<a class="headerlink" href="#installation-complete" title="Permanent link">&para;</a></h2>
-<p>OVOS is now installed and ready to use. Try saying things like:</p>
+<p>OVOS is installed and ready to use. Try saying things like:</p>
 <ul>
 <li>
 <p>"What's the weather?"</p>

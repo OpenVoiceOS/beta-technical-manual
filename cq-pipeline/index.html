@@ -1489,7 +1489,7 @@
 <p>When you ask a general-knowledge question like "who wrote Hamlet?", the Common Query pipeline asks all your installed knowledge skills (Wikipedia, Wolfram Alpha, and so on) the same question at once, gathers their answers, and reads back the best one. Think of it as a quiz host who puts the question to every contestant and then announces the strongest reply. It never makes up answers itself. Every answer comes from a skill, so if you have no knowledge skills installed, it simply stays quiet. See the <a href="../pipelines-overview/">Intent Pipeline overview</a> or the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p>Not in the default pipeline. Add its stage IDs to <code>intents.pipeline</code> explicitly to use it.</p>
-<p>The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.</p>
+<p>The sections below are for people who deploy or customize OVOS.</p>
 <details class="info">
 <summary>Formal specification</summary>
 <p>Common Query is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md">OVOS-COMMON-QUERY-1: Common Query Pipeline Plugin</a></strong>, built on <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a></strong>. See the <a href="../architecture-specs/">spec index</a>.</p>
@@ -1614,7 +1614,7 @@ a question.</p>
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>The config block is read from <code>intents.ovos-common-query-pipeline-plugin</code>, falling
-back to the older <code>intents.common_query</code> key.</p>
+back to the legacy <code>intents.common_query</code> key.</p>
 <table>
 <thead>
 <tr>
@@ -1637,7 +1637,7 @@ back to the older <code>intents.common_query</code> key.</p>
 <tr>
 <td><code>reranker</code></td>
 <td><code>ovos-flashrank-reranker-plugin</code></td>
-<td>An installed reranker plugin name used to reorder candidate answers, if installed. The pipeline still loads this through the legacy <code>opm.solver.multiple_choice</code> group (a <code>MultipleChoiceSolver</code>), not the newer <code>opm.agents.reranker</code> contract. See <a href="../agent-plugins/">Agent Plugins</a>.</td>
+<td>An installed reranker plugin name used to reorder candidate answers, if installed. The pipeline still loads this through the legacy <code>opm.solver.multiple_choice</code> group (a <code>MultipleChoiceSolver</code>), not the <code>opm.agents.reranker</code> contract. See <a href="../agent-plugins/">Agent Plugins</a>.</td>
 </tr>
 <tr>
 <td><code>ignore_skill_scores</code></td>
@@ -1690,7 +1690,7 @@ the same plugin the library falls back to when no reranker is configured at all.
 <li><strong>Not chit-chat</strong>: strictly factual question answering.</li>
 <li><strong>Skills required</strong>: with no CommonQuery skills installed, the matcher returns
   nothing immediately.</li>
-<li>Skills using the old CommonQuery base class still work but log a deprecation
+<li>Skills using the legacy CommonQuery base class work but log a deprecation
   warning and are matched as plain <code>question:action</code>.</li>
 </ul>
 <hr />

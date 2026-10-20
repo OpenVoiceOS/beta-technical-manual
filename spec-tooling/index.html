@@ -1577,7 +1577,7 @@ and check:</p>
 <li><a href="../spec-test-harness/"><strong>ovos-test-harness</strong></a>: an executable test suite
   that proves a running stack obeys the specs.</li>
 </ul>
-<p>A related, separate mechanism lets the ecosystem adopt the new <code>ovos.*</code>
+<p>A related, separate mechanism lets the ecosystem adopt the <code>ovos.*</code>
 topic names without a flag day: see
 <a href="../bus-namespace-migration/">Bus namespace migration</a>.</p>
 </div>
@@ -1605,8 +1605,8 @@ pre-flight an unmerged cross-repo change before merge. See
 pre-flight a change.</p>
 <h2 id="adopting-the-spec-namespace-without-a-flag-day">Adopting the spec namespace: without a flag day<a class="headerlink" href="#adopting-the-spec-namespace-without-a-flag-day" title="Permanent link">&para;</a></h2>
 <p>The specs rename many bus topics into the <code>ovos.*</code> namespace. Migrating an
-ecosystem of independently-released repos to new topic names all at once is
-impossible, so <code>ovos-bus-client</code> bridges old and new names automatically and
+ecosystem of independently-released repos to different topic names all at once is
+impossible, so <code>ovos-bus-client</code> bridges legacy and spec names automatically and
 incrementally. <code>ovos-spec-tools</code> owns the <strong>vocabulary</strong> of that mapping
 (<code>SpecMessage</code> / <code>MIGRATION_MAP</code>). The runtime bridge itself lives in
 <code>ovos-bus-client</code>. See <a href="../bus-namespace-migration/">Bus namespace migration</a>

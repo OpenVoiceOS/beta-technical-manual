@@ -1024,7 +1024,7 @@
         <li class="md-nav__item">
   <a href="#status-today-legacy-but-the-default" class="md-nav__link">
     <span class="md-ellipsis">
-      Status today: legacy, but the default
+      Status: legacy, but the default
     </span>
   </a>
   
@@ -1432,7 +1432,7 @@
         <li class="md-nav__item">
   <a href="#status-today-legacy-but-the-default" class="md-nav__link">
     <span class="md-ellipsis">
-      Status today: legacy, but the default
+      Status: legacy, but the default
     </span>
   </a>
   
@@ -1496,12 +1496,12 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p><strong>OCP</strong> ("OVOS Common Play") is the voice media player behind "play some jazz" or "play the
-news". It ships as a plugin for the old <a href="../audio-service/">audio service</a>: the package
+news". It ships as a plugin for the legacy <a href="../audio-service/">audio service</a>: the package
 <code>ovos-plugin-common-play</code>, which registers as an <em>audio backend</em> called <code>ovos_common_play</code>.
 This is the <strong>default</strong> way OVOS plays media. It still works and is enabled out of
 the box, but it is <strong>legacy</strong>: a dedicated replacement, <a href="../ovos-media/"><code>ovos-media</code></a>, is
-being built to take over the playback job. This page explains what the OCP audio plugin is,
-why it lives inside the audio service, and how <code>ovos-media</code> will replace it. For the <em>intent</em>
+being built to take over the playback job. The sections below explain what the OCP audio plugin is,
+why it lives inside the audio service, and how <code>ovos-media</code> replaces it. For the <em>intent</em>
 side of OCP (deciding that "play X" is a media request) see the
 <a href="../ocp-pipeline/">OCP Pipeline</a>; for the skills that supply results see
 <a href="../ocp-skills/">Media Skills</a>.</p>
@@ -1514,7 +1514,7 @@ side of OCP (deciding that "play X" is a media request) see the
   request. See <a href="../ocp-pipeline/">OCP Pipeline</a>.</li>
 <li><strong>The OCP skill base class</strong>: <code>OVOSCommonPlaybackSkill</code>; skills built on it provide
   or embody media for the pipeline to find. See <a href="../ocp-skills/">OCP Skills</a>.</li>
-<li><strong>The legacy OCP audio plugin</strong>: <code>ovos-plugin-common-play</code>, the current default
+<li><strong>The legacy OCP audio plugin</strong>: <code>ovos-plugin-common-play</code>, the default
   playback engine running inside <code>ovos-audio</code>. See <a href="./">The OCP Audio Plugin</a>.</li>
 </ul>
 </div>
@@ -1573,7 +1573,7 @@ unaffected: turning OCP off (or switching to <code>ovos-media</code>) does not c
 notification sounds are played.</p>
 </div>
 <hr />
-<h2 id="status-today-legacy-but-the-default">Status today: legacy, but the default<a class="headerlink" href="#status-today-legacy-but-the-default" title="Permanent link">&para;</a></h2>
+<h2 id="status-today-legacy-but-the-default">Status: legacy, but the default<a class="headerlink" href="#status-today-legacy-but-the-default" title="Permanent link">&para;</a></h2>
 <p>The OCP audio plugin is <strong>still the default media playback path</strong>:</p>
 <ul>
 <li>It is installed as part of <a href="../audio-service/"><code>ovos-audio</code></a>'s media extra
@@ -1587,14 +1587,13 @@ this plugin.</p>
 <div class="admonition warning">
 <p class="admonition-title">Legacy: bug fixes only, no new features</p>
 <p><code>ovos-ocp-audio-plugin</code> still receives bug fixes, but no new functionality — active
-development goes into <a href="../ovos-media/"><code>ovos-media</code></a>. Recent fixes worth knowing about if
-you rely on this plugin: skipping backwards through a shuffled queue no longer re-shuffles
-the remaining tracks, and stream URLs carrying an auth token are redacted before they are
-written to the log.</p>
+development goes into <a href="../ovos-media/"><code>ovos-media</code></a>. Skipping backwards through a shuffled
+queue does not re-shuffle the remaining tracks, and the plugin redacts stream URLs that
+carry an auth token before it writes them to the log.</p>
 </div>
 <div class="admonition warning">
-<p class="admonition-title">Upcoming: breaking</p>
-<p>This legacy audioservice subsystem, including the OCP backend described on this page,
+<p class="admonition-title">Planned removal: breaking</p>
+<p>This legacy audioservice subsystem, including the OCP backend,
 is planned for removal from <code>ovos-audio</code> entirely. Media playback will then live wholly
 in <a href="../ovos-media/"><code>ovos-media</code></a>. Plan a migration if you have not already switched.</p>
 </div>
@@ -1646,7 +1645,7 @@ register OCP's intents.</p>
 <hr />
 <h2 id="how-ovos-media-replaces-it">How <code>ovos-media</code> replaces it<a class="headerlink" href="#how-ovos-media-replaces-it" title="Permanent link">&para;</a></h2>
 <p><a href="../ovos-media/"><code>ovos-media</code></a> is the <strong>final step</strong> of the decomposition described
-<a href="#background-why-ocp-is-an-audio-service-plugin">above</a> and the <strong>upcoming, opt-in</strong> replacement
+<a href="#background-why-ocp-is-an-audio-service-plugin">above</a> and the <strong>opt-in</strong> replacement
 for this plugin. With the NLP, search, and extraction layers already split out into their own
 repos, what remains is the player itself. Instead of cramming it into the audio service,
 <code>ovos-media</code> gives it a <strong>dedicated media daemon</strong> with a cleaner design:</p>
@@ -1655,7 +1654,7 @@ repos, what remains is the player itself. Instead of cramming it into the audio 
 <tr>
 <th></th>
 <th>OCP audio plugin (legacy, default)</th>
-<th><code>ovos-media</code> (upcoming)</th>
+<th><code>ovos-media</code> (opt-in)</th>
 </tr>
 </thead>
 <tbody>
@@ -1683,9 +1682,8 @@ repos, what remains is the player itself. Instead of cramming it into the audio 
 </table>
 <p>What stays the same: the <strong>search layer is shared</strong>. The <a href="../ocp-pipeline/">OCP pipeline</a>
 (intent matching) and <a href="../ocp-skills/">OCP skills</a> (media providers) are used by <em>both</em>. Only the
-<em>playback backend</em> changes. <code>ovos-media</code> no longer carries a
-<code>mycroft.audio.service.*</code> bridge of its own (its <code>LegacyAudioServiceCompat</code> shim was dropped
-in 1.0.0a1): clients on the old topics are served by the legacy ovos-audio/OCP stack, and the
+<em>playback backend</em> changes. <code>ovos-media</code> has no
+<code>mycroft.audio.service.*</code> bridge of its own: clients on the legacy topics are served by the legacy ovos-audio/OCP stack, and the
 OCP pipeline plugin's own fallback, not by the <code>ovos-media</code> daemon.</p>
 <p>To switch to <code>ovos-media</code>: set <strong><code>"enable_old_audioservice": false</code></strong> in <code>mycroft.conf</code> and run
 the <code>ovos-media</code> daemon. See the <a href="../ovos-media/">ovos-media</a> page for the full setup and the list

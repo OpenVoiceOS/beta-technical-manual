@@ -1580,9 +1580,9 @@
 <p class="admonition-title">In a nutshell</p>
 <p>A satellite deployment puts one capable server in the middle and several small
 devices around the house. The server runs the messagebus, <code>ovos-core</code>, and skills.
-Each satellite only listens and speaks. This page is the build guide. It has two
-paths: a raw shared bus for a trusted LAN, and HiveMind for anything that needs
-auth or crosses an untrusted network. Terminology: this page says <em>satellite</em>.
+Each satellite only listens and speaks. The build guide has two paths: a raw shared
+bus for a trusted LAN, and HiveMind for anything that needs auth or crosses an
+untrusted network. Terminology: this guide says <em>satellite</em>.
 HiveMind pages say <em>client</em> or <em>node</em> for the same thing: the device that
 connects to the central server.</p>
 </div>
@@ -1635,7 +1635,7 @@ listener and an audio service, and both connect back to the server's messagebus.
 </table>
 <p>Keep the raw shared bus on a trusted LAN only. Never forward its port to the internet.
 Use HiveMind for anything off your own network, or when you need to tell satellites apart.</p>
-<p>Both paths on this page share one <code>ovos-core</code> brain across every satellite. If you instead
+<p>Both paths share one <code>ovos-core</code> brain across every satellite. If you instead
 want each device to run its own independent <code>ovos-core</code> and only share the heavy STT/TTS
 inference, see <a href="#thin-clients-a-shared-speech-backend">Thin clients + a shared speech backend</a>
 below.</p>
@@ -1733,7 +1733,7 @@ separate project with its own protocol and docs.</p>
 <p class="admonition-title">Alpha channel only</p>
 <p>Install both sides from the prerelease channel. The two sides negotiate a protocol
 version, and the stable <code>hivemind-bus-client</code> release, <code>0.4.4</code>, predates the protocol
-this page documents, so a satellite from the stable channel connects to nothing here.
+described here, so a satellite from the stable channel connects to nothing here.
 <a href="../hivemind-agents/">HiveMind agents</a> explains why.</p>
 </div>
 </li>
@@ -1885,12 +1885,12 @@ resource limit and healthcheck spelled out.</p>
 <p>With <code>network_mode: host</code>, <code>127.0.0.1</code> is the <strong>host's</strong> loopback, not a container-private
 one. Every container and process on that host shares it. A bus bound to <code>127.0.0.1</code> is
 reachable by any of them, not just <code>ovos_messagebus</code>.</p>
-<p>"Bound to localhost" no longer means "only reachable by this one process" once host
+<p>"Bound to localhost" does not mean "only reachable by this one process" once host
 networking is in play. Treat the whole host as the trust boundary, not the individual
 container.</p>
 <p>Host networking also exposes any service that binds <code>0.0.0.0</code> straight onto the LAN, not
 just the host's own loopback. <code>gui_websocket.host</code> ships as <code>127.0.0.1</code>. If you widen
-it to <code>0.0.0.0</code> for a remote display, or an older config still carries that value, then
+it to <code>0.0.0.0</code> for a remote display, or a config carries that value, then
 with <code>network_mode: host</code> the GUI WebSocket lands on the LAN, not just the device. Keep
 the loopback default unless a remote display client genuinely needs LAN access.</p>
 </div>

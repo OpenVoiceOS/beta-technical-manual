@@ -1999,7 +1999,7 @@
 <h1 id="configuration-reference">Configuration Reference<a class="headerlink" href="#configuration-reference" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This is the settings catalog for OVOS: a lookup table of the main options you can adjust (your language, units, microphone, wake word, and which speech and voice engines to use), with each option's default value and a short note on what it does. You don't need to set most of them. Use this page when you want to find the name of a particular setting and what it controls. For how to apply these settings, see <a href="../config/">Configuration Management</a>. For unfamiliar terms, see the <a href="../glossary/">Glossary</a>.</p>
+<p>This is the settings catalog for OVOS: a lookup table of the main options you can adjust (your language, units, microphone, wake word, and which speech and voice engines to use), with each option's default value and a short note on what it does. You don't need to set most of them. Use it to find the name of a particular setting and what it controls. For how to apply these settings, see <a href="../config/">Configuration Management</a>. For unfamiliar terms, see the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p>OVOS uses a layered configuration system, typically stored in <code>mycroft.conf</code>.</p>
 <hr />
@@ -2385,7 +2385,7 @@ stock install keys placed under <code>intents.OCP</code> change nothing (see
 <tr>
 <td><code>intents.ovos-ocp-pipeline-plugin.legacy</code></td>
 <td><code>false</code></td>
-<td>Force the old audio-service bus API instead of OCP.</td>
+<td>Force the legacy audio-service bus API instead of OCP.</td>
 </tr>
 <tr>
 <td><code>intents.ovos-ocp-pipeline-plugin.min_score</code></td>
@@ -2473,7 +2473,7 @@ stock install keys placed under <code>intents.OCP</code> change nothing (see
 <tr>
 <td><code>skills.blacklisted_skills</code></td>
 <td><code>["skill-ovos-stop.openvoiceos"]</code></td>
-<td>Skill IDs that never load, even if installed. The stop skill is blacklisted because stop handling is now built into core.</td>
+<td>Skill IDs that never load, even if installed. The stop skill is blacklisted because stop handling is built into core.</td>
 </tr>
 <tr>
 <td><code>skills.fallbacks.fallback_mode</code></td>
@@ -2533,7 +2533,7 @@ stock install keys placed under <code>intents.OCP</code> change nothing (see
 <tr>
 <td><code>skills.converse.cross_deactivation</code></td>
 <td><code>true</code></td>
-<td><strong>Currently unused</strong> — nothing in <code>ovos-core</code> reads this key (the shipped <code>mycroft.conf</code> comment says skill deactivation is not yet implemented); in practice cross-skill <em>deactivation</em> permission is gated by the same <code>cross_activation</code> flag above.</td>
+<td><strong>Unused</strong>: nothing in <code>ovos-core</code> reads this key (the shipped <code>mycroft.conf</code> comment says skill deactivation is not implemented); in practice cross-skill <em>deactivation</em> permission is gated by the same <code>cross_activation</code> flag above.</td>
 </tr>
 </tbody>
 </table>

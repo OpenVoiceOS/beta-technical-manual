@@ -1795,7 +1795,7 @@
 <h1 id="writing-an-stt-plugin">Writing an STT Plugin<a class="headerlink" href="#writing-an-stt-plugin" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page is the tutorial for building your own STT plugin: the <code>STT</code> and <code>StreamingSTT</code> base classes, the entry point that makes a plugin installable, and how to test it. Looking for a plugin to use instead of writing one? Go to <a href="../stt-plugins/">STT Plugins</a>.</p>
+<p>Build your own STT plugin: the <code>STT</code> and <code>StreamingSTT</code> base classes, the entry point that makes a plugin installable, and how to test it. Looking for a plugin to use instead of writing one? Go to <a href="../stt-plugins/">STT Plugins</a>.</p>
 </div>
 <h2 id="writing-your-own-stt-plugin">Writing your own STT plugin<a class="headerlink" href="#writing-your-own-stt-plugin" title="Permanent link">&para;</a></h2>
 <h3 id="stt"><code>STT</code><a class="headerlink" href="#stt" title="Permanent link">&para;</a></h3>
@@ -1988,7 +1988,7 @@ entry-point name (left of <code>=</code>) is the string users put in their <code
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="s2">&quot;ovos-stt-plugin-mymodel.config&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos_stt_plugin_mymodel:MySTTConfig&quot;</span>
 </span></code></pre></div>
 <blockquote>
-<p><strong>Backward Compatibility</strong>: <code>ovos-plugin-manager</code> still supports legacy <code>mycroft.plugin.stt</code> entry points, but new plugins should use the <code>opm.*</code> namespace.</p>
+<p><strong>Backward Compatibility</strong>: <code>ovos-plugin-manager</code> supports legacy <code>mycroft.plugin.stt</code> entry points, but a plugin you write should use the <code>opm.*</code> namespace.</p>
 </blockquote>
 <h3 id="test-it-without-ovos">Test it without OVOS<a class="headerlink" href="#test-it-without-ovos" title="Permanent link">&para;</a></h3>
 <p><code>STT</code> is a plain class with no messagebus connection, so a unit test needs no running

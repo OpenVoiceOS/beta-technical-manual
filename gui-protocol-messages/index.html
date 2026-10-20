@@ -1615,13 +1615,13 @@
 <h1 id="gui-protocol-messages">GUI Protocol Messages<a class="headerlink" href="#gui-protocol-messages" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page is the wire-level message catalog for the <strong>legacy</strong> Qt WebSocket GUI protocol: every <code>mycroft.session.*</code>, <code>mycroft.gui.list.*</code>, and <code>mycroft.events.triggered</code> message shape, with JSON examples. For the conceptual picture (what the protocol is for, the messagebus messages skills send, and the client architecture), see <a href="../gui-protocol/">GUI Protocol</a>. For terms, see the <a href="../glossary/">Glossary</a>.</p>
+<p>The wire-level message catalog for the <strong>legacy</strong> Qt WebSocket GUI protocol: every <code>mycroft.session.*</code>, <code>mycroft.gui.list.*</code>, and <code>mycroft.events.triggered</code> message shape, with JSON examples. For the conceptual picture (what the protocol is for, the messagebus messages skills send, and the client architecture), see <a href="../gui-protocol/">GUI Protocol</a>. For terms, see the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <div class="admonition danger">
-<p class="admonition-title">The OVOS GUI is deprecated: see <a href="../gui-status/">Screens on OVOS Today</a> for the full picture</p>
-<p>This page documents the legacy protocol. There is no generally usable OVOS GUI,
-and a replacement is <strong>Upcoming</strong>. Building a remote client? Skip this legacy protocol
-and see <a href="../gui-status/">Screens on OVOS Today</a> for the current approach.</p>
+<p class="admonition-title">The OVOS GUI is deprecated: see <a href="../gui-status/">Screens on OVOS</a> for the full picture</p>
+<p>The legacy protocol follows. There is no generally usable OVOS GUI,
+and a replacement is planned. Building a remote client? Skip this legacy protocol
+and see <a href="../gui-status/">Screens on OVOS</a> for the current approach.</p>
 </div>
 <hr />
 <h2 id="qt-websocket-protocol-legacy-adapter">Qt WebSocket Protocol (Legacy Adapter)<a class="headerlink" href="#qt-websocket-protocol-legacy-adapter" title="Permanent link">&para;</a></h2>
@@ -1845,15 +1845,15 @@ as normal bus events.</p>
   longer supported.</li>
 <li>Instead of mirroring to Qt clients directly, template events fan out to every loaded
   <code>opm.gui_adapter</code> plugin (see <a href="../gui-adapters/">GUI Adapter Plugins</a>). The Qt WebSocket
-  protocol on this page becomes one such adapter.</li>
+  protocol becomes one such adapter.</li>
 </ul>
-<p>None of this is implemented in <code>ovos-gui</code> yet. See
+<p><code>ovos-gui</code> does not implement any of this. See
 <a href="../gui-adapters/">GUI Adapter Plugins</a> for what the adapter plugins being built ahead of
 this rework have already settled on.</p>
 </div>
 <hr />
 <p><strong>Read next:</strong> <a href="../ovos-shell/">OVOS Shell</a>
-<strong>Related:</strong> <a href="../gui-protocol/">GUI Protocol</a> · <a href="../gui-service/">GUI Service (legacy)</a> · <a href="../gui-status/">Screens on OVOS Today</a></p>
+<strong>Related:</strong> <a href="../gui-protocol/">GUI Protocol</a> · <a href="../gui-service/">GUI Service (legacy)</a> · <a href="../gui-status/">Screens on OVOS</a></p>
 
 
 

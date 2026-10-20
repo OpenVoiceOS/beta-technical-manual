@@ -1812,16 +1812,16 @@
 <h1 id="gui-skills-guiinterface">GUI Skills (GUIInterface)<a class="headerlink" href="#gui-skills-guiinterface" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>When an OVOS device has a screen, a skill can show things on it: text, images, a page of results. This page describes the small Python toolkit a skill author uses to push data to the screen and ask for a page to be displayed. It is a developer topic, and the screen system is being rebuilt (see <a href="../gui-adapters/">GUI Adapters</a>). Voice should stay the main way you interact, while the screen is a bonus. See the <a href="../glossary/">Glossary</a> for terms.</p>
+<p>When an OVOS device has a screen, a skill can show things on it: text, images, a page of results. A skill author uses a small Python toolkit to push data to the screen and ask for a page to be displayed. It is a developer topic. For the GUI rework, see <a href="../gui-adapters/">GUI Adapters</a>. Voice should stay the main way you interact, while the screen is a bonus. See the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
 <div class="admonition danger">
-<p class="admonition-title">The OVOS GUI is deprecated — see <a href="../gui-status/">Screens on OVOS Today</a> for the full picture</p>
-<p>This page documents the legacy skill GUI API. There is no generally usable OVOS GUI right
-now, and a replacement is <strong>Upcoming</strong>. Voice should remain the primary interface.</p>
+<p class="admonition-title">The OVOS GUI is deprecated — see <a href="../gui-status/">Screens on OVOS</a> for the full picture</p>
+<p>The skill GUI API is legacy. OVOS has no generally usable GUI, and the replacement is
+not released. Voice is the primary interface.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>The <strong>forward</strong> model a skill targets is <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1 — GUI Display Subsystem</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). Under it, <code>self.gui</code> declares display intent by naming a template from the <strong>closed <code>SYSTEM_*</code> vocabulary</strong> (<code>SYSTEM_text</code>, <code>SYSTEM_image</code>, <code>SYSTEM_list</code>, <code>SYSTEM_weather</code>, <code>SYSTEM_confirm</code>, …) and pushing flat session-data. Interchangeable <strong>render backends</strong> draw it, routed by <code>session_id</code>. Two rules matter for skill authors. A skill <strong>MUST NOT</strong> invent template names or ship its own home/resting screen (the resting display is owned entirely by the backend, §6.9). Image keys carry an <code>http(s)</code> URL or <code>data:</code> URI, <strong>never a local filesystem path</strong>. The <code>show_*</code> helpers below map onto these templates. The custom-<code>.qml</code> path is legacy and unsupported under OVOS-GUI-1. Where this page and the spec differ, the spec is the canonical target.</p>
+<p>The <strong>forward</strong> model a skill targets is <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1 — GUI Display Subsystem</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). Under it, <code>self.gui</code> declares display intent by naming a template from the <strong>closed <code>SYSTEM_*</code> vocabulary</strong> (<code>SYSTEM_text</code>, <code>SYSTEM_image</code>, <code>SYSTEM_list</code>, <code>SYSTEM_weather</code>, <code>SYSTEM_confirm</code>, …) and pushing flat session-data. Interchangeable <strong>render backends</strong> draw it, routed by <code>session_id</code>. Two rules matter for skill authors. A skill <strong>MUST NOT</strong> invent template names or ship its own home/resting screen (the resting display is owned entirely by the backend, §6.9). Image keys carry an <code>http(s)</code> URL or <code>data:</code> URI, <strong>never a local filesystem path</strong>. The <code>show_*</code> helpers below map onto these templates. The custom-<code>.qml</code> path is legacy and unsupported under OVOS-GUI-1. Where this manual and the spec differ, the spec is the canonical target.</p>
 </details>
 <p>Many OVOS devices have a screen. A skill can drive that screen the same way it
 speaks: through a small Python API. You set some values, ask for a page to be
@@ -1829,18 +1829,18 @@ shown, and any connected GUI client (Qt shell, web, terminal, ...) renders it.</
 <p><strong>In plain terms:</strong> <code>self.gui</code> is a dict-like object. You put data in it
 (<code>self.gui["name"] = "OVOS"</code>), then call a <code>show_*</code> method to display a page.</p>
 <p>Under the hood, <code>self.gui</code> is a <code>SkillGUI</code> instance (a subclass of <code>GUIInterface</code>)
-created automatically for every <code>OVOSSkill</code>. On current <code>ovos-workshop</code> the base class
+created automatically for every <code>OVOSSkill</code>. In <code>ovos-workshop</code> the base class
 lives in <code>ovos_bus_client.apis.gui.GUIInterface</code>. The skill wrapper is
 <code>ovos_workshop.skills.ovos.SkillGUI</code>, namespaced to your <code>skill_id</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Alpha channel only</p>
 <p>A planned breaking change rebinds <code>self.gui</code> to a
 <code>GUIInterface</code> from the standalone <strong><code>ovos-gui-api-client</code></strong> package (instead of
-<code>ovos_bus_client.apis.gui</code>) and drops the <code>ui_directories</code> constructor argument (today,
-<code>ui_directories</code> is a <code>dict</code> mapping a framework name, e.g. <code>"qt5"</code>, to its local resource
+<code>ovos_bus_client.apis.gui</code>) and drops the <code>ui_directories</code> constructor argument (in the
+released code, <code>ui_directories</code> is a <code>dict</code> mapping a framework name, e.g. <code>"qt5"</code>, to its local resource
 directory, which <code>GUIInterface</code> searches when resolving a relative image/page name to a
-file on disk), since skills under the <a href="../gui-service/">GUI rework</a> no longer ship QML. This is <strong>not</strong> on a released <code>ovos-workshop</code>. On stable installs <code>self.gui</code> is
-still the <code>ovos_bus_client.apis.gui.GUIInterface</code>-based <code>SkillGUI</code> described above. Tracked in
+file on disk), because skills under the <a href="../gui-service/">GUI rework</a> do not ship QML. No published <code>ovos-workshop</code> carries this change. In every published release, <code>self.gui</code> is
+the <code>ovos_bus_client.apis.gui.GUIInterface</code>-based <code>SkillGUI</code> described above. Tracked in
 <a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/420">ovos-workshop#420</a>.</p>
 </div>
 <h2 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
@@ -1881,13 +1881,13 @@ according to its local capabilities.</p>
 <code>url</code> may be a local file path or an <code>http(s)</code> URL. Missing local files are
 logged and the call returns without showing anything.</p>
 <div class="admonition note">
-<p class="admonition-title">Local paths work today, but the spec says not to rely on them</p>
+<p class="admonition-title">Local paths work, but the spec says not to rely on them</p>
 <p>The installed <code>show_image()</code> (<code>ovos_bus_client.apis.gui.GUIInterface</code>) does accept and
-resolve a local filesystem path. That is the current, working behavior described above.
-The OVOS-GUI-1 spec box further up this page nonetheless says image keys should carry only
-an <code>http(s)</code> URL or <code>data:</code> URI, never a local path. That is the forward-looking contract
-for interchangeable render backends, not a rule the current code enforces. Prefer a URL or
-<code>data:</code> URI in new skills if you want to stay forward-compatible.</p>
+resolve a local filesystem path, as described above.
+The OVOS-GUI-1 spec box above says image keys carry only
+an <code>http(s)</code> URL or <code>data:</code> URI, never a local path. That is the contract
+for interchangeable render backends. The code does not enforce it. Use a URL or
+<code>data:</code> URI in a skill to stay compatible with the spec.</p>
 </div>
 <h4 id="animated-image">Animated Image<a class="headerlink" href="#animated-image" title="Permanent link">&para;</a></h4>
 <p>Display an animated image such as a gif (same arguments as <code>show_image</code>).</p>
@@ -1929,15 +1929,15 @@ disables platform transition animations for the page.</p>
 <code>show_face(awake=True, ...)</code> (the classic assistant face), <code>show_loading_animation(text, ...)</code>,
 and <code>show_status_animation(text, success, ...)</code>.</p>
 <div class="admonition warning">
-<p class="admonition-title">Upcoming — a wider template surface in the standalone package</p>
-<p>The templates above are what today's <code>ovos_bus_client.apis.gui.GUIInterface</code> ships. The
-forward-looking standalone <strong><code>ovos-gui-api-client</code></strong> <code>GUIInterface</code> (the package
+<p class="admonition-title">Pending change: a wider template surface in the standalone package</p>
+<p>The templates above are what <code>ovos_bus_client.apis.gui.GUIInterface</code> ships. The
+standalone <strong><code>ovos-gui-api-client</code></strong> <code>GUIInterface</code> (the package
 <a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/420">ovos-workshop#420</a> rebinds
 <code>self.gui</code> to) adds more <code>SYSTEM_*</code> helpers: <code>show_list</code>, <code>show_grid</code>, <code>show_table</code>,
 <code>show_weather</code>, <code>show_clock</code>, <code>show_timer</code>, <code>show_map</code>, <code>show_media_player</code>,
 and the two voice-first dialogue helpers <code>show_confirm(question, ...)</code> and
 <code>show_select(items, prompt=None, ...)</code>. These are <strong>not</strong> on a released <code>ovos-workshop</code>.
-Treat them as the template set new skills will target once the rebind lands.</p>
+They are the template set for skills after the rebind merges.</p>
 <p>Two behavioural notes for that package:</p>
 <ul>
 <li><strong><code>fill</code> vocabulary changes.</strong> The standalone <code>FillMode</code> enum uses <code>"fit"</code> / <code>"crop"</code> /
@@ -1992,7 +1992,7 @@ skills setting <code>self.gui["name"]</code> never collide.</p>
 <a href="../gui-service/">GUI Service Reference</a>.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../skill-runtime-requirements/">Runtime Requirements in OVOS</a>
-<strong>Related:</strong> <a href="../resource-files/">Resource Files</a> · <a href="../gui-status/">Screens on OVOS Today</a> · <a href="../gui-service/">GUI Service (ovos-gui)</a> · <a href="../gui-adapters/">GUI Adapter Plugins</a></p>
+<strong>Related:</strong> <a href="../resource-files/">Resource Files</a> · <a href="../gui-status/">Screens on OVOS</a> · <a href="../gui-service/">GUI Service (ovos-gui)</a> · <a href="../gui-adapters/">GUI Adapter Plugins</a></p>
 
 
 

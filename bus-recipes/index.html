@@ -1669,11 +1669,12 @@ the same client for quick, no-code interaction with a running assistant:</p>
 isn't behaving as expected), run <code>ovos-busmon</code>, a browser-based web UI (FastAPI + WebSocket)
 for live bus traffic. It subscribes like any other client and streams each message to the
 browser as it is broadcast. Install it with <code>pip install ovos-busmon</code>.</p>
-<div class="admonition note">
-<p class="admonition-title">Upcoming: <code>AsyncMessageBusClient</code></p>
-<p>An in-progress change adds an async/await-native <code>AsyncMessageBusClient</code> alongside the
-threaded <code>MessageBusClient</code> used in the recipes above, for callers already running an
-asyncio event loop (e.g. FastAPI servers) that would rather avoid a background thread.</p>
+<div class="admonition warning">
+<p class="admonition-title">Alpha channel only</p>
+<p><code>ovos-bus-client</code> ships an async/await-native <code>AsyncMessageBusClient</code> beside the
+threaded <code>MessageBusClient</code> used in the recipes above. Use it when the caller already runs an
+asyncio event loop (e.g. FastAPI servers) and must avoid a background thread. It needs the
+<code>async</code> extra: <code>pip install --pre "ovos-bus-client[async]"</code>.</p>
 </div>
 <h2 id="from-a-non-python-client-the-json-round-trip">From a non-Python client: the JSON round trip<a class="headerlink" href="#from-a-non-python-client-the-json-round-trip" title="Permanent link">&para;</a></h2>
 <p>The bus speaks plain JSON frames over a WebSocket, so any language works: Dart, Kotlin,

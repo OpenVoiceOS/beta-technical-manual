@@ -1461,14 +1461,14 @@
 <h1 id="adapt-pipeline-plugin">Adapt Pipeline Plugin<a class="headerlink" href="#adapt-pipeline-plugin" title="Permanent link">&para;</a></h1>
 <div class="admonition info">
 <p class="admonition-title">Maturity — Stable ⬤⬤⬤⬤◯</p>
-<p>Stable, actively-maintained code, but its <em>use</em> is scenario-limited. See the Recommendation on this page before choosing it for a broad deployment. Maturity rates <a href="../maturity/">repository health</a>, <a href="../maturity/">not fitness for your use case</a>.</p>
+<p>Stable, actively-maintained code, but its <em>use</em> is scenario-limited. See the Recommendation below before choosing it for a broad deployment. Maturity rates <a href="../maturity/">repository health</a>, <a href="../maturity/">not fitness for your use case</a>.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>Adapt is one of the tools that helps the assistant figure out what you want when you speak to it. It works like a checklist: a skill says "if you hear these keywords together, this is the command for me." When you say "switch on the lamp", Adapt spots the keywords "switch on" and "lamp" and routes your request to the right skill. There is no guessing or learning involved. It simply matches the words it was told to look for. See the <a href="../glossary/">Glossary</a> for terms, or <a href="../padatious-pipeline/">Padatious</a> for a sister tool that learns from example sentences instead.</p>
 </div>
 <p>Shipped in the default pipeline.</p>
-<p>The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.</p>
+<p>The sections below are for people who deploy or customize OVOS.</p>
 <details class="info">
 <summary>📐 Formal specification</summary>
 <p>Adapt is a <strong>pipeline plugin</strong> under <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 — Utterance Lifecycle &amp; Pipeline</a></strong>. It is a <strong>keyword-intent</strong> engine in the sense of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md">OVOS-INTENT-3 — Intent Definition §4</a></strong>: it matches by <em>which vocabularies occur</em> (required / optional / one-of / excluded), with each occurring vocabulary doubling as a slot. The <code>.voc</code> vocabularies are written in the <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1 — Sentence Template Grammar</a></strong> (<code>(a|b)</code> / <code>[optional]</code> expansion). See the <a href="../architecture-specs/">spec index</a>.</p>

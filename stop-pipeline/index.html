@@ -1627,7 +1627,7 @@
 <p>This is the part of OVOS that listens for "stop", "cancel", or the same word in your language and makes the assistant quit whatever it is doing: interrupting a spoken reply, ending a question, or halting a task a skill started. Because being able to stop is so essential to a voice assistant, OVOS treats it as a built-in, always-on feature rather than an optional add-on. It works in any language that ships the right word list. For the wider system this fits into, see the <a href="../fallback-pipeline/">Fallback Pipeline</a> or the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p>This is a flow stage: part of every standard pipeline rather than a matcher you choose between.</p>
-<p>The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.</p>
+<p>The sections below are for people who deploy or customize OVOS.</p>
 <details class="info">
 <summary>📐 Formal specification</summary>
 <p>The stop plugin is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md">OVOS-STOP-1: Stop Pipeline Plugin</a></strong>, built on <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a></strong>. See the <a href="../architecture-specs/">spec index</a>.</p>
@@ -1726,7 +1726,7 @@ recording is in progress. Neither cancels speech on its own.</p>
 <p>Collects the session's stop candidates, skipping session-blacklisted ones and the stop plugin itself. A skill holding the session's <code>response_mode</code> window comes first, ahead of the recency list; the session's active handlers follow in recency order.</p>
 </li>
 <li>
-<p>Emits the <code>ovos.stop.ping</code> broadcast STOP-1 defines, and also pings each active handler on its per-skill topic <code>{skill_id}.stop.ping</code>. Both go out on every stop. The per-skill form is what reaches skills today, because the <code>ovos-workshop</code> base class subscribes to that one and not to the broadcast; keep the per-skill subscription until the base class moves. <code>ovos-core</code> logs a warning that the per-skill emission is a compatibility measure and names the release that drops it. The plugin then waits up to <code>0.5s</code> for <code>ovos.stop.pong</code> (legacy: <code>skill.stop.pong</code>) replies carrying <code>can_handle</code>.</p>
+<p>Emits the <code>ovos.stop.ping</code> broadcast STOP-1 defines, and also pings each active handler on its per-skill topic <code>{skill_id}.stop.ping</code>. Both go out on every stop. The <code>ovos-workshop</code> base class answers both forms with the same reply. The per-skill form serves skills that subscribe only to their own topic, and <code>ovos-core</code> logs a warning that names the release that removes it (<code>ovos-core</code> 4.0.0) and tells skill authors to subscribe to <code>ovos.stop.ping</code>. The plugin then waits up to <code>0.5s</code> for <code>ovos.stop.pong</code> (legacy: <code>skill.stop.pong</code>) replies carrying <code>can_handle</code>.</p>
 </li>
 <li>
 <p>Dispatches <code>&lt;skill_id&gt;:stop</code> (legacy: <code>{skill_id}.stop</code>) to the first positive responder in candidate order. Pongs are re-sorted into that order before the winner is picked, so the answer that arrived first does not decide the round.</p>
@@ -1798,12 +1798,12 @@ recording is in progress. Neither cancels speech on its own.</p>
 <tr>
 <td><code>ovos.stop.ping</code></td>
 <td>out</td>
-<td>Broadcast asking active handlers whether they can stop, per STOP-1. The <code>ovos-workshop</code> base class does not subscribe to it yet</td>
+<td>Broadcast asking active handlers whether they can stop, per STOP-1. The <code>ovos-workshop</code> base class answers it</td>
 </tr>
 <tr>
 <td><code>{skill_id}.stop.ping</code></td>
 <td>out</td>
-<td>The same question addressed to one skill, emitted alongside the broadcast. The form skills actually answer, since the base class subscribes to it rather than the broadcast. Removed in a future <code>ovos-core</code></td>
+<td>The same question addressed to one skill, emitted alongside the broadcast. A compatibility form for skills that subscribe only to their own topic. <code>ovos-core</code> 4.0.0 removes it. The base class answers it too</td>
 </tr>
 <tr>
 <td><code>ovos.stop.pong</code> (legacy: <code>skill.stop.pong</code>)</td>

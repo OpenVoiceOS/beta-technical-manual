@@ -1484,7 +1484,7 @@
 <h1 id="test-your-skill">Test Your Skill<a class="headerlink" href="#test-your-skill" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page continues <a href="../first-skill/">Your First Skill</a>, and picks up right after it: the
+<p>This tutorial continues <a href="../first-skill/">Your First Skill</a>, and picks up right after it: the
 <code>ovos-skill-my-first</code> skill you just wrote. Here you'll add an automated test for it. It
 sends the skill the utterance "hello" and checks it replies correctly, without needing a
 microphone, speakers, or a running assistant. By the end you'll have a test you can run
@@ -1590,7 +1590,7 @@ you understand it, the fixture is the leaner way to write most tests.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">PYTEST_DISABLE_PLUGIN_AUTOLOAD</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>pytest<span class="w"> </span>test/test_hello.py<span class="w"> </span>-v
 </span></code></pre></div>
 <p><code>PYTEST_DISABLE_PLUGIN_AUTOLOAD=1</code> avoids autoloading unrelated pytest plugins that some OVOS
-dependencies register. It fits the hand-built examples on this page, but it also disables
+dependencies register. It fits the hand-built examples here, but it also disables
 <code>ovoscope</code>'s own <code>pytest11</code> plugin: with it set, the <code>minicroft</code> fixture from the tip above
 is not found unless you re-enable the plugin explicitly with <code>-p ovoscope.pytest_plugin</code>.
 A real run looks like this (trimmed of the framework's own deprecation-warning noise):</p>

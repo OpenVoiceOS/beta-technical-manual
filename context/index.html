@@ -1760,11 +1760,11 @@
 </tr>
 </tbody>
 </table>
-<p>This page is about the third (and the field that holds it). It is not <code>Message.context</code>, and a context entry is not a <code>Match.slot</code>. CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a <code>requires_context</code> key also names a slot, its value fills that slot if the utterance did not. This is exactly the "remember which person" mechanism below.</p>
+<p>The sections below cover the third (and the field that holds it). It is not <code>Message.context</code>, and a context entry is not a <code>Match.slot</code>. CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a <code>requires_context</code> key also names a slot, its value fills that slot if the utterance did not. This is exactly the "remember which person" mechanism below.</p>
 <p><strong>A capped store.</strong> CONTEXT-1 §2 says the orchestrator SHOULD enforce a maximum
 live-entry count per session, evicting the entry closest to natural expiry when a write
 would exceed it. <code>ovos-spec-tools</code> ships the eviction helper with
-<code>DEFAULT_MAX_ENTRIES = 1024</code>, but the shipped core does not call it yet — today the only
+<code>DEFAULT_MAX_ENTRIES = 1024</code>, but <code>ovos-core</code> does not call it. The only
 bound on the store is entry expiry. Either way this is a safety bound, not a limit a
 skill author needs to plan around.</p>
 <p><strong>When context and the utterance both fill a slot, the utterance wins.</strong> CONTEXT-1 §7 only
@@ -1772,7 +1772,7 @@ fills a slot from context when the utterance itself left it empty; a value the m
 already extracted from what the user said is never overridden by a stored context entry.</p>
 </details>
 <p>Conversational context makes voice interactions feel more natural. The assistant keeps track of the subject you are discussing, so you do not have to repeat it.</p>
-<p><strong>What works in a skill today</strong>: the declarative <code>requires_context=</code>/<code>excludes_context=</code>
+<p><strong>What works in a skill</strong>: the declarative <code>requires_context=</code>/<code>excludes_context=</code>
 kwargs on <code>@intent_handler</code> (file-registered/Padatious intents, see below), a blocking prompt,
 <code>ask_yesno()</code>/<code>get_response()</code> (see <a href="../prompts/">Statements and Prompts</a>), keeping the skill in
 the conversation with <a href="../converse/"><code>converse()</code></a>, or the Adapt path: <code>self.set_context()</code> plus
@@ -1794,7 +1794,7 @@ whose gate is not satisfied against <code>session.intent_context</code> at match
 <p>The private/shared scoping rules are identical on both sides: a bare key gates privately
 against the registering <code>skill_id</code>, and reading a shared key needs the explicit
 <code>{"key": "person", "scope": "shared"}</code> form.</p>
-<p>Since <code>ovos-workshop</code> <code>9.6.0a1</code>, <code>@intent_handler</code> carries the declaration side too, on any
+<p><code>@intent_handler</code> carries the declaration side too, on any
 intent, adapt or file-registered:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
@@ -1809,7 +1809,7 @@ engines (Padatious, Padacioso, M2V) filter candidates against <code>session.inte
 time, and so does Adapt, whose keyword matcher stores each intent's declared
 <code>requires_context</code>/<code>excludes_context</code> at registration and admits a candidate only when the gate
 is satisfied (OVOS-CONTEXT-1 §6/§6.1). Adapt also keeps its own separate legacy mechanism
-(<code>.require()</code> on a context keyword, the TeaSkill example below) for gating today, so a skill can
+(<code>.require()</code> on a context keyword, the TeaSkill example below) for gating, so a skill can
 use either the declarative kwargs or <code>.require()</code>.</p>
 <div class="admonition danger">
 <p class="admonition-title">A bare-string entry silently never matches a shared entry</p>
@@ -1823,10 +1823,10 @@ skill wrote as shared.</p>
 <p>Context lives on the per-conversation <a href="../session/">Session</a>, in <code>Session.intent_context</code>. It
 is <strong>session-scoped</strong>, not a single global store, so concurrent users and devices keep
 separate context.</p>
-<p><code>Session.context</code> still resolves as a read/write view projected over <code>intent_context</code>, kept
-for older code: reads project from the canonical map and legacy writes
+<p><code>Session.context</code> resolves as a read/write view projected over <code>intent_context</code>, kept
+for legacy code: reads project from the canonical map and legacy writes
 (<code>inject_context</code>, <code>update_context</code>, <code>remove_context</code>, <code>clear_context</code>) fold back into it,
-so old mutation calls still take effect. Touching it warns. New code writes to
+so legacy mutation calls take effect. Touching it warns. Write to
 <code>intent_context</code> directly.</p>
 <hr />
 <h2 id="follow-up-questions">Follow-up questions<a class="headerlink" href="#follow-up-questions" title="Permanent link">&para;</a></h2>
@@ -1872,7 +1872,7 @@ so old mutation calls still take effect. Touching it warns. New code writes to
 </span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;He is from </span><span class="si">{</span><span class="n">from_dict</span><span class="p">[</span><span class="n">python</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s1">&#39;PythonPerson&#39;</span><span class="p">,</span> <span class="n">python</span><span class="p">)</span>
 </span></code></pre></div>
-<p>When either method is called, OVOS adds the <code>PythonPerson</code> keyword to its context. If there is a match with <code>Length</code> but <code>PythonPerson</code> is missing, OVOS assumes the last mention of that keyword. The interaction can now become the one described at the top of the page.</p>
+<p>When either method is called, OVOS adds the <code>PythonPerson</code> keyword to its context. If there is a match with <code>Length</code> but <code>PythonPerson</code> is missing, OVOS assumes the last mention of that keyword. The interaction can then become the one described at the top of the page.</p>
 <blockquote>
 <p>User: How tall is John Cleese?</p>
 </blockquote>
@@ -1945,12 +1945,12 @@ context gate: present in the current context, or the intent does not match.</p>
 <p>The full, worked-through version of this <code>TeaSkill</code>, with every handler, is in
 <a href="#using-context-to-enable-intents">Using context to enable Intents</a> below.</p>
 <blockquote>
-<p><strong>NOTE</strong>: cross skill context is not yet exposed via decorators</p>
+<p><strong>NOTE</strong>: decorators do not expose cross skill context.</p>
 </blockquote>
 <h2 id="using-context-to-enable-intents">Using context to enable <strong>Intents</strong><a class="headerlink" href="#using-context-to-enable-intents" title="Permanent link">&para;</a></h2>
 <p>Context can create "bubbles" of available intent handlers, so certain <strong>intents</strong> can't trigger unless some previous stage in a conversation has occurred.</p>
 <blockquote>
-<p>This is the <em>idea</em> behind the <strong><code>requires_context</code></strong> gate of CONTEXT-1 §6, expressed through the legacy mechanism that works today: <code>MilkContext</code> is a private flag (the <code>@adds_context</code> decorator stores it under the skill's own prefix), and an intent that <code>.require('MilkContext')</code> declares it as an Adapt keyword precondition, so the <code>yes</code>/<code>no</code> intents are invisible except in the narrow window between the question and the reply, with no skill-side state machine. Note that <code>.require()</code> keyword matching and the declarative <code>requires_context=</code> / <code>excludes_context=</code> intent kwargs are <strong>different code paths</strong>: the declarative gate looks entries up under the resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> shape, which <code>set_context</code> / <code>@adds_context</code> also write (see "Both spellings are written, with one decay policy" below). The complementary <code>excludes_context</code> gate (CONTEXT-1 §6.1) handles fire-once intents (for example, "greet only once per session").</p>
+<p>This is the <em>idea</em> behind the <strong><code>requires_context</code></strong> gate of CONTEXT-1 §6, expressed through the legacy mechanism: <code>MilkContext</code> is a private flag (the <code>@adds_context</code> decorator stores it under the skill's own prefix), and an intent that <code>.require('MilkContext')</code> declares it as an Adapt keyword precondition, so the <code>yes</code>/<code>no</code> intents are invisible except in the narrow window between the question and the reply, with no skill-side state machine. Note that <code>.require()</code> keyword matching and the declarative <code>requires_context=</code> / <code>excludes_context=</code> intent kwargs are <strong>different code paths</strong>: the declarative gate looks entries up under the resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> shape, which <code>set_context</code> / <code>@adds_context</code> also write (see "Both spellings are written, with one decay policy" below). The complementary <code>excludes_context</code> gate (CONTEXT-1 §6.1) handles fire-once intents (for example, "greet only once per session").</p>
 </blockquote>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>User: Hey Mycroft, bring me some Tea
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>OVOS: Of course, would you like Milk with that?
@@ -2052,7 +2052,7 @@ both keys.</p>
 <p>Separately, the legacy <code>add_context</code> bus message is also emitted, for pre-spec
 orchestrators that only understand <code>Session.context</code>. This is a different consumer, not
 a second write path into <code>intent_context</code>. The two live in different session fields.
-The legacy emit now logs a deprecation warning once per process; it is scheduled for
+The legacy emit logs a deprecation warning once per process; it is scheduled for
 removal at <code>ovos-workshop</code> 10.0.0.</p>
 </div>
 <div class="admonition note">

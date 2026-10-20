@@ -1802,12 +1802,11 @@
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Project status: stable images paused, development active</p>
-<p>The last <strong>stable</strong> raspOVOS images date from mid-2025 and are not receiving updates,
-so they are not the recommended install path for a new setup. The repository itself is
-actively developed — CI work continues and newer builds tagged <code>raspOVOS-DEV-*</code> appear
-on the <a href="https://github.com/OpenVoiceOS/raspOVOS/releases">releases page</a> alongside the
-older stable ones, but DEV images are untested builds toward the refreshed image on the
-roadmap, not something to hand a newcomer. Check the repository for status before
+<p>The <strong>stable</strong> raspOVOS images do not receive updates, so they are not the recommended
+install path for a new setup. The repository is actively developed. Builds tagged
+<code>raspOVOS-DEV-*</code> appear on the
+<a href="https://github.com/OpenVoiceOS/raspOVOS/releases">releases page</a> beside the stable
+ones, but DEV images are untested builds, not something to hand a newcomer. Check the repository for status before
 flashing. For a supported setup on a Raspberry Pi, install Raspberry Pi OS and use the
 <a href="../ovos-installer/">ovos-installer</a>. This guide stays for people running an existing
 raspOVOS image.</p>
@@ -1909,7 +1908,7 @@ tier (see <a href="../stt-plugins/">STT Plugins</a>, <a href="../tts-plugins/">T
 <div class="admonition warning">
 <p class="admonition-title">The image's own generated config may not match what it installs</p>
 <p>Both the hybrid and offline builds run <code>ovos-config autoconfigure</code> before installing
-their plugins, and the recommendation layer that command writes now points at
+their plugins, and the recommendation layer that command writes points at
 <code>ovos-stt-plugin-onnx-asr</code> (offline) and <code>ovos-tts-plugin-phoonnx</code> (both tiers), none of
 which either build installs. On a freshly built image, set <code>stt.module</code>/<code>tts.module</code> yourself (as below) to
 a plugin that is actually present rather than trusting the generated defaults. Optional swaps, not what ships by default, are</p>

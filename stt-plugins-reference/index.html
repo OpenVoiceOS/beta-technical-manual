@@ -2257,7 +2257,7 @@
 <h1 id="stt-plugins-reference">STT Plugins Reference<a class="headerlink" href="#stt-plugins-reference" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page holds the full technical entry for each STT plugin in the roster: repository link, license notes, and a default configuration snippet where one exists. Start at <a href="../stt-plugins/">STT Plugins</a> to pick a plugin; come here for the exact settings.</p>
+<p>Each section holds the full technical entry for an STT plugin in the roster: repository link, license notes, and a default configuration snippet where one exists. Start at <a href="../stt-plugins/">STT Plugins</a> to pick a plugin; come here for the exact settings.</p>
 </div>
 <h2 id="ovos-stt-plugin-wav2vec">ovos-stt-plugin-wav2vec<a class="headerlink" href="#ovos-stt-plugin-wav2vec" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2353,7 +2353,7 @@ a private or guaranteed-available endpoint. Point it at your own self-hosted ser
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a> }
 </span></code></pre></div>
 <p>Leaving <code>urls</code> unset falls back to a shuffled pick from the plugin's own hardcoded public
-community-run server list, currently <code>stt.openvoiceos.pt</code> and <code>stt.smartgic.io</code>, rather than
+community-run server list (<code>stt.openvoiceos.pt</code> and <code>stt.smartgic.io</code>), rather than
 failing. See <a href="../stt-server/#companion-plugin">stt-server</a> for a self-hosted alternative, or
 pick a fully offline engine from the table above.</p>
 <div class="admonition warning">
@@ -2378,7 +2378,7 @@ servers entirely: fully offline plugins exist for everything.</p>
 <ul>
 <li>
 <p><strong>GitHub</strong>: <a href="https://github.com/TigreGotico/ovos-stt-plugin-whisper">TigreGotico/ovos-stt-plugin-whisper</a>
-  (the identically named <code>OpenVoiceOS/ovos-stt-plugin-whisper</code> repo is an older, different
+  (the identically named <code>OpenVoiceOS/ovos-stt-plugin-whisper</code> repo is a different
   plugin wrapping the <code>whisper</code> pip package, default model <code>base</code>, no CUDA switch)</p>
 </li>
 <li>

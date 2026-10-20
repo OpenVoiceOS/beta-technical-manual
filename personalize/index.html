@@ -1437,7 +1437,7 @@
 <p>You just installed OVOS and it works. Now you want it to sound like <em>your</em> assistant: a
 different name to wake it up, a different voice answering you, or a different language
 altogether. All three are small edits to the same file, <code>~/.config/mycroft/mycroft.conf</code>.
-This page is a quick-reference for all three. Each section links to the full page with
+Each section below is a quick reference for one of them, and links to the full page with
 more detail and more options.</p>
 </div>
 <div class="admonition tip">
@@ -1520,8 +1520,8 @@ The assistant keeps listening, though each failed engine still logs its own <cod
 (see <a href="../wake-word-plugins/">Wake-word Plugins</a>). Full walkthrough,
 plugin choices, and tuning: <a href="../wake-word-plugins/#change-your-wake-word">Wake-word Plugins</a>.</p>
 <h2 id="change-your-voice">Change your voice<a class="headerlink" href="#change-your-voice" title="Permanent link">&para;</a></h2>
-<p>Install the plugin's package first. Unlike most tweaks on this page, this one does
-require a terminal today. There is no on-device UI for installing plugins yet. <code>phoonnx</code>
+<p>Install the plugin's package first. Unlike most tweaks here, this one needs a terminal.
+OVOS has no on-device UI to install plugins. <code>phoonnx</code>
 ships the <code>ovos-tts-plugin-phoonnx</code> plugin,
 so without it OVOS has nothing to load and the voice won't actually change. Activate the
 same Python <a href="../glossary/">virtual environment</a> OVOS runs in
@@ -1548,8 +1548,8 @@ log of <code>ovos-audio</code> shows <code>(re)loading TTS engine</code> when th
 <p>On the stable channel (<code>ovos-audio</code> 0.4.0) and the testing channel (<code>ovos-audio</code> 1.2.0),
 the voice reloads only when the settings block of the plugin changes, for example a new
 <code>voice</code> value. If you change only <code>module</code>, and neither plugin has a settings block, the
-old voice keeps speaking until you restart OVOS. <code>ovos-audio</code> 2.2.1a1 and later also
-reload when <code>module</code> changes.</p>
+old voice keeps speaking until you restart OVOS. On the alpha channel, <code>ovos-audio</code> also
+reloads when <code>module</code> changes.</p>
 </div>
 <p>Browse voice samples and see every available plugin: <a href="../tts-plugins/#change-your-voice">TTS Plugins</a>.</p>
 <h2 id="make-it-talk-slower">Make it talk slower<a class="headerlink" href="#make-it-talk-slower" title="Permanent link">&para;</a></h2>

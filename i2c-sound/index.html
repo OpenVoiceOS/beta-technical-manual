@@ -1509,7 +1509,7 @@
 <p>Many Raspberry Pi voice devices use an add-on <strong>sound board (a "HAT")</strong> for their microphones
 and speaker, such as the <a href="../mark2/">Mark 2</a>'s SJ201 or a Respeaker. Before OVOS can hear or
 speak, that board has to be <strong>detected</strong>, given the <strong>right driver</strong>, and wired into the
-system's <strong>audio config</strong>. This page covers the small OVOS tools that do that on the
+system's <strong>audio config</strong>. Small OVOS tools do that on the
 <a href="../install-raspovos/">raspOVOS</a> image. The <a href="../ovos-installer/">ovos-installer</a> handles the
 Mark 2 differently. See <a href="../mark2/">Mark 2 Hardware</a> and the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
@@ -1519,7 +1519,7 @@ system's <strong>audio routing</strong> (sound server, default device, volume) c
 across a few focused tools, used mainly by the <a href="../install-raspovos/">raspOVOS</a> image.</p>
 <div class="admonition info">
 <p class="admonition-title">Two different hardware paths</p>
-<p>The tools on this page are the <strong>raspOVOS image</strong> path. The ansible
+<p>These tools are the <strong>raspOVOS image</strong> path. The ansible
 <a href="../ovos-installer/">ovos-installer</a> does <strong>not</strong> use them for the <a href="../mark2/">Mark 2</a>. It
 builds the <a href="../mark2/#the-ovos-kernel-driver-vocalfusiondriver"><code>VocalFusionDriver</code></a> kernel
 module instead. Pick the path that matches how you installed OVOS.</p>
@@ -1598,7 +1598,7 @@ boot and USB sound events.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Alpha</p>
-<p><code>raspovos-audio-setup</code> is an alpha-stage project. It is useful, but still stabilizing.</p>
+<p><code>raspovos-audio-setup</code> is an alpha-stage project. It is useful, but not stable.</p>
 </div>
 <h2 id="ovos-tools-raspovos-shell-helpers"><code>ovos-tools</code>: raspOVOS shell helpers<a class="headerlink" href="#ovos-tools-raspovos-shell-helpers" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/OpenVoiceOS/ovos-tools"><code>OpenVoiceOS/ovos-tools</code></a> is a set of helper bash

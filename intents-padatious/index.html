@@ -1888,7 +1888,7 @@ things the <code>{type}</code> of tomato should be. We do this by defining the t
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>pale
 </span></code></pre></div>
 <p>Every <code>.entity</code> file shipped under the skill's locale resources auto-registers when the
-skill's resources load for a language (since ovos-workshop 9.5.0a1; opt out with
+skill's resources load for a language (opt out with
 <code>"skills": {"auto_register_entity_files": false}</code>). An explicit call is only needed for
 entity files outside the locale resources, and still works:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
@@ -1921,15 +1921,15 @@ back to neural-only matching. Past 64 options, use a slot with an <code>.entity<
 </div>
 <div class="admonition note">
 <p class="admonition-title">Out-of-list matches land in the medium stage</p>
-<p>In <code>ovos-padatious-pipeline-plugin</code> (2.0.3a1+), an out-of-list value is floored at
+<p>In <code>ovos-padatious-pipeline-plugin</code>, an out-of-list value is floored at
 <code>ENTITY_HINT_FLOOR = 0.8</code> rather than collapsing the candidate. A listed value scores
-exactly <code>1.0</code> through a deterministic exact-match fast path (2.0.5a1+), the same as if
+exactly <code>1.0</code> through a deterministic exact-match fast path, the same as if
 no entity were attached at all. That floor lands in the plugin's <strong>medium</strong>-confidence band
 (<code>conf_med = 0.8</code>, <code>conf_high = 0.95</code> by default), below <code>conf_high</code>. The floor applies to
 the per-slot entity contribution, not the final confidence, so the exact final score
 varies with the rest of the match, but in practice an out-of-list value drags the match
 below <code>conf_high</code>. The stock <code>mycroft.conf</code> pipeline includes
-<code>ovos-padatious-pipeline-plugin-medium</code> (since ovos-config <code>2.3.9a1</code>) precisely so these
+<code>ovos-padatious-pipeline-plugin-medium</code> so these
 matches still fire. On a deployment that trims the pipeline to the high stage only,
 out-of-list slot values silently produce no match at all.</p>
 </div>
@@ -1956,12 +1956,11 @@ free-form numeric slot like this.</p>
 <p><strong>Engine-specific, deprecated:</strong> an inline <code>#</code> digit token (matching only bare digit runs) and
 the <code>:0</code> unknown-token below are <strong>Padatious extensions</strong>, not part of the
 <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a> Sentence
-Template Grammar, so they're not portable to other pipeline plugins. Since
-<code>ovos-padatious-pipeline-plugin</code> <code>2.0.8a2</code>, an unescaped inline <code>#</code> in a template line logs a
-one-time deprecation warning (<code>#</code> still matches digits exactly as before — nothing breaks this
-cycle). Prefer the <code>{slot}</code> pattern above for new skills. A non-normative spec note on this is
-<strong>pending</strong> <a href="https://github.com/OpenVoiceOS/architecture/pull/166">OpenVoiceOS/architecture#166</a>,
-not yet merged.</p>
+Template Grammar, so they're not portable to other pipeline plugins. In
+<code>ovos-padatious-pipeline-plugin</code>, an unescaped inline <code>#</code> in a template line logs a
+one-time deprecation warning, and <code>#</code> still matches digits. Prefer the <code>{slot}</code> pattern above
+for new skills. A non-normative spec note covers this:
+<a href="https://github.com/OpenVoiceOS/architecture/pull/166">OpenVoiceOS/architecture#166</a>.</p>
 </blockquote>
 <h3 id="typed-slots">Typed slots<a class="headerlink" href="#typed-slots" title="Permanent link">&para;</a></h3>
 <p>A slot can carry a <strong>type prefix</strong>, <code>{type:name}</code> instead of the plain
@@ -1999,8 +1998,8 @@ matching; a handler never has to reach into that map directly.</p>
 the template without producing a <code>{date:when}</code> still fires the handler,
 with <code>typed_slot</code> returning <code>None</code> for <code>when</code>. Forcing a match to fail
 unless a given slot bound something is a separate, orchestrator-level
-<code>required_slots</code> check tied to an intent's registration; there is no
-skill-facing API yet to declare it directly, so a handler that truly
+<code>required_slots</code> check tied to an intent's registration; no
+skill-facing API declares it directly, so a handler that truly
 cannot proceed without a value still validates for <code>None</code> itself, as in
 the example above.</p>
 <h3 id="entities-with-unknown-tokens">Entities with unknown tokens<a class="headerlink" href="#entities-with-unknown-tokens" title="Permanent link">&para;</a></h3>
@@ -2018,7 +2017,7 @@ to the boss in my game?" We can try creating a <code>.entity</code> file with th
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>#### Georgia Street
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>San Francisco
 </span></code></pre></div>
-<p>The problem is that now anything that is not specifically a mix of New York City, San
+<p>The problem is that anything that is not specifically a mix of New York City, San
 Francisco, or something on Georgia Street won't match. Instead, we can specify an unknown word
 with <code>:0</code>. This would be written as:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>:0 :0 City
@@ -2026,10 +2025,10 @@ with <code>:0</code>. This would be written as:</p>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>#### :0 Street
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>:0 :0
 </span></code></pre></div>
-<p>Now, while this will still match quite a lot, it will match things like "Directions to
+<p>This still matches quite a lot, but it matches things like "Directions to
 Baldwin City" more than "How do I get to the boss in my game?"</p>
-<p><em>NOTE: Currently, the number of <code>:0</code> words is not fully taken into account, so the above might
-match quite liberally. This will change in the future.</em></p>
+<p><em>NOTE: The engine does not fully count the number of <code>:0</code> words, so the above can
+match quite liberally.</em></p>
 <h3 id="parentheses-expansion">Parentheses Expansion<a class="headerlink" href="#parentheses-expansion" title="Permanent link">&para;</a></h3>
 <p>Sometimes you might find yourself writing many variations of the same thing. For example, to
 write a skill that orders food, you might write the following intent:</p>
@@ -2066,7 +2065,7 @@ model training to time out, making the skill unusable.</p>
 <p>The <code>intent_handler()</code> decorator can create an examples-based intent handler by passing in the
 filename of the <code>.intent</code> file as a string.</p>
 <p>You may also see the <code>@intent_file_handler</code> decorator used in skills. This is deprecated. You
-can now replace any instance of this with the simpler <code>@intent_handler</code> decorator.</p>
+can replace any instance of this with the simpler <code>@intent_handler</code> decorator.</p>
 <p>From our first example above, we created a file <code>locale/en-us/what.is.a.tomato.intent</code>. To
 register an intent using this file we can use the following decorator, shown on its own.
 Place it above a handler method inside your skill class:</p>

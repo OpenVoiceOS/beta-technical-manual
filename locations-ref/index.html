@@ -1881,8 +1881,7 @@ not exist on disk, it falls back to the legacy pre-XDG location <code>~/.mycroft
 <li><code>/etc/xdg/mycroft/mycroft.conf</code> is <strong>not</strong> in the list, but it is loaded — merged just
   before the user config, so the user's own file wins over it.</li>
 <li>The deprecated web-cache path sits fourth in this list, after default, distribution, and
-  system. <code>load_all_configs()</code> does not merge it at all. <code>ovos-config</code> 3.0.0a1 dropped the
-  remote-config layer as a breaking change.</li>
+  system. <code>load_all_configs()</code> does not merge it at all. There is no remote-config layer.</li>
 <li>The path environment variables below are ignored — the function rebuilds
   <code>/usr/share/&lt;base&gt;/&lt;file&gt;</code> and <code>/etc/&lt;base&gt;/&lt;file&gt;</code> literally.</li>
 </ul>

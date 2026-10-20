@@ -1859,9 +1859,6 @@
 <li>
 <p>Enhances GUI experiences with visuals and usage examples.</p>
 </li>
-<li>
-<p>Lays the foundation for future help dialogs and skill documentation features.</p>
-</li>
 </ul>
 <hr />
 <h2 id="usage-guide">Usage Guide<a class="headerlink" href="#usage-guide" title="Permanent link">&para;</a></h2>
@@ -2009,7 +2006,7 @@
 listings, and older, auto-generated <code>skill.json</code> files
 (from the legacy skills-manager tooling) carry many more fields
 (<code>version</code>, <code>url</code>, <code>requirements</code>, <code>platforms</code>, and more). Stick to the
-fields above for new skills. Anything extra is ignored by <code>ovos-workshop</code>.</p>
+fields above when you write a skill. Anything extra is ignored by <code>ovos-workshop</code>.</p>
 </div>
 <hr />
 <h2 id="language-support">Language Support<a class="headerlink" href="#language-support" title="Permanent link">&para;</a></h2>
@@ -2031,7 +2028,7 @@ so external installers have somewhere to pull the skill from.</p>
 <h2 id="tips-caveats">Tips &amp; Caveats<a class="headerlink" href="#tips-caveats" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p>This metadata format is a <strong>standard</strong> part of the OVOS skill discovery process and continues to evolve to support new ecosystem features.</p>
+<p>This metadata format is a <strong>standard</strong> part of the OVOS skill discovery process.</p>
 </li>
 <li>
 <p><code>extra_plugins</code> allows for declaring companion plugins your skill may require, but that aren't direct Python dependencies.</p>
@@ -2088,7 +2085,7 @@ a package name:</p>
 <p><code>dependencies</code> in <code>pyproject.toml</code> (for example <code>ovos-workshop&gt;=0.0.1</code> in the <a href="../first-skill/#step-5-make-it-installable">first-skill
 tutorial</a>) pin a floor, not an exact version. If a
 release relies on behavior only present from a newer <code>ovos-workshop</code> (or another dependency)
-than what's currently declared, raise that floor in the same release. An outdated floor lets
+than the declared floor, raise that floor in the same release. An outdated floor lets
 an installer set up a combination the skill was never tested against, which shows up later as
 a hard-to-diagnose bug report rather than a clean install failure. The same applies to the
 <code>pip_spec</code> field in <code>skill.json</code> itself if it carries a version constraint: keep it aligned

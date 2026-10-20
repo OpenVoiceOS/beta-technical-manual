@@ -1535,7 +1535,7 @@ It's the heavyweight option you reach for when the simpler, deterministic matche
 (<a href="../adapt-pipeline/">Adapt</a>, <a href="../padatious-pipeline/">Padatious</a>) can't confidently decide.</p>
 </div>
 <p>Not in the default pipeline. Add its stage IDs to <code>intents.pipeline</code> explicitly to use it.</p>
-<p>The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.</p>
+<p>The sections below are for people who deploy or customize OVOS.</p>
 <details class="info">
 <summary>📐 Formal specification</summary>
 <p>Hierarchical KNN is a <strong>pipeline plugin</strong> under <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1: Utterance Lifecycle &amp; Pipeline</a></strong>. It fills the <strong>template-intent</strong> engine role of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md">OVOS-INTENT-3 §5-§6</a></strong> over the <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1 grammar</a></strong>. Its embedding/k-NN matching is one of the engine-specific strategies INTENT-3 §8 leaves open. See the <a href="../architecture-specs/">spec index</a>.</p>

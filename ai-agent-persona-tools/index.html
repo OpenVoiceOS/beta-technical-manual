@@ -1024,15 +1024,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#who-this-is-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      Who this is for
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#what-you-get" class="md-nav__link">
     <span class="md-ellipsis">
       What you get
@@ -1342,15 +1333,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#who-this-is-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      Who this is for
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#what-you-get" class="md-nav__link">
     <span class="md-ellipsis">
       What you get
@@ -1468,9 +1450,7 @@
 
 
 <h1 id="use-persona-tools-from-an-ai-agent-mcp-and-utcp">Use Persona Tools from an AI Agent (MCP and UTCP)<a class="headerlink" href="#use-persona-tools-from-an-ai-agent-mcp-and-utcp" title="Permanent link">&para;</a></h1>
-<p>This page serves every installed OVOS tool plugin to AI agents, through the MCP and UTCP endpoints of the persona server.</p>
-<h2 id="who-this-is-for">Who this is for<a class="headerlink" href="#who-this-is-for" title="Permanent link">&para;</a></h2>
-<p>You have OVOS tool plugins, your own or the ones that OVOS ships. You want Claude Code, Claude Desktop, opencode, Mistral Vibe, or another agent to call them.</p>
+<p>Serve every installed OVOS tool plugin to AI agents, through the MCP and UTCP endpoints of the persona server. Use the persona server tools endpoint when Claude Code, Claude Desktop, opencode, Mistral Vibe, or another agent must call OVOS tool plugins, your own or the ones that OVOS ships.</p>
 <h2 id="what-you-get">What you get<a class="headerlink" href="#what-you-get" title="Permanent link">&para;</a></h2>
 <ul>
 <li>An MCP endpoint at <code>http://localhost:8337/mcp</code>, with one MCP tool for each tool of each installed toolbox.</li>
@@ -1487,7 +1467,7 @@ from that channel:</p>
 </div>
 <ol>
 <li>
-<p>Install the tool plugins in the same environment. This page uses <code>my-math-tools</code> from <a href="../ai-agent-tool-plugin/">Write a tool plugin</a>:</p>
+<p>Install the tool plugins in the same environment. The example uses <code>my-math-tools</code> from <a href="../ai-agent-tool-plugin/">Write a tool plugin</a>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>./my-math-tools
 </span></code></pre></div>
 </li>

@@ -1215,7 +1215,7 @@
         
   
   <span class="md-ellipsis">
-    Screens on OVOS Today
+    Screens on OVOS
   </span>
   
 
@@ -1828,7 +1828,7 @@
 <h1 id="gui-service-ovos-gui">GUI Service (ovos-gui)<a class="headerlink" href="#gui-service-ovos-gui" title="Permanent link">&para;</a></h1>
 <div class="admonition danger">
 <p class="admonition-title">Maturity: Beta ⬤⬤⬤◯◯ — but the stack is deprecated</p>
-<p>The <code>ovos-gui</code> repository is active, but the GUI <strong>stack this page documents is legacy</strong> and being superseded. There is no generally usable OVOS GUI, and a replacement is <strong>Upcoming</strong>. See <a href="../gui-status/">Screens on OVOS Today</a> for the full picture and what to use now. The badge rates <a href="../maturity/">repository health</a>, not the stack's status.</p>
+<p>The <code>ovos-gui</code> repository is active, but the GUI <strong>stack it runs is legacy</strong> and being superseded. There is no generally usable OVOS GUI, and a replacement is not released. See <a href="../gui-status/">Screens on OVOS</a> for the full picture and what to use. The badge rates <a href="../maturity/">repository health</a>, not the stack's status.</p>
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
@@ -1842,8 +1842,8 @@ It reframes the GUI as a <em>voice-OS peripheral</em>: an application declares
 <strong>what</strong> to show using a <strong>closed <code>SYSTEM_*</code> template vocabulary</strong>, and any
 number of interchangeable <strong>render backends</strong> decide <strong>how</strong> to draw it
 (pixels, a character grid, a synthesized face…), each routed solely by the
-message's <code>session_id</code>. The <code>ovos-gui</code> daemon described on this page is the
-current ("legacy") implementation. Read GUI-1 for the target contract this
+message's <code>session_id</code>. The <code>ovos-gui</code> daemon described below is the
+"legacy" implementation. Read GUI-1 for the target contract this
 subsystem is converging on. For the full set see the
 <strong><a href="../architecture-specs/">spec index</a></strong>.</p>
 </details>
@@ -2025,7 +2025,7 @@ namespace holds session data (key/value pairs) and an ordered list of displayed 
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>music ends         → stack empty → idle view shown
 </span></code></pre></div>
 <blockquote>
-<p><strong>Note:</strong> GUI does not yet track namespaces per <a href="../session/">Session</a>. Today all clients
+<p><strong>Note:</strong> GUI does not track namespaces per <a href="../session/">Session</a>. All clients
 share one global display stack.</p>
 </blockquote>
 <hr />
@@ -2072,8 +2072,8 @@ key does exist in the default config (value <code>false</code>), but it is a no-
 in <code>ovos_gui/bus.py</code> reads only <code>route</code>, <code>base_port</code>, and <code>host</code>, so nothing turns this
 socket into <code>wss://</code>.</p>
 <p>It ships bound to <code>127.0.0.1</code> (loopback only). Widen <code>gui_websocket.host</code> to <code>0.0.0.0</code>
-only if a remote display genuinely needs network access — and check configs from older
-installs, which may still carry <code>0.0.0.0</code>. Never leave <code>0.0.0.0</code> on an
+only if a remote display genuinely needs network access, and check that your config does
+not carry <code>0.0.0.0</code> by accident. Never leave <code>0.0.0.0</code> on an
 untrusted network, and never expose port <code>18181</code> beyond a trusted network. If a display
 really must run on another machine, put it behind a VPN or a reverse proxy that
 authenticates and terminates TLS. Or use
@@ -2083,8 +2083,8 @@ transport.</p>
 <hr />
 <div class="admonition warning">
 <p class="admonition-title">Alpha channel only</p>
-<p>The following describes a <strong>plugin-based rendering rework</strong> that is <strong>not yet
-released</strong> and not present on any published package. It is specified by the
+<p>The following describes a <strong>plugin-based rendering rework</strong> that is <strong>unreleased</strong>
+and not present on any published package. It is specified by the
 <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1</a> spec
 and implemented in <code>ovos-gui</code>, with adapters in
 <code>ovos-legacy-mycroft-gui-plugin</code> and <code>pyhtmx-gui-client</code>.
@@ -2102,7 +2102,7 @@ headless device with zero adapters degrades to a no-op dispatch. It never crashe
 Qt WebSocket server moves into the <code>ovos-legacy-mycroft-gui-plugin</code> adapter.</p>
 <p><strong>Templates instead of QML page names.</strong> Skills display one of a <strong>closed vocabulary of
 22 <code>SYSTEM_*</code> templates</strong> (<code>SYSTEM_weather</code>, <code>SYSTEM_text</code>, <code>SYSTEM_list</code>, and more) defined by
-the spec. Custom QML page names are no longer accepted by the router. The template-based
+the spec. The router does not accept custom QML page names. The template-based
 <code>GUIInterface</code> moves into the standalone <code>ovos-gui-api-client</code> package (separate from the
 current <code>ovos_bus_client.apis.gui.GUIInterface</code>).</p>
 <p><strong>Addressing is <code>session_id</code>-only.</strong> The spec drops any separate site/room/location
@@ -2110,7 +2110,7 @@ dimension. A GUI message is routed solely by its <code>session_id</code>, and a 
 screen is expressed by clients sharing one <code>session_id</code>. This is the intended target
 design, not a regression.</p>
 <p>See <a href="../gui-adapters/">GUI Adapter Plugins</a> for the adapter API and the full template
-list, and the Upcoming section of <a href="../gui-protocol/">GUI Protocol</a> for the routing
+list, and the <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1 spec</a> for the routing
 messages.</p>
 </div>
 <hr />
@@ -2119,7 +2119,7 @@ messages.</p>
 application, and <a href="../homescreen/">Home Screen</a> for idle-screen skills.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../phal/">PHAL</a> · <a href="../concepts-overview/">Concepts Overview</a>
-<strong>Related:</strong> <a href="../gui-status/">Screens on OVOS Today</a> · <a href="../gui-adapters/">GUI Adapter Plugins</a> · <a href="../gui-protocol/">GUI Protocol</a> · <a href="../skill-gui/">Skill GUI Support</a></p>
+<strong>Related:</strong> <a href="../gui-status/">Screens on OVOS</a> · <a href="../gui-adapters/">GUI Adapter Plugins</a> · <a href="../gui-protocol/">GUI Protocol</a> · <a href="../skill-gui/">Skill GUI Support</a></p>
 
 
 

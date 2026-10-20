@@ -1411,7 +1411,7 @@
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Just want to change your language?</p>
-<p>See <a href="../lang-support/">Language Support</a> instead. This page covers internals: how
+<p>See <a href="../lang-support/">Language Support</a> instead. The sections below cover internals: how
 <code>ovos-core</code> picks a language for a given utterance internally, not how to configure one.</p>
 </div>
 <div class="admonition abstract">
@@ -1421,7 +1421,7 @@ resolves it from the most trustworthy source available, falling back to your con
 default, before it tries to match an intent. If you only ever use one language, the
 default <code>lang</code> in <code>mycroft.conf</code> is all that matters, and you can skip the details below.</p>
 </div>
-<p>OpenVoiceOS is designed to be multi-language from the ground up. This page explains the technical logic used by <code>ovos-core</code> to determine which language should be used for a given user utterance.</p>
+<p>OpenVoiceOS is designed to be multi-language from the ground up. <code>ovos-core</code> uses the logic below to determine which language should be used for a given user utterance.</p>
 <p>To switch your assistant's language, set <code>lang</code> in <code>mycroft.conf</code> to the new default. To
 understand a second language as well, without replacing the primary one, list it under
 <code>secondary_langs</code>. See <a href="../personalize/#change-your-language">Make It Yours</a> for the config
@@ -1490,9 +1490,9 @@ is present <em>and</em> resolves to a valid language:</p>
 language). These are what <code>ovos-core</code> itself uses.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The older <code>ovos_utils.lang</code> helpers below (<code>standardize_lang_tag</code>, <code>get_language_dir</code>) are
+<p>The legacy <code>ovos_utils.lang</code> helpers below (<code>standardize_lang_tag</code>, <code>get_language_dir</code>) are
 <strong>deprecated</strong> in favor of the <code>ovos_spec_tools</code> helpers above. They are documented here
-because existing skills still reference them.</p>
+because existing skills reference them.</p>
 </div>
 <h3 id="standardize_lang_taglang_code-macrotrue"><code>standardize_lang_tag(lang_code, macro=True)</code><a class="headerlink" href="#standardize_lang_taglang_code-macrotrue" title="Permanent link">&para;</a></h3>
 <p>Normalizes a language tag to a canonical form (e.g., <code>"en-us"</code> -&gt; <code>"en-US"</code>). It is used internally to ensure comparisons are reliable. With <code>macro=True</code> it can also collapse a tag to its macro-language.</p>

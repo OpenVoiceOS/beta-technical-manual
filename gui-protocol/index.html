@@ -1729,17 +1729,17 @@
 <h1 id="gui-protocol">GUI Protocol<a class="headerlink" href="#gui-protocol" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This is a developer reference for the <strong>legacy</strong> (old, deprecated) way OVOS put things on a screen. It documents the set of behind-the-scenes messages that a skill, the screen service, and the on-device display use to stay in sync about what to show. Think of it as the agreed "language" two parts of the system speak so the right page and data appear. There is no generally usable OVOS screen today. This is kept mainly for <strong>Mark 2</strong> devices and reference, and a ground-up replacement is being built (see <a href="../gui-adapters/">GUI Adapter Plugins</a>). For terms, see the <a href="../glossary/">Glossary</a>.</p>
+<p>A developer reference for the <strong>legacy</strong>, deprecated way OVOS puts things on a screen. It lists the behind-the-scenes messages that a skill, the screen service, and the on-device display use to stay in sync about what to show. Think of it as the agreed "language" two parts of the system speak so the right page and data appear. OVOS has no generally usable screen. The protocol stays mainly for <strong>Mark 2</strong> devices and reference. For the unreleased replacement, see <a href="../gui-adapters/">GUI Adapter Plugins</a>. For terms, see the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <div class="admonition danger">
-<p class="admonition-title">The OVOS GUI is deprecated: see <a href="../gui-status/">Screens on OVOS Today</a> for the full picture</p>
-<p>This page documents the legacy protocol. There is no generally usable OVOS GUI,
-and a replacement is <strong>Upcoming</strong>. Building a remote client? Skip this legacy protocol
-and see <a href="../gui-status/">Screens on OVOS Today</a> for the current approach.</p>
+<p class="admonition-title">The OVOS GUI is deprecated: see <a href="../gui-status/">Screens on OVOS</a> for the full picture</p>
+<p>The protocol below is legacy. OVOS has no generally usable GUI,
+and the replacement is not released. Building a remote client? Skip this legacy protocol
+and see <a href="../gui-status/">Screens on OVOS</a> for the supported approach.</p>
 </div>
 <details class="info">
 <summary>Formal specification</summary>
-<p>The <strong>forward</strong> model for the display subsystem is <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1: GUI Display Subsystem</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). It replaces the legacy protocol on this page with a clean separation: an application declares <em>what</em> to show by naming a template from a <strong>closed <code>SYSTEM_*</code> vocabulary</strong> and pushing flat session-data. Interchangeable <strong>render backends (adapters)</strong> decide <em>how</em> to draw it, fanned out to every installed adapter. The wire messages stay <code>gui.value.set</code> / <code>gui.page.show</code> / <code>gui.clear.namespace</code>, but a <code>gui.page.show</code> whose first page is <strong>not</strong> a <code>SYSTEM_*</code> template is rejected (no more arbitrary QML). A GUI message is routed <strong>solely by its <code>session_id</code></strong>. This page documents the legacy Qt-WebSocket protocol that the OVOS-GUI-1 adapter model supersedes. Where they differ, the spec is the canonical target (see the "Upcoming" note at the foot of this page and <a href="../gui-adapters/">GUI Adapter Plugins</a>).</p>
+<p>The <strong>forward</strong> model for the display subsystem is <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1: GUI Display Subsystem</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). It replaces the legacy protocol below with a clean separation: an application declares <em>what</em> to show by naming a template from a <strong>closed <code>SYSTEM_*</code> vocabulary</strong> and pushing flat session-data. Interchangeable <strong>render backends (adapters)</strong> decide <em>how</em> to draw it, fanned out to every installed adapter. The wire messages stay <code>gui.value.set</code> / <code>gui.page.show</code> / <code>gui.clear.namespace</code>, but a <code>gui.page.show</code> whose first page is <strong>not</strong> a <code>SYSTEM_*</code> template is rejected (no more arbitrary QML). A GUI message is routed <strong>solely by its <code>session_id</code></strong>. The sections below document the legacy Qt-WebSocket protocol that the OVOS-GUI-1 adapter model supersedes. Where they differ, the spec is the canonical target (see <a href="../gui-adapters/">GUI Adapter Plugins</a>).</p>
 </details>
 <p>The <code>ovos-gui</code> service exposes two communication channels:</p>
 <ol>
@@ -1864,7 +1864,7 @@ clients as <code>mycroft.events.triggered</code> with <code>namespace = __from</
 <hr />
 <h4 id="mycroftguiscreenclose"><code>mycroft.gui.screen.close</code><a class="headerlink" href="#mycroftguiscreenclose" title="Permanent link">&para;</a></h4>
 <p>A global "back" request. <code>NamespaceManager.handle_namespace_global_back()</code> removes the
-namespace currently at the top of the active stack. It carries no payload.</p>
+namespace at the top of the active stack. It carries no payload.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mycroft.gui.screen.close&quot;</span><span class="p">,</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
@@ -1990,11 +1990,11 @@ reference listener implementation.</p>
 <p>The messagebus messages above are mirrored to Qt clients as a separate set of
 <code>mycroft.session.*</code> / <code>mycroft.gui.list.*</code> / <code>mycroft.events.triggered</code> wire messages over a
 WebSocket connection. The full message catalog, with JSON examples for the connection
-handshake, namespace stack management, session data sync, page management, and events, has
-moved to its own page: <strong><a href="../gui-protocol-messages/">GUI Protocol Messages</a></strong>.</p>
+handshake, namespace stack management, session data sync, page management, and events, is
+in <strong><a href="../gui-protocol-messages/">GUI Protocol Messages</a></strong>.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../gui-protocol-messages/">GUI Protocol Messages</a>
-<strong>Related:</strong> <a href="../gui-service/">GUI Service (legacy)</a> · <a href="../gui-status/">Screens on OVOS Today</a> · <a href="../gui-adapters/">GUI Adapters</a></p>
+<strong>Related:</strong> <a href="../gui-service/">GUI Service (legacy)</a> · <a href="../gui-status/">Screens on OVOS</a> · <a href="../gui-adapters/">GUI Adapters</a></p>
 
 
 

@@ -1321,7 +1321,7 @@
         
   
   <span class="md-ellipsis">
-    Screens on OVOS Today
+    Screens on OVOS
   </span>
   
 
@@ -1863,11 +1863,11 @@
 <hr />
 <h2 id="legacy-compatibility">Legacy Compatibility<a class="headerlink" href="#legacy-compatibility" title="Permanent link">&para;</a></h2>
 <h3 id="classicaudioserviceinterface">ClassicAudioServiceInterface<a class="headerlink" href="#classicaudioserviceinterface" title="Permanent link">&para;</a></h3>
-<p>When <code>ovos-media</code> is not running (i.e., the system still uses <code>ovos-ocp-audio-plugin</code> inside
+<p>When <code>ovos-media</code> is not running (i.e., the system uses <code>ovos-ocp-audio-plugin</code> inside
 <code>ovos-audio</code>), the pipeline plugin falls back to emitting <code>mycroft.audio.service.*</code> bus messages
 to control the classic audio service via <code>ovos_bus_client.apis.ocp.ClassicAudioServiceInterface</code>.</p>
 <h3 id="legacycommonplay-bridge">LegacyCommonPlay Bridge<a class="headerlink" href="#legacycommonplay-bridge" title="Permanent link">&para;</a></h3>
-<p>For skills that still use the old Mycroft <code>CommonPlaySkill</code> base class (pre-OCP), the pipeline
+<p>For skills that use the old Mycroft <code>CommonPlaySkill</code> base class (pre-OCP), the pipeline
 plugin includes a bridge:</p>
 <ul>
 <li>
@@ -1880,16 +1880,15 @@ plugin includes a bridge:</p>
 <p>Emits <code>play:start</code> to tell the winning skill to handle playback itself</p>
 </li>
 </ul>
-<p>The bridge's own docstring carries a removal note targeting <code>ovos-core 0.1.0</code>, a version
-number from before <code>ovos-core</code> adopted its current numbering and never reconciled since —
-treat the bridge as legacy-support code with no confirmed removal date, not as scheduled
-for a specific upcoming release.</p>
+<p>The bridge is legacy-support code with no confirmed removal date. Its docstring names
+<code>ovos-core 0.1.0</code> as a removal target, a number from an earlier <code>ovos-core</code> numbering scheme
+that does not map to a release.</p>
 <hr />
 <h2 id="known-coupling-issues">Known Coupling Issues<a class="headerlink" href="#known-coupling-issues" title="Permanent link">&para;</a></h2>
 <h3 id="ocpvoiceskill-is-a-skill">OCPVoiceSkill is a skill<a class="headerlink" href="#ocpvoiceskill-is-a-skill" title="Permanent link">&para;</a></h3>
 <p><code>OCPVoiceSkill</code> in <code>ovos_media/skill.py</code> inherits from <code>OVOSCommonPlaybackSkill</code>, constructed
 separately from the player and given a reference to its <code>MediaCatalog</code> (<code>OCPMediaCatalog</code> is
-now just a back-compat alias for the plain, skill-free catalog object). <code>OCPVoiceSkill</code> registers
+a back-compat alias for the plain, skill-free catalog object). <code>OCPVoiceSkill</code> registers
 <code>ovos-media</code> as a skill on the bus and loads skill infrastructure (settings, locale, etc.). It
 registers <code>@ocp_search()</code> to expose liked songs as a search result. There is no
 <code>@ocp_featured_media()</code> handler.</p>

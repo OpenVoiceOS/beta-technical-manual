@@ -1430,10 +1430,10 @@
 <h1 id="agent-plugin-walkthroughs-and-migration">Agent Plugin Walkthroughs and Migration<a class="headerlink" href="#agent-plugin-walkthroughs-and-migration" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page gives two front-to-back worked examples for writing an agent engine plugin
+<p>Two front-to-back worked examples for writing an agent engine plugin
 (a <code>DocumentIndexerEngine</code> and a <code>ChatEngine</code>), a guide for migrating an existing
 <code>QuestionSolver</code>-family plugin to the agent engine API, and a pre-publish
-checklist. For picking the right base class and the rules every engine follows, see
+checklist follow. For picking the right base class and the rules every engine follows, see
 <a href="../building-agent-plugins/">Building Agent Plugins</a>.</p>
 </div>
 <hr />
@@ -1615,7 +1615,7 @@ the returned string in an <code>AgentMessage</code> and update the dict-style me
 translates the input and output behind the scenes.</p>
 <p><strong>Agent engines never translate.</strong> After migration your engine receives the user's
 language as-is. Either handle it or return nothing for languages you do not support.</p>
-<p>Translation is still the recommended strategy for engines whose backend is inherently
+<p>Translation is the recommended strategy for engines whose backend is inherently
 monolingual (Wolfram Alpha and most web APIs only speak English). The agent base class
 does not translate for you, so the plugin translates explicitly. Use the translation plugin system instead of hardcoding one translator.
 <code>OVOSLangTranslationFactory.create()</code> (in <code>ovos_plugin_manager.language</code>) returns the

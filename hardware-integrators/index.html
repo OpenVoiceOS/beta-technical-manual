@@ -1301,7 +1301,7 @@
         <li class="md-nav__item">
   <a href="#screens-where-things-stand-today" class="md-nav__link">
     <span class="md-ellipsis">
-      Screens: where things stand today
+      Screens: where things stand
     </span>
   </a>
   
@@ -1593,7 +1593,7 @@
         <li class="md-nav__item">
   <a href="#screens-where-things-stand-today" class="md-nav__link">
     <span class="md-ellipsis">
-      Screens: where things stand today
+      Screens: where things stand
     </span>
   </a>
   
@@ -1624,8 +1624,8 @@
 kiosk, that listens and talks using OVOS. Most of the software underneath does not care
 what board you run it on. The part that does care about hardware is a small layer called
 <a href="../phal/">PHAL</a> (Platform/Hardware Abstraction Layer). PHAL is also where you plug in
-your own LEDs, buttons, and sensors. This page maps what is generic and what is
-Raspberry-Pi-specific. It shows how to write a driver for your own LED ring or button
+your own LEDs, buttons, and sensors. The sections below map what is generic and what is
+Raspberry-Pi-specific. They show how to write a driver for your own LED ring or button
 panel, what resources your device needs, and what OVOS does and does not do for
 over-the-air updates and on-screen UI.</p>
 </div>
@@ -1855,11 +1855,11 @@ whole OS image, not just Python packages, bring your own solution, such as Mende
 SWUpdate, or RAUC. OVOS has no opinion on that layer.</p>
 </div>
 <hr />
-<h2 id="screens-where-things-stand-today">Screens: where things stand today<a class="headerlink" href="#screens-where-things-stand-today" title="Permanent link">&para;</a></h2>
+<h2 id="screens-where-things-stand-today">Screens: where things stand<a class="headerlink" href="#screens-where-things-stand-today" title="Permanent link">&para;</a></h2>
 <p>If your device has a display, <a href="../gui-service/"><code>ovos-gui</code></a> provides the protocol.
 <a href="../ovos-shell/"><code>ovos-shell</code></a>, or a Qt5/QML client speaking the same
 <a href="../gui-protocol/">GUI protocol</a>, renders it, with a <a href="../homescreen/">homescreen</a> skill as the
-default idle view. This works today on Linux desktops and the
+default idle view. This works on Linux desktops and the
 <a href="../ovos-installer/">GUI-capable installer path</a>, but the legacy Qt5 stack is deprecated
 pending the GUI rework. If you are starting a from-scratch hardware design, plan for a
 voice-first experience with an optional screen, not the other way around. Treat the GUI

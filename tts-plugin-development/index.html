@@ -1789,7 +1789,7 @@
 <h1 id="writing-a-tts-plugin">Writing a TTS Plugin<a class="headerlink" href="#writing-a-tts-plugin" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page is the tutorial for building your own TTS plugin: the <code>TTS</code> base class, the
+<p>A tutorial for building your own TTS plugin: the <code>TTS</code> base class, the
 <code>StreamingTTS</code> variant, the entry point that makes a plugin installable, and how to test
 it. Looking for a plugin to use instead of writing one? Go to <a href="../tts-plugins/">TTS Plugins</a>.</p>
 </div>
@@ -1984,7 +1984,7 @@ the full precedence rules.</p>
 <p><em>Diagram:</em> The chunking flow starts at a long reply and ends with the first sentence playing while the rest synthesizes, and the streaming flow starts at a sentence and branches on tts.enable_streaming between chunk playback in ovos-audio and the queued full-wav path.</p>
 <p><strong>Sentence chunking ("fake streaming").</strong> Long replies are split into sentences before
 synthesis, so the first sentence plays while the rest still synthesizes. This works with
-EVERY TTS plugin because the chunking happens before the engine runs. It is opt-in today:
+EVERY TTS plugin because the chunking happens before the engine runs. It is opt-in:
 set <code>"sentence_tokenize": true</code> in the plugin's config block (<code>TTS.preprocess_sentence</code>
 splits with <code>quebra_frases</code>, with a newline-split fallback). This is the mechanism to
 reach for in practice.</p>
@@ -2036,9 +2036,9 @@ bytes as they come off the backend.</p>
 wrapping a synchronous, whole-file engine in an async generator that yields one chunk.</p>
 <h3 id="package-and-publish">Package and publish<a class="headerlink" href="#package-and-publish" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Pin the dependency version.</strong> Put a floor and a ceiling on <code>ovos-plugin-manager</code> in
-   <code>pyproject.toml</code>, for example <code>ovos-plugin-manager&gt;=2.3.0a1,&lt;3.0.0</code>. A floor alone lets a future
-   breaking release slip in unnoticed. A ceiling alone lets an old install miss a needed feature.</li>
+<li><strong>Pin the dependency version.</strong> Put a floor on <code>ovos-plugin-manager</code> in
+   <code>pyproject.toml</code>, for example <code>ovos-plugin-manager&gt;=2.3.0a1</code>. The floor stops an old install
+   from missing a feature the plugin needs.</li>
 <li><strong>Install for local development.</strong> Run <code>pip install -e .</code> from the plugin's own repository so
    changes to the source take effect without reinstalling. See
    <a href="../plugin-manager/#3-install-and-verify">OVOS Plugin Manager: Install and verify</a> for the

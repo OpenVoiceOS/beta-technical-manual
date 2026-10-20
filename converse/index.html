@@ -1692,7 +1692,7 @@
 <h1 id="converse">Converse<a class="headerlink" href="#converse" title="Permanent link">&para;</a></h1>
 <div class="admonition info">
 <p class="admonition-title">Which page do you want?</p>
-<p>This page covers the skill-side <code>converse()</code> API. <a href="../converse-pipeline/">Converse Pipeline</a>
+<p>Read on for the skill-side <code>converse()</code> API. <a href="../converse-pipeline/">Converse Pipeline</a>
 covers the pipeline stage that dispatches to it. <a href="../session/">Session</a> covers session
 state. <a href="../layers/">Layers</a> covers intent layers. <a href="../permissions/">Permissions</a> covers
 activation control. Just want to ask one blocking yes/no question and get the answer in
@@ -1705,7 +1705,7 @@ the same handler? You don't need <code>converse()</code> at all — use <code>as
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>Converse is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md">OVOS-CONVERSE-1 — Active Handlers &amp; Interactive Response</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). A skill that was recently active stays on the session's <strong>converse-handler list</strong> (<code>session.converse_handlers</code>, what this page calls the <em>Active Skills List</em>; current <code>ovos-core</code> and <code>ovos-workshop</code> implement eligibility via the dispatch-recency field <code>session.active_handlers</code> instead — see <a href="../converse-pipeline/">Converse Pipeline</a> for the spec-vs-code mapping). The "wait for the next reply" feature (the response window) is the session field <code>session.response_mode</code>, delivered via the reserved <code>intent_name</code> <strong><code>response</code></strong>. Both <code>converse</code> and <code>response</code> are reserved names no skill may register. The list and the response window are <strong>session-resident state</strong> that rides every message. This is why session-aware skills behave correctly across satellites.</p>
+<p>Converse is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md">OVOS-CONVERSE-1 — Active Handlers &amp; Interactive Response</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). A skill that was active a short time ago stays on the session's <strong>converse-handler list</strong> (<code>session.converse_handlers</code>, called the <em>Active Skills List</em> below; <code>ovos-core</code> and <code>ovos-workshop</code> implement eligibility via the dispatch-recency field <code>session.active_handlers</code> instead — see <a href="../converse-pipeline/">Converse Pipeline</a> for the spec-vs-code mapping). The "wait for the next reply" feature (the response window) is the session field <code>session.response_mode</code>, delivered via the reserved <code>intent_name</code> <strong><code>response</code></strong>. Both <code>converse</code> and <code>response</code> are reserved names no skill may register. The list and the response window are <strong>session-resident state</strong> that rides every message. This is why session-aware skills behave correctly across satellites.</p>
 <pre class="mermaid"><code>sequenceDiagram
     participant U as User
     participant P as Converse pipeline plugin
@@ -1743,7 +1743,7 @@ emit. See <a href="../life-of-an-utterance/">Life of an Utterance</a> for the tw
 <p><code>converse()</code>, <code>activate()</code>, <code>deactivate()</code>, <code>handle_activate()</code>/<code>handle_deactivate()</code>, and
 <code>@conversational_intent</code> are <strong>not</strong> available on the plain <code>OVOSSkill</code> base class. Subclass
 <code>ConversationalSkill</code> (<code>from ovos_workshop.skills.converse import ConversationalSkill</code>) instead
-to use any of the features on this page.</p>
+to use any of these features.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">A second gate sits in front of <code>converse()</code></p>

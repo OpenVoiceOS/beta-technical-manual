@@ -1474,8 +1474,8 @@ is a telemetry pipeline you opt into, not an operational metrics/monitoring syst
 <li>The <a href="../production-operations/#knowing-when-the-assistant-is-actually-ready">readiness probe</a> as a synthetic check you
   can run from outside the device (cron, a monitoring agent, a CI job) on a schedule.</li>
 </ul>
-<p>There is no supported way to scrape per-request latency or error rates across a fleet today.
-If you need that, you will need to build it on top of the bus messages yourself.</p>
+<p>OVOS has no supported way to scrape per-request latency or error rates across a fleet.
+If you need that, build it on top of the bus messages yourself.</p>
 <h3 id="building-fleet-wide-alerting-yourself">Building fleet-wide alerting yourself<a class="headerlink" href="#building-fleet-wide-alerting-yourself" title="Permanent link">&para;</a></h3>
 <p>Since there is no push-based metrics endpoint, fleet alerting has to be built the other way
 around. Something outside each device polls its

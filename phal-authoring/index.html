@@ -1215,7 +1215,7 @@
         
   
   <span class="md-ellipsis">
-    Screens on OVOS Today
+    Screens on OVOS
   </span>
   
 
@@ -1949,14 +1949,8 @@ entry point, and how to test the result without a running OVOS stack.</p>
   <code>enclosure.mouth.*</code>) and <code>recognizer_loop:*</code> bus handlers. Override the matching
   <code>on_*</code> methods to react to them. Call <code>super().shutdown()</code> to unregister them.</li>
 </ul>
-<div class="admonition info">
-<p class="admonition-title">Fixed in <code>ovos-plugin-manager</code> 2.11.5a1</p>
-<p>Before <code>2.11.5a1</code>, a callable mismatch between <code>bus.on()</code> and <code>bus.remove()</code> in
-<code>PHALPlugin</code> left most <code>enclosure.mouth.*</code>/<code>enclosure.eyes.*</code> handlers, and
-<code>recognizer_loop:audio_output_end</code>, registered after <code>shutdown()</code> ran (<code>ovos-plugin-manager</code>
-<code>be8d9fa</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/438" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #438">#438</a>). <code>PHALPlugin</code> now records every <code>(topic, handler)</code> pair it registers and
-<code>shutdown()</code> removes exactly those pairs.</p>
-</div>
+<p><code>PHALPlugin</code> records every <code>(topic, handler)</code> pair it registers, and <code>shutdown()</code> removes
+exactly those pairs.</p>
 <div class="admonition note">
 <p class="admonition-title">Hardware-interface ABCs live in <code>ovos-hardware-helpers</code></p>
 <p>The abstract base classes that hardware PHAL plugins implement,

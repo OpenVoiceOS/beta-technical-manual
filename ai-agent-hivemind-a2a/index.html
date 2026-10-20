@@ -1108,15 +1108,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#who-this-is-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      Who this is for
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#what-you-get" class="md-nav__link">
     <span class="md-ellipsis">
       What you get
@@ -1288,15 +1279,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#who-this-is-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      Who this is for
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#what-you-get" class="md-nav__link">
     <span class="md-ellipsis">
       What you get
@@ -1360,9 +1342,7 @@
 
 
 <h1 id="connect-a-hivemind-satellite-to-an-a2a-agent">Connect a HiveMind Satellite to an A2A Agent<a class="headerlink" href="#connect-a-hivemind-satellite-to-an-a2a-agent" title="Permanent link">&para;</a></h1>
-<p>This page makes a HiveMind master send the questions of its clients to an A2A agent, in place of an OVOS brain.</p>
-<h2 id="who-this-is-for">Who this is for<a class="headerlink" href="#who-this-is-for" title="Permanent link">&para;</a></h2>
-<p>You run a HiveMind master. You want the questions of its clients to go to an agent that speaks A2A. The answers come back to the client that asked.</p>
+<p>Make a HiveMind master send the questions of its clients to an A2A agent, in place of an OVOS brain. Use the HiveMind A2A agent plugin when the questions of the clients of a HiveMind master must go to an agent that speaks A2A. The answers come back to the client that asked.</p>
 <h2 id="what-you-get">What you get<a class="headerlink" href="#what-you-get" title="Permanent link">&para;</a></h2>
 <p>The HiveMind agent protocol <code>hivemind-a2a-agent-plugin</code>. The HiveMind master loads it in place of the OVOS agent protocol. The plugin answers each <code>QUERY</code> and <code>CASCADE</code> message: it sends the question to the A2A agent and sends the reply back as <code>speak</code> messages.</p>
 <div class="admonition warning">

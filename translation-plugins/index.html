@@ -1411,7 +1411,7 @@
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Just want translation to work? See <a href="../bidirectional-translation/">Bidirectional Translation</a>. This page covers the plugin internals.</p>
+<p>Just want translation to work? See <a href="../bidirectional-translation/">Bidirectional Translation</a>. The plugin internals follow.</p>
 </div>
 <p>Language detection and translation plugins let OVOS identify the language of a piece of text and translate it between languages. They are the building blocks used by features like <a href="../bidirectional-translation/">Bidirectional Translation</a>, and they can also be called directly from your own code.</p>
 <p><strong>New here?</strong> Two separate jobs are involved:</p>
@@ -1613,7 +1613,7 @@ with a permissive license but thin docs. Do not read one column as implying the 
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">my-detector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_package.module:MyDetector&quot;</span>
 </span></code></pre></div>
 <blockquote>
-<p>The legacy Neon groups <code>neon.plugin.lang.translate</code> / <code>neon.plugin.lang.detect</code> are still honoured as aliases by <code>ovos-plugin-manager</code> (this is why a plugin like <code>ovos-lang-detector-fasttext-plugin</code> keeps working), but new plugins <strong>should</strong> register under the <code>opm.lang.*</code> groups.</p>
+<p>The legacy Neon groups <code>neon.plugin.lang.translate</code> / <code>neon.plugin.lang.detect</code> are honoured as aliases by <code>ovos-plugin-manager</code> (this is why a plugin like <code>ovos-lang-detector-fasttext-plugin</code> keeps working), but a plugin you write <strong>should</strong> register under the <code>opm.lang.*</code> groups.</p>
 </blockquote>
 <h2 id="standalone-usage">Standalone Usage<a class="headerlink" href="#standalone-usage" title="Permanent link">&para;</a></h2>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.language</span> <span class="kn">import</span> <span class="n">find_tx_plugins</span><span class="p">,</span> <span class="n">find_lang_detect_plugins</span>

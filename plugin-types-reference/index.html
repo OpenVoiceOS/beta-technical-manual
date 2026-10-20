@@ -1635,7 +1635,7 @@
 <h1 id="plugin-types-reference">Plugin Types Reference<a class="headerlink" href="#plugin-types-reference" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page is the exhaustive lookup table of every plugin type the
+<p>The exhaustive lookup table of every plugin type the
 <a href="../plugin-manager/">OVOS Plugin Manager</a> (OPM) knows how to discover: its entry
 point group, its template base class, and (for deprecated types) what to use
 instead. Use it to find the exact entry point group and base class for the kind
@@ -1911,13 +1911,6 @@ from that list are not run. A plugin can cancel the rest of the chain by returni
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="admonition-title">Minimum OPM version</p>
-<p>The transformer (<code>opm.transformer.*</code>) and solver (<code>opm.solver.*</code>) groups require
-<code>ovos-plugin-manager&gt;=2.1.0</code>. The agent groups (<code>opm.agents.*</code>) require
-<code>ovos-plugin-manager&gt;=2.4.0a1</code> (the option-matcher group arrived last). Pin
-accordingly in your plugin's dependencies (cap below <code>&lt;3.0.0</code>).</p>
-</div>
 <h3 id="media-plugins">Media Plugins<a class="headerlink" href="#media-plugins" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1949,7 +1942,7 @@ accordingly in your plugin's dependencies (cap below <code>&lt;3.0.0</code>).</p
 </tr>
 <tr>
 <td>Legacy audio backend</td>
-<td><code>mycroft.plugin.audioservice</code> — deprecated but still discovered at runtime; it has no <code>opm.*</code> rename (<code>opm.media.audio</code> is a distinct newer type, not its replacement). Used by the classic <a href="../ocp-audio-plugin/">audio backends</a></td>
+<td><code>mycroft.plugin.audioservice</code> — deprecated but still discovered at runtime; it has no <code>opm.*</code> rename (<code>opm.media.audio</code> is a distinct type, not its replacement). Used by the classic <a href="../ocp-audio-plugin/">audio backends</a></td>
 </tr>
 </tbody>
 </table>
@@ -2221,13 +2214,11 @@ plugin/repository was retired in favor of a different package, see
 </table>
 <p>This table mirrors <code>ovos_plugin_manager.utils.DEPRECATED_ENTRYPOINTS</code>. This is the source of truth OPM
 uses at runtime to silently rewrite a plugin's old entry-point group to its canonical one, so
-plugins published under any of the names above still load correctly today.</p>
+plugins published under any of the names above load correctly.</p>
 <p>The <code>opm.agents.*</code> types above supersede the legacy <strong>solver</strong> groups
 (<code>opm.solver.question</code>, <code>opm.solver.chat</code>, <code>opm.solver.summarization</code>,
 <code>opm.solver.entailment</code>, <code>opm.solver.multiple_choice</code>, <code>opm.solver.reading_comprehension</code>)
-and <code>opm.coreference</code>. The next major release removes these legacy groups. That release is
-the same <code>ovos-plugin-manager</code> major-version boundary as the <code>&lt;3.0.0</code> cap noted above under
-<a href="#plugin-types">Minimum OPM version</a>.</p>
+and <code>opm.coreference</code>. OPM marks these legacy groups for removal in its next major release. Do not use them in a plugin you write.</p>
 <hr />
 <h2 id="configuration-utilities">Configuration Utilities<a class="headerlink" href="#configuration-utilities" title="Permanent link">&para;</a></h2>
 <p><code>ovos_plugin_manager.utils.config</code> provides helpers for resolving plugin configuration

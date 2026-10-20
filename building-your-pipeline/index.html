@@ -1414,7 +1414,7 @@
 <p class="admonition-title">In a nutshell</p>
 <p>The <code>intents.pipeline</code> list in <code>mycroft.conf</code> is the whole arbitration model for intent
 matching. OVOS tries each stage in the order you list, and the first one that claims the
-utterance wins. This page shows three fully worked pipeline configs, built only from stages
+utterance wins. Three fully worked pipeline configs follow, built only from stages
 documented elsewhere in this manual, so you can see how the ordering rules play out in
 practice. See the <a href="../pipelines-overview/">Intent Pipeline Overview</a> for the full stage
 reference.</p>
@@ -1485,8 +1485,7 @@ the <a href="../pipelines-overview/#available-pipeline-components">Pipelines Ove
   matchers get another pass. See <a href="../fallback-pipeline/">Fallback Pipeline</a>.</li>
 <li><strong><code>ovos-stop-pipeline-plugin-medium</code></strong>: a fuzzy (non-exact) stop match, for stop phrases that
   are not a literal "stop" or "cancel". See <a href="../stop-pipeline/">Stop Pipeline</a>.</li>
-<li><strong><code>ovos-padatious-pipeline-plugin-medium</code></strong> (in the default list since ovos-config
-  <code>2.3.9a1</code>): catches template matches that score below <code>conf_high</code>, most importantly
+<li><strong><code>ovos-padatious-pipeline-plugin-medium</code></strong> (in the default list): catches template matches that score below <code>conf_high</code>, most importantly
   utterances whose auto-registered <code>.entity</code> slot values are out-of-list and therefore cap
   below the high threshold. Without this stage those utterances go unmatched on a default
   install.</li>

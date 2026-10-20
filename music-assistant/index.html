@@ -1531,8 +1531,8 @@ since it's the same bus messages regardless of what runs behind it. Two options:
   not just playback.</li>
 <li><strong><a href="https://github.com/JarbasHiveMind/hivemind-media-player"><code>hivemind-player-protocol</code></a></strong>:
   a lighter HiveMind agent plugin for when you only want playback and don't want to run
-  full <code>ovos-core</code>. It currently embeds the legacy <code>ovos-audio</code> service, not
-  <a href="../ovos-media/"><code>ovos-media</code></a>; its status query does not yet report real player state.</li>
+  full <code>ovos-core</code>. It embeds the legacy <code>ovos-audio</code> service, not
+  <a href="../ovos-media/"><code>ovos-media</code></a>, and its status query does not report real player state.</li>
 </ul>
 <p>Home Assistant needs an <strong>admin</strong> client to reach the device's real <code>"default"</code> session
 instead of an isolated one translated away from it (see

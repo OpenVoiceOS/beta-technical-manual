@@ -1577,7 +1577,7 @@
 <p class="admonition-title">In a nutshell</p>
 <p>OCP (OVOS Common Playback) is the part of OVOS that handles playing media, like music, podcasts, or radio. An OCP skill does not listen for "play X" itself. Instead it acts as a source of media.</p>
 <p>When someone asks to play something, OVOS asks every OCP skill "can you find this?" Each skill answers with whatever it can offer and how good a match it thinks it is. OVOS plays the best result. It works like asking several record shops for an album and going with whoever has the closest match. New terms are explained in the <a href="../glossary/">Glossary</a>.</p>
-<p>Just want to play music or radio? Install a ready-made skill instead of writing one. See <a href="../skill-examples-media/#music-radio">What Can I Say? Music &amp; Radio</a>. This page is for developers writing a new OCP media skill.</p>
+<p>Just want to play music or radio? Install a ready-made skill instead of writing one. See <a href="../skill-examples-media/#music-radio">What Can I Say? Music &amp; Radio</a>. The rest is for developers who write an OCP media skill.</p>
 </div>
 <div class="admonition info">
 <p class="admonition-title">What OCP means here</p>
@@ -1587,33 +1587,31 @@
   request. See <a href="../ocp-pipeline/">OCP Pipeline</a>.</li>
 <li><strong>The OCP skill base class</strong>: <code>OVOSCommonPlaybackSkill</code>; skills built on it provide
   or embody media for the pipeline to find. See <a href="./">OCP Skills</a>.</li>
-<li><strong>The legacy OCP audio plugin</strong>: <code>ovos-plugin-common-play</code>, the current default
+<li><strong>The legacy OCP audio plugin</strong>: <code>ovos-plugin-common-play</code>, the default
   playback engine running inside <code>ovos-audio</code>. See <a href="../ocp-audio-plugin/">The OCP Audio Plugin</a>.</li>
 </ul>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">OCP skills are giving way to MediaProvider plugins</p>
 <p>OCP <strong>skills</strong> (media-provider skills built on <code>OVOSCommonPlaybackSkill</code> /
-<a href="#search-results"><code>@ocp_search</code></a>) still work and remain fully supported. The intended
+<a href="#search-results"><code>@ocp_search</code></a>) work and remain fully supported. The
 successor is a dedicated <strong>MediaProvider</strong> plugin type (<code>opm.media.provider</code>). The
-entry-point group is defined in <code>ovos-plugin-manager</code>, and the design is for the
-<a href="../ovos-media/"><code>ovos-media</code></a> player to load such plugins <strong>in-process</strong> and call
-<code>search()</code> on them directly, instead of broadcasting a query over the bus to skills.
-That in-process loading is not wired up in <code>ovos-media</code> yet, so writing an OCP skill
-remains the way to provide media today, and stays the simpler path for setups still on
-the legacy audio service.</p>
+entry-point group is defined in <code>ovos-plugin-manager</code>. The
+<a href="../ocp-pipeline/#mediaprovider-plugins">OCP pipeline</a> loads such plugins <strong>in-process</strong>, calls
+<code>search()</code> on them directly, and merges their results with the bus <code>@ocp_search</code> results
+from skills.</p>
 <p>The split also changes what OCP <em>skills</em> are for. Once MediaProvider plugins own
 catalog search, an OCP skill is for the case where <strong>the skill itself is the playable
-media</strong>: a voice game (see <code>ovos-skill-moon-game</code>, a VoiceGamez title not currently public),
+media</strong>: a voice game (see <code>ovos-skill-moon-game</code>, a VoiceGamez title that is not public),
 an ebook reader, any experience the player can start, pause, and resume like a track.
 If your skill is only a searchable catalog of external media (a station list, a
-podcast feed), plan to ship it as a MediaProvider plugin when that lands. If the
+podcast feed), ship it as a MediaProvider plugin. If the
 skill is the thing being played, it stays an OCP skill.</p>
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
 <p>OCP is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md">OVOS-OCP-1: OVOS Common Playback: the Virtual Media Player</a></strong> (a formal <a href="../architecture-specs/">architecture spec</a>). The spec defines a single <strong>per-session Virtual Media Player</strong>. It is one arbitration point that owns the session's now-playing track, queue, and transport state. It is addressed over the <code>ovos.common_play.*</code> bus surface with an MPRIS-style control set (play / search / pause / resume / next / previous / seek / stop) and a three-axis state model (<code>PlayerState</code>, <code>MediaState</code>, loop/shuffle). It can even be bridged to host-OS MPRIS players so voice controls media OVOS did not start.</p>
-<p>This page covers the <strong>provider</strong> side: the <code>@ocp_search</code> skills that feed candidate media <em>into</em> that player. The player and its control surface are the spec's subject. Both this provider model and OVOS-OCP-1's player are current. The <a href="../ovos-media/"><code>ovos-media</code></a> refactor (see the note above) adds <code>opm.media.provider</code> plugins as an alternative to skill-based providers.</p>
+<p>OCP skills are the <strong>provider</strong> side: the <code>@ocp_search</code> skills that feed candidate media <em>into</em> that player. The player and its control surface are the spec's subject. Both this provider model and OVOS-OCP-1's player are in use. <code>opm.media.provider</code> plugins (see the note above) are an alternative to skill-based providers.</p>
 </details>
 <p>OCP (OVOS Common Playback) skills are built from the <code>OVOSCommonPlaybackSkill</code> class.</p>
 <p><strong>What / why (beginners):</strong> an OCP skill is a <em>media provider</em>. You do <strong>not</strong> write intents like "play X". OCP owns the "play music / play a podcast / play the radio" voice interaction. Your skill only answers the question <em>"given this search phrase, what can you play?"</em>. You decorate one or more search methods with <code>@ocp_search</code>. Each one returns a list (or yields a stream) of result dicts with a confidence score. OCP picks the best match across every installed OCP skill and handles the actual playback, queueing and GUI.</p>
@@ -1804,11 +1802,11 @@ The title and skill ID show as text. Duration shows as the elapsed-time readout.
 <p class="admonition-title"><code>ocp_voc_match</code> needs <code>ahocorasick_ner</code> for local matching</p>
 <p><code>pip install ahocorasick_ner</code> to run keyword matching locally, inside the skill process
 (e.g. to call <code>ocp_voc_match</code> directly, as in the example below). Without it, <code>ocp_voc_match</code>
-still runs but returns <code>{}</code> — the registered keywords are still sent to OCP over the bus, so
-matching still works end to end through the normal OCP pipeline, only the local call returns
-empty. This <code>ocp_voc_match</code> integration is legacy OCP-skill-side keyword matching. It is not
-expected to gain new features as OCP skills give way to MediaProvider plugins (see the
-migration note above). The <code>ahocorasick_ner</code> package itself stays live: it also backs the
+runs but returns <code>{}</code> — the registered keywords go to OCP over the bus, so
+matching works end to end through the normal OCP pipeline, only the local call returns
+empty. This <code>ocp_voc_match</code> integration is legacy OCP-skill-side keyword matching. It gets no
+feature work, because OCP skills give way to MediaProvider plugins (see the
+note above). The <code>ahocorasick_ner</code> package itself is maintained: it also backs the
 unrelated <a href="../intent-transformers/"><code>ovos-ahocorasick-ner-plugin</code></a> intent transformer.</p>
 </div>
 <p>Wordlists can also be loaded from a .csv file. See <a href="https://github.com/OpenVoiceOS/ovos-classifiers/tree/dev/scripts/training/ocp/datasets">the OCP dataset</a> for a list of keywords gathered from wikidata with SPARQL queries.</p>

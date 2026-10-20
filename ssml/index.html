@@ -1809,7 +1809,7 @@
 <p>See the <a href="../maturity/">Maturity Scale</a>. SSML handling works end to end, but almost no
 TTS plugin acts on the tags, so treat every SSML effect as optional polish. SSML support
 is <strong>experimental</strong> and engine-dependent, not universal. Most TTS plugins ignore or strip
-SSML tags entirely rather than acting on them. Currently only the <strong>espeakNG</strong> and
+SSML tags entirely rather than acting on them. Only the <strong>espeakNG</strong> and
 <strong>Amazon Polly</strong> plugins actually interpret SSML markup; every other plugin just reads
 the plain words underneath. Sending SSML is always harmless (unsupported tags are
 stripped), but do not build a skill that <em>depends</em> on SSML for meaning. If a voice
@@ -1817,7 +1817,7 @@ effect matters, choose a TTS plugin/voice that can actually produce it instead.<
 </div>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Normally the assistant just reads text aloud in a flat voice. SSML is a way to add stage directions to that text: pause here, say this word louder, slow down, whisper, change the pitch. This makes speech sound more natural and expressive. The <code>SSMLBuilder</code> helper on this page lets you add those directions without memorizing the markup by hand. <strong>Most TTS voices do not actually support SSML.</strong> That is harmless: OVOS just strips the directions and reads the plain words, so it is always safe to send. For spoken replies in general, see <a href="../statements/">Statements</a>. For term definitions, see the <a href="../glossary/">Glossary</a>.</p>
+<p>Normally the assistant just reads text aloud in a flat voice. SSML is a way to add stage directions to that text: pause here, say this word louder, slow down, whisper, change the pitch. This makes speech sound more natural and expressive. The <code>SSMLBuilder</code> helper lets you add those directions without memorizing the markup by hand. <strong>Most TTS voices do not actually support SSML.</strong> That is harmless: OVOS just strips the directions and reads the plain words, so it is always safe to send. For spoken replies in general, see <a href="../statements/">Statements</a>. For term definitions, see the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <h2 id="what-is-ssml">What is SSML?<a class="headerlink" href="#what-is-ssml" title="Permanent link">&para;</a></h2>
 <p>Speech Synthesis Markup Language (SSML) is a markup language used to enhance synthesized speech output. It provides developers with a way to control various aspects of speech synthesis, such as pronunciation, intonation, volume, and speed, by using predefined tags and attributes.</p>

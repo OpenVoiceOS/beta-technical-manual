@@ -1473,10 +1473,10 @@
 <p>OVOS is a <strong>voice-first</strong> assistant. Talking to it and hearing it talk back is the primary
 way to use it, not a fallback for a graphical app. That matters if you, or someone you're
 setting this up for, can't reliably use a screen, mouse, or keyboard. A voice interface
-removes those requirements entirely for day-to-day use. This page states plainly what OVOS
-does and does not offer today: the install path that avoids a screen reader fighting an
+removes those requirements entirely for day-to-day use. Below is a plain statement of what OVOS
+does and does not offer: the install path that avoids a screen reader fighting an
 installer wizard, how to slow down or change the speaking voice for long listening sessions,
-and an honest note on where support is currently thin. See the <a href="../glossary/">Glossary</a> for
+and an honest note on where support is thin. See the <a href="../glossary/">Glossary</a> for
 terms and <a href="../troubleshooting/">Troubleshooting</a> if something isn't working.</p>
 </div>
 <hr />
@@ -1485,8 +1485,8 @@ terms and <a href="../troubleshooting/">Troubleshooting</a> if something isn't w
 assistant, asking a question, hearing the answer, adjusting <a href="../skill-examples-utilities/#volume">volume</a>,
 and asking what it can do. This isn't a design aspiration. A skill is not required to register
 any <a href="../gui-service/">GUI</a> page at all, and a skill with nothing to show on screen simply speaks
-its response instead. The current OVOS GUI stack is itself
-<a href="../gui-service/">deprecated and not generally usable</a> while its replacement is built. So today,
+its response instead. The OVOS GUI stack is itself
+<a href="../gui-service/">deprecated and not generally usable</a> while its replacement is built. So
 voice-only really is how most OVOS devices operate in practice, screen or no screen.</p>
 <h2 id="installing-without-fighting-a-screen-reader">Installing without fighting a screen reader<a class="headerlink" href="#installing-without-fighting-a-screen-reader" title="Permanent link">&para;</a></h2>
 <p>The interactive <a href="../ovos-installer/"><code>ovos-installer</code></a> wizard is a series of arrow-key menus in a
@@ -1510,11 +1510,11 @@ the plugin's module name, under <code>tts</code> in <code>mycroft.conf</code>, f
 <a href="../tts-plugins-reference/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>
 and <a href="../tts-plugins-reference/#ovos-tts-plugin-edge-tts"><code>ovos-tts-plugin-edge-tts</code></a> each expose their own
 <code>voice</code> key for picking a specific speaker. This manual's <a href="../tts-plugins/">TTS Plugins</a> reference
-does not currently document a dedicated rate or speed key for any individual plugin. Check that
+does not document a dedicated rate or speed key for any individual plugin. Check that
 plugin's own repository for one before falling back to SSML below.</p>
 <p>Rate control is per-plugin config, so check the active plugin's page first. <a href="../ssml/">SSML</a>'s
 <code>&lt;prosody rate="..."&gt;</code> tag is a niche fallback, applied per-utterance from a skill. It is
-<strong>experimental</strong> and only honored by a couple of TTS plugins (currently espeakNG and Amazon
+<strong>experimental</strong> and only honored by a couple of TTS plugins (espeakNG and Amazon
 Polly). Every other plugin just strips the tag and speaks the plain text, so it does nothing for
 most voices:</p>
 <div class="admonition note">
@@ -1549,7 +1549,7 @@ tuning specifically for this:</p>
   clarifications. Keep requests short and literal. <a href="../skill-examples/">What can I say?</a> lists the
   phrasing each skill actually expects, which avoids triggering a clarification round-trip at
   all. This is a usage pattern more than a config switch. OVOS has no built-in setting that slows
-  down or simplifies its clarification dialog today.</li>
+  down or simplifies its clarification dialog.</li>
 <li><strong>If speaking isn't reliable.</strong> Voice-first is itself a barrier for non-verbal users and anyone
   with a motor speech disorder, severe stutter, or temporary voice loss. The documented
   text-input fallback is <code>ovos-simple-cli</code> (see <a href="../cli-tools/">Command-line Tools</a>), which opens
@@ -1579,9 +1579,9 @@ easily. The full trigger table lives at
 <li><strong>Speaking-rate control is per-plugin, not a single global switch</strong> (see above). Expect to look
   up the specific voice or plugin in use rather than finding one universal setting.</li>
 <li><strong>No visual transcript or captioning of spoken output exists for Deaf or Hard-of-Hearing
-  users.</strong> What OVOS speaks is not also written to a screen anywhere in the stack today. The
+  users.</strong> What OVOS speaks is not also written to a screen anywhere in the stack. The
   deprecated GUI stack noted above never implemented this either. A Deaf or Hard-of-Hearing user
-  currently has no supported way to read what the assistant said.</li>
+  has no supported way to read what the assistant said.</li>
 <li><strong>No dedicated tuning exists for limited dexterity or cognitive load beyond what's described
   above.</strong> Wake-word sensitivity and phrasing choices help, but there is no built-in "simplified
   mode" or slower confirmation flow.</li>

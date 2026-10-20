@@ -1441,8 +1441,8 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>Upgrading OVOS safely means freezing the current package set before you touch anything, so
-you can force-reinstall it if the upgrade misbehaves. This page covers that for a single
-device and for a fleet, plus the fleet-wide canary pattern.</p>
+you can force-reinstall it if the upgrade misbehaves. The recipes cover a single
+device and a fleet, plus the fleet-wide canary pattern.</p>
 </div>
 <h2 id="updating-a-single-device">Updating a single device<a class="headerlink" href="#updating-a-single-device" title="Permanent link">&para;</a></h2>
 <p>The <a href="#staged-upgrades-and-rollback">staged-upgrade recipe</a> below is written for a fleet, but
@@ -1450,7 +1450,7 @@ the same steps apply to a single, standalone device with the fleet-specific part
 back up the config, freeze the current package set, upgrade, and verify.</p>
 <div class="admonition warning">
 <p class="admonition-title">Installed with <code>ovos-installer</code>? Know your method first</p>
-<p>Every <code>pip</code>/<code>uv pip</code> command on this page assumes the <strong><code>virtualenv</code></strong> install method,
+<p>Every <code>pip</code>/<code>uv pip</code> command below assumes the <strong><code>virtualenv</code></strong> install method,
 run <strong>inside that venv</strong> — activate it first (its path is shown on the installer's
 environment-summary screen; after the fact, <code>systemctl --user cat ovos-core.service</code>
 reveals it from that unit's <code>ExecStart</code> — the umbrella <code>ovos.service</code> is a no-op meta
@@ -1459,7 +1459,7 @@ unit, so check a component unit). If you installed with the <strong><code>contai
 (<code>docker compose pull &amp;&amp; docker compose up -d</code>, run from the installer's compose
 directory so the right project is targeted) or by
 <a href="../ovos-installer-scenarios/">re-running the installer</a>, which detects an existing
-install and offers only your current method. To check what you currently have installed,
+install and offers only your current method. To check what you have installed,
 see <a href="../release-channels/#checking-what-you-have-installed">Checking what you have installed</a>.</p>
 </div>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># 1. Back up config and freeze the current package set, in case you need to go back</span>
@@ -1497,7 +1497,7 @@ your current era. If you maintain custom skills or plugins, see
     Verify -- yes --&gt; Fleet[Roll same command&lt;br/&gt;out to fleet]
     Verify -- no --&gt; Rollback["--force-reinstall&lt;br/&gt;known-good,&lt;br/&gt;restart ovos.service"]</code></pre>
 <p><em>Diagram:</em> The flow starts at freezing known-good packages and ends at either the fleet rollout or a rollback, and it branches on whether the canary device passes its readiness probe and real voice check.</p>
-<p>See <a href="../production-operations/#knowing-when-the-assistant-is-actually-ready">Knowing when the assistant is actually ready</a> for the readiness probe both recipes on this page reference.</p>
+<p>See <a href="../production-operations/#knowing-when-the-assistant-is-actually-ready">Knowing when the assistant is actually ready</a> for the readiness probe both recipes use.</p>
 <p><a href="../release-channels/">Release channels</a> covers <code>stable</code>/<code>testing</code>/<code>alpha</code> constraints files.
 For a fleet, the same mechanism gives you a controlled, reversible upgrade path:</p>
 <p>If only a single package regressed, rolling back the whole stack is unnecessary. See

@@ -1604,7 +1604,7 @@ told. <code>self.speak("hello")</code> reaches the right satellite. <code>self.l
 language of the person who is talking, not the device default. The mechanism behind
 that is <code>dig_for_message</code>, which walks the Python call stack and finds the <code>Message</code>
 your handler was called with. It is powerful, and it fails in ways that are hard to
-guess. This page is for developers who need to rely on it, extend it, or work out why
+guess. Read on if you need to rely on it, extend it, or work out why
 it returned <code>None</code>.</p>
 </div>
 <p><code>dig_for_message</code> lives in <code>ovos_bus_client.message</code>. It takes no required arguments and

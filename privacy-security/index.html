@@ -1631,14 +1631,14 @@ install still talks to the network</strong> for speech recognition and speech
 synthesis unless you change the plugins, and the <a href="../bus-service/">messagebus</a>
 that skills use to talk to each other has <strong>no authentication</strong>. Anything
 that can reach it, or any skill you install, has full control of the
-assistant. This page inventories what a stock install actually sends over
+assistant. The sections below list what a stock install sends over
 the network, who you're trusting when you install a skill, and how to
 lock things down. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
-<p>This page describes the <strong><code>ovos</code> profile installed by the <a href="../ovos-installer/"><code>ovos-installer</code></a>
+<p>The scope is the <strong><code>ovos</code> profile installed by the <a href="../ovos-installer/"><code>ovos-installer</code></a>
 with its bundled defaults</strong>, the most common path. Anything below can be
 changed by picking different plugins or a different <a href="../composable-deployments/">profile</a>,
-so where behavior depends on a choice you made, this page says so instead of
+so where behavior depends on a choice you made, the text says so instead of
 guessing.</p>
 <p>None of this is unusual for a local-only Linux service. The trust model below is the same
 one any local daemon or dev server has. It mostly starts to matter once you expose a port
@@ -1962,8 +1962,8 @@ There is no secrets manager or encryption layer.</p>
       <a href="../tts-plugins/">TTS plugins</a>).</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Keep the messagebus bound to <code>127.0.0.1</code>. Never expose port <code>8181</code>
       directly to the internet (<a href="../bus-service/">Bus Service</a>).</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Keep <code>gui_websocket.host</code> at <code>127.0.0.1</code> (the shipped default) and re-check
-      configs from older installs, which may still carry <code>0.0.0.0</code>. Widen it only
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Keep <code>gui_websocket.host</code> at <code>127.0.0.1</code> (the shipped default) and make sure
+      your config does not carry <code>0.0.0.0</code>. Widen it only
       behind a VPN or an authenticating proxy. That socket carries the same
       authority as the bus (<a href="../gui-service/">GUI Service</a>).</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Point <code>network_tests</code> at your own infrastructure if the default connectivity

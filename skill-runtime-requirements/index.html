@@ -1961,7 +1961,7 @@ emitting <code>mycroft.ready</code>. (The listener reports readiness under <code
 resolve.) Each setup can customize this list based on its
 needs. An offline install will not want to wait on internet-dependent skills, and a
 headless server will not want to wait on an audio stack. If <code>ready_settings</code>
-is not set, the skill defaults to waiting for <code>skills</code> plus every currently
+is not set, the skill defaults to waiting for <code>skills</code> plus every
 installed skill_id.</p>
 <h3 id="step-2-define-runtimerequirements-in-your-skill">Step 2: Define <code>RuntimeRequirements</code> in your skill<a class="headerlink" href="#step-2-define-runtimerequirements-in-your-skill" title="Permanent link">&para;</a></h3>
 <p>Use the <code>runtime_requirements</code> class property to control when and how your skill should load based on system resources like internet, network, or GUI.</p>
@@ -2014,7 +2014,7 @@ installed skill_id.</p>
 <p>Any other name is treated generically: the skill waits for a <code>mycroft.&lt;name&gt;.is_ready</code> response, so third-party services can plug into the same mechanism.</p>
 <blockquote>
 <p>⚠️ <strong>Note</strong>: If <code>ready_settings</code> is not configured, the skill defaults to
-waiting for <code>skills</code> plus every currently installed skill_id. Because OVOS
+waiting for <code>skills</code> plus every installed skill_id. Because OVOS
 supports dynamic skill loading (skills can load and unload after startup),
 timing can impact anything that depends on the <code>mycroft.ready</code> message.</p>
 <p>⚠️ <strong>Troubleshooting</strong>: A readiness check polls every 3s and gives up after
@@ -2033,7 +2033,7 @@ it only applies when <code>skills.use_deferred_loading</code> is set to <code>tr
 default configuration (<code>use_deferred_loading</code> unset/<code>false</code>), all installed skills load
 unconditionally at startup regardless of their declared requirements.</p>
 <p><code>gui_before_load</code> exists on the same dataclass but is declared-only: no consumer in
-<code>ovos-core</code> currently reads it, so setting it has no effect. A GUI connecting triggers a
+<code>ovos-core</code> reads it, so setting it has no effect. A GUI connecting triggers a
 load sweep for all pending skills, not a per-skill gate.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;skills&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -2054,15 +2054,12 @@ load sweep for all pending skills, not a per-skill gate.</p>
 </li>
 </ul>
 <p><code>requires_internet</code>, <code>requires_network</code>, and <code>requires_gui</code> are also present on
-<code>RuntimeRequirements</code>, but they do not currently trigger an unload. <code>SkillManager</code>'s
+<code>RuntimeRequirements</code>, but they do not trigger an unload. <code>SkillManager</code>'s
 connection-loss handlers exist as no-op placeholders, so a running skill is <strong>not</strong> unloaded
 when a required resource disappears. Only the before-load gate above is active.</p>
 <hr />
 <h2 id="runtimerequirements-classproperty">RuntimeRequirements (<code>@classproperty</code>)<a class="headerlink" href="#runtimerequirements-classproperty" title="Permanent link">&para;</a></h2>
 <p>The <code>RuntimeRequirements</code> class property lets a skill declare its connectivity/GUI needs.</p>
-<blockquote>
-<p>⚠️ Replaces the older, now-removed <code>"priority_skills"</code> config option.</p>
-</blockquote>
 <h3 id="key-fields">Key fields:<a class="headerlink" href="#key-fields" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -2094,7 +2091,7 @@ when a required resource disappears. Only the before-load gate above is active.<
 </tr>
 <tr>
 <td><code>gui_before_load</code></td>
-<td>Declared, but not currently read by any consumer in <code>ovos-core</code> — setting it has no effect</td>
+<td>Declared, but not read by any consumer in <code>ovos-core</code> — setting it has no effect</td>
 </tr>
 <tr>
 <td><code>requires_gui</code></td>
@@ -2190,7 +2187,7 @@ With <code>skills.use_deferred_loading: true</code>, loads once the local networ
 <p>Consider a skill with both graphical user interface (GUI) and internet dependencies.</p>
 <p>The skill declares both GUI and internet requirements. With <code>skills.use_deferred_loading: true</code>,
 loading waits until internet is available. <code>gui_before_load</code> has no effect (see the note
-above); GUI-readiness gating isn't currently possible this way.</p>
+above); GUI-readiness gating is not possible this way.</p>
 <p>If the user asks "show me the picture of the day" and we have both internet and a GUI, our skill will match the intent. If we do not have internet but have a GUI, the skill can still operate using a cached picture. That is what <code>no_internet_fallback=True</code> documents.</p>
 <p><div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">ovos_utils</span> <span class="kn">import</span> <span class="n">classproperty</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>

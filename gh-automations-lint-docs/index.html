@@ -1893,7 +1893,7 @@
 <h1 id="reusable-workflow-reference-lint-docs-and-notification-workflows">Reusable Workflow Reference: Lint, Docs, and Notification Workflows<a class="headerlink" href="#reusable-workflow-reference-lint-docs-and-notification-workflows" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page documents the shared workflows for lint, type-checking, docs presence, and Matrix chat notifications: <code>lint.yml</code>, <code>type-check.yml</code>, <code>docs-check.yml</code>, and <code>notify-matrix.yml</code>. For coverage and dependency security scans, see <a href="../gh-automations-coverage-security/">Coverage and Security Workflows</a>. For the PR-comment aggregation pattern and the shared Python scripts, see <a href="../gh-automations-pr-comment-scripts/">PR Comment Pattern and Scripts</a>. Start with the <a href="../gh-automations-overview/">gh-automations overview</a> for the big picture, or the full <a href="../gh-automations-workflows/">Workflow Reference index</a>.</p>
+<p>Four shared workflows cover lint, type-checking, docs presence, and Matrix chat notifications: <code>lint.yml</code>, <code>type-check.yml</code>, <code>docs-check.yml</code>, and <code>notify-matrix.yml</code>. For coverage and dependency security scans, see <a href="../gh-automations-coverage-security/">Coverage and Security Workflows</a>. For the PR-comment aggregation pattern and the shared Python scripts, see <a href="../gh-automations-pr-comment-scripts/">PR Comment Pattern and Scripts</a>. Start with the <a href="../gh-automations-overview/">gh-automations overview</a> for the big picture, or the full <a href="../gh-automations-workflows/">Workflow Reference index</a>.</p>
 </div>
 <p>All reusable workflows are in <code>.github/workflows/</code> and are called via:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenVoiceOS/gh-automations/.github/workflows/&lt;name&gt;.yml@dev</span>
@@ -1901,7 +1901,7 @@
 <blockquote>
 <p><strong>Ref:</strong> Always use <code>@dev</code>.</p>
 </blockquote>
-<p><strong>Workflows on this page:</strong></p>
+<p><strong>Workflows:</strong></p>
 <ul>
 <li><a href="#lintyml"><code>lint.yml</code></a></li>
 <li><a href="#type-checkyml"><code>type-check.yml</code></a></li>

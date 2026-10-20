@@ -1489,7 +1489,7 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>Two kinds of state matter on an OVOS device: installed packages and everything under a
-user's config/data directories. This page covers backing up and restoring the config/data
+user's config/data directories. The steps below back up and restore the config/data
 directories. See <a href="../staged-upgrades/#staged-upgrades-and-rollback">Staged Upgrades and Rollback</a>
 for the package side.</p>
 </div>
@@ -1555,8 +1555,7 @@ without writing to a temporary file and renaming, so there is a window in which
 <code>mycroft.conf</code> on disk is half-written. A <code>cp</code> that lands in that window copies a
 truncated file, and the backup then looks fine until the day you restore it. Per-skill
 <code>settings.json</code> is safe to copy live: <code>JsonStorage.store()</code> in <code>json_database</code> writes to
-a temporary file in the same directory and swaps it in with <code>os.replace</code> (atomic, since
-<code>1.0.4a1</code>), so a reader always sees either the old file or the new one.</p>
+a temporary file in the same directory and swaps it in with <code>os.replace</code> (atomic), so a reader always sees either the old file or the new one.</p>
 <p>A skill writes its settings whenever <code>self.settings</code> changes — a <code>settings.json</code> edit,
 a settings-meta change from the web UI, or the skill's own code. That is rare, so a
 live copy usually works, which is exactly what makes the failure hard to trace. Stop

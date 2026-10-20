@@ -2115,7 +2115,7 @@
 <h1 id="reusable-workflow-reference-release-workflows">Reusable Workflow Reference: Release Workflows<a class="headerlink" href="#reusable-workflow-reference-release-workflows" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page documents the three shared workflows that move a package through its release lifecycle: bumping the version and opening a release PR, publishing the stable tag, and previewing the next version number on an open PR. For the PR-gate checks that run before a merge, see <a href="../gh-automations-pr-workflows/">PR Workflows</a>. For lint, coverage, security scans, and notifications, see <a href="../gh-automations-quality-workflows/">Quality Workflows</a>. Start with the <a href="../gh-automations-overview/">gh-automations overview</a> for the big picture, or the full <a href="../gh-automations-workflows/">Workflow Reference index</a>.</p>
+<p>Three shared workflows move a package through its release lifecycle: bumping the version and opening a release PR, publishing the stable tag, and previewing the next version number on an open PR. For the PR-gate checks that run before a merge, see <a href="../gh-automations-pr-workflows/">PR Workflows</a>. For lint, coverage, security scans, and notifications, see <a href="../gh-automations-quality-workflows/">Quality Workflows</a>. Start with the <a href="../gh-automations-overview/">gh-automations overview</a> for the big picture, or the full <a href="../gh-automations-workflows/">Workflow Reference index</a>.</p>
 </div>
 <p>All reusable workflows are in <code>.github/workflows/</code> and are called via:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenVoiceOS/gh-automations/.github/workflows/&lt;name&gt;.yml@dev</span>
@@ -2123,7 +2123,7 @@
 <blockquote>
 <p><strong>Ref:</strong> Always use <code>@dev</code>.</p>
 </blockquote>
-<p><strong>Workflows on this page:</strong></p>
+<p><strong>Release workflows:</strong></p>
 <ul>
 <li><a href="#publish-alphayml"><code>publish-alpha.yml</code></a></li>
 <li><a href="#publish-stableyml"><code>publish-stable.yml</code></a></li>
@@ -2162,7 +2162,7 @@
 <td><code>setup_py</code></td>
 <td>string</td>
 <td><code>setup.py</code></td>
-<td>Deprecated. Version is now read from version_file directly.</td>
+<td>Deprecated. The workflow reads the version from version_file.</td>
 </tr>
 <tr>
 <td><code>branch</code></td>
@@ -2410,7 +2410,7 @@
 <td><code>setup_py</code></td>
 <td>string</td>
 <td><code>setup.py</code></td>
-<td>Deprecated. Version is now read from version_file directly.</td>
+<td>Deprecated. The workflow reads the version from version_file.</td>
 </tr>
 <tr>
 <td><code>branch</code></td>

@@ -1604,8 +1604,8 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>These plugins are the <strong>playback backends</strong> that actually push audio/video to your
-speakers or screen (VLC, MPV, Chromecast, Spotify…). OVOS is mid-migration between the
-legacy audio-service backend and the upcoming <a href="../ovos-media/"><code>ovos-media</code></a> daemon, and a
+speakers or screen (VLC, MPV, Chromecast, Spotify…). OVOS has two playback systems, the
+legacy audio-service backend and the <a href="../ovos-media/"><code>ovos-media</code></a> daemon, and a
 single plugin <strong>package is meant to ship a version for both</strong>. See
 <a href="../ovos-media/">Media playback: legacy vs. ovos-media</a>.</p>
 </div>
@@ -1615,7 +1615,7 @@ single plugin <strong>package is meant to ship a version for both</strong>. See
 <ul>
 <li><strong>Old audio service</strong>: <code>mycroft.plugin.audioservice</code> (used by the deprecated
   <a href="#ovos-ocp-audio-plugin"><code>ovos-ocp-audio-plugin</code></a> / "old audio service", the shipped default).</li>
-<li><strong><a href="../ovos-media/"><code>ovos-media</code></a></strong>: <code>opm.media.{audio,video,web}</code> (the upcoming daemon).</li>
+<li><strong><a href="../ovos-media/"><code>ovos-media</code></a></strong>: <code>opm.media.{audio,video,web}</code> (the standalone daemon).</li>
 </ul>
 <p>Media <em>classifiers</em> are a separate concern from playback backends: they recognize the
 media intent and entities (artist, title, station, …) in an utterance before a stream is
@@ -1623,7 +1623,7 @@ resolved and played. See <a href="#ovos-media-classifier">ovos-media-classifier<
 <p>These two families are <strong>separate</strong> (different entry-point groups and base classes), <strong>but a
 plugin package is meant to ship a version for <em>both</em></strong>. This way a single <code>pip install</code> gives
 you a backend that works whichever playback system you run. Packages are not required to ship
-both families. See the table below for what each currently supports.</p>
+both families. The table below shows what each package supports.</p>
 <table>
 <thead>
 <tr>
@@ -1703,7 +1703,7 @@ both families. See the table below for what each currently supports.</p>
 <td>external MPRIS player (audio + video)</td>
 <td>ovos-media only</td>
 <td>—</td>
-<td>Not yet published</td>
+<td>Unpublished</td>
 </tr>
 </tbody>
 </table>
@@ -1890,8 +1890,7 @@ ovos-media</a>.</p>
 <hr />
 <h2 id="ovos-media-plugin-mpris">ovos-media-plugin-mpris<a class="headerlink" href="#ovos-media-plugin-mpris" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Status</strong>: not yet published — no public repository or PyPI package exists, so it cannot be
-  installed today.</li>
+<li><strong>Status</strong>: unpublished. No public repository or PyPI package exists, so you cannot install it.</li>
 <li><strong>Description</strong>: Drives an already-running external MPRIS player (e.g. a desktop media app)
   rather than playing the stream itself. <code>opm.media.audio</code> and <code>opm.media.video</code>, <code>ovos-media</code>
   only. Complements (but is separate from) <code>ovos-media</code>'s own MPRIS exporter/reflector — see

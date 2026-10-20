@@ -1645,17 +1645,17 @@
 <h1 id="mycroft-gui-qt5">Mycroft-GUI QT5<a class="headerlink" href="#mycroft-gui-qt5" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>Some OVOS devices have a screen, and this page describes the older way of drawing on it: a graphical toolkit called Qt5/QML, where you describe what a screen should look like (text, images, animations, cards) in a markup language. This is the <strong>legacy</strong> screen path. It is deprecated, and a ground-up replacement is being built (see <a href="../gui-adapters/">GUI Adapters</a>), so treat the examples here as reference rather than something to build new work on. Voice, not the screen, is meant to be the main way you interact with OVOS. See the <a href="../glossary/">Glossary</a> for terms.</p>
+<p>Some OVOS devices have a screen. Qt5/QML is the legacy way to draw on it: a graphical toolkit where you describe what a screen should look like (text, images, animations, cards) in a markup language. This is the <strong>legacy</strong> screen path. It is deprecated, and a ground-up replacement is being built (see <a href="../gui-adapters/">GUI Adapters</a>), so treat the examples here as reference rather than something to build new work on. Voice, not the screen, is meant to be the main way you interact with OVOS. See the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
 <div class="admonition danger">
-<p class="admonition-title">The OVOS GUI is deprecated: see <a href="../gui-status/">Screens on OVOS Today</a> for the full picture</p>
+<p class="admonition-title">The OVOS GUI is deprecated: see <a href="../gui-status/">Screens on OVOS</a> for the full picture</p>
 <p>The Qt5/QML client described here is part of the legacy stack. There is no generally
-usable OVOS GUI, and a replacement is <strong>Upcoming</strong>.</p>
+usable OVOS GUI. A replacement is in development.</p>
 <p>The <a href="https://github.com/OpenVoiceOS/mycroft-gui-qt5">Qt5 gui-client</a> is the <strong>only client
-that currently runs</strong>, but <strong>Qt5 itself has been deprecated upstream for a long time</strong> and
-this client <strong>will not be updated</strong>. It is kept solely so existing (e.g. Mark 2) devices
+that runs</strong>. <strong>Qt5 itself is deprecated upstream</strong>, and
+this client <strong>gets no updates</strong>. It is kept solely so existing (e.g. Mark 2) devices
 keep a screen.</p>
-<p>Two replacement GUI clients are being built, <strong>both unreleased / WIP</strong>. Neither is usable yet:</p>
+<p>Two replacement GUI clients are in development, <strong>both unreleased</strong>. Neither is usable:</p>
 <ul>
 <li><strong>Qt6/Kirigami</strong>: <a href="https://github.com/OpenVoiceOS/mycroft-gui-qt6">mycroft-gui-qt6</a>
   (<code>feat/gui-protocol-rework</code>), still needs a human C++/Qt6 build review.</li>
@@ -1681,7 +1681,7 @@ keep a screen.</p>
 </ul>
 <h3 id="importing-modules">Importing Modules<a class="headerlink" href="#importing-modules" title="Permanent link">&para;</a></h3>
 <p>A QML module provides versioned types and JavaScript resources in a type namespace which may be used by clients who import the module. Modules make use of the QML versioning system which allows modules to be independently updated. More in-depth information about QML modules can be found here <a href="http://doc.qt.io/qt-5/qtqml-modules-topic.html">Qt QML Modules Documentation</a></p>
-<p>The code snippet example below imports some of the common modules that provide the components required to get started with a visual user interface. Every other QML example on this page starts from this same import block (dropping <code>org.kde.lottie</code> when Lottie animations aren't used); later snippets only show what changes below the imports.</p>
+<p>The code snippet example below imports some of the common modules that provide the components required to get started with a visual user interface. Every other QML example below starts from this same import block (dropping <code>org.kde.lottie</code> when Lottie animations aren't used); later snippets only show what changes below the imports.</p>
 <div class="language-qml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kr">import</span> <span class="nx">QtQuick</span> <span class="mf">2.4</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kr">import</span> <span class="nx">QtQuick</span><span class="p">.</span><span class="nx">Controls</span> <span class="mf">2.2</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kr">import</span> <span class="nx">QtQuick</span><span class="p">.</span><span class="nx">Layouts</span> <span class="mf">1.4</span>
@@ -1921,11 +1921,11 @@ keep a screen.</p>
 </span></code></pre></div>
 <h2 id="advanced-skill-displays-using-qml">Advanced skill displays using QML<a class="headerlink" href="#advanced-skill-displays-using-qml" title="Permanent link">&para;</a></h2>
 <p>Worked examples of Lottie animations, sliding images, paginated text, card list views,
-proportional/auto-fit layouts, slideshows, event handling, and resting (idle) faces have
-moved to their own page: <strong><a href="../qt5-gui-examples/">QML Worked Examples</a></strong>.</p>
+proportional/auto-fit layouts, slideshows, event handling, and resting (idle) faces are
+in <strong><a href="../qt5-gui-examples/">QML Worked Examples</a></strong>.</p>
 <hr />
 <p><strong>Read next:</strong> <a href="../homescreen/">Home Screen</a>
-<strong>Related:</strong> <a href="../qt5-gui-examples/">QML Worked Examples</a> · <a href="../ovos-shell/">OVOS Shell</a> · <a href="../gui-protocol/">GUI Protocol</a> · <a href="../gui-status/">Screens on OVOS Today</a> · <a href="../gui-service/">GUI Service</a></p>
+<strong>Related:</strong> <a href="../qt5-gui-examples/">QML Worked Examples</a> · <a href="../ovos-shell/">OVOS Shell</a> · <a href="../gui-protocol/">GUI Protocol</a> · <a href="../gui-status/">Screens on OVOS</a> · <a href="../gui-service/">GUI Service</a></p>
 
 
 

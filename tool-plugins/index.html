@@ -1833,7 +1833,7 @@ different kinds of tools in the same request, and only one of them is a <code>To
 <ul>
 <li><strong>Client-side tools</strong> are whatever the API caller put in the request's <code>tools</code> field. The
   caller executes them itself; the server only relays the model's <code>tool_calls</code>.</li>
-<li><strong>Server-side tools</strong> are the persona's own <code>ToolBox</code> plugins (documented on this page). The
+<li><strong>Server-side tools</strong> are the persona's own <code>ToolBox</code> plugins (documented here). The
   server executes these in a bounded agentic loop and the client never sees the call.</li>
 </ul>
 <p>If a client tool shares a name with one of the persona's <code>ToolBox</code> tools, the persona's tool

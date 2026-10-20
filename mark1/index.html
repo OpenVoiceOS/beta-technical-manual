@@ -1608,17 +1608,6 @@ Images can be encoded as a string where each character represents 4 pixels.</p>
 You can also display 32x8 PNG images.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">enclosure</span><span class="o">.</span><span class="n">mouth_display_png</span><span class="p">(</span><span class="s1">&#39;/path/to/image.png&#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">refresh</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title"><code>self.enclosure</code> may leave the skill base class</p>
-<p>No tracked issue or PR currently documents a concrete plan for this, unlike the
-<a href="../gui-adapters/">GUI adapter rework</a>, which does have open tracked work. Treat the
-following as a possible future direction, not a scheduled change: <code>self.enclosure</code>
-could stop being a built-in <code>OVOSSkill</code> property, following the same direction
-<a href="../skill-gui/"><code>self.gui</code></a> is going, with the <code>EnclosureAPI</code> moving into the
-<strong><a href="https://github.com/OpenVoiceOS/ovos-mark1-utils"><code>ovos-mark1-utils</code></a></strong> library
-instead. This page documents the current, actually-shipped API for existing Mark 1
-skills.</p>
-</div>
 <hr />
 <h2 id="mark-1-utilities-ovos-mark1-utils">Mark 1 Utilities (<code>ovos-mark1-utils</code>)<a class="headerlink" href="#mark-1-utilities-ovos-mark1-utils" title="Permanent link">&para;</a></h2>
 <p>For more advanced control, such as pixel-by-pixel eye manipulation or complex faceplate
@@ -1700,14 +1689,6 @@ control back. The <code>Eyes</code> API also exposes <code>set_hue</code> and <c
 spec message namespace rather than legacy topic names. See the
 <a href="https://openvoiceos.github.io/message_spec/phal_mk1/">PHAL Mark 1 message spec</a> for the
 current topic names.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Upcoming: enclosure protocol mixin</p>
-<p>The Mark 1 PHAL plugin is expected to adopt a shared <code>EnclosureProtocolListener</code> mixin for
-handling the enclosure protocol, aligning it with how other enclosure PHAL plugins are
-structured. Tracked in
-<a href="https://github.com/OpenVoiceOS/ovos-PHAL-plugin-mk1/pull/39">ovos-PHAL-plugin-mk1#39</a>,
-still open, so the mixin does not exist in any released version yet.</p>
 </div>
 <hr />
 <h2 id="faceplate-page-in-the-control-panel">Faceplate page in the control panel<a class="headerlink" href="#faceplate-page-in-the-control-panel" title="Permanent link">&para;</a></h2>

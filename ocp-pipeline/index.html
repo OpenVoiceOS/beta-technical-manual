@@ -1544,12 +1544,12 @@
   request. See <a href="./">OCP Pipeline</a>.</li>
 <li><strong>The OCP skill base class</strong>: <code>OVOSCommonPlaybackSkill</code>; skills built on it provide
   or embody media for the pipeline to find. See <a href="../ocp-skills/">OCP Skills</a>.</li>
-<li><strong>The legacy OCP audio plugin</strong>: <code>ovos-plugin-common-play</code>, the current default
+<li><strong>The legacy OCP audio plugin</strong>: <code>ovos-plugin-common-play</code>, the default
   playback engine running inside <code>ovos-audio</code>. See <a href="../ocp-audio-plugin/">The OCP Audio Plugin</a>.</li>
 </ul>
 </div>
 <p>Shipped in the default pipeline.</p>
-<p>The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.</p>
+<p>The sections below are for people deploying or customizing OVOS.</p>
 <details class="info">
 <summary>📐 Formal specification</summary>
 <p>The media player this pipeline drives is specified by <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md">OVOS-OCP-1 — OVOS Common Playback</a></strong>: the per-session <em>Virtual Media Player</em> and its <code>ovos.common_play.*</code> control surface. The matching/classification side is a <strong>pipeline plugin</strong> under <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1</a></strong> (OCP-1 explicitly leaves the NLU to PIPELINE-1). Media stop is one subscriber to the <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md">OVOS-STOP-1</a></strong> cascade. See the <a href="../architecture-specs/">spec index</a>.</p>
@@ -1583,14 +1583,14 @@ early and the low tier last:</p>
 </span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>The older short names <code>ocp_high</code> / <code>ocp_medium</code> / <code>ocp_low</code> / <code>ocp_legacy</code> still work
-as <strong>deprecated aliases</strong> (ovos-core rewrites them to the canonical IDs above), but new
+as <strong>deprecated aliases</strong> (ovos-core rewrites them to the canonical IDs above), but
 configs should use the canonical names.</p>
 <p>Then install OCP-enabled media skills and ask to play something.</p>
 <hr />
 <h2 id="pipeline-matchers">Pipeline matchers<a class="headerlink" href="#pipeline-matchers" title="Permanent link">&para;</a></h2>
 <p>The matcher class is <code>OCPPipelineMatcher</code>, registered under the single OPM entry point
 <code>ovos-ocp-pipeline-plugin</code>. Because it is a <code>ConfidenceMatcherPipeline</code>, OVOS derives three
-tier matchers from it at runtime via <code>match_high</code> / <code>match_medium</code> / <code>match_low</code> — you reference
+tier matchers from it at runtime via <code>match_high</code> / <code>match_medium</code> / <code>match_low</code>. You reference
 them in the pipeline by the IDs below (the short <code>ocp_*</code> aliases are deprecated):</p>
 <table>
 <thead>
@@ -1653,7 +1653,7 @@ intended. Place it last and only enable it on media-focused devices.</p>
 <li><strong>Keyword matching</strong> (<code>ocp_medium</code> / <code>ocp_low</code>): <code>classify_media()</code> delegates
   to a <code>ContextAwareClassifier</code> backed by the <code>ovos-media-classifier</code> package
   (a hard dependency), which feeds player status and registered NER entities
-  into the classification. The classifier backend is pluggable — the default
+  into the classification. The classifier backend is pluggable. The default
   is a keyword/vocab matcher, but other <code>opm.media.classifier</code> entry points can
   be selected via config. <code>is_ocp_query()</code> treats any non-GENERIC media type as
   a playback query.</li>
@@ -1666,11 +1666,12 @@ used with full confidence.</p>
 <h3 id="mediaprovider-plugins">MediaProvider plugins<a class="headerlink" href="#mediaprovider-plugins" title="Permanent link">&para;</a></h3>
 <p>In-process <code>MediaProvider</code> plugins (entry-point group <code>opm.media.provider</code>) run
 alongside the legacy bus <code>@ocp_search</code> window rather than replacing it —
-results from both are merged, bounded by the same timeout. A provider that
-declares no media types is demoted (confidence capped at 50); each provider's
-results are capped at 50. With no <code>MediaProvider</code> plugins installed, behavior
-is unchanged from the legacy bus-only flow. Settings live under
-<code>intents.ovos-ocp-pipeline-plugin.media_providers</code> in <code>mycroft.conf</code>; set
+results from both are merged, bounded by the same timeout. A provider entry is
+dropped when a legacy result already has the same URI. Playlists are never
+dropped this way. A provider that
+declares no media types is demoted (confidence capped at 50). Each provider's
+results are capped at 50. With no <code>MediaProvider</code> plugins installed, only the legacy bus flow runs. Settings live under
+<code>intents.ovos-ocp-pipeline-plugin.media_providers</code> in <code>mycroft.conf</code>. Set
 <code>media_providers.enabled: false</code> to turn the mechanism off entirely.</p>
 <p>Supported media types include <code>music</code>, <code>podcast</code>, <code>movie</code>, <code>radio</code>, <code>audiobook</code>,
 <code>news</code>, and many more from <code>ovos_utils.ocp.MediaType</code>.</p>

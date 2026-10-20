@@ -1533,22 +1533,22 @@
 <p class="admonition-title">In a nutshell</p>
 <p>The home screen (or "resting screen") is what a device with a display shows when it sits
 idle. It typically shows the clock, date, weather, and small widgets, much like a smart
-speaker's standby face. When nothing else is shown, OVOS falls back to this screen. This
-page covers the <strong>legacy</strong> screen stack, which is deprecated today and mainly relevant to
-<strong>Mark 2</strong> devices. In the upcoming rework, the home screen becomes a job for the display
+speaker's standby face. When nothing else is shown, OVOS falls back to this screen. The
+sections below cover the <strong>legacy</strong> screen stack, which is deprecated and mainly relevant to
+<strong>Mark 2</strong> devices. In the unreleased GUI rework, the home screen is a job for the display
 backend rather than a skill. See the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
 <div class="admonition danger">
-<p class="admonition-title">The OVOS GUI is deprecated. See <a href="../gui-status/">Screens on OVOS Today</a> for the full picture</p>
-<p>The home screen is part of the legacy stack. There is no generally usable OVOS GUI right
-now, and a replacement is <strong>Upcoming</strong>.</p>
+<p class="admonition-title">The OVOS GUI is deprecated. See <a href="../gui-status/">Screens on OVOS</a> for the full picture</p>
+<p>The home screen is part of the legacy stack. OVOS has no generally usable GUI, and the
+replacement is not released.</p>
 </div>
 <p>The home screen is what a device with a display shows when it is idle: clock, date, weather,
 widgets, and so on. It is an ordinary <strong>skill</strong> that registers a <em>resting screen</em>. When the
 <a href="../gui-service/">GUI</a> namespace stack is empty, the configured homescreen skill is asked to
 display its idle page.</p>
-<p>On the current (legacy) stack, <code>ovos-gui</code> tracks the configured homescreen via its
-<code>HomescreenManager</code> (<code>ovos_gui/homescreen.py</code>). Today that manager only handles <strong>skill
+<p>On the legacy stack, <code>ovos-gui</code> tracks the configured homescreen via its
+<code>HomescreenManager</code> (<code>ovos_gui/homescreen.py</code>). That manager only handles <strong>skill
 selection and lifecycle</strong>: which homescreen skill is active, registering or removing candidate
 homescreens, and asking the active one to display itself (<code>homescreen.manager.*</code> messages). It
 does <strong>not</strong> push clock, weather, or widget data over the bus. A homescreen skill fetches or
@@ -1581,9 +1581,9 @@ computes whatever data it wants to show on its own.</p>
 <p>The <code>homescreen.data.*</code> / <code>homescreen.widget.*</code> messages below belong to
 <code>ovos-legacy-mycroft-gui-plugin</code> (<code>ovos_legacy_mycroft_gui/homescreen.py</code>), part of the
 <a href="../gui-adapters/">GUI adapter</a> rework described in <a href="../gui-service/">GUI Service</a>. That
-rework is not yet released and not present on any published package — do not rely on any
-of this on a stable install. Once shipped, it will let a display render a live idle screen
-without a skill polling its own data. The legacy stack described elsewhere on this page
+rework is not in any published package. Do not rely on any
+of it on an installed system. It lets a display render a live idle screen
+without a skill polling its own data. The legacy stack in the other sections
 does not carry it.</p>
 <h3 id="homescreendata"><code>homescreen.data.*</code><a class="headerlink" href="#homescreendata" title="Permanent link">&para;</a></h3>
 <table>
@@ -1691,7 +1691,7 @@ concern</strong>. Applications must not register a home or resting screen. The s
 below (<code>@resting_screen_handler</code>, <code>homescreen_app</code>, and the <code>IdleDisplaySkill</code> base class)
 is deprecated in <code>ovos-workshop</code>. The resting display is owned by the
 <a href="../gui-adapters/">GUI plugin / render backend</a>. It is documented here for skills that
-still use it. Do not build new skills against it.</p>
+that use it. Do not build a skill against it.</p>
 </div>
 <p>The resting face API lets skill authors extend their skills with customized idle screens.
 These screens display when there is no activity on the screen.</p>

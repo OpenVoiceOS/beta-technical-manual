@@ -1917,7 +1917,7 @@
 <h1 id="reusable-workflow-reference-build-checks">Reusable Workflow Reference: Build Checks<a class="headerlink" href="#reusable-workflow-reference-build-checks" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page documents the shared workflows that verify a package builds, installs, and still runs where it has to: <code>build-tests.yml</code> across Python versions, <code>channel-compat.yml</code> against an OVOS distro release channel, and the deprecated <code>python-support.yml</code>. For OVOS-plugin (OPM) detection, license, and repo-health checks, see <a href="../gh-automations-plugin-repo-checks/">Plugin, License, and Repo Checks</a>. For skill and locale packaging checks, see <a href="../gh-automations-repo-skill-checks/">Skill and Locale Checks</a>. For end-to-end skill test execution, see <a href="../gh-automations-skill-test-workflows/">Skill Test Workflows</a>. Start with the <a href="../gh-automations-overview/">gh-automations overview</a> for the big picture, or the full <a href="../gh-automations-workflows/">Workflow Reference index</a>.</p>
+<p>These shared workflows verify a package builds, installs, and still runs where it has to: <code>build-tests.yml</code> across Python versions, <code>channel-compat.yml</code> against an OVOS distro release channel, and the deprecated <code>python-support.yml</code>. For OVOS-plugin (OPM) detection, license, and repo-health checks, see <a href="../gh-automations-plugin-repo-checks/">Plugin, License, and Repo Checks</a>. For skill and locale packaging checks, see <a href="../gh-automations-repo-skill-checks/">Skill and Locale Checks</a>. For end-to-end skill test execution, see <a href="../gh-automations-skill-test-workflows/">Skill Test Workflows</a>. Start with the <a href="../gh-automations-overview/">gh-automations overview</a> for the big picture, or the full <a href="../gh-automations-workflows/">Workflow Reference index</a>.</p>
 </div>
 <p>All reusable workflows are in <code>.github/workflows/</code> and are called via:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenVoiceOS/gh-automations/.github/workflows/&lt;name&gt;.yml@dev</span>
@@ -1925,7 +1925,7 @@
 <blockquote>
 <p><strong>Ref:</strong> Always use <code>@dev</code>.</p>
 </blockquote>
-<p><strong>Workflows on this page:</strong></p>
+<p><strong>Workflows:</strong></p>
 <ul>
 <li><a href="#build-testsyml"><code>build-tests.yml</code></a></li>
 <li><a href="#channel-compatyml"><code>channel-compat.yml</code></a></li>

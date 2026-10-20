@@ -1396,10 +1396,10 @@
 <p class="admonition-title">In a nutshell</p>
 <p>Intent matching problems fall into four buckets: nothing matched at all, the wrong skill
 answered, matching is slow or seems to "wake up" after a while, or a match happened but the
-wrong handler ran. This page is a symptom-indexed index into checks and gotchas that live
-scattered across the pipeline pages, plus the bus events to watch for each one. Start with
-<a href="../troubleshooting/">Troubleshooting &amp; Debugging</a> if you have not yet confirmed the mic, wake
-word, and STT stages are healthy. This page assumes the utterance already reached the intent
+wrong handler ran. The sections below index, by symptom, the checks and gotchas from
+the pipeline pages, plus the bus events to watch for each one. Start with
+<a href="../troubleshooting/">Troubleshooting &amp; Debugging</a> until you confirm that the mic, wake
+word, and STT stages are healthy. The checks below assume the utterance reached the intent
 pipeline.</p>
 </div>
 <pre class="mermaid"><code>flowchart TD
@@ -1411,7 +1411,7 @@ pipeline.</p>
     B --&gt; B1["#35;the-wrong-skill-answered"]
     C --&gt; C1["#35;matching-is-slow-or-works-only-after-a-while"]
     D --&gt; D1["#35;it-matched-but-the-wrong-handler-ran"]</code></pre>
-<p><em>Diagram: from the symptom question, four branches lead to the matching sections on this page: nothing matched, wrong skill answered, slow or works only after a while, and matched but wrong handler ran.</em></p>
+<p><em>Diagram: from the symptom question, four branches lead to the matching sections below: nothing matched, wrong skill answered, slow or works only after a while, and matched but wrong handler ran.</em></p>
 <hr />
 <h2 id="nothing-matched">Nothing matched<a class="headerlink" href="#nothing-matched" title="Permanent link">&para;</a></h2>
 <p>The utterance reached <code>IntentService</code>, every pipeline stage passed on it, and the assistant said

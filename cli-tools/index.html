@@ -1507,7 +1507,7 @@
 <p class="admonition-title">In a nutshell</p>
 <p>Installing OVOS also installs a handful of <strong>terminal commands</strong>: small programs you run from
 a shell to configure the assistant, poke a running system ("say this", "listen now"), read the
-logs, or launch the individual services by hand. This page is a catalog of the ones the core
+logs, or launch the individual services by hand. Below is a catalog of the ones the core
 OVOS packages provide, what each does, and which package ships it. (These are the <em>core</em> CLIs.
 The <a href="../install-raspovos/">RaspOVOS image</a> adds its own extra convenience commands on top.) See
 the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
@@ -1515,15 +1515,6 @@ the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 <p>Each command below is a console-script entry point declared by a core OVOS package, so it lands on
 your <code>PATH</code> when that package is installed. Most take <code>--help</code>, which is the authoritative,
 version-correct list of options.</p>
-<div class="admonition warning">
-<p class="admonition-title"><code>--help</code> is not safe on older bus clients</p>
-<p><code>ovos-speak</code>, <code>ovos-say-to</code>, <code>ovos-listen</code> and <code>ovos-simple-cli</code> gained <code>--help</code> in
-<code>ovos-bus-client</code> 2.7.3. Before that they read the first argument as the utterance, so
-<code>ovos-speak --help</code> made the device <strong>say "--help" out loud</strong>, and <code>ovos-say-to --help</code> injected
-it as if you had spoken it
-(<a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/274">ovos-bus-client#274</a>). On an older
-install, use the usage lines documented on this page instead.</p>
-</div>
 <hr />
 <h2 id="configuration-ovos-config">Configuration: <code>ovos-config</code><a class="headerlink" href="#configuration-ovos-config" title="Permanent link">&para;</a></h2>
 <p>Shipped by <strong><a href="../config/"><code>ovos-config</code></a></strong>. Inspect and edit the layered
@@ -1546,7 +1537,7 @@ install, use the usage lines documented on this page instead.</p>
 </tr>
 <tr>
 <td><code>ovos-config set -k &lt;key&gt; -v &lt;value&gt;</code></td>
-<td>Write a value. Omit <code>-v</code> to be prompted (useful when the key is ambiguous). Before <code>ovos-config</code> <code>3.1.1a1</code> this wrote to the wrong file — see <a href="../config/#config-layer-stack">Configuration</a>.</td>
+<td>Write a value. Omit <code>-v</code> to be prompted (useful when the key is ambiguous). See <a href="../config/#config-layer-stack">Configuration</a> for the file it writes.</td>
 </tr>
 <tr>
 <td><code>ovos-config autoconfigure -l &lt;lang&gt;</code></td>
@@ -1923,7 +1914,7 @@ service from an editable checkout of its own repo while fixing a bug in it, see
 <div class="admonition note">
 <p class="admonition-title">About the <code>ovos-config autoconfigure</code> telemetry text</p>
 <p>The generated help output above is the tool's own text, reproduced verbatim. The
-opendata dashboard domain it mentions no longer resolves; the telemetry upload
+opendata dashboard domain it mentions does not resolve; the telemetry upload
 endpoints themselves are whatever <code>open_data.intent_urls</code> is set to
 (see <a href="../privacy-security/">Privacy &amp; Security</a>).</p>
 </div>

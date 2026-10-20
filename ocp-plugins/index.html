@@ -1495,9 +1495,9 @@
 <h1 id="ocp-plugins-reference">OCP Plugins Reference<a class="headerlink" href="#ocp-plugins-reference" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>OCP (the OpenVoiceOS Common Play system) is the part of OVOS that plays media: music, podcasts, news, radio and the like. Each plugin on this page teaches it to handle one kind of source, such as YouTube links, Bandcamp pages, RSS feeds, or local files. So if you ask to play something, the right plugin knows how to find the actual audio stream and start it. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
+<p>OCP (the OpenVoiceOS Common Play system) is the part of OVOS that plays media: music, podcasts, news, radio and the like. Each plugin below teaches it to handle one kind of source, such as YouTube links, Bandcamp pages, RSS feeds, or local files. So if you ask to play something, the right plugin knows how to find the actual audio stream and start it. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
-<p>This page covers stream extractors: plugins that turn a URL or search request into a playable
+<p>The plugins here are stream extractors: plugins that turn a URL or search request into a playable
 stream. The playback engine that plays that stream is <a href="../ocp-audio-plugin/">OCP Audio Plugin</a>.
 The playback backends it can use are <a href="../media-plugins/">Media Playback Plugins</a>.</p>
 <div class="admonition info">
@@ -1508,7 +1508,7 @@ The playback backends it can use are <a href="../media-plugins/">Media Playback 
   request. See <a href="../ocp-pipeline/">OCP Pipeline</a>.</li>
 <li><strong>The OCP skill base class</strong>: <code>OVOSCommonPlaybackSkill</code>; skills built on it provide
   or embody media for the pipeline to find. See <a href="../ocp-skills/">OCP Skills</a>.</li>
-<li><strong>The legacy OCP audio plugin</strong>: <code>ovos-plugin-common-play</code>, the current default
+<li><strong>The legacy OCP audio plugin</strong>: <code>ovos-plugin-common-play</code>, the default
   playback engine running inside <code>ovos-audio</code>. See <a href="../ocp-audio-plugin/">The OCP Audio Plugin</a>.</li>
 </ul>
 </div>
@@ -1570,8 +1570,8 @@ The playback backends it can use are <a href="../media-plugins/">Media Playback 
 </table>
 <p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the <a href="../maturity/">Maturity Scale</a>.</p>
 <div class="admonition note">
-<p class="admonition-title">Maturity not yet rated for this family</p>
-<p>These plugins are not yet individually rated in the manual (see the OCP comparison
+<p class="admonition-title">Maturity not rated for this family</p>
+<p>The manual does not rate these plugins individually (see the OCP comparison
 table in <a href="../choosing-plugins/#speech-input">Choosing Plugins</a>). "not rated" means
 unrated, not unmature.</p>
 </div>
@@ -1599,7 +1599,7 @@ unrated, not unmature.</p>
   skills can hand it a raw provider URL without the <code>news//</code> prefix. At playback time it looks
   the URL up in that table and calls the matching extractor function to resolve the real,
   playable stream. The TSF (Portugal) source resolves the current bulletin by scraping it from
-  TSF's listing page rather than guessing a predictable URL, since TSF now hosts bulletins on a
+  TSF's listing page rather than guessing a predictable URL, since TSF hosts bulletins on a
   CDN with unpredictable per-bulletin filenames. The GR1 (Italy) source resolves Rai's relinker
   URL server-side with a browser-like User-Agent before handing back the final stream, since the
   relinker rejects requests without one.</p>
@@ -1641,7 +1641,7 @@ unrated, not unmature.</p>
 </li>
 <li>
 <p><strong>Description</strong>: A stream extractor for YouTube and YouTube Music links. Unlike the other
-  extractors on this page, it is a small router over multiple interchangeable backends:
+  extractors here, it is a small router over multiple interchangeable backends:
   <code>youtube-dl</code>/<code>yt-dlp</code>, <code>pytube</code>, an Invidious mirror, or a webview fallback, selectable via
   the <code>youtube_backend</code> / <code>ydl_backend</code> / <code>invidious_host</code> settings, since any single scraping
   approach tends to break whenever YouTube changes its page format. It also has a dedicated path
@@ -1671,13 +1671,13 @@ unrated, not unmature.</p>
 <p><strong>GitHub</strong>: <a href="https://github.com/OpenVoiceOS/ovos-media-classifier">ovos-media-classifier</a></p>
 </li>
 <li>
-<p><strong>Description</strong>: ⚠️ <strong>Experimental. Work in progress, not yet deployed in OpenVoiceOS.</strong>
+<p><strong>Description</strong>: ⚠️ <strong>Experimental.</strong> The <code>ovos-ocp-pipeline-plugin</code> alpha installs it as a dependency.
   A self-describing, pluggable media-intent classifier: given a spoken request, it decides
   whether it is a media request at all and, if so, classifies it along several axes at once
   (media type, playback modality, structure, explicitness, tags, qualifiers) so OCP can route
   it to the right <code>MediaProvider</code>s and apply content policy. It is a router, not a
   resolver. It does not turn a title into a playable stream. The OCP stream-extractor
-  plugins on this page do that.</p>
+  plugins above do that.</p>
 </li>
 </ul>
 <hr />

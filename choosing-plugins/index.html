@@ -1612,11 +1612,10 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>OVOS ships <strong>dozens</strong> of interchangeable plugins for each job. That's useful, but
-it's easy to feel lost picking one. This page is the shortcut: for every plugin type
-it names a <strong>recommended default</strong>, then a small <strong>comparison table</strong> so you can see at
+it's easy to feel lost picking one. For every plugin type, the sections below name a <strong>recommended default</strong>, then a small <strong>comparison table</strong> so you can see at
 a glance which option fits your situation (offline vs cloud, hardware budget, licence,
 maturity). Want the full config and every option? Each section links to its detailed
-catalog. New here? Start with the <a href="../plugins-index/">Plugins Index</a>.</p>
+catalog. For an overview of plugin types, start with the <a href="../plugins-index/">Plugins Index</a>.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Don't want to choose? Use the recommended offline stack</p>
@@ -1767,12 +1766,12 @@ page for its config.</p>
 <td>ovos-ww-plugin-server</td>
 <td>Alpha</td>
 <td>hybrid</td>
-<td>Thin satellite offloading detection to a self-hosted ww-server. <strong>Not available yet</strong> — repos still private</td>
+<td>Thin satellite offloading detection to a self-hosted ww-server. <strong>Not published</strong>: the repositories are private</td>
 </tr>
 </tbody>
 </table>
 <p><em><code>ovos-ww-plugin-precise-lite</code> is <strong>deprecated</strong>. It is the TFLite predecessor of precise-onnx,
-kept working as a fallback but not a pick for new setups.</em></p>
+kept as a fallback. Do not pick it for a fresh setup.</em></p>
 <h3 id="stt-speech-to-text">STT (Speech-to-Text)<a class="headerlink" href="#stt-speech-to-text" title="Permanent link">&para;</a></h3>
 <p>Transcribes speech to text. See the <a href="../stt-plugins/">STT catalog</a> (16 plugins, top picks shown).</p>
 <table>
@@ -2242,9 +2241,9 @@ server. For privacy, point <code>api_url</code> at your own server, or use <code
   stable channel has no GPU tier. See
   <a href="../lang-support-tables/">Language Support Tables</a>. TTS <strong>coqui</strong>. Still fully offline.</li>
 <li><strong>Thin satellite / shared backend:</strong> offload with the <code>*-server</code> plugins so the heavy models
-  live on one machine. STT and TTS are available today (<code>ovos-stt-plugin-server</code>,
+  live on one machine. STT and TTS servers are on PyPI (<code>ovos-stt-plugin-server</code>,
   <code>ovos-tts-plugin-server</code> — set <code>urls</code>/<code>host</code>, or they use public community servers); the
-  wake-word one is not released yet, so keep wake-word detection on the satellite.</li>
+  wake-word one is not published, so keep wake-word detection on the satellite.</li>
 <li><strong>Cloud is acceptable (coverage/quality first):</strong> STT <strong>azure</strong>, TTS <strong>edge-tts</strong>/<strong>polly</strong>,
   translation <strong>google</strong>. Each adds the vendor's separate terms.</li>
 </ul>

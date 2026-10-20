@@ -1903,7 +1903,7 @@
 <h1 id="configuration-management">Configuration Management<a class="headerlink" href="#configuration-management" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page covers how you change OVOS's settings, such as your language, voice, and
+<p>You change OVOS's settings, such as your language, voice, and
 microphone. OVOS ships with a complete set of defaults you never touch. You write a
 small personal file listing only the things you want different. OVOS stacks your file
 on top of the defaults, so the rest stays as-is, like adding a sticky note over a
@@ -1930,10 +1930,9 @@ changes — for example automatic location detection — without ever touching t
 by hand. Write to it programmatically with <code>update_assistant_config(config, bus)</code>.</p>
 <p>It is not the file you edit. See the <a href="#config-layer-stack">Config Layer Stack</a> below.</p>
 <div class="admonition note">
-<p class="admonition-title">Remote configuration is gone</p>
-<p>The old Mycroft Home / <code>home.mycroft.ai</code> backend layer (<code>RemoteConf</code>,
-<code>disable_remote_config</code>, <code>protected_keys.remote</code>) was removed as a breaking change
-(<code>ovos-config</code> <code>5a7d1a3</code>, <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/194" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #194">#194</a>, first tag <code>3.0.0a1</code>). <code>Configuration.remote</code> now raises
+<p class="admonition-title">No remote configuration</p>
+<p>OVOS has no Mycroft Home / <code>home.mycroft.ai</code> backend layer. <code>RemoteConf</code>,
+<code>disable_remote_config</code> and <code>protected_keys.remote</code> have no effect. <code>Configuration.remote</code> raises
 <code>AttributeError</code>; <code>RemoteConf</code> stays importable only as a deprecated, warn-on-construction
 class.</p>
 </div>
@@ -1972,13 +1971,9 @@ the full picture.</p>
 <p>The layers merge left to right, so the last one wins. <code>$XDG_CONFIG_HOME</code>
 (<code>~/.config/mycroft/mycroft.conf</code>) is last, and therefore overrides a system-wide
 <code>/etc/xdg/mycroft/mycroft.conf</code>, as the XDG base-directory spec requires.</p>
-<div class="admonition warning">
-<p class="admonition-title">Older versions had this backwards</p>
-<p>Before <code>ovos-config</code> 2.3.7, <code>get_xdg_config_locations()</code> returned the list reversed, so
-<code>/etc/xdg/mycroft/mycroft.conf</code> silently overrode the user's own file
-(<a href="https://github.com/OpenVoiceOS/ovos-config/pull/284">ovos-config#284</a>). If you deploy to
-devices that may still run an older release, check which order they use before relying on
-either:</p>
+<div class="admonition tip">
+<p class="admonition-title">Check the merge order on a device</p>
+<p>Print the XDG config paths in merge order:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from ovos_config.locations import get_xdg_config_locations as f; print(f())&quot;</span>
 </span></code></pre></div>
 <p>The last path printed is the one that wins. All layers are <code>LocalConf</code> dict subclasses backed by a file. Only the user</p>
@@ -2041,10 +2036,7 @@ for the full guidance.</p>
 </span></code></pre></div>
 <p>See the <strong>Secrets and permissions</strong> warning above. <code>ovos-config set</code> does not restrict the file's permissions itself.</p>
 <p><code>ovos-config set</code> writes to <code>~/.config/mycroft/mycroft.conf</code> (the User layer), and
-<code>ovos-config show -u</code>/<code>show -a</code> read the User/Assistant layers respectively. A mis-indexed
-config-layer table swapped these before <code>ovos-config</code> <code>3.1.1a1</code>
-(<a href="https://github.com/OpenVoiceOS/ovos-config/pull/305"><code>ovos-config#305</code></a>); update if
-you're on an older release.</p>
+<code>ovos-config show -u</code>/<code>show -a</code> read the User/Assistant layers respectively.</p>
 <p><strong>Restart and verify</strong></p>
 <p><code>ovos-config set</code> writes the change to disk. It does not restart the running services. They
 keep using the old value until you restart them:</p>
@@ -2079,9 +2071,9 @@ server actually receives the request. See <a href="../stt-server/#companion-plug
 </tr>
 </tbody>
 </table>
-<p>Since <code>ovos-config</code> <code>3.0.1a1</code>, the <strong>assistant</strong> layer (<code>runtime.conf</code>) has its own protection
-list (<code>protected_keys.assistant</code>) and is no longer classified as a "user" layer for merge
-purposes — <code>disable_user_config</code> does <strong>not</strong> drop it, unlike earlier releases.</p>
+<p>The <strong>assistant</strong> layer (<code>runtime.conf</code>) has its own protection
+list (<code>protected_keys.assistant</code>). It is not a "user" layer for merge
+purposes, so <code>disable_user_config</code> does <strong>not</strong> drop it.</p>
 <div class="admonition danger">
 <p class="admonition-title"><code>disable_user_config</code> drops more than the user layer</p>
 <p>The merge filter treats every layer whose path is neither the bundled default, the
@@ -2091,7 +2083,7 @@ that <code>configuration.patch</code> bus messages write to.</p>
 <p>So an OEM that ships a distribution config and then locks the device with
 <code>disable_user_config</code> erases its own settings and silences every runtime config update
 that goes through the patch layer. The device falls back to stock defaults, with no
-error and no log line. Verified against <code>ovos-config</code> <code>3.0.1a1</code>: with <code>lang</code> set to
+error and no log line. For example, with <code>lang</code> set to
 <code>pt-PT</code> in the distribution layer, turning the flag on returns <code>en-US</code>.</p>
 <p>To lock a device, put the values in <code>/etc/mycroft/mycroft.conf</code> (the system layer), which
 the filter keeps.</p>
@@ -2206,7 +2198,7 @@ and XDG path helpers are covered on the
 <li>
 <p>Use <code>disable_user_config</code> with caution. It silently skips the distribution layer and
   in-memory runtime patches too, not only the user layer. The assistant layer
-  (<code>runtime.conf</code>) is exempt since <code>3.0.1a1</code>.</p>
+  (<code>runtime.conf</code>) is exempt.</p>
 </li>
 <li>
 <p>For the package layout, entry points, and other internals, see

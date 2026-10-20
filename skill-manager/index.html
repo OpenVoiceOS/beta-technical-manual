@@ -1781,7 +1781,7 @@
 </ul>
 </details>
 <h2 id="skill-discovery">Skill Discovery<a class="headerlink" href="#skill-discovery" title="Permanent link">&para;</a></h2>
-<p>Skills are Python packages. They register themselves via the <code>opm.skill</code> entry point group. The older <code>ovos.plugin.skill</code> group is still accepted as a deprecated alias. <code>ovos-plugin-manager</code> discovers them with <code>find_skill_plugins()</code>, which returns a <code>{skill_id: SkillClass}</code> dict.</p>
+<p>Skills are Python packages. They register themselves via the <code>opm.skill</code> entry point group. <code>ovos-plugin-manager</code> also accepts the <code>ovos.plugin.skill</code> group as a deprecated alias. <code>ovos-plugin-manager</code> discovers them with <code>find_skill_plugins()</code>, which returns a <code>{skill_id: SkillClass}</code> dict.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">ovos_plugin_manager.skills</span> <span class="kn">import</span> <span class="n">find_skill_plugins</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">plugins</span> <span class="o">=</span> <span class="n">find_skill_plugins</span><span class="p">()</span>
 </span></code></pre></div>
@@ -1861,11 +1861,8 @@ Padatious pipeline plugin does announce <code>mycroft.skills.trained</code> when
 completes (on both the trained and nothing-new-to-train paths), so tooling that needs a
 deterministic "training done" signal can watch for that. The manager itself never does.</p>
 <p>The manager itself never blocks on <code>mycroft.skills.trained</code>. The event exists (see
-above) but nothing in core does a <code>wait_for_response</code> on it. An earlier
-version blocked on <code>wait_for_response(..., "mycroft.skills.trained", timeout=60)</code>, which
-stalled boot for a full minute on every install without a deferred-training engine, since
-no such engine was there to answer. A single responder could not speak for every loaded
-pipeline anyway.</p>
+above) but nothing in core does a <code>wait_for_response</code> on it. A single responder cannot
+speak for every loaded pipeline.</p>
 <h2 id="settings-file-watcher">Settings File Watcher<a class="headerlink" href="#settings-file-watcher" title="Permanent link">&para;</a></h2>
 <p>When enabled, a <code>FileWatcher</code> monitors <code>~/.config/mycroft/skills/*/settings.json</code>. Any change emits:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ovos.skills.settings_changed  {skill_id: &quot;...&quot;}

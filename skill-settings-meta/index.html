@@ -1883,14 +1883,14 @@ reads it. For term definitions, see the <a href="../glossary/">Glossary</a>.</p>
 <p class="admonition-title">Legacy — specified but not used by OVOS itself</p>
 <p><code>settingsmeta.json</code> / <code>.yaml</code> is a <strong>legacy format inherited from the Mycroft backend
 server</strong>, which presented a web form to edit skill settings. <strong>OVOS does not run that backend</strong>,
-so nothing in OVOS core consumes this file, and it is <strong>optional and usually absent</strong> in modern
+so nothing in OVOS core consumes this file, and it is <strong>optional and usually absent</strong> in OVOS
 skills. Your skill reads and writes its settings perfectly well without it — see
 <a href="../skill-settings/">Skill Settings</a>.</p>
-<p>It is still <em>specified</em>, and <code>ovos-workshop</code> can auto-generate a basic version from a skill's
-settings. Some <strong>community tools still consume it to render a settings UI</strong>, most notably
+<p>It is <em>specified</em>, and <code>ovos-workshop</code> can auto-generate a basic version from a skill's
+settings. Some <strong>community tools consume it to render a settings UI</strong>, most notably
 <a href="https://github.com/OscillateLabsLLC/ovos-skill-config-tool"><code>ovos-skill-config-tool</code></a> by
 Oscillate Labs. Provide a <code>settingsmeta</code> file only if you specifically target such a tool. The
-rest of this page documents the format for that case.</p>
+sections below document the format for that case.</p>
 </div>
 <h2 id="define-settings-ui-for-a-skill">Define settings UI for a <a href="../skill-design-guidelines/">Skill</a><a class="headerlink" href="#define-settings-ui-for-a-skill" title="Permanent link">&para;</a></h2>
 <p>To define a Skill's settings UI you can provide a <code>settingsmeta.json</code> or <code>settingsmeta.yaml</code> file.
@@ -1917,7 +1917,7 @@ community settings editor like the one above, which then presents the described 
 </span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="p">}</span>
 </span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>Now, here is the same settings, as it would be defined with YAML in a <code>settingsmeta.yaml</code> file:</p>
+<p>Here are the same settings, as defined with YAML in a <code>settingsmeta.yaml</code> file:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">skillMetadata</span><span class="p">:</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">   </span><span class="nt">sections</span><span class="p">:</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
@@ -1985,7 +1985,7 @@ community settings editor like the one above, which then presents the described 
 <p>Semicolon-separated <code>Label|value</code> pairs, e.g. <code>Option 1|option_one;Option 2|option_two</code>.</p>
 </li>
 </ul>
-<p>Examples for each type of field are provided in JSON and YAML at the end of this page.</p>
+<p>The end of this reference gives JSON and YAML examples for each type of field.</p>
 <h2 id="settingsmeta-examples">SettingsMeta Examples<a class="headerlink" href="#settingsmeta-examples" title="Permanent link">&para;</a></h2>
 <h3 id="label-field">Label Field<a class="headerlink" href="#label-field" title="Permanent link">&para;</a></h3>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">skillMetadata</span><span class="p">:</span>

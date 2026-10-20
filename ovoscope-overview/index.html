@@ -1463,15 +1463,15 @@
 <p><code>ovoscope</code> is the official tool for testing OpenVoiceOS skills and core parts. It runs a small,
 fast, pretend version of the whole assistant in one process. This lets you confirm a request is
 understood and answered correctly without real hardware. "End-to-end" just means it checks the
-whole journey, from what the user said to what the assistant did. This page gets you started.
+whole journey, from what the user said to what the assistant did.
 The <strong>full, always-current reference lives in the <a href="https://github.com/OpenVoiceOS/ovoscope/tree/dev/docs">ovoscope repo's <code>docs/</code></a></strong>. See the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <div class="admonition info">
-<p class="admonition-title">This page is a guide; the reference is in the repo</p>
-<p><code>ovoscope</code> is actively developed, so its detailed per-harness reference is kept <strong>in the tool's
+<p class="admonition-title">Guide here, reference in the repo</p>
+<p>The detailed per-harness reference is kept <strong>in the tool's
 own <a href="https://github.com/OpenVoiceOS/ovoscope/tree/dev/docs"><code>docs/</code></a></strong> rather than copied here
-(which would drift out of sync). This page gives you the concept and a working first test, then
-links to the authoritative reference for each harness.</p>
+(which would drift out of sync). The sections below give the concept and a working first test, then
+link to the authoritative reference for each harness.</p>
 </div>
 <p><strong>ovoscope</strong> provides a lightweight, in-process environment for running <strong>End-to-End (E2E) tests</strong>
 without a full system installation. Every official OVOS skill is required to pass <code>ovoscope</code> E2E
@@ -1650,7 +1650,7 @@ uses <code>get_minicroft</code>. For single-language suites on the 180s CI defau
 For multilingual suites, set <code>pytest-timeout</code> to at least <code>max_wait + 120s</code>. A <code>pytest-timeout</code>
 at or below the ceiling kills setup mid-wait, and the failure looks like a boot failure
 instead of a timeout. This applies to the <strong>global</strong> timeout in <code>pytest.ini</code> or <code>pyproject.toml</code>
-too, not just a per-test <code>@pytest.mark.timeout</code>: a low global floor kills <code>setUpClass</code> before
+too, as well as a per-test <code>@pytest.mark.timeout</code>: a low global floor kills <code>setUpClass</code> before
 <code>get_minicroft</code> even returns, regardless of any per-test marker. Full detail:
 <a href="https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/minicroft.md">minicroft.md</a>.</p>
 <hr />

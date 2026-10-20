@@ -1003,15 +1003,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#who-this-is-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      Who this is for
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#what-you-get" class="md-nav__link">
     <span class="md-ellipsis">
       What you get
@@ -1288,15 +1279,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#who-this-is-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      Who this is for
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#what-you-get" class="md-nav__link">
     <span class="md-ellipsis">
       What you get
@@ -1360,9 +1342,7 @@
 
 
 <h1 id="write-a-tool-plugin-opm-toolbox">Write a Tool Plugin (OPM ToolBox)<a class="headerlink" href="#write-a-tool-plugin-opm-toolbox" title="Permanent link">&para;</a></h1>
-<p>This page writes a tool plugin: a Python package that gives AI agents a typed tool, which every OVOS agent component can find and call.</p>
-<h2 id="who-this-is-for">Who this is for<a class="headerlink" href="#who-this-is-for" title="Permanent link">&para;</a></h2>
-<p>You write Python. You want an AI agent to do a task of your own, such as read a sensor or call a service. You write the tool one time, and three OVOS components use it. The persona server serves it over MCP and UTCP. The PHAL plugin shares it on the messagebus. The agentic loop gives it to a language model.</p>
+<p>Write a tool plugin: a Python package that gives AI agents a typed tool, which every OVOS agent component can find and call. Use a tool plugin when an AI agent must do a task of your own in Python, such as read a sensor or call a service. You write the tool one time, and three OVOS components use it. The persona server serves it over MCP and UTCP. The PHAL plugin shares it on the messagebus. The agentic loop gives it to a language model.</p>
 <h2 id="what-you-get">What you get<a class="headerlink" href="#what-you-get" title="Permanent link">&para;</a></h2>
 <p>A package with one <code>ToolBox</code> class. The class declares its tools with Pydantic models for the arguments and the result. OVOS turns those models into JSON Schema for the agent.</p>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>

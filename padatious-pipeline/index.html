@@ -1585,7 +1585,7 @@
 <p>Padatious is one of the tools that helps the assistant work out what you want. Instead of matching fixed keywords, a skill gives it a handful of example sentences (like "what is the weather" and "what's the weather like"), and Padatious learns the pattern so it can recognize new phrasings of the same request. It is the "learns from examples" companion to the keyword-based <a href="../adapt-pipeline/">Adapt</a> tool. See the <a href="../glossary/">Glossary</a> for unfamiliar terms.</p>
 </div>
 <p>Shipped in the default pipeline.</p>
-<p>The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.</p>
+<p>The sections below are for people who deploy or customize OVOS.</p>
 <details class="info">
 <summary>📐 Formal specification</summary>
 <p>Padatious is a <strong>pipeline plugin</strong> under <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md">OVOS-PIPELINE-1 — Utterance Lifecycle &amp; Pipeline</a></strong>. It is a <strong>template-intent</strong> engine in the sense of <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md">OVOS-INTENT-3 — Intent Definition §5</a></strong>: the <code>.intent</code> example sentences are <em>training data</em>, written in the <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1 — Sentence Template Grammar</a></strong> with <code>{slot}</code> placeholders the engine fills at match time. See the <a href="../architecture-specs/">spec index</a>.</p>
@@ -1651,7 +1651,7 @@
 <p>Each stage runs at a different point in the pipeline and applies a different confidence threshold to the same scored result.</p>
 <hr />
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
-<p>Configure Padatious thresholds in your <code>mycroft.conf</code> under <code>intents</code> → <code>ovos-padatious-pipeline-plugin</code> (the canonical, plugin-id-keyed section. The older <code>padatious</code> key is read as a fallback if the canonical one is absent). The defaults are:</p>
+<p>Configure Padatious thresholds in your <code>mycroft.conf</code> under <code>intents</code> → <code>ovos-padatious-pipeline-plugin</code> (the canonical, plugin-id-keyed section. OVOS reads the <code>padatious</code> key as a fallback if the canonical one is absent). The defaults are:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&quot;ovos-padatious-pipeline-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1782,10 +1782,6 @@ basename becomes the placeholder name). For example, a <code>location.entity</co
 <p>Every registration schedules a background training pass off the utterance-handling thread. Nothing is left dirty waiting for an unrelated live query to trigger it. Queries made while a retrain is in flight, and the <code>intent.service.padatious.manifest.get</code> bus response, still serve the previous trained generation instead of blocking or erroring. Re-registering an intent or entity with unchanged content is a no-op. Both workers debounce a burst of registrations into a single retrain instead of retraining once per registration. Each new registration resets a 2-second quiet timer. The retrain fires once nothing new arrives within that window, capped at a 60-second maximum wait so a slow, steady trickle of registrations still eventually trains.</p>
 <p><code>mycroft.skills.trained</code> only fires once every container a training pass touched is fully compiled, both the neural model and the padaos regex layer. A registration that lands mid-pass defers the signal to the next pass instead of firing early, so a caller waiting on this event can rely on exact matches being live when it fires.</p>
 <p><strong>Per-domain training.</strong> Setting <code>domain_engine: true</code> in the plugin's config trains a separate model per skill domain (using the same <code>ovos-padatious-pipeline-plugin</code> entry point) instead of one flat model across all skills, reducing cross-skill collisions at the cost of extra memory.</p>
-<div class="admonition note">
-<p class="admonition-title">Upcoming</p>
-<p>A dedicated <code>DomainPadatiousPipeline</code> OPM entry point (a first-class plugin ID for the per-domain training mode, instead of the <code>domain_engine</code> config flag on the flat plugin) is <strong>Upcoming</strong>.</p>
-</div>
 <hr />
 <p><strong>Read next:</strong> <a href="../m2v-pipeline/">Model2Vec Pipeline</a>
 <strong>Related:</strong> <a href="../nebulento/">Nebulento</a> · <a href="../intents-padatious/">Padatious Intents</a> · <a href="../adapt-pipeline/">Adapt Pipeline</a> · <a href="../debugging-intent-matching/">Debugging Intent Matching</a></p>

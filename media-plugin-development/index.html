@@ -1459,11 +1459,11 @@
 <h1 id="writing-a-media-playback-backend-plugin">Writing a Media Playback Backend Plugin<a class="headerlink" href="#writing-a-media-playback-backend-plugin" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page teaches you how to write an <a href="../ovos-media/"><code>ovos-media</code></a> playback backend:
+<p>Write an <a href="../ovos-media/"><code>ovos-media</code></a> playback backend:
 which base class to subclass, what each method contract expects, how to register the
-entry point, and how to test the result. It covers the <code>opm.media.*</code> family only. The
+entry point, and how to test the result. The guide covers the <code>opm.media.*</code> family only. The
 old audio service (<code>mycroft.plugin.audioservice</code>) is a separate, deprecated interface.
-See <a href="../ocp-audio-plugin/">OCP Audio Plugin</a> if you still need to target it. Looking for
+See <a href="../ocp-audio-plugin/">OCP Audio Plugin</a> if you must target it. Looking for
 a plugin to use instead of writing one? Go to <a href="../media-plugins/">Media Plugins</a>.</p>
 </div>
 <p>A media backend plays <strong>one track at a time</strong>. OCP owns the playlist. Your plugin only

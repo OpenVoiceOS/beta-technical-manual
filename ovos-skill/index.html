@@ -1842,7 +1842,7 @@
 <h1 id="ovosskill">OVOSSkill<a class="headerlink" href="#ovosskill" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>A "skill" is an add-on that teaches your voice assistant to do one new thing, like telling the weather or setting a timer. Every skill is built on top of a shared starter kit called <code>OVOSSkill</code>, which quietly handles the housekeeping: starting up, listening for commands, speaking replies, remembering settings, and shutting down. This page is a reference for that starter kit and its methods. New to all this? Start with <a href="../skill-classes/">Skill Classes</a> or the <a href="../glossary/">Glossary</a>.</p>
+<p>A "skill" is an add-on that teaches your voice assistant to do one new thing, like telling the weather or setting a timer. Every skill is built on top of a shared starter kit called <code>OVOSSkill</code>, which quietly handles the housekeeping: starting up, listening for commands, speaking replies, remembering settings, and shutting down. The reference below covers that starter kit and its methods. New to all this? Start with <a href="../skill-classes/">Skill Classes</a> or the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <p><strong>Module:</strong> <code>ovos_workshop.skills.ovos.OVOSSkill</code></p>
 <p><code>OVOSSkill</code> is the base class that all OVOS skills inherit from. It handles startup, intent registration, resource loading, settings, event management, GUI, and shutdown.</p>
@@ -1850,7 +1850,7 @@
 <p class="admonition-title">Constructor, lifecycle, and startup/shutdown sequence</p>
 <p>The constructor signature, the lifecycle methods to override (<code>initialize()</code>, <code>stop()</code>,
 <code>shutdown()</code>, etc.), and the full startup/shutdown sequence are documented once, on
-<a href="../skill-classes/#ovosskill">Skill Classes</a>. This page covers <code>OVOSSkill</code>'s remaining
+<a href="../skill-classes/#ovosskill">Skill Classes</a>. The sections below cover <code>OVOSSkill</code>'s remaining
 surface: properties, speaking, user input, scheduling, <code>SkillApi</code>, and the bus events it
 handles.</p>
 </div>
@@ -2068,7 +2068,7 @@ once or repeatedly:</p>
 <li><strong><code>schedule_event(handler, when, data=None, name=None, context=None)</code></strong>: single-shot.
   <code>when</code> is either a <code>datetime</code> or a number of seconds from now. A naive <code>datetime</code> (no
   <code>tzinfo</code>) is stamped with the assistant's configured timezone (<code>location.timezone.code</code>),
-  not the OS/process timezone — a device on the stock config is in Lawrence, Kansas until
+  not the OS/process timezone. A device on the stock config is in Lawrence, Kansas until
   its location is set.</li>
 <li><strong><code>schedule_repeating_event(handler, when, frequency, data=None, name=None, context=None)</code></strong>:
   repeating. <code>frequency</code> is the interval <strong>in seconds</strong> between calls. <code>when=None</code> fires the
@@ -2078,10 +2078,10 @@ once or repeatedly:</p>
   <code>cancel_scheduled_event(name)</code>. Re-scheduling <code>schedule_event</code> under a <code>name</code> that already
   has a pending one-shot replaces it, so a skill that re-creates its schedules on every load
   does not accumulate duplicates. <code>schedule_repeating_event</code> does not replace an existing
-  repeating schedule of the same name — cancel it first. <code>update_scheduled_event</code> changes an
+  repeating schedule of the same name. Cancel it first. <code>update_scheduled_event</code> changes an
   existing event's payload without touching its fire time; <code>get_scheduled_event_status</code>
   returns <code>None</code> (not an exception) when nothing is scheduled under that name. A repeating
-  schedule survives skill shutdown/restart — it is tied to the skill id, not the running
+  schedule survives skill shutdown/restart. It is tied to the skill id, not the running
   process.</li>
 <li>Scheduled events are persisted by the <a href="../bus-service/"><code>EventScheduler</code></a> so they survive an
   <code>ovos-core</code> restart. They are not tied to the skill instance staying in memory. See
@@ -2092,7 +2092,7 @@ once or repeatedly:</p>
 <h2 id="runtimerequirements">RuntimeRequirements<a class="headerlink" href="#runtimerequirements" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code>RuntimeRequirements</code> is a deprecated mechanism. See <a href="../skill-runtime-requirements/">Runtime Requirements</a> for what it currently does.</p>
+<p><code>RuntimeRequirements</code> is a deprecated mechanism. See <a href="../skill-runtime-requirements/">Runtime Requirements</a> for what it does.</p>
 </div>
 <p>Override the class property to declare connectivity needs:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_utils</span> <span class="kn">import</span> <span class="n">classproperty</span>

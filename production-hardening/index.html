@@ -1471,14 +1471,14 @@
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
 <p>OVOS ships several network services, and most bind to <code>127.0.0.1</code> by default, but not all of
-them do. This page lists every port, its default bind, and whether it has auth or TLS, plus
+them do. The table below lists every port, its default bind, and whether it has auth or TLS, plus
 the rules to follow before you open any of them on a shared network.</p>
 </div>
 <div class="admonition tip">
-<p class="admonition-title">Is this page for you?</p>
+<p class="admonition-title">Looking for operations instead?</p>
 <p>Looking for systemd units, readiness probes, log locations, backups, or staged upgrades
-instead? See <a href="../production-operations/">Production Operations</a>. This page is the
-security-hardening slice of that material.</p>
+instead? See <a href="../production-operations/">Production Operations</a>. The hardening rules
+below are the security slice of that material.</p>
 </div>
 <hr />
 <h2 id="network-hardening">Network hardening<a class="headerlink" href="#network-hardening" title="Permanent link">&para;</a></h2>
@@ -1505,7 +1505,7 @@ each one before you open a port on a shared network.</p>
 <tr>
 <td><a href="../gui-service/#configuration">GUI WebSocket</a></td>
 <td>18181</td>
-<td><code>127.0.0.1</code> (older configs may carry <code>0.0.0.0</code>)</td>
+<td><code>127.0.0.1</code> (a config written before the loopback default may carry <code>0.0.0.0</code>)</td>
 <td>None</td>
 <td>None</td>
 </tr>
@@ -1559,7 +1559,7 @@ each one before you open a port on a shared network.</p>
 authentication, no origin check, and no TLS option at all, and anything it receives is
 forwarded straight onto the core bus. Widen <code>gui_websocket.host</code> to <code>0.0.0.0</code> only if a
 remote display genuinely needs network access, and re-check configs from before the
-loopback default, which may still carry <code>0.0.0.0</code>. See
+loopback default, which may carry <code>0.0.0.0</code>. See
 <a href="../gui-service/#configuration">GUI Service: Configuration</a> for the full warning and the
 VPN/reverse-proxy alternative.</p>
 </div>

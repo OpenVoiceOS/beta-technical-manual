@@ -2239,7 +2239,7 @@
 <h1 id="tts-plugins-reference">TTS Plugins Reference<a class="headerlink" href="#tts-plugins-reference" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page holds the full technical entry for each TTS plugin in the roster: repository link, license notes, and a default configuration snippet where one exists. Start at <a href="../tts-plugins/">TTS Plugins</a> to pick a plugin, come here for the exact settings.</p>
+<p>Each section holds the full technical entry for a TTS plugin in the roster: repository link, license notes, and a default configuration snippet where one exists. Start at <a href="../tts-plugins/">TTS Plugins</a> to pick a plugin, come here for the exact settings.</p>
 </div>
 <h2 id="ovos-tts-server">ovos-tts-server<a class="headerlink" href="#ovos-tts-server" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2561,8 +2561,8 @@ the table doesn't cover.</p>
 <p>If <code>"voice"</code> is omitted, the plugin picks the first bundled model that supports the configured language.</p>
 </blockquote>
 <h3 id="per-language-default-voices">Per-language default voices<a class="headerlink" href="#per-language-default-voices" title="Permanent link">&para;</a></h3>
-<p>A configured <code>voice</code> pins one voice regardless of request language. For multilingual serving
-(1.86.0a1+), the <code>lang2voice</code> config map, e.g. <code>{"pt-br": "...", "gl": "..."}</code>, and
+<p>A configured <code>voice</code> pins one voice regardless of request language. For multilingual serving,
+the <code>lang2voice</code> config map, e.g. <code>{"pt-br": "...", "gl": "..."}</code>, and
 <code>PHOONNX_DEFAULT_VOICE_&lt;LANG&gt;</code> env vars resolve the default voice per request language. Keys
 are BCP-47 tags, full tag tried before primary subtag, and resolution is table-major: the
 whole <code>lang2voice</code> table wins outright for any language it names before env vars are consulted
@@ -2598,7 +2598,7 @@ not equivalent:</p>
 </tr>
 </tbody>
 </table>
-<p><code>max_loaded_voices</code> is the older setting and a poor bound on this catalog: a Piper voice is
+<p><code>max_loaded_voices</code> is a poor bound on this catalog: a Piper voice is
 around 60 MB while an omnivoice voice is around 2.2 GB, roughly a 40x spread, so a count that is
 safe for small voices is fatal for large ones. <code>max_loaded_bytes</code> bounds by the actual resident
 size instead, and is the one to reach for on a mixed catalog. (Mirrors <code>max_loaded_mb</code> on the

@@ -1783,7 +1783,7 @@
 <h1 id="microphone-plugin-development">Microphone Plugin Development<a class="headerlink" href="#microphone-plugin-development" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>This page is the tutorial for building your own microphone plugin: the <code>Microphone</code> base class, the entry point that makes a plugin installable, and how to test and use it standalone. Looking for a plugin to use instead of writing one? Go to <a href="../mic-plugins/">Microphone Plugins</a>.</p>
+<p>A tutorial for building your own microphone plugin: the <code>Microphone</code> base class, the entry point that makes a plugin installable, and how to test and use it standalone. Looking for a plugin to use instead of writing one? Go to <a href="../mic-plugins/">Microphone Plugins</a>.</p>
 </div>
 <h2 id="technical-explanation">Technical Explanation<a class="headerlink" href="#technical-explanation" title="Permanent link">&para;</a></h2>
 <p>OVOS uses a plugin architecture to decouple the audio input system from the rest of the voice stack. Microphone plugins implement a common interface, making it easy to swap between different audio sources or backends without changing application code.</p>
@@ -1868,7 +1868,7 @@ three abstract methods: <code>start()</code>, <code>read_chunk() -&gt; Optional[
 installers and GUIs. It is optional. Add it once the plugin has settings worth
 advertising.</p>
 <blockquote>
-<p>💡 The legacy alias <code>ovos.plugin.microphone</code> is still accepted by <code>ovos-plugin-manager</code>, but new plugins should register under <code>opm.microphone</code>.</p>
+<p>💡 <code>ovos-plugin-manager</code> accepts the legacy alias <code>ovos.plugin.microphone</code>. Register a plugin under <code>opm.microphone</code>.</p>
 </blockquote>
 <h3 id="3-test-it-without-ovos">3. Test it without OVOS<a class="headerlink" href="#3-test-it-without-ovos" title="Permanent link">&para;</a></h3>
 <p><code>Microphone</code> is a plain dataclass with no messagebus connection, so a unit test needs no

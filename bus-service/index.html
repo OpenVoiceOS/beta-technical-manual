@@ -1973,7 +1973,7 @@
 </div>
 <details class="info">
 <summary>📐 Formal specification</summary>
-<p>The <code>{type, data, context}</code> envelope, the <code>source</code>/<code>destination</code> routing keys, the <code>forward</code>/<code>reply</code>/<code>response</code> derivations, and the session carrier that rides in every message are all normative. See <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md">OVOS-MSG-1 — Bus Message</a></strong>, <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md">OVOS-SESSION-1 — Session Carrier</a></strong>, <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md">OVOS-SESSION-2 — Session Lifecycle</a></strong>, and <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/bridge-1.md">OVOS-BRIDGE-1 — Bus Bridge &amp; Opaque Relay</a></strong> (how satellites relay messages across a <a href="../hivemind-agents/">HiveMind</a> mesh), plus the <a href="../architecture-specs/">spec index</a>. This page describes the reference implementation. Where it diverges from the spec, the spec wins.</p>
+<p>The <code>{type, data, context}</code> envelope, the <code>source</code>/<code>destination</code> routing keys, the <code>forward</code>/<code>reply</code>/<code>response</code> derivations, and the session carrier that rides in every message are all normative. See <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md">OVOS-MSG-1 — Bus Message</a></strong>, <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md">OVOS-SESSION-1 — Session Carrier</a></strong>, <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md">OVOS-SESSION-2 — Session Lifecycle</a></strong>, and <strong><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/bridge-1.md">OVOS-BRIDGE-1 — Bus Bridge &amp; Opaque Relay</a></strong> (how satellites relay messages across a <a href="../hivemind-agents/">HiveMind</a> mesh), plus the <a href="../architecture-specs/">spec index</a>. The sections below describe the reference implementation. Where it diverges from the spec, the spec wins.</p>
 </details>
 <p>The <strong>messagebus</strong> is the central nervous system of the OVOS platform. All services communicate by publishing and subscribing to typed <code>Message</code> objects through this central WebSocket broker.</p>
 <p><strong>In plain terms:</strong> every OVOS service (core, audio, listener, GUI) connects to one shared WebSocket. Whatever any service emits, every other service receives. There is no central router deciding who gets what. Services just listen for the message types they care about and ignore the rest.</p>
@@ -2075,11 +2075,6 @@ connect and take part with the same permissions as any other client.</p>
 <td>Opt-in perf flag: move outbound socket writes onto one dedicated daemon thread reading a bounded queue, instead of every emitting thread serializing on the socket's send lock. Ordering is unchanged; a send error surfaces in the sender thread's log rather than the caller's. Also settable via the <code>OVOS_BUS_ASYNC_SENDER</code> env var.</td>
 </tr>
 <tr>
-<td><code>local_echo_topics</code></td>
-<td><code>[]</code></td>
-<td>Opt-in perf flag (<a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/292"><code>ovos-bus-client#292</code></a>, not yet merged): a list of message types that, in addition to going out on the wire as usual, are delivered to this same process's own listeners immediately rather than waiting for the round trip back over the socket. Meant for hot handler-ack paths within one process (e.g. an intent dispatcher waiting on a same-process skill's ack). Each local delivery still happens exactly once — the wire copy carries a per-client marker that the client's own <code>on_message</code> recognizes and drops.</td>
-</tr>
-<tr>
 <td><code>max_msg_size</code></td>
 <td><code>25</code></td>
 <td>Max WebSocket frame size in megabytes.</td>
@@ -2109,8 +2104,8 @@ plugin such as <code>ovos-PHAL-plugin-system</code> is installed and enabled (se
   emits on this bus, so it carries the same authority. Like the bus, it ships bound to
   <code>127.0.0.1</code>. Widening <code>gui_websocket.host</code> to <code>0.0.0.0</code> (required for a remote
   display) exposes that unauthenticated socket to the whole network. Keep the loopback
-  default unless a remote display needs it, and re-check configs from older installs
-  that may still carry a <code>0.0.0.0</code> value.</li>
+  default unless a remote display needs it, and make sure your config does not
+  carry a <code>0.0.0.0</code> value.</li>
 </ul>
 <p>See <a href="../privacy-security/">Privacy &amp; Security</a> for the full trust model.</p>
 </div>
@@ -2396,10 +2391,10 @@ the bus over TLS.</p>
 <p>It is early/alpha and not the default: it does <strong>not</strong> terminate TLS and does not honour
 <code>websocket.max_msg_size</code> (it refuses to start when <code>websocket.ssl</code> is set), so serve
 <code>wss://</code> with the Tornado backend. The repo ships a benchmark (<code>benchmark/run_benchmark.py</code>,
-<code>--compare</code>) that pits Tornado, webrockets, and the Rust server against each other. Early
+<code>--compare</code>) that pits Tornado, webrockets, and the Rust server against each other. Its
 numbers put webrockets ahead at higher concurrency. On a stable install, stay on the
 default Tornado server unless profiling shows the bus is a bottleneck.</p>
-<p><strong>Known limitations of webrockets today:</strong> no TLS termination at all (see above).
+<p><strong>Known limitations of webrockets:</strong> no TLS termination at all (see above).
 <code>max_msg_size</code> is silently ignored rather than enforced, so an oversized frame is not
 rejected the way it would be on the Tornado backend. It also does not implement the
 <code>MessageBusEventHandler.on()</code> emitter hook that the Tornado backend exposes for embedding

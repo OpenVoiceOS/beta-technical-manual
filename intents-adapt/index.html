@@ -1855,7 +1855,7 @@ determine their intent.</p>
 They can have one or more lines listing synonyms or terms with the same meaning in the
 context of this skill. OVOS matches <em>any</em> of these keywords with the intent.</p>
 <blockquote>
-<p>Language directories are named with BCP-47 tags and compared case-insensitively, so <code>en-us</code> and <code>en-US</code> denote the same language (OVOS-INTENT-2 §3). The older split layout (<code>vocab/&lt;lang&gt;/</code>, <code>regex/&lt;lang&gt;/</code>, <code>dialog/&lt;lang&gt;/</code>) is still supported for legacy skills, but new skills should use a single <code>locale/&lt;lang&gt;/</code> folder per language.</p>
+<p>Language directories are named with BCP-47 tags and compared case-insensitively, so <code>en-us</code> and <code>en-US</code> denote the same language (OVOS-INTENT-2 §3). The legacy split layout (<code>vocab/&lt;lang&gt;/</code>, <code>regex/&lt;lang&gt;/</code>, <code>dialog/&lt;lang&gt;/</code>) also loads, but a skill you write should use a single <code>locale/&lt;lang&gt;/</code> folder per language.</p>
 </blockquote>
 <p>Consider a simple <code>Potato.voc</code>. Within this file we might include:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>potato
@@ -1922,8 +1922,7 @@ anything.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>message.data.get(&#39;Type&#39;)
 </span></code></pre></div>
 <h2 id="using-keyword-intents-in-a-skill">Using Keyword Intents in a Skill<a class="headerlink" href="#using-keyword-intents-in-a-skill" title="Permanent link">&para;</a></h2>
-<p>Now that we have a vocab and a regular expression defined, let's look at how to use these in a
-simple skill.</p>
+<p>This section uses the vocab and the regular expression above in a simple skill.</p>
 <p>For the following example we will use the two files we outlined above:</p>
 <ul>
 <li>
@@ -1933,7 +1932,7 @@ simple skill.</p>
 <p><code>type.rx</code></p>
 </li>
 </ul>
-<p>We will also add some new <code>.voc</code> files:</p>
+<p>Add these <code>.voc</code> files too:</p>
 <ul>
 <li>
 <p><code>Like.voc</code>: containing a single line "like"</p>
@@ -1987,7 +1986,7 @@ parameters that correspond with one of our <code>.voc</code> or <code>.rx</code>
 </blockquote>
 <p><em>Neither the <code>You</code> nor <code>I</code> keyword is found.</em></p>
 <h3 id="including-it-in-a-skill">Including it in a Skill<a class="headerlink" href="#including-it-in-a-skill" title="Permanent link">&para;</a></h3>
-<p>Now we can create our Potato Skill:</p>
+<p>Create the Potato Skill:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.intents</span> <span class="kn">import</span> <span class="n">IntentBuilder</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>

@@ -2021,7 +2021,7 @@ the string users put in their config:</p>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">[project]</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos-g2p-plugin-example&quot;</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-plugin-manager&gt;=0.5.0,&lt;1.0.0&quot;</span><span class="p">]</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-plugin-manager&gt;=0.5.0&quot;</span><span class="p">]</span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.g2p&quot;</span><span class="k">]</span>
 </span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">ovos-g2p-plugin-example</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos_g2p_plugin_example:MyG2P&quot;</span>
@@ -2033,8 +2033,8 @@ the string users put in their config:</p>
 plugin family: optional, and only worth adding once the plugin has settings worth advertising to
 installers and GUIs.</p>
 <blockquote>
-<p><strong>Backward compatibility</strong>: <code>ovos-plugin-manager</code> still loads legacy <code>ovos.plugin.g2p</code> entry
-points, but new plugins should register under <code>opm.g2p</code>.</p>
+<p><strong>Backward compatibility</strong>: <code>ovos-plugin-manager</code> loads legacy <code>ovos.plugin.g2p</code> entry
+points, but a plugin you write should register under <code>opm.g2p</code>.</p>
 </blockquote>
 <h3 id="2-test-it-without-ovos">2. Test it without OVOS<a class="headerlink" href="#2-test-it-without-ovos" title="Permanent link">&para;</a></h3>
 <p><code>Grapheme2PhonemePlugin</code> is a plain class with no messagebus connection, so a unit test needs
@@ -2077,16 +2077,16 @@ model file, an unreachable service) should raise from <code>__init__</code> or f
 calls; there is nothing analogous to <code>StreamingTTS</code>. Do not add one.</p>
 <h3 id="package-and-publish">Package and publish<a class="headerlink" href="#package-and-publish" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Pin the dependency version.</strong> Put a floor and a ceiling on <code>ovos-plugin-manager</code> in
-   <code>pyproject.toml</code>, for example <code>ovos-plugin-manager&gt;=0.5.0,&lt;1.0.0</code>.</li>
+<li><strong>Pin the dependency version.</strong> Put a floor on <code>ovos-plugin-manager</code> in
+   <code>pyproject.toml</code>, for example <code>ovos-plugin-manager&gt;=0.5.0</code>.</li>
 <li><strong>Install for local development.</strong> Run <code>pip install -e .</code> from the plugin's own repository, then
    confirm <code>find_g2p_plugins()</code> sees it, as in <a href="#3-verify-discovery">Verify discovery</a> above.</li>
 <li><strong>Publish to PyPI.</strong> OVOS deployments install plugins from PyPI, not from a git checkout, so a
    plugin needs a PyPI release before it can be installed by <code>pip install &lt;plugin-name&gt;</code> on a
    real deployment.</li>
-<li><strong>Remember this is alpha, Mark 1-era territory.</strong> As the top of this page explains, G2P only
+<li><strong>Remember this is alpha, Mark 1-era territory.</strong> As the introduction explains, G2P only
    matters if something consumes its viseme output for lip-sync. Confirm that use case exists
-   before investing in a new plugin; most new TTS voices need no G2P plugin at all.</li>
+   before investing in a new plugin. Most TTS voices need no G2P plugin at all.</li>
 </ol>
 <hr />
 <p><strong>Read next:</strong> <a href="../ocp-audio-plugin/">OCP Audio Plugin</a>

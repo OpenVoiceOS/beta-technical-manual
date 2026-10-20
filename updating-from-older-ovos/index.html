@@ -1218,7 +1218,7 @@
         <li class="md-nav__item">
   <a href="#coming-next" class="md-nav__link">
     <span class="md-ellipsis">
-      Coming next
+      Unreleased work
     </span>
   </a>
   
@@ -1753,7 +1753,7 @@
         <li class="md-nav__item">
   <a href="#coming-next" class="md-nav__link">
     <span class="md-ellipsis">
-      Coming next
+      Unreleased work
     </span>
   </a>
   
@@ -1788,19 +1788,18 @@
 
 <h1 id="updating-from-older-ovos">Updating From Older OVOS<a class="headerlink" href="#updating-from-older-ovos" title="Permanent link">&para;</a></h1>
 <h2 id="in-a-nutshell">In a nutshell<a class="headerlink" href="#in-a-nutshell" title="Permanent link">&para;</a></h2>
-<p>This page is the upgrade companion for people who already run OVOS and need
-to move to a newer version. It is not for people new to OVOS
+<p>Use this guide when you already run OVOS and must move to a later version. It is not for people new to OVOS
 (see <a href="../coming-from-mycroft/">Coming From Mycroft</a>) and it is not for
 porting Mycroft skill code (see <a href="../migrating-from-mycroft/">Migrating From Mycroft</a>).
 It is for a deployer or developer who has an OVOS stack from some past date
-and wants to know exactly what changed between then and now.</p>
+and wants to know exactly what changed since that date.</p>
 <p>Use it like this:</p>
 <ol>
 <li>Find your role in the table below: skill maintainer, plugin maintainer,
    device or fleet operator, or remote bus client (HiveMind and similar),
    and open that audience page.</li>
 <li>On that page, read from the top. Entries are in date order. Start at
-   the version you are currently running — not sure what that is? See
+   the version that you run — not sure what that is? See
    <a href="../release-channels/#checking-what-you-have-installed">Checking what you have installed</a> —
    and read forward to your target version.</li>
 <li>For the largest breaks, open the linked migration page in the
@@ -1850,12 +1849,12 @@ and wants to know exactly what changed between then and now.</p>
 </table>
 <div class="admonition tip">
 <p class="admonition-title">What is coming, not what shipped</p>
-<p>This page covers released changes only. Open pull requests and the expected next
+<p>This guide covers released changes only. Open pull requests and the expected next
 breaking changes live on <a href="../upcoming-changes/">Upcoming Changes</a>.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Supporting several versions from one codebase</p>
-<p>This page tells you what changed. If you maintain a skill or plugin that must run on
+<p>This guide tells you what changed. If you maintain a skill or plugin that must run on
 both sides of a break, see <a href="../version-compat-guide/">Version-Compatible Skills &amp; Plugins</a>
 for the sanctioned shim patterns.</p>
 </div>
@@ -1889,7 +1888,7 @@ release date after the commit is given instead.</p>
 <h2 id="upgrade-in-place-or-start-fresh">Upgrade in place, or start fresh?<a class="headerlink" href="#upgrade-in-place-or-start-fresh" title="Permanent link">&para;</a></h2>
 <p>Before working through anything below, decide which path you are on. As a rule of thumb:</p>
 <ul>
-<li><strong>Upgrade in place</strong> when your install is within roughly the current stable window — none
+<li><strong>Upgrade in place</strong> when your install is within roughly the stable release window — none
   or one of the big-ticket migrations below happened after your install date. Read your
   audience page forward from your version and you are done.</li>
 <li><strong>Back up and reinstall</strong> when two or more big-ticket migrations have landed since your
@@ -1898,8 +1897,8 @@ release date after the commit is given instead.</p>
   stacked per-repo breaks in place is slower and more error-prone than a clean
   <a href="../ovos-installer/">ovos-installer</a> run. Back up first (<a href="../backup-restore/">Backup &amp; Restore</a>),
   reinstall, then restore your <code>mycroft.conf</code> <strong>selectively</strong> — re-add your customizations to
-  the fresh file rather than copying the old file wholesale, since several old keys are
-  silently ignored now (see <a href="../updating-deployers/">Updating Deployers</a>) — and reinstall your
+  the fresh file rather than copying the old file wholesale, since the latest release silently
+  ignores several old keys (see <a href="../updating-deployers/">Updating Deployers</a>) — and reinstall your
   skills from PyPI rather than restoring old checkouts.</li>
 </ul>
 <h2 id="big-ticket-migrations">Big-ticket migrations<a class="headerlink" href="#big-ticket-migrations" title="Permanent link">&para;</a></h2>
@@ -2023,18 +2022,11 @@ classified as a "user" layer, so <code>disable_user_config</code> no longer drop
 does a one-time migration of the old <code>web_cache.json</code> (plugin-written location data, etc.) into
 <code>runtime.conf</code>, renaming the old file to <code>web_cache.json.migrated</code> afterward.</p>
 <p><code>ovos-core</code>'s opt-in intent-metrics upload (<code>open_data.intent_urls</code>, empty/disabled by default)
-now includes <code>pipeline</code> (the matcher ids from <code>session.pipeline</code> that produced the match) and
+includes <code>pipeline</code> (the matcher ids from <code>session.pipeline</code> that produced the match) and
 <code>core_version</code> in its payload (<code>ovos-core</code> <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/689" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #689">#689</a>, first tag <code>3.0.12a1</code>).</p>
-<h2 id="coming-next">Coming next<a class="headerlink" href="#coming-next" title="Permanent link">&para;</a></h2>
-<p>The following work is visible on unmerged branches only and is <strong>not
-released</strong>. It is included so you know it is coming, not because it is
-safe to build against yet.</p>
-<ul>
-<li>Unmerged <code>ovos-workshop</code> branches <code>feat/deprecate-ocp-skills</code>,
-  <code>feat/remove-skill-homescreens</code>, <code>feat/gameskill-and-ocp-deprecation</code>:
-  OCP-skill-base-class and skill-homescreen removal has not landed as of
-  this page's sources. Do not treat as shipped.</li>
-</ul>
+<h2 id="coming-next">Unreleased work<a class="headerlink" href="#coming-next" title="Permanent link">&para;</a></h2>
+<p>Unmerged work is not released, and you must not build against it. Open pull requests and
+expected breaking changes are listed on <a href="../upcoming-changes/">Upcoming Changes</a>.</p>
 <hr />
 <h2 id="verification-gaps">Verification gaps<a class="headerlink" href="#verification-gaps" title="Permanent link">&para;</a></h2>
 <p><code>ovos-core</code> is a fork of <code>mycroft-core</code> and carries that project's full

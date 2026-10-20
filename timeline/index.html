@@ -1680,7 +1680,7 @@
 </blockquote>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>OVOS did not appear out of nowhere; it grew out of an earlier voice assistant called Mycroft, and other projects branched off along the way. This page is the family tree showing where everything came from and how the pieces relate. It is background reading for anyone curious about the project's history. See the <a href="../glossary/">Glossary</a>.</p>
+<p>OVOS did not appear out of nowhere; it grew out of an earlier voice assistant called Mycroft, and other projects branched off along the way. The family tree below shows where everything came from and how the pieces relate. It is background reading for anyone curious about the project's history. See the <a href="../glossary/">Glossary</a>.</p>
 </div>
 <h2 id="family-tree">Family Tree<a class="headerlink" href="#family-tree" title="Permanent link">&para;</a></h2>
 <p><img alt="Fork tree from mycroft-core: one line goes through mycroft-lib to ovos-core (marked &quot;you are here&quot;), a separate mycroft-dinkum branch that was abandoned, and a neon-core branch that was recreated on mycroft-lib before later moving to ovos-core" src="https://github.com/OpenVoiceOS/ovos-technical-manual/assets/33701864/95db65ea-0aff-49f3-bd80-85919a3356e5" /></p>
@@ -2050,7 +2050,6 @@
 <li>Jul 2025 - <a href="https://blog.openvoiceos.org/posts/2025-07-22-ovos-transcription-validator-plugin">Transcription Validator</a> utterance plugin introduced, filtering STT nonsense before intent matching</li>
 <li>Oct 2025 - <code>ovos-core</code> reaches the <strong>2.x</strong> line (<code>2.1.0</code>), a major release formalizing the multi-intent-pipeline architecture.</li>
 <li>Oct 2025 - <a href="https://blog.openvoiceos.org/posts/2025-10-06-phoonnx">phoonnx</a> introduced: OVOS's own ONNX-based multilingual neural TTS engine and the recommended on-device voice</li>
-<li>Oct 2025 - OpenVoiceOS <a href="https://blog.openvoiceos.org/posts/2025-10-20-ngi">selected for an NGI Zero Commons Fund grant</a> by the <a href="https://nlnet.nl/project/OpenVoiceOS/">NLnet Foundation</a>, funding the road to a first stable version, onboarding, language support, and documentation</li>
 <li>Nov 2025 - <a href="https://blog.openvoiceos.org/posts/2025-11-03-precise-onnx">Precise wake-word engine ported to ONNX</a>, dropping the tensorflow dependency</li>
 <li>Dec 2025 - Speech support for minority languages expands: <a href="https://blog.openvoiceos.org/posts/2025-12-09-ast">TTS voices for Asturian and Aragonese</a> and the <a href="https://blog.openvoiceos.org/posts/2025-12-14-barranquenho">first phonemizer for Barranquenho</a></li>
 <li>??? 2025 - OVOS prototype selected as a demonstrator of the <a href="http://web.archive.org/web/20251008035516/https://proyectoilenia.es/">ILENIA project</a>: an open voice assistant in all co-official languages of Spain, runnable on a PC or Raspberry Pi</li>
@@ -2067,7 +2066,7 @@
 <li>Mar 2026 - <a href="https://github.com/OpenVoiceOS/ovos-pydantic-models">ovos-pydantic-models</a> reaches its first tagged release, packaging the ecosystem-wide data structures first committed in October 2025.</li>
 <li>Mar 2026 - <code>ovos-bus-client</code> version <strong>1.5.0</strong> released.</li>
 <li>May 2026 - <a href="https://github.com/OpenVoiceOS/architecture">architecture</a> repo introduced: formal written specifications for the OVOS protocols, with <a href="https://github.com/OpenVoiceOS/ovos-spec-tools">ovos-spec-tools</a> as their dependency-free reference implementation</li>
-<li>Jun 2026 - <strong>MediaProvider plugin family</strong> introduced (bandcamp, youtube, tunein, somafm, pyradios, soundcloud, spotify, news, mass) as repositories, intended to eventually supersede the legacy OCP media skills; the in-process loading is not yet wired into <code>ovos-media</code>, see <a href="../ovos-media/#mediaprovider-plugins-replace-ocp-skills">ovos-media</a></li>
+<li>Jun 2026 - <strong>MediaProvider plugin family</strong> introduced (bandcamp, youtube, tunein, somafm, pyradios, soundcloud, spotify, news, mass) as repositories, intended to supersede the legacy OCP media skills, see <a href="../ovos-media/#mediaprovider-plugins-replace-ocp-skills">ovos-media</a></li>
 <li>Jun 2026 - <a href="https://github.com/OpenVoiceOS/ovos-test-harness">ovos-test-harness</a> introduced: an executable conformance suite proving the running stack against the formal specs, covering every published spec</li>
 <li>Jul 2026 - OVOS speech servers gain <a href="https://blog.openvoiceos.org/posts/2026-07-15-mcp-utcp-speech-servers">UTCP/MCP endpoints</a>, callable from any AI agent</li>
 <li>Jul 2026 - Bus topics migrate to the canonical <code>ovos.*</code> spec namespace, with transparent bridging so legacy and spec components interoperate during the transition — see <a href="../bus-namespace-migration/">Bus namespace migration</a></li>

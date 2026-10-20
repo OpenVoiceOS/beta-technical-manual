@@ -1565,10 +1565,10 @@
 <p class="admonition-title">In a nutshell</p>
 <p>Making OVOS truly work in a given language takes more than translating menu text. It
 needs translated skill phrases, a speech-to-text engine that understands that language,
-and a text-to-speech voice that can speak it. This page explains the current state of
+and a text-to-speech voice that can speak it. The sections below cover the state of
 language support, how to get a working setup quickly with the <code>ovos-config autoconfigure</code>
 command, and how you can help improve your language by translating phrases or testing
-real speech. If you just want it running now, jump to
+real speech. For a quick setup, jump to
 <a href="#auto-configuration">Auto-Configuration</a>. See also
 <a href="../lang-customization/">Customizing Language Resources</a> and the <a href="../glossary/">Glossary</a>.</p>
 </div>
@@ -1576,9 +1576,7 @@ real speech. If you just want it running now, jump to
 recognition, speech-to-text (<a href="../stt-plugins/">STT</a>), text-to-speech (<a href="../tts-plugins/">TTS</a>),
 and skill dialogs. However, full language support requires more than translation of interface
 text.</p>
-<p>This document outlines the current state of language support, known limitations, and
-how contributors can help improve multilingual performance in OVOS.</p>
-<p><strong>Want it working now?</strong> Jump to <a href="#auto-configuration">Auto-Configuration</a>.
+<p><strong>Want a quick setup?</strong> Jump to <a href="#auto-configuration">Auto-Configuration</a>.
 <code>ovos-config autoconfigure -l &lt;lang&gt; ...</code> sets up recommended STT/TTS plugins in one command.
 <strong>Want to make your language work better?</strong> See <a href="#how-to-improve-language-support">How to Improve Language Support</a>.</p>
 <p>Related pages:</p>
@@ -1713,12 +1711,12 @@ repositories. It replaces the retired third-party <em>GitLocalize</em> service. 
 <h3 id="translation-progress">Translation Progress<a class="headerlink" href="#translation-progress" title="Permanent link">&para;</a></h3>
 <p>OVOS Localize scans skill data and exports a language × skill coverage matrix to
 <a href="https://openvoiceos.github.io/ovos-localize/data/coverage.json"><code>data/coverage.json</code></a>,
-refreshed alongside the translation app. This is the current source of translation progress.</p>
+refreshed alongside the translation app. It is the source of translation progress.</p>
 <blockquote>
-<p>Warning: the older <a href="https://github.com/OpenVoiceOS/lang-support-tracker">lang-support-tracker</a>
+<p>Warning: the <a href="https://github.com/OpenVoiceOS/lang-support-tracker">lang-support-tracker</a>
 is a <strong>frozen GitLocalize-era snapshot</strong> (superseded by OVOS Localize). Its percentages
-are no longer updated and should not be treated as current.</p>
-<p>Note: if your language is missing from <a href="https://openvoiceos.github.io/ovos-localize/">OVOS Localize</a>, <a href="https://github.com/OpenVoiceOS/ovos-localize/issues">open an issue on ovos-localize</a> to request it. Currently, languages must be added manually.</p>
+are not updated. Do not use them.</p>
+<p>Note: if your language is missing from <a href="https://openvoiceos.github.io/ovos-localize/">OVOS Localize</a>, <a href="https://github.com/OpenVoiceOS/ovos-localize/issues">open an issue on ovos-localize</a> to request it. A maintainer adds each language manually.</p>
 </blockquote>
 <p>See <strong><a href="../ovos-localize-tutorial/">Contribute Translations with OVOS Localize</a></strong> for the step-by-step translator guide.</p>
 <h3 id="open-data-ml-datasets">Open-data ML datasets<a class="headerlink" href="#open-data-ml-datasets" title="Permanent link">&para;</a></h3>
@@ -1850,7 +1848,7 @@ parser, side by side for the original, longest-supported languages).</p>
 and offline TTS from <a href="../tts-plugins-reference/#ovos-tts-plugin-phoonnx"><code>ovos-tts-plugin-phoonnx</code></a>
 wherever a recommendation is bundled. Several regional variants, including <strong>EN-GB</strong>,
 <strong>PT-BR</strong>, <strong>AR-SA</strong>, and three of the four Catalan variants, ship a TTS voice but no
-bundled offline STT recommendation yet. A language absent from both tables, such as
+bundled offline STT recommendation. A language absent from both tables, such as
 Japanese, has no bundled recommendation at all: that is an honest gap to fill, not a
 deliberate exclusion. See <a href="../lang-support-tables/">Language Support Tables</a> for the
 exact per-language breakdown.</p>
