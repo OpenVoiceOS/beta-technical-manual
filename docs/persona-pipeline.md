@@ -335,10 +335,10 @@ The Persona Service listens for these bus events:
 | `persona:list` | List available personas |
 | `persona:check` | Report which persona is active |
 | `persona:release` | Deactivate the active persona |
-| `recognizer_loop:utterance` | Utterance routed in from the pipeline while a persona is active |
-| `speak` | Persona response delivered back to the user |
 | `ovos.persona.query` → `ovos.persona.answer` | Out-of-band, stateless Q&A to a **named** persona (OVOS-PERSONA-1 §8.5). Bypasses the pipeline and session; never touches `session.persona_id` |
 | `ovos.persona.list` → `ovos.persona.list.response` | Out-of-band persona discovery (§8.7) |
+
+The service records each exchange that it answers for `persona:query`, in the memory of the persona that answered. It does not listen to `recognizer_loop:utterance` or `speak`.
 
 Responses use these dialog keys: `activated_persona`, `release_persona`, `active_persona`, `no_active_persona`, `unknown_persona`, `no_personas`, `list_personas`, `persona_error`.
 

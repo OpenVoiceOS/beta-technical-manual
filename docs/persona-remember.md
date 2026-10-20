@@ -34,13 +34,13 @@ The examples use the public demo server `https://llama.smartgic.io/v1`. Change `
         "system_prompt": "You are a home assistant. Answer in at most fifteen words."
       },
       "memory_module": "ovos-agents-short-term-memory-plugin",
-      "ovos-agents-short-term-memory-plugin": {"max_history": 7}
+      "ovos-agents-short-term-memory-plugin": {"max_history": 6}
     }
     ```
 
-    `max_history` counts messages, not exchanges. The question that the persona is answering takes one slot of the window. A value of `7` gives the model the last three exchanges and the new question. An even value, such as `6`, starts the history with an answer that has no question.
+    `max_history` counts messages, not exchanges. The persona stores each exchange as a question and an answer. A value of `6` gives the model the last three exchanges and the new question. When the limit cuts an exchange in two, the persona drops the answer that has no question.
 
-3. Save this script as `remember.py` and run it from the directory that holds `personas`. The script sends the two bus events that `ovos-core` sends around each answer. The persona records the history from these events.
+3. Save this script as `remember.py` and run it from the directory that holds `personas`. The script sends the `persona:query` message that `ovos-core` sends when the persona pipeline matches an utterance. The persona records each exchange when it has finished the answer.
 
     ```python
     from ovos_bus_client.message import Message
@@ -50,17 +50,16 @@ The examples use the public demo server `https://llama.smartgic.io/v1`. Change `
 
     bus = FakeBus()
     svc = PersonaService(bus=bus, config={"personas_path": "personas"})
+    spoken = []
+    bus.on("speak", lambda msg: spoken.append(msg.data["utterance"]))
 
 
     def say(text, device):
         sess = Session(device)
         sess.persona_id = "helper"
-        ctx = {"session": sess.serialize()}
-        # ovos-core emits these two events around every answer; the persona records both
-        bus.emit(Message("recognizer_loop:utterance", {"utterances": [text]}, ctx))
-        answer = " ".join(svc.query(text, "helper", sess))
-        bus.emit(Message("speak", {"utterance": answer}, ctx))
-        print(f"{device}> {text}\n  {answer}")
+        spoken.clear()
+        bus.emit(Message("persona:query", {"utterance": text}, {"session": sess.serialize()}))
+        print(f"{device}> {text}\n  {' '.join(spoken)}")
 
 
     say("My name is Rita. I parked on level 3.", "living-room")
@@ -75,7 +74,7 @@ Output of a run:
 
 ```text
 living-room> My name is Rita. I parked on level 3.
-  Hello Rita, your car is parked on Level 3, parking attendant will assist you soon.
+  Hello Rita, your car is parked on Level 3, parking spot 12 if needed.
 living-room> Which level did I park on? Answer with the number only.
   3
 garage> Where did I park? If you do not know, say UNKNOWN.
@@ -85,7 +84,7 @@ living-room> Tell me one fact about the weather.
 living-room> Tell me one fact about music.
   The Beatles released their iconic album "Sgt. Pepper's Lonely Hearts Club Band" in 1967.
 living-room> Tell me one fact about cooking.
-  Boiling water is a crucial step for cooking pasta, typically at 212°F (100°C).
+  Boiling water is a great way to cook eggs, making them easier to peel.
 living-room> Where did I park? If you do not know, say UNKNOWN.
   UNKNOWN
 ```
