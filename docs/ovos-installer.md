@@ -42,15 +42,43 @@ flowchart TD
     installer is the supported route meanwhile, and the recommended path on the Pi and
     everywhere else.
 
-    **This runs over SSH in a terminal, not an app.** There's no phone app or setup wizard with a
-    graphical pairing flow. You type commands into a terminal, usually over SSH into a headless
-    device. If you've never used SSH before, budget some extra time to get comfortable with it,
-    or consider the [raspOVOS](install-raspovos.md) image (see its status note above) which boots
-    into a working assistant with no SSH step.
+    **This runs in a terminal, not an app.** There's no phone app. You type commands into a
+    terminal, usually over SSH into a headless device. The [web setup wizard](#set-up-from-the-web-wizard)
+    prepares the command for you, but you still paste it into the device's terminal. If you've
+    never used SSH before, budget some extra time to get comfortable with it, or consider the
+    [raspOVOS](install-raspovos.md) image (see its status note above) which boots into a working
+    assistant with no SSH step.
 
     **Exotic hardware.** Some hardware (like ReSpeaker microphones or certain audio HATs) may
     require extra configuration. The installer aims for wide compatibility, but specialized
     setups might need some manual intervention.
+
+---
+
+## Set up from the web wizard
+
+[start.openvoiceos.org](https://start.openvoiceos.org/) is a web page that prepares the
+installer for you. Use it from any browser, for example on your laptop.
+
+1. Open [start.openvoiceos.org](https://start.openvoiceos.org/).
+2. Choose your language, your device and your preferences.
+3. Follow the preparation steps for your device.
+4. Copy the install command that the wizard gives you, and paste it into the device's terminal.
+5. Keep the wizard open. It shows the installation progress, then helps you check your speaker
+   and microphone.
+
+The wizard makes these choices for you:
+
+- It installs from the **alpha** channel. It does not offer a channel choice.
+- On a Raspberry Pi, a Mark 1, a Mark II or a DevKit, it turns on
+  [Raspberry Pi tuning](ovos-installer-scenarios.md#raspberry-pi-tuning-if-applicable).
+- It asks whether to send the one-time install statistics (`share_telemetry`). The switch
+  starts on, and you can turn it off before you continue. Ongoing usage telemetry
+  (`share_usage_telemetry`) stays off.
+
+The wizard does not show every installer option. To choose a channel or another option it does
+not offer, run the installer yourself as the next section shows. To change your setup or to
+reinstall, open the wizard again.
 
 ---
 
@@ -184,11 +212,32 @@ OVOS is now installed and ready to use. Try saying things like:
     word first won't be heard. See [Wake-word plugins](wake-word-plugins.md)
     if you want to change it.
 
+### Install more packages later
+
+On a `virtualenv` install, the installer writes a `pip.conf` file into the virtual environment.
+It points pip at a copy of the constraints file of your release channel. Every run of that
+environment's pip uses it, with no activation and no extra flag:
+
+```bash
+~/.venvs/ovos/bin/pip install ovos-skill-application-launcher
+```
+
+pip then installs versions that match the channel the device was installed from. Without the
+constraints, pip can install an older release of a skill that downgrades `ovos-workshop` or
+`ovos-bus-client` under a running `ovos-core`, which then stops working.
+
+At the end of a `virtualenv` install, the installer runs `uv pip check`. If two installed
+packages disagree about their dependencies, the installer prints a warning that starts with
+"Some installed packages disagree about their dependencies." and names each package. The
+install still finishes. Report the warning when you ask for help, because a package that cannot
+import the version it was given can make a skill or a pipeline plugin disappear with no log
+line.
+
 ---
 
 ## Post-install tuning
 
-The installer picks sensible defaults, but the best speech plugins vary by language and hardware. After the initial install, review the selected plugins and run `ovos-config autoconfigure --help` to see the language-aware reconfiguration options. Note that the default STT/TTS plugins talk to public community-run servers rather than running locally. See [Privacy & Security](privacy-security.md#network-surface-of-a-default-install) for exactly what that means and how to switch to an offline or self-hosted plugin.
+The installer picks sensible defaults, but the best speech plugins vary by language and hardware. After the initial install, review the selected plugins and run `ovos-config autoconfigure --help` to see the language-aware reconfiguration options. Note that the default STT/TTS plugins talk to public community-run servers rather than running locally, unless you chose `local` on the [Speech](ovos-installer-scenarios.md#speech-if-applicable) screen. See [Privacy & Security](privacy-security.md#network-surface-of-a-default-install) for exactly what that means and how to switch to an offline or self-hosted plugin.
 
 The recording below shows this post-install tuning step in action: the operator runs
 `ovos-config autoconfigure` in a terminal, the tool prints the recommended STT/TTS plugins
@@ -231,6 +280,7 @@ Key options:
 | `raspberry_pi_tuning` | Enable Raspberry Pi performance tuning (includes an overclock prompt) |
 | `share_telemetry` | One-time install report, sent once when the install finishes ([details](ovos-installer-scenarios.md#anonymous-telemetry)) |
 | `share_usage_telemetry` | Configures the *installed, running* assistant to keep reporting intent-matching data afterwards. Not a one-time report ([details](ovos-installer-scenarios.md#anonymous-telemetry)) |
+| `speech_engine` | Optional. `public` (the default) uses the community servers. `local` runs speech on the device, with the public servers as a fallback. See [Speech](ovos-installer-scenarios.md#speech-if-applicable) for the requirements |
 
 All of `uninstall`, `method`, `channel`, `profile`, `features`, `raspberry_pi_tuning`,
 `share_telemetry`, and `share_usage_telemetry` are **required**. The installer

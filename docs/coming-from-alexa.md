@@ -30,13 +30,16 @@
 
 ## What setup actually looks like
 
-There's no pairing screen or app-based wizard. You either:
+There's no pairing screen or phone app. You either:
 
 1. Flash the [RaspOVOS](install-raspovos.md) image to an SD card and boot a Raspberry Pi with
    it. This is the closest thing to "unbox and go" that exists today.
 2. Run the [ovos-installer](ovos-installer.md) against an existing Linux install (Raspberry Pi
    OS or a regular desktop or laptop). This is a guided, menu-driven wizard, but you run it from
-   a terminal, typically over SSH if the device is headless.
+   a terminal, typically over SSH if the device is headless. The web wizard at
+   [start.openvoiceos.org](https://start.openvoiceos.org/) prepares the install command in
+   your browser and shows the progress. You still paste the command into the device's
+   terminal. See [Set up from the web wizard](ovos-installer.md#set-up-from-the-web-wizard).
 
 If you've never used SSH before, budget extra time for that step. Or use the RaspOVOS image,
 which needs none of it.
