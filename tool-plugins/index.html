@@ -1627,7 +1627,7 @@ callers do not have to know the name.</p>
 <p>All three loaders in the org (<code>ovos-persona-server</code>, <code>ovos-PHAL-plugin-tools</code>,
 <code>ovos-agentic-loop</code>) construct a toolbox as <code>cls(config=..., bus=bus)</code>, and every
 shipped toolbox accepts <code>__init__(self, config=None, bus=None)</code>. Plugins own their
-own <code>toolbox_id</code>; no loader passes one. Write new toolboxes with that signature.</p>
+own <code>toolbox_id</code>; no loader passes one. Write your toolbox with that signature.</p>
 </div>
 <p><code>ToolBox.__init__</code> calls <code>discover_tools()</code> immediately to populate <code>self.tools</code>, and <code>bind(bus)</code>
 registers the messagebus handlers described below. The full authoring guide with more
@@ -1863,8 +1863,8 @@ into the <code>ToolBox</code> interface, so a persona can call it like any nativ
 </tr>
 </tbody>
 </table>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-tool-adapters<span class="o">[</span>mcp<span class="o">]</span><span class="w">     </span><span class="c1"># for ovos-mcp-toolbox</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-tool-adapters<span class="o">[</span>utcp<span class="o">]</span><span class="w">    </span><span class="c1"># for ovos-utcp-toolbox</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s1">&#39;ovos-tool-adapters[mcp]&#39;</span><span class="w">     </span><span class="c1"># for ovos-mcp-toolbox</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s1">&#39;ovos-tool-adapters[utcp]&#39;</span><span class="w">    </span><span class="c1"># for ovos-utcp-toolbox</span>
 </span></code></pre></div>
 <p>Each takes its own config section, keyed by plugin name <strong>inside the loop's section</strong>, beside
 <code>toolboxes</code>. The loop passes <code>config["&lt;plugin name&gt;"]</code> from its own section to each toolbox, so a
@@ -1958,9 +1958,8 @@ own OpenAI-compatible server is enough to exercise the whole path — server dis
 model requests one, caller or server executes it — without a GPU:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>llama-server<span class="w"> </span>-m<span class="w"> </span>Qwen3-0.6B-Q4_K_M.gguf<span class="w"> </span>--jinja<span class="w"> </span>-c<span class="w"> </span><span class="m">8192</span>
 </span></code></pre></div>
-<p>Qwen3-0.6B at Q4_K_M quantization is a roughly 380 MB download. <code>llama.cpp</code> builds b7170 and later
-enable the chat template by default, and <code>--jinja</code> above asks for it explicitly, which keeps
-the command working on a build that does not. Where the template is off, the server produces no
+<p>Qwen3-0.6B at Q4_K_M quantization is a roughly 380 MB download. The <code>--jinja</code> flag turns on the
+model's chat template. Where the template is off, the server produces no
 <code>tool_calls</code> at all, and every tool-calling test degrades into an ordinary plain-text
 conversation instead of failing loudly.</p>
 <p>Point a persona at the running server with the OpenAI-compatible chat engine:</p>
@@ -1978,7 +1977,7 @@ different port (<code>llama-server --port 8081</code> and adjust <code>api_url</
 <div class="admonition warning">
 <p class="admonition-title">Entry-point name vs. package name</p>
 <p>The entry point is <strong><code>ovos-chat-openai-plugin</code></strong>, not the package name
-(<code>ovos-openai-plugin</code>, <code>pip install ovos-openai-plugin</code>). Writing the package name into
+(<code>ovos-openai-plugin</code>, <code>pip install --pre ovos-openai-plugin</code>). Writing the package name into
 <code>handlers</code> instead of the entry-point name raises <code>ImportError: 'ovos-openai-plugin' not
 installed</code> — which reads like the package genuinely isn't installed, when the actual problem
 is the wrong key.</p>

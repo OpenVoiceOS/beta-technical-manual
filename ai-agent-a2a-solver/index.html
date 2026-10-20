@@ -1419,42 +1419,36 @@
 </tbody>
 </table>
 <h2 id="which-agents-it-can-reach">Which agents it can reach<a class="headerlink" href="#which-agents-it-can-reach" title="Permanent link">&para;</a></h2>
-<p>The released plugin, <code>ovos-a2a-solver-plugin</code> 0.0.2a3, uses an early draft of A2A:</p>
-<ul>
-<li>It reads the agent card from <code>/.well-known/agent.json</code>.</li>
-<li>It sends the JSON-RPC method <code>tasks/send</code>, or <code>tasks/sendSubscribe</code> for streaming.</li>
-<li>It posts to <code>agent_url</code> without a slash at the end.</li>
-</ul>
-<p>An agent that is built on <code>a2a-sdk</code> 1.x does not accept <code>tasks/send</code>. This includes the OVOS persona server from <a href="../ai-agent-a2a-server/">Talk to an OVOS persona over A2A</a>. With the persona server as the remote agent, the persona gives no answer, and the log shows:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>A2AChatEngine: task failed: Redirect response &#39;307 Temporary Redirect&#39; for url &#39;http://localhost:8337/a2a&#39;
+<p>The plugin uses the <code>a2a-sdk</code> client. It reads the agent card from <code>/.well-known/agent-card.json</code> under <code>agent_url</code>, and it uses the transport that the card names. It speaks A2A 1.0 and A2A 0.3. An agent that publishes only <code>/.well-known/agent.json</code>, the path of A2A 0.2, is not supported.</p>
+<p>The OVOS persona server from <a href="../ai-agent-a2a-server/">Talk to an OVOS persona over A2A</a> is a valid remote agent. Set <code>agent_url</code> to the value of its <code>--a2a-base-url</code> flag, for example <code>http://localhost:8337/a2a</code>. A persona that sent "what is the speed of light?" to a persona server with a RiveScript persona gave this answer:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Are such questions much on your mind?
 </span></code></pre></div>
-<p>The same endpoint answers <code>tasks/send</code> with:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span><span class="nt">&quot;error&quot;</span><span class="p">:{</span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="mi">-32601</span><span class="p">,</span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;Method not found&quot;</span><span class="p">},</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;jsonrpc&quot;</span><span class="p">:</span><span class="s2">&quot;2.0&quot;</span><span class="p">}</span>
-</span></code></pre></div>
+<p>The plugin sends only the newest user message. The remote agent keeps the conversation for each OVOS session.</p>
 <h2 id="if-it-fails">If it fails<a class="headerlink" href="#if-it-fails" title="Permanent link">&para;</a></h2>
+<p>The persona speaks one line of its error dialog when the remote agent cannot answer. The log line that starts with <code>A2AChatEngine: task failed</code> gives the cause.</p>
 <table>
 <thead>
 <tr>
-<th>What you see</th>
+<th>What you see in the log</th>
 <th>Cause</th>
 <th>What to do</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>produced no answer: no handler in its chain returned a response</code></td>
-<td>The remote agent rejected the call</td>
-<td>Read the log line that starts with <code>A2AChatEngine: task failed</code>.</td>
+<td><code>Network communication error fetching agent card</code></td>
+<td>The agent is not running, or <code>agent_url</code> is wrong</td>
+<td>Make sure that <code>&lt;agent_url&gt;/.well-known/agent-card.json</code> answers.</td>
 </tr>
 <tr>
-<td><code>-32601 Method not found</code></td>
-<td>The agent does not accept <code>tasks/send</code></td>
-<td>Use an agent that accepts the early A2A method names.</td>
+<td><code>Client Request timed out</code></td>
+<td>The agent took longer than <code>timeout</code></td>
+<td>Increase <code>timeout</code>.</td>
 </tr>
 <tr>
-<td><code>307 Temporary Redirect</code></td>
-<td>The agent serves its endpoint at a URL that ends with <code>/</code></td>
-<td>Use an agent that accepts the URL without the slash.</td>
+<td><code>A2A task ended in TASK_STATE_FAILED</code></td>
+<td>The agent failed the task</td>
+<td>Read the log of the agent.</td>
 </tr>
 </tbody>
 </table>

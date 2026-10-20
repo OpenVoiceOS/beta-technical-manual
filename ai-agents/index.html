@@ -1333,14 +1333,14 @@
 <thead>
 <tr>
 <th>What you can do</th>
-<th>Story</th>
+<th>Task</th>
 <th>Component</th>
 <th>Component docs</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Transcribe speech from Claude Code, Claude Desktop or any MCP or UTCP agent</td>
+<td>Transcribe speech from Claude Code, Claude Desktop, opencode, Mistral Vibe or any MCP or UTCP agent</td>
 <td><a href="../ai-agent-transcribe/">Transcribe audio from an AI agent</a></td>
 <td><code>ovos-stt-server</code></td>
 <td><a href="https://github.com/OpenVoiceOS/ovos-stt-server#ai-agent-integration">AI agent integration</a></td>
@@ -1403,7 +1403,7 @@
 </table>
 <h2 id="the-three-protocols">The three protocols<a class="headerlink" href="#the-three-protocols" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>MCP</strong> (Model Context Protocol) lets an AI assistant, such as Claude Code or Claude Desktop, find and call the tools of a server.</li>
+<li><strong>MCP</strong> (Model Context Protocol) lets an AI assistant, such as Claude Code, Claude Desktop, opencode or Mistral Vibe, find and call the tools of a server.</li>
 <li><strong>UTCP</strong> (Universal Tool Calling Protocol) gives an agent a JSON manual at <code>GET /utcp</code>. The manual tells the agent how to call the server's own HTTP endpoints, so no wrapper process is necessary.</li>
 <li><strong>A2A</strong> (Agent-to-Agent) lets one agent give a full question to another agent and get the answer back.</li>
 </ul>
@@ -1439,7 +1439,7 @@
 </table>
 <pre class="mermaid"><code>flowchart LR
     subgraph Outside OVOS
-        Agent["AI agent&lt;br/&gt;Claude Code, Claude Desktop,&lt;br/&gt;UTCP or A2A client"]
+        Agent["AI agent&lt;br/&gt;Claude Code, Claude Desktop,&lt;br/&gt;opencode, Mistral Vibe,&lt;br/&gt;UTCP or A2A client"]
         ExtTools["MCP or UTCP server"]
         ExtA2A["A2A agent"]
     end

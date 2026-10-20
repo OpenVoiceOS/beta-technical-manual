@@ -1815,9 +1815,8 @@ already resolved by the base <code>__init__</code> when a subclass doesn't pass 
 </span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">ovos-ww-plugin-mymodel</span><span class="p">.</span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos_ww_plugin_mymodel:MyWWConfig&quot;</span>
 </span></code></pre></div>
 <blockquote>
-<p><strong>Backward Compatibility</strong>: <code>ovos-plugin-manager</code> still supports legacy
-<code>mycroft.plugin.wake_word</code> entry points, but new plugins should use the <code>opm.*</code>
-namespace.</p>
+<p><strong>Entry point group</strong>: <code>ovos-plugin-manager</code> also reads the
+<code>mycroft.plugin.wake_word</code> group. Register a plugin under <code>opm.wake_word</code>.</p>
 </blockquote>
 <h3 id="3-test-it-without-ovos">3. Test it without OVOS<a class="headerlink" href="#3-test-it-without-ovos" title="Permanent link">&para;</a></h3>
 <p><code>HotWordEngine</code> is a plain class with no messagebus connection, so a unit test needs no

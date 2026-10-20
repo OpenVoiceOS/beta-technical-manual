@@ -1513,9 +1513,8 @@ toolboxes) and registers under one <code>opm.agents.*</code> entry-point group. 
 through the entry point. There is no registration API to call and no framework to inherit
 beyond the one base class.</p>
 <div class="admonition note">
-<p class="admonition-title">Version requirement</p>
-<p>The <code>opm.agents.*</code> groups need <strong><code>ovos-plugin-manager &gt;= 2.4.0a1</code></strong> (cap below
-<code>&lt;3.0.0</code>; the option-matcher group arrived last, in <code>2.4.0a1</code>). The legacy <code>QuestionSolver</code> family (<code>opm.solver.*</code>) is deprecated. See the
+<p class="admonition-title">Legacy solvers</p>
+<p>The legacy <code>QuestionSolver</code> family (<code>opm.solver.*</code>) is deprecated. See the
 migration map in <a href="../agent-plugins/#deprecated-solver-types">Deprecated Solver Types</a>.</p>
 </div>
 <hr />
@@ -1754,7 +1753,7 @@ callable itself. The base class handles everything else: input/output validation
   matters.</li>
 <li><strong>Language</strong>: every public method takes an optional BCP-47 <code>lang</code>. When it is <code>None</code>,
   fall back to <code>self.lang</code>, which reads <code>config["lang"]</code> and then the active OVOS
-  session. <strong>Engines do not auto-translate.</strong> The old solver family translated inputs
+  session. <strong>Engines do not auto-translate.</strong> The legacy solver family translates inputs
   behind your back. Agent engines must either support the language or fail honestly.</li>
 <li><strong>No bus access</strong>: engines are plain classes with no messagebus connection (only
   <code>ToolBox</code> binds to the bus, and only when asked). Keep them importable and testable

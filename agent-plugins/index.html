@@ -1628,13 +1628,6 @@
 answer, rank, summarize, remember, or resolve pronouns. You don't call them directly. You list
 them in a <a href="../personas/">persona</a> and the <a href="../personas/#personaservice-pipeline-plugin">PersonaService</a>
 loads them. Each plugin advertises itself to OVOS through an OPM entry-point group.</p>
-<div class="admonition note">
-<p class="admonition-title">Version requirement</p>
-<p>The agent plugin system (<code>opm.agents.*</code> entry-point groups) requires
-<strong><code>ovos-plugin-manager &gt;= 2.4.0a1</code></strong> (cap below <code>&lt;3.0.0</code>); that floor covers every
-group, including <code>opm.agents.option_matcher</code>, which arrived last. Older OPM releases
-don't know these groups.</p>
-</div>
 <p><strong>For advanced users:</strong> every agent engine subclasses an abstract base in
 <code>ovos_plugin_manager.templates.agents</code> and registers under one <code>opm.agents.*</code> group (each with a
 parallel <code>*.config</code> group for config metadata). The discovery helpers live in
@@ -1744,8 +1737,8 @@ Personas</a>.</p>
 a specific NLP sub-problem and registers under its own OPM entry point group. This makes it
 discoverable, configurable, and usable together with other engine types on its own.</p>
 <p>All base classes live in <code>ovos_plugin_manager.templates.agents</code>. The deprecated solver API
-(<code>opm.solver.*</code>) is covered in <a href="#deprecated-solver-types">Deprecated Solver Types</a> below. Migrate
-to <code>opm.agents.*</code> for all new plugins.</p>
+(<code>opm.solver.*</code>) is covered in <a href="#deprecated-solver-types">Deprecated Solver Types</a> below. Use
+<code>opm.agents.*</code> for every plugin you write.</p>
 <h3 id="reranker-opmagentsreranker">ReRanker: <code>opm.agents.reranker</code><a class="headerlink" href="#reranker-opmagentsreranker" title="Permanent link">&para;</a></h3>
 <p><strong>Base class:</strong> <code>ReRankerEngine</code></p>
 <p>Scores a list of candidate answers by relevance to a query and returns them ranked highest-first.
@@ -1760,9 +1753,9 @@ Used internally by the <a href="../cq-pipeline/">Common Query pipeline</a> and
 <div class="admonition note">
 <p class="admonition-title">Score semantics</p>
 <p><code>ReRankerEngine.rerank()</code> returns <code>(score, option)</code> pairs, but the base class does
-<strong>not</strong> fix the score's scale. It is whatever the underlying model produces. There
-is no <code>ReRankerEngine</code> implementation shipped by an OpenVoiceOS-org repository yet;
-the de-facto reranker, <code>ovos-flashrank-reranker-plugin</code>, still registers only the
+<strong>not</strong> fix the score's scale. It is whatever the underlying model produces. No
+OpenVoiceOS-org repository ships a <code>ReRankerEngine</code> implementation. The reranker in
+use, <code>ovos-flashrank-reranker-plugin</code>, registers only the
 legacy <code>opm.solver.multiple_choice</code> group (a <code>MultipleChoiceSolver</code>), which is what
 the Common Query pipeline actually loads. Its scores land in <strong><code>[0, 1]</code></strong> because
 the underlying FlashRank library normalizes cross-encoder outputs, so
@@ -1783,8 +1776,7 @@ reusing the same threshold.</p>
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>The <code>reranker</code> key names an installed legacy <code>opm.solver.multiple_choice</code> plugin (see the
-note above); it will name an <code>opm.agents.reranker</code> plugin once one ships and the pipeline
-migrates its loader.</p>
+note above).</p>
 <hr />
 <h3 id="extractive-qa-opmagentsextractive_qa">Extractive QA: <code>opm.agents.extractive_qa</code><a class="headerlink" href="#extractive-qa-opmagentsextractive_qa" title="Permanent link">&para;</a></h3>
 <p><strong>Base class:</strong> <code>ExtractiveQAEngine</code></p>
@@ -1799,7 +1791,7 @@ entire documents.</p>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># &quot;The Eiffel Tower stands 330 metres tall.&quot;</span>
 </span></code></pre></div>
-<p>No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see <a href="../building-agent-plugins/">Building Agent Plugins</a>.</p>
+<p>No OVOS org plugin implements this type. The base class and entry-point group exist so a plugin can provide one — see <a href="../building-agent-plugins/">Building Agent Plugins</a>.</p>
 <hr />
 <h3 id="summarizer-opmagentssummarizer">Summarizer: <code>opm.agents.summarizer</code><a class="headerlink" href="#summarizer-opmagentssummarizer" title="Permanent link">&para;</a></h3>
 <p><strong>Base class:</strong> <code>SummarizerEngine</code></p>
@@ -1820,7 +1812,7 @@ when it exceeds <code>max_history</code> turns, keeping the context window manag
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">]</span>
 </span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">summary_text</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">summarize</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
 </span></code></pre></div>
-<p>No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see <a href="../building-agent-plugins/">Building Agent Plugins</a>.</p>
+<p>No OVOS org plugin implements this type. The base class and entry-point group exist so a plugin can provide one — see <a href="../building-agent-plugins/">Building Agent Plugins</a>.</p>
 <hr />
 <h3 id="nli-opmagentsnli">NLI: <code>opm.agents.nli</code><a class="headerlink" href="#nli-opmagentsnli" title="Permanent link">&para;</a></h3>
 <p><strong>Base class:</strong> <code>NaturalLanguageInferenceEngine</code></p>
@@ -1829,7 +1821,7 @@ conflict detection, and condition evaluation in skills.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">engine</span><span class="o">.</span><span class="n">predict_entailment</span><span class="p">(</span><span class="s2">&quot;It is raining heavily.&quot;</span><span class="p">,</span> <span class="s2">&quot;The weather is wet.&quot;</span><span class="p">))</span>  <span class="c1"># True</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">engine</span><span class="o">.</span><span class="n">predict_entailment</span><span class="p">(</span><span class="s2">&quot;It is sunny.&quot;</span><span class="p">,</span> <span class="s2">&quot;You need an umbrella.&quot;</span><span class="p">))</span>           <span class="c1"># False</span>
 </span></code></pre></div>
-<p>No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see <a href="../building-agent-plugins/">Building Agent Plugins</a>.</p>
+<p>No OVOS org plugin implements this type. The base class and entry-point group exist so a plugin can provide one — see <a href="../building-agent-plugins/">Building Agent Plugins</a>.</p>
 <hr />
 <h3 id="yesno-classifier-opmagentsyesno">Yes/No Classifier: <code>opm.agents.yesno</code><a class="headerlink" href="#yesno-classifier-opmagentsyesno" title="Permanent link">&para;</a></h3>
 <p>Classifies a user's ambiguous confirmation as <code>True</code> (yes), <code>False</code> (no), or <code>None</code> (unclear).
@@ -1839,7 +1831,7 @@ Returns <code>None</code> on API error.</p>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">engine</span><span class="o">.</span><span class="n">yes_or_no</span><span class="p">(</span><span class="s2">&quot;Ready?&quot;</span><span class="p">,</span> <span class="s2">&quot;what do you mean?&quot;</span><span class="p">))</span>                        <span class="c1"># None</span>
 </span></code></pre></div>
 <p>Use this in skills when <code>ask_yesno()</code> receives uncertain phrasing like "I guess" or "maybe".</p>
-<p>No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see <a href="../building-agent-plugins/">Building Agent Plugins</a>.</p>
+<p>No OVOS org plugin implements this type. The base class and entry-point group exist so a plugin can provide one — see <a href="../building-agent-plugins/">Building Agent Plugins</a>.</p>
 <hr />
 <h3 id="option-matcher-opmagentsoption_matcher">Option Matcher: <code>opm.agents.option_matcher</code><a class="headerlink" href="#option-matcher-opmagentsoption_matcher" title="Permanent link">&para;</a></h3>
 <p><strong>Base class:</strong> <code>OptionMatcherEngine</code></p>
@@ -1874,7 +1866,7 @@ skip expensive work when no pronouns are present.</p>
 have <code>resolve()</code> apply previously registered context and learn new mappings from each turn.
 <code>context_ttl</code> (config key, default <code>120</code> s) controls how long a tracked context entry remains
 valid before it is pruned.</p>
-<p>No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see <a href="../building-agent-plugins/">Building Agent Plugins</a>.</p>
+<p>No OVOS org plugin implements this type. The base class and entry-point group exist so a plugin can provide one — see <a href="../building-agent-plugins/">Building Agent Plugins</a>.</p>
 <hr />
 <h3 id="memory-context-manager-opmagentsmemory">Memory / Context Manager: <code>opm.agents.memory</code><a class="headerlink" href="#memory-context-manager-opmagentsmemory" title="Permanent link">&para;</a></h3>
 <p><strong>Base class:</strong> <code>AgentContextManager</code></p>
@@ -1917,8 +1909,8 @@ needs no API key and is always available when <code>ovos-persona</code> is insta
 <p>Provided by any installed <code>opm.agents.chat.multimodal</code> plugin.</p>
 <hr />
 <h2 id="deprecated-solver-types">Deprecated Solver Types<a class="headerlink" href="#deprecated-solver-types" title="Permanent link">&para;</a></h2>
-<p>The legacy <code>opm.solver.*</code> entry points are deprecated and will be removed in the next major
-release. Migrate existing plugins to the corresponding <code>opm.agents.*</code> types.</p>
+<p>The legacy <code>opm.solver.*</code> entry points are deprecated. Migrate existing plugins to the
+corresponding <code>opm.agents.*</code> types.</p>
 <table>
 <thead>
 <tr>
@@ -1966,8 +1958,7 @@ release. Migrate existing plugins to the corresponding <code>opm.agents.*</code>
 </tbody>
 </table>
 <p>The deprecated classes remain in <code>ovos_plugin_manager.templates.solvers</code> and are still loaded
-by <code>PersonaService</code> and <code>QuestionSolversService</code> for backwards compatibility. But no new
-plugins should use them.</p>
+by <code>PersonaService</code> and <code>QuestionSolversService</code>. Do not use them in a plugin you write.</p>
 <hr />
 <h2 id="plugin-catalog">Plugin catalog<a class="headerlink" href="#plugin-catalog" title="Permanent link">&para;</a></h2>
 <table>
@@ -2075,8 +2066,7 @@ plugins should use them.</p>
 <p>Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the <a href="../maturity/">Maturity Scale</a>.</p>
 <div class="admonition note">
 <p class="admonition-title"><code>ovos-solver-YesNo-plugin</code> is deprecated</p>
-<p>Superseded by <a href="https://github.com/OpenVoiceOS/ovos-YesNo-plugin">ovos-YesNo-plugin</a>
-(needs <code>ovos-plugin-manager&gt;=2.4.0</code>). See <a href="../deprecated-repos/">Deprecated Repos</a>.</p>
+<p>Use <a href="https://github.com/OpenVoiceOS/ovos-YesNo-plugin">ovos-YesNo-plugin</a> instead. See <a href="../deprecated-repos/">Deprecated Repos</a>.</p>
 </div>
 <p>See <a href="../tool-plugins/#available-toolboxes">Tool Plugins: Available ToolBoxes</a> and
 <a href="../tool-plugins/#available-chat-engines">Tool Plugins: Available Chat Engines</a> for the

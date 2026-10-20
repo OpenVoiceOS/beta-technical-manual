@@ -1736,9 +1736,9 @@ You can swap implementations without touching the rest:</p>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Alpha channel only</p>
-<p><code>--pre</code> is not optional here. Without it the install resolves a release that
-reads its plugins through <code>pkg_resources</code>, which setuptools 82.0.0 and later do not
-ship, so the first command below fails with <code>ModuleNotFoundError: No module
+<p><code>--pre</code> is not optional here. Without it the install resolves the stable release,
+which reads its plugins through <code>pkg_resources</code>. Setuptools does not ship
+that module, so the first command below fails with <code>ModuleNotFoundError: No module
 named 'pkg_resources'</code> and nothing warns at install time.</p>
 <p>The satellite is installed with <code>--pre</code> as well, further down. Use the same
 form on both: the server and the satellite negotiate a protocol, and
@@ -1794,7 +1794,7 @@ an error: utterances arrive and nothing answers them.</p>
 <p><strong>3. Give a client its identity, then connect.</strong> On the <em>client</em> device, save the access key
 issued in step 1. This step makes everything else work:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>hivemind-bus-client<span class="w">   </span><span class="c1"># repo name is hivemind-websocket-client;</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># the plain PyPI &quot;stable&quot; (0.4.4) predates the current protocol -- --pre is required</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># --pre is required: the satellite and the server must speak the same protocol</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>hivemind-client<span class="w"> </span>set-identity<span class="w"> </span>--key<span class="w"> </span>&lt;access_key&gt;<span class="w"> </span>--password<span class="w"> </span>&lt;password&gt;<span class="w"> </span>--host<span class="w"> </span>&lt;hostname-or-ip&gt;<span class="w"> </span>--port<span class="w"> </span><span class="m">5678</span>
 </span></code></pre></div>
 <p>Use the access key and password printed by <code>add-client</code> in step 1. <code>set-identity</code> needs at
@@ -1820,10 +1820,7 @@ clients get the whole assistant: skills, pipelines, OCP, and more.</p>
 <p>Exposes just one <a href="../personas/">persona</a>, with no <code>ovos-core</code> and no messagebus, so the attack
 surface stays minimal. It answers straight from the configured persona.</p>
 <p>Pointing the persona at an OpenAI-compatible endpoint, as in the example below, is a working
-LLM-fallback deployment: the remote node just forwards chat to that endpoint. Pin
-<code>ovos-persona&gt;=0.9.0a17</code>. Versions before that mixed up the <code>lang</code> and <code>system_unit</code> arguments
-in <code>Persona.chat</code>/<code>Persona.stream</code>, which could break a retrieval-backed persona or 500 the
-<code>/v1/chat/completions</code> endpoint.</p>
+LLM-fallback deployment: the remote node just forwards chat to that endpoint.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;agent_protocol&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hivemind-persona-agent-plugin&quot;</span><span class="p">,</span>
@@ -1861,13 +1858,13 @@ sentinel.</p>
 <ul>
 <li><strong><a href="https://github.com/JarbasHiveMind/hivemind-websocket-client"><code>hivemind-websocket-client</code></a></strong>: the client library and the <code>hivemind-client</code> CLI (<code>set-identity</code>, send utterances, and more). It installs as <code>hivemind-bus-client</code>. The repository and the distribution have different names.</li>
 <li><strong><a href="https://github.com/JarbasHiveMind/hivemind-mic-satellite"><code>hivemind-mic-satellite</code></a></strong>: the thinnest device. Only microphone and VAD run locally. Wake word, STT and TTS all run server-side. Run it with the <code>hivemind-mic-sat</code> command, and note the server must have <code>hivemind-audio-binary-protocol</code> installed (see below).</li>
-<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-audio-binary-protocol"><code>hivemind-audio-binary-protocol</code></a></strong>: the server-side audio entry point that performs wake word/STT/TTS for audio satellites, with binary audio moving over the mesh. Plain <code>hivemind-core</code> does no audio processing without it. (Formerly named <code>hivemind-listener</code>. The old PyPI package name still exists.)</li>
+<li><strong><a href="https://github.com/JarbasHiveMind/hivemind-audio-binary-protocol"><code>hivemind-audio-binary-protocol</code></a></strong>: the server-side audio entry point that performs wake word/STT/TTS for audio satellites, with binary audio moving over the mesh. Plain <code>hivemind-core</code> does no audio processing without it.</li>
 </ul>
-<p>This split is the real "voice satellite" story: cheap devices listen and speak, and the server thinks.</p>
+<p>This split is how a voice satellite deployment works: cheap devices listen and speak, and the server thinks.</p>
 <p>HiveMind also ships bridges into existing chat and telephony surfaces.
 Matrix, Mattermost, Telegram, HackChat, and Twitch each have one, and so does VOIP through <a href="https://github.com/JarbasHiveMind/HiveMind-baresip-bridge">HiveMind-baresip-bridge</a>.
 Each bridge is a client like any other, addressing a different end-user surface.
-The community docs list the current <a href="https://jarbashivemind.github.io/HiveMind-community-docs/gpt_bridges/">integrations</a>.</p>
+The community docs list the <a href="https://jarbashivemind.github.io/HiveMind-community-docs/gpt_bridges/">integrations</a>.</p>
 <hr />
 <h2 id="session-isolation-between-clients">Session isolation between clients<a class="headerlink" href="#session-isolation-between-clients" title="Permanent link">&para;</a></h2>
 <p>A <code>session_id</code> (see <a href="../session/">Sessions</a>) names an OVOS-side conversation. HiveMind never
@@ -1892,9 +1889,7 @@ unchanged. Reaching the orchestrator's real sessions by name is what admin stand
 (<code>HIVEMIND-BRIDGE-1 §4.1</code>, "The reserved default session and the translation exemption").</p>
 <p>A client multiplexes several conversations over one connection by declaring a distinct
 <code>session_id</code> per message. A chat-room or telephony bridge does this per end-user
-conversation. Each declared name maps to its own isolated session. This needs
-<code>hivemind-bus-client &gt;= 1.0.16a1</code>; older clients overwrite a per-message <code>session_id</code> with
-the connection-level one. Session contents merge over the established baseline, so a
+conversation. Each declared name maps to its own isolated session. Session contents merge over the established baseline, so a
 bridged peer that omits a field keeps its own last value, never the orchestrator's default.</p>
 <hr />
 <h2 id="permissions-access-control">Permissions &amp; access control<a class="headerlink" href="#permissions-access-control" title="Permanent link">&para;</a></h2>
@@ -1967,7 +1962,7 @@ delegate at the intent-matching stage, for example as a late, catch-all matcher.
 <table>
 <thead>
 <tr>
-<th>Use case</th>
+<th>Deployment</th>
 <th>Tools</th>
 <th>Secure?</th>
 <th>Notes</th>

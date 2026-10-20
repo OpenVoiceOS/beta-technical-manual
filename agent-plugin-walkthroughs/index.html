@@ -1055,7 +1055,7 @@
           <li class="md-nav__item">
   <a href="#how-ovos-persona-keeps-old-solvers-working" class="md-nav__link">
     <span class="md-ellipsis">
-      How ovos-persona keeps old solvers working
+      How ovos-persona loads legacy solvers
     </span>
   </a>
   
@@ -1389,7 +1389,7 @@
           <li class="md-nav__item">
   <a href="#how-ovos-persona-keeps-old-solvers-working" class="md-nav__link">
     <span class="md-ellipsis">
-      How ovos-persona keeps old solvers working
+      How ovos-persona loads legacy solvers
     </span>
   </a>
   
@@ -1432,7 +1432,7 @@
 <p class="admonition-title">In a nutshell</p>
 <p>This page gives two front-to-back worked examples for writing an agent engine plugin
 (a <code>DocumentIndexerEngine</code> and a <code>ChatEngine</code>), a guide for migrating an existing
-<code>QuestionSolver</code>-family plugin to the new agent engine API, and a pre-publish
+<code>QuestionSolver</code>-family plugin to the agent engine API, and a pre-publish
 checklist. For picking the right base class and the rules every engine follows, see
 <a href="../building-agent-plugins/">Building Agent Plugins</a>.</p>
 </div>
@@ -1482,7 +1482,7 @@ config:</p>
 <div class="language-toml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[project]</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos-notes-retrieval-plugin&quot;</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-plugin-manager&gt;=2.4.0a1,&lt;3.0.0&quot;</span><span class="p">]</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ovos-plugin-manager&gt;=2.4.0a1&quot;</span><span class="p">]</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.agents.retrieval.documents&quot;</span><span class="k">]</span>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">ovos-notes-retrieval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ovos_notes_retrieval:NotesRetrieval&quot;</span>
@@ -1551,16 +1551,16 @@ list:</p>
 else in the stack. See <a href="../personas/">Agents &amp; Personas</a> for the persona JSON format.</p>
 <hr />
 <h2 id="migrating-a-solver-plugin-to-an-agent-engine">Migrating a solver plugin to an agent engine<a class="headerlink" href="#migrating-a-solver-plugin-to-an-agent-engine" title="Permanent link">&para;</a></h2>
-<p>The old <code>QuestionSolver</code> family (<code>opm.solver.*</code> entry points, classes in
+<p>The legacy <code>QuestionSolver</code> family (<code>opm.solver.*</code> entry points, classes in
 <code>ovos_plugin_manager.templates.solvers</code>) is deprecated. The entry-point-to-class mapping
 lives in <a href="../agent-plugins/#deprecated-solver-types">Deprecated Solver Types</a>.
 This section covers the code changes, which are small but not mechanical.</p>
-<p><strong>1. Pick the new base class.</strong></p>
+<p><strong>1. Pick the agent base class.</strong></p>
 <table>
 <thead>
 <tr>
-<th>Old solver class</th>
-<th>New base class</th>
+<th>Solver class</th>
+<th>Agent base class</th>
 </tr>
 </thead>
 <tbody>
@@ -1592,7 +1592,7 @@ This section covers the code changes, which are small but not mechanical.</p>
 </table>
 <p>One exception: if your <code>QuestionSolver</code> was really a knowledge lookup (Wikipedia, Wolfram
 Alpha, a database), migrate it to <code>RetrievalEngine</code> instead of <code>ChatEngine</code>. The solver API
-had no retrieval type, so lookups were forced into the Q&amp;A shape. The new API separates them.</p>
+has no retrieval type, so a lookup must take the Q&amp;A shape. The agent API has a separate type for it.</p>
 <p><strong>2. Rename the methods.</strong> For a <code>QuestionSolver</code> moving to <code>ChatEngine</code>, the core
 change is from string-in/string-out to messages-in/message-out:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># before (QuestionSolver)</span>
@@ -1609,16 +1609,15 @@ change is from string-in/string-out to messages-in/message-out:</p>
 <p><code>ChatMessageSolver.get_chat_completion</code> maps almost one-to-one to <code>continue_chat</code>. Wrap
 the returned string in an <code>AgentMessage</code> and update the dict-style messages to
 <code>AgentMessage</code> dataclasses. <code>stream_utterances</code> becomes <code>stream_sentences</code>.</p>
-<p><strong>3. Drop the auto-translation assumptions.</strong> This is the trap. <code>QuestionSolver</code> had
-<code>enable_tx</code> and bidirectional auto-translation: a solver could declare
+<p><strong>3. Drop the auto-translation assumptions.</strong> This is the trap. <code>QuestionSolver</code> has
+<code>enable_tx</code> and bidirectional auto-translation: a solver can declare
 <code>supported_langs = ["en"]</code> and still receive every language, because the base class
-translated the input and output behind the scenes.</p>
+translates the input and output behind the scenes.</p>
 <p><strong>Agent engines never translate.</strong> After migration your engine receives the user's
 language as-is. Either handle it or return nothing for languages you do not support.</p>
 <p>Translation is still the recommended strategy for engines whose backend is inherently
-monolingual (Wolfram Alpha and most web APIs only speak English). What changed is who
-does it: the base class no longer translates for you, so the plugin re-implements it
-explicitly. Use the translation plugin system instead of hardcoding one translator.
+monolingual (Wolfram Alpha and most web APIs only speak English). The agent base class
+does not translate for you, so the plugin translates explicitly. Use the translation plugin system instead of hardcoding one translator.
 <code>OVOSLangTranslationFactory.create()</code> (in <code>ovos_plugin_manager.language</code>) returns the
 <code>LanguageTranslator</code> the user configured in the central <code>"language"</code> section of
 <code>mycroft.conf</code>, so every plugin honors one shared translation config:</p>
@@ -1657,10 +1656,10 @@ makes the migration invisible to them:</p>
 </span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="k">[project.entry-points.</span><span class="s2">&quot;opm.agents.chat&quot;</span><span class="k">]</span>
 </span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">my-plugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_plugin:MyChatEngine&quot;</span>
 </span></code></pre></div>
-<p>During a transition period a plugin may register under <strong>both</strong> groups, with the old
-class delegating to the new one. Ship the dual registration in a minor release, then
+<p>During a transition period a plugin may register under <strong>both</strong> groups, with the solver
+class delegating to the agent class. Ship the dual registration in a minor release, then
 drop the solver entry point in the next major.</p>
-<h3 id="how-ovos-persona-keeps-old-solvers-working">How ovos-persona keeps old solvers working<a class="headerlink" href="#how-ovos-persona-keeps-old-solvers-working" title="Permanent link">&para;</a></h3>
+<h3 id="how-ovos-persona-keeps-old-solvers-working">How ovos-persona loads legacy solvers<a class="headerlink" href="#how-ovos-persona-keeps-old-solvers-working" title="Permanent link">&para;</a></h3>
 <p>You do not need to migrate everything at once, because
 <a href="https://github.com/OpenVoiceOS/ovos-persona">ovos-persona</a> loads both generations side
 by side. Its <code>QuestionSolversService</code> merges the plugin registries into a single handler
@@ -1675,7 +1674,7 @@ dispatches on type:</p>
   and the top document becomes the answer.</li>
 <li><code>ChatMessageSolver</code> (legacy) → <code>get_chat_completion</code> with the full message list.</li>
 <li><code>QuestionSolver</code> (legacy) → <code>spoken_answer(last_utterance)</code>. <strong>Chat history is
-  silently dropped</strong>, because the old contract is single-turn. This is the main
+  silently dropped</strong>, because the solver contract is single-turn. This is the main
   functional reason to migrate conversational plugins: under a persona, a
   <code>QuestionSolver</code> answers every turn as if it were the first.</li>
 </ul>
@@ -1684,20 +1683,13 @@ generations freely during migration:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MixedPersona&quot;</span><span class="p">,</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">&quot;solvers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="s2">&quot;my-new-chat-engine&quot;</span><span class="p">,</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="s2">&quot;my-chat-engine&quot;</span><span class="p">,</span>
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="s2">&quot;ovos-solver-failure-plugin&quot;</span>
 </span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span><span class="p">]</span>
 </span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>The <code>"solvers"</code> key is itself legacy naming. Newer configs use <code>"handlers"</code>, and
-ovos-persona accepts both. One more back-compat layer sits below all this: with
-an <code>ovos-plugin-manager</code> from before the early 2.2.x alphas the <code>opm.agents.*</code> registries
-do not exist (they landed piecemeal from 2.2.x through <code>2.4.0a1</code>, where the option-matcher
-group arrived last; the example pin of <code>&gt;=2.4.0a1</code> above is the safe floor that has all of
-them), and
-ovos-persona stubs them out so solver-only personas keep working. None of this
-back-compat is permanent. The solver classes stay loadable until the next major OPM
-release, and new plugins must not use them.</p>
+<p>The <code>"solvers"</code> key is legacy naming. Use <code>"handlers"</code>. ovos-persona accepts both.
+The solver classes are deprecated, and a plugin you write must not use them.</p>
 <hr />
 <h2 id="checklist-before-you-publish">Checklist before you publish<a class="headerlink" href="#checklist-before-you-publish" title="Permanent link">&para;</a></h2>
 <ol>

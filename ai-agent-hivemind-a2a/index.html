@@ -1360,25 +1360,29 @@
 
 
 <h1 id="connect-a-hivemind-satellite-to-an-a2a-agent">Connect a HiveMind Satellite to an A2A Agent<a class="headerlink" href="#connect-a-hivemind-satellite-to-an-a2a-agent" title="Permanent link">&para;</a></h1>
-<p>This page makes a HiveMind master send the questions of its voice satellites to an A2A agent, in place of an OVOS brain.</p>
+<p>This page makes a HiveMind master send the questions of its clients to an A2A agent, in place of an OVOS brain.</p>
 <h2 id="who-this-is-for">Who this is for<a class="headerlink" href="#who-this-is-for" title="Permanent link">&para;</a></h2>
-<p>You run HiveMind voice satellites. You want their questions to go to an agent that speaks A2A. The answers come back to the satellite as speech.</p>
+<p>You run a HiveMind master. You want the questions of its clients to go to an agent that speaks A2A. The answers come back to the client that asked.</p>
 <h2 id="what-you-get">What you get<a class="headerlink" href="#what-you-get" title="Permanent link">&para;</a></h2>
-<p>The HiveMind agent protocol <code>hivemind-a2a-agent-plugin</code>. The HiveMind master loads it in place of the OVOS agent protocol. The plugin sends each satellite query to the A2A agent and sends the reply back to the satellite that asked.</p>
+<p>The HiveMind agent protocol <code>hivemind-a2a-agent-plugin</code>. The HiveMind master loads it in place of the OVOS agent protocol. The plugin answers each <code>QUERY</code> and <code>CASCADE</code> message: it sends the question to the A2A agent and sends the reply back as <code>speak</code> messages.</p>
+<div class="admonition warning">
+<p class="admonition-title">The plugin answers <code>QUERY</code> and <code>CASCADE</code> messages</p>
+<p>A voice satellite and <code>hivemind-client terminal</code> send <code>BUS</code> messages. The plugin does not answer them. A client must send the question in a <code>QUERY</code> or <code>CASCADE</code> message.</p>
+</div>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
 <ol>
 <li>
-<p>Install the plugin next to <code>hivemind-core</code>. The plugin depends on <code>hivemind-bus-client</code> 1.2.11a1, which fails to import with <code>bitstring</code> 5. hivemind-a2a-agent-plugin 0.1.1a1 also needs <code>httpx</code> 0.x. Install <code>bitstring</code> 4 and <code>httpx</code> 0.x with it:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>hivemind-a2a-agent-plugin<span class="w"> </span><span class="s2">&quot;bitstring&lt;5&quot;</span><span class="w"> </span><span class="s2">&quot;httpx&lt;1&quot;</span>
+<p>Install the plugin next to <code>hivemind-core</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>hivemind-a2a-agent-plugin
 </span></code></pre></div>
 </li>
 <li>
-<p>Set the agent protocol in the HiveMind configuration, usually <code>~/.config/hivemind/hivemind.conf</code>:</p>
+<p>Set the agent protocol in <code>~/.config/hivemind-core/server.json</code>. <code>agent_protocol.module</code> names the plugin. The key with the plugin name holds its settings:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;hivemind&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">&quot;agent_protocol&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hivemind-a2a-agent-plugin&quot;</span><span class="p">,</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">&quot;a2a_agent&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">      </span><span class="nt">&quot;agent_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:9999&quot;</span><span class="p">,</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;agent_protocol&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hivemind-a2a-agent-plugin&quot;</span><span class="p">,</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">&quot;hivemind-a2a-agent-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">      </span><span class="nt">&quot;agent_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:8337/a2a&quot;</span><span class="p">,</span>
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">      </span><span class="nt">&quot;auth_header&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bearer secret&quot;</span><span class="p">,</span>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">      </span><span class="nt">&quot;timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">      </span><span class="nt">&quot;streaming&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
@@ -1388,15 +1392,16 @@
 </span></code></pre></div>
 </li>
 <li>
-<p>Restart <code>hivemind-core</code>.</p>
+<p>Restart <code>hivemind-core</code>. The log names the plugin:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>INFO - Agent protocol: A2AAgentProtocol
+</span></code></pre></div>
 </li>
 </ol>
-<p>The keys have the same meaning as for the <a href="../ai-agent-a2a-solver/#steps">A2A solver</a>.</p>
+<p>The keys have the same meaning as for the <a href="../ai-agent-a2a-solver/#steps">A2A solver</a>. With <code>streaming</code> set to <code>true</code>, each chunk from the agent becomes one <code>speak</code> message.</p>
 <h2 id="which-agents-it-can-reach">Which agents it can reach<a class="headerlink" href="#which-agents-it-can-reach" title="Permanent link">&para;</a></h2>
-<p>The released plugin, <code>hivemind-a2a-agent-plugin</code> 0.1.1a1, uses the same early draft of A2A as the A2A solver. It sends <code>tasks/send</code> and <code>tasks/sendSubscribe</code> to <code>agent_url</code>. Agents that are built on <code>a2a-sdk</code> 1.x, the OVOS persona server among them, answer <code>-32601 Method not found</code>. A call from the plugin to the persona server stopped with:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>HTTPStatusError Redirect response &#39;307 Temporary Redirect&#39; for url &#39;http://localhost:8337/a2a&#39;
-</span></code></pre></div>
+<p>The plugin uses the <code>a2a-sdk</code> client, the same as the <a href="../ai-agent-a2a-solver/#which-agents-it-can-reach">A2A solver</a>. It speaks A2A 1.0 and A2A 0.3, so the OVOS persona server is a valid agent. <code>hivemind-core</code> passes no session id, so each query starts its own A2A conversation.</p>
 <h2 id="if-it-fails">If it fails<a class="headerlink" href="#if-it-fails" title="Permanent link">&para;</a></h2>
+<p>When the agent cannot answer, the plugin sends an error sentence to the client, and then the end of the query.</p>
 <table>
 <thead>
 <tr>
@@ -1407,19 +1412,24 @@
 </thead>
 <tbody>
 <tr>
-<td><code>ImportError: cannot import name 'BitStream' from 'bitstring'</code></td>
-<td><code>bitstring</code> 5 is installed, and <code>hivemind-bus-client</code> 1.2.11a1 cannot import it</td>
-<td>Install <code>bitstring&lt;5</code>.</td>
+<td>A voice satellite gets no answer</td>
+<td>The satellite sends a <code>BUS</code> message, and the plugin answers <code>QUERY</code> and <code>CASCADE</code> messages</td>
+<td>Send the question in a <code>QUERY</code> or <code>CASCADE</code> message.</td>
 </tr>
 <tr>
-<td><code>TypeError: Client.__init__() got an unexpected keyword argument 'timeout'</code></td>
-<td>An <code>httpx</code> 1.0 prerelease is installed</td>
-<td>Install <code>httpx&lt;1</code>.</td>
+<td><code>Error validating A2A agent ... (HTTP 404)</code></td>
+<td><code>agent_url</code> is wrong, or the agent publishes only the A2A 0.2 card path</td>
+<td>Make sure that <code>&lt;agent_url&gt;/.well-known/agent-card.json</code> answers.</td>
 </tr>
 <tr>
-<td>The satellite hears an error answer</td>
-<td>The A2A agent rejected the call</td>
-<td>Read the <code>hivemind-core</code> log. Make sure that the agent accepts <code>tasks/send</code>.</td>
+<td><code>Error contacting A2A agent: Client Request timed out</code></td>
+<td>The agent took longer than <code>timeout</code></td>
+<td>Increase <code>timeout</code>.</td>
+</tr>
+<tr>
+<td><code>A2A agent not configured</code></td>
+<td><code>agent_url</code> is not set</td>
+<td>Set <code>agent_url</code>.</td>
 </tr>
 </tbody>
 </table>

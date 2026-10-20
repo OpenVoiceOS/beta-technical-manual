@@ -1559,7 +1559,7 @@
 <li><strong>Send unanswered questions to it</strong>: enable the <a href="../persona-pipeline/">persona pipeline</a>
    with <code>handle_fallback: true</code>.</li>
 </ol>
-<p>Now anything no skill handles is answered by the LLM. The rest of this page is the full
+<p>After these steps, the LLM answers anything that no skill handles. The rest of this page is the full
 architecture. You don't need it to get started.</p>
 </div>
 <p>OpenVoiceOS (OVOS) provides a flexible, modular system for integrating AI agents into voice-first
@@ -1625,7 +1625,7 @@ configuration inline.</p>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>The <code>"solvers"</code> key is an alias for <code>"handlers"</code> (legacy compat). Plugins are tried in order.
+<p>The <code>"solvers"</code> key is an alias for <code>"handlers"</code>. Plugins are tried in order.
 The first non-<code>None</code> response wins.</p>
 <h3 id="available-personas">Available Personas<a class="headerlink" href="#available-personas" title="Permanent link">&para;</a></h3>
 <p><code>opm.plugin.persona</code> plugins ship a ready-made persona as a static dict, which <code>ovos-persona</code>
@@ -1642,7 +1642,7 @@ per named plugin.</p>
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="p">}</span>
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">}</span>
 </span></code></pre></div>
-<p><code>Persona.__init__</code> reads <code>handlers</code>, falling back to the legacy <code>"solvers"</code> key if <code>handlers</code> is
+<p><code>Persona.__init__</code> reads <code>handlers</code>, and reads the <code>"solvers"</code> key if <code>handlers</code> is
 absent, and raises <code>ValueError</code> if it finds neither. There is no <code>chat_engine</code> key and no
 <code>system_prompt</code> key at this level — a persona that names one is not loadable.</p>
 <p>This manual only covers plugins backed by an OpenVoiceOS-org repository:</p>
@@ -1937,10 +1937,9 @@ enables OVOS to act as an agent inside another system, for example a Docker netw
 </span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><code>timeout</code> (default <code>30</code>) is how long the engine waits for a <code>speak</code> reply per utterance; it resets on every <code>speak</code> it receives, so a skill that emits several <code>speak</code> messages in a row does not time out early. <code>source_name</code> (default <code>messagebus_chat_agent</code>) is written to <code>context.source</code> on every bus message the engine sends, so routing rules on the target <code>ovos-core</code> can identify — and exclude — traffic that originated from this engine.</p>
-<p>This plugin replaces the removed <code>OVOSMessagebusSolver</code> / <code>ovos-solver-bus-plugin</code>, which lived
-under the deprecated <code>neon.plugin.solver</code> group; install
+<p>To use this engine, install
 <a href="https://github.com/OpenVoiceOS/ovos-messagebus-chat-plugin"><code>ovos-messagebus-chat-plugin</code></a> and
-migrate any persona that referenced the old solver to the <code>ovos-messagebus</code> chat engine.</p>
+name the <code>ovos-messagebus</code> chat engine in the persona.</p>
 <p><strong>Note:</strong> routing OVOS back through itself creates an infinite loop if this engine is used inside
 a persona that is <em>already</em> loaded by the same running <code>ovos-core</code>. It is intended for
 cross-instance bridging, not local routing. Use <code>source_name</code> to detect or filter such loops on

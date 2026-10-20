@@ -1695,7 +1695,7 @@ glue code is required.</p>
 <hr />
 <h2 id="usage-guide">Usage Guide<a class="headerlink" href="#usage-guide" title="Permanent link">&para;</a></h2>
 <p><strong>Install the server</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-tts-server
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-tts-server
 </span></code></pre></div>
 <p><strong>Configure your TTS plugin</strong></p>
 <p>In your <code>mycroft.conf</code> (or equivalent) under the <code>tts</code> section:</p>
@@ -1735,8 +1735,8 @@ glue code is required.</p>
 </span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">  </span>--mcp<span class="w">                 </span>mount<span class="w"> </span>MCP<span class="w"> </span>server<span class="w"> </span>at<span class="w"> </span>/mcp<span class="w"> </span><span class="o">(</span>requires<span class="w"> </span>ovos-tts-server<span class="o">[</span>mcp<span class="o">])</span>
 </span></code></pre></div>
 <p>Flag details the short help text leaves out: the port defaults to <code>9666</code> and the host to
-<code>0.0.0.0</code>. The companion plugin defaults to <code>/v2/synthesize</code> on that port; if you point an
-old client at the legacy <code>/synthesize/{utterance}</code> path, set <code>"v2": false</code> in its config.
+<code>0.0.0.0</code>. The companion plugin defaults to <code>/v2/synthesize</code> on that port. To use the
+legacy <code>/synthesize/{utterance}</code> path, set <code>"v2": false</code> in its config.
 When <code>--lang</code> is omitted, the plugin uses its own configured <code>lang</code>, then the top-level
 config <code>lang</code>, then falls back to <code>"mul"</code>.</p>
 <div class="admonition example">
@@ -1755,7 +1755,7 @@ synthesis to disk for later inspection:</p>
 </li>
 <li>
 <p><strong>Plugin Loading</strong><br />
-<code>--engine</code> names any <code>opm.tts</code> plugin entry point. It is loaded dynamically via the OVOS Plugin Manager, so no code changes are needed when adding new voices. Plugin config is read from the <code>tts</code> section of your <code>mycroft.conf</code>.</p>
+<code>--engine</code> names any <code>opm.tts</code> plugin entry point. It is loaded dynamically via the OVOS Plugin Manager, so you add a voice with no code changes. Plugin config is read from the <code>tts</code> section of your <code>mycroft.conf</code>.</p>
 </li>
 <li>
 <p><strong>Caching</strong><br />
@@ -1824,8 +1824,8 @@ synthesis, on every synthesis surface (native endpoints and vendor-compat router
 <li><strong>TTS transformers</strong> post-process the <em>synthesized audio</em> (e.g. loudness normalization,
   effects).</li>
 </ul>
-<p>Loading is config-gated and opt-in via the standard <code>mycroft.conf</code> sections. With no config
-the server behaves exactly as before:</p>
+<p>Loading is config-gated and opt-in via the standard <code>mycroft.conf</code> sections. With no config,
+the server runs no transformers:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;dialog_transformers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&quot;ovos-dialog-transformer-openai-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>

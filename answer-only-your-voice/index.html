@@ -1692,7 +1692,7 @@
 <p>The speaker verifier is the plugin <code>ovos-ww-verifier-plugin-speaker</code>. It runs after the wake-word engine fires and before the assistant starts to listen. It compares the voice in the wake-word audio with the voices you enrolled. If no enrolled voice matches, the listener drops the activation. See <a href="../ww-verifier/">Wake-word Verifiers</a> for how verifiers fit into the listener. The listener can run more than one verifier: the Silero VAD verifier <code>ovos-ww-verifier-silero</code>, from <code>ovos-vad-plugin-silero</code>, rejects wake words with no speech in them. The blog post <a href="https://blog.openvoiceos.org/posts/2026-09-26-speaker-verifier">Only you can order the cheeseburgers: Speaker verification comes to OVOS</a> shows the verifier in use.</p>
 <div class="admonition warning">
 <p class="admonition-title">Alpha channel only</p>
-<p>The listener runs verifiers from <code>ovos-dinkum-listener</code> 0.6.0a1. The stable release of the listener does not load them.</p>
+<p>Only the prerelease channel of <code>ovos-dinkum-listener</code> loads verifiers. Install the listener with <code>pip install --pre ovos-dinkum-listener</code>.</p>
 </div>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1810,7 +1810,7 @@ restart them depends on how OVOS was installed:</p>
 </div>
 <h2 id="tune-the-threshold">Tune the threshold<a class="headerlink" href="#tune-the-threshold" title="Permanent link">&para;</a></h2>
 <p>The <code>threshold</code> is a cosine similarity between 0 and 1. A higher value rejects more guests and also more of your own wake words. A lower value does the opposite. Lower it for a distant or noisy microphone.</p>
-<p>The default of 0.45 is for the default model, <code>wespeaker-resnet34</code>. <strong>Each model has its own score scale.</strong> If you change <code>model</code>, find a new threshold: compare the scores in the log for your own voice and for a guest, and choose a value between them. Set a different value for one person with <code>per_profile_thresholds</code>, for example <code>{"Bob": 0.5}</code>.</p>
+<p>The default of 0.45 is for the default model, <code>wespeaker-resnet34</code>. <strong>Each model has its own score scale.</strong> If you change <code>model</code>, find the threshold for that model: compare the scores in the log for your own voice and for a guest, and choose a value between them. Set a different value for one person with <code>per_profile_thresholds</code>, for example <code>{"Bob": 0.5}</code>.</p>
 <h2 id="configuration-keys">Configuration keys<a class="headerlink" href="#configuration-keys" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

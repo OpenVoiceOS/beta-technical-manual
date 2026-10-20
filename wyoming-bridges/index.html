@@ -1802,7 +1802,7 @@ entry-point group and re-exposes it over the Wyoming protocol.</p>
 <p>All three bridges:</p>
 <ul>
 <li>
-<p>Are installed via <code>pip install &lt;package-name&gt;</code></p>
+<p>Are installed via <code>pip install --pre &lt;package-name&gt;</code></p>
 </li>
 <li>
 <p>Read plugin configuration from <code>mycroft.conf</code> (standard OVOS config file)</p>
@@ -1858,7 +1858,7 @@ entry-point group and re-exposes it over the Wyoming protocol.</p>
 </table>
 <p>Plugin loading happens once at startup. The plugin instance is shared across all connections.</p>
 <h3 id="running">Running<a class="headerlink" href="#running" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>wyoming-ovos-stt
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>wyoming-ovos-stt
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>wyoming-ovos-stt<span class="w"> </span>--plugin-name<span class="w"> </span>&lt;ovos-stt-plugin-name&gt;<span class="w"> </span>--uri<span class="w"> </span>tcp://0.0.0.0:7891
 </span></code></pre></div>
 <table>
@@ -1999,7 +1999,7 @@ is not part of this bridge, so a client that needs it has to split the text itse
 one <code>Synthesize</code> per sentence.</p>
 </div>
 <h3 id="running_1">Running<a class="headerlink" href="#running_1" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span>wyoming-ovos-tts
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>wyoming-ovos-tts
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>wyoming-ovos-tts<span class="w"> </span>--plugin-name<span class="w"> </span>&lt;ovos-tts-plugin-name&gt;<span class="w"> </span>--uri<span class="w"> </span>tcp://0.0.0.0:7892
 </span></code></pre></div>
 <table>
@@ -2083,15 +2083,15 @@ servers entirely: fully offline plugins exist for everything.</p>
 <hr />
 <h2 id="wake-word-bridge-wyoming-ovos-wakeword">Wake-word Bridge (<code>wyoming-ovos-wakeword</code>)<a class="headerlink" href="#wake-word-bridge-wyoming-ovos-wakeword" title="Permanent link">&para;</a></h2>
 <p>Exposes any OVOS wake-word plugin as a Wyoming wake-word detection server, supporting
-<strong>multiple simultaneous wake-word models</strong> loaded on demand per client session. Its full
-architecture, running instructions, configuration and message-flow reference now live on
-their own page: <a href="../wyoming-wakeword-bridge/">Wyoming Wake-word Bridge</a>.</p>
+<strong>multiple simultaneous wake-word models</strong> loaded on demand per client session. For its
+architecture, running instructions, configuration and message flow, see
+<a href="../wyoming-wakeword-bridge/">Wyoming Wake-word Bridge</a>.</p>
 <hr />
 <h2 id="on-the-home-assistant-side">On the Home Assistant side<a class="headerlink" href="#on-the-home-assistant-side" title="Permanent link">&para;</a></h2>
 <p>Once a bridge is running with a <code>tcp://</code> URI, register it in Home Assistant through the
 <strong>Wyoming Protocol</strong> integration: <strong>Settings → Devices &amp; Services → Add Integration</strong>, search
 for "Wyoming Protocol", and enter the bridge machine's host and the port from your <code>--uri</code>.
-Repeat once per bridge (STT, TTS, and wake word are three separate Wyoming services). The new
+Repeat once per bridge (STT, TTS, and wake word are three separate Wyoming services). The bridge
 entities then become selectable in <strong>Settings → Voice assistants</strong> when building an Assist
 pipeline. For the HA side in more depth, see the
 <a href="https://www.home-assistant.io/integrations/wyoming/">Home Assistant Wyoming integration docs</a>.</p>

@@ -1834,7 +1834,7 @@ activates on install alone.</p>
 <p>A lower <code>threshold</code> accepts quieter speech. Raise it to require stronger speech confidence.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code>ovos-ww-verifier-silero</code> is the reference verifier used throughout the listener's own examples and end-to-end tests. It is not a separate PyPI package. It is an <code>opm.wake_word.verifier</code> entry point registered by <a href="../vad-plugins/"><code>ovos-vad-plugin-silero</code></a>. Run <code>pip install ovos-vad-plugin-silero</code> to make it available.</p>
+<p><code>ovos-ww-verifier-silero</code> is the reference verifier used throughout the listener's own examples and end-to-end tests. It is not a separate PyPI package. It is an <code>opm.wake_word.verifier</code> entry point registered by <a href="../vad-plugins/"><code>ovos-vad-plugin-silero</code></a>. Run <code>pip install --pre ovos-vad-plugin-silero</code> to make it available.</p>
 </div>
 <hr />
 <h2 id="speaker-verification">Speaker Verification<a class="headerlink" href="#speaker-verification" title="Permanent link">&para;</a></h2>
@@ -1938,7 +1938,7 @@ speaker-labelled logs cannot be built on top of it.</p>
 <hr />
 <h2 id="microwakeword-plugin">microWakeWord Plugin<a class="headerlink" href="#microwakeword-plugin" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p><strong>Status:</strong> <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword">OpenVoiceOS/ovos-ww-plugin-microwakeword</a> is published to PyPI as an early alpha (<code>pip install --pre ovos-ww-plugin-microwakeword</code>) and still in active development.</p>
+<p><strong>Status:</strong> <a href="https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword">OpenVoiceOS/ovos-ww-plugin-microwakeword</a> is on PyPI as an alpha: <code>pip install --pre ovos-ww-plugin-microwakeword</code>.</p>
 </blockquote>
 <p>OVOS wake-word plugin wrapping <a href="https://github.com/kahrendt/microWakeWord">microWakeWord</a> TFLite streaming models from the ESPHome ecosystem. Enables zero-cost sub-1 MB wake-word models originally designed for microcontrollers.</p>
 <hr />

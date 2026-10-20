@@ -1413,7 +1413,7 @@
 <div class="admonition warning">
 <p class="admonition-title">Alpha channel only</p>
 <p>The loop and the adapters install from the prerelease channel:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s2">&quot;ovos-persona-server&gt;=0.18.6a1&quot;</span><span class="w"> </span><span class="s2">&quot;ovos-agentic-loop&gt;=0.2.4a1&quot;</span><span class="w"> </span><span class="s2">&quot;ovos-tool-adapters[mcp,utcp]&gt;=0.1.9a1&quot;</span><span class="w"> </span>ovos-openai-plugin
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-persona-server<span class="w"> </span>ovos-agentic-loop<span class="w"> </span><span class="s2">&quot;ovos-tool-adapters[mcp,utcp]&quot;</span><span class="w"> </span>ovos-openai-plugin
 </span></code></pre></div>
 </div>
 <h2 id="use-tools-from-an-mcp-server">Use tools from an MCP server<a class="headerlink" href="#use-tools-from-an-mcp-server" title="Permanent link">&para;</a></h2>
@@ -1537,7 +1537,7 @@
 </tr>
 <tr>
 <td>A <code>tool_providers</code> config loads no tools</td>
-<td><code>tool_providers</code> is the key of UTCP before 1.0</td>
+<td><code>tool_providers</code> is not a UTCP key</td>
 <td>Use <code>manual_call_templates</code>.</td>
 </tr>
 <tr>

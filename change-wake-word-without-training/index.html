@@ -1699,7 +1699,7 @@
 <h1 id="change-the-wake-word-without-training">Change the Wake Word Without Training<a class="headerlink" href="#change-the-wake-word-without-training" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p>You want the assistant to answer to a name you choose, like "Hey Jarvis" or "Hey Computer". Usually a new wake word needs a trained model and many recordings. Two plugins skip that step: you type the wake word in the config and the assistant listens for it. WakePhoneHuBERT is the better choice. Vosk is simpler but works for fewer phrases.</p>
+<p>You want the assistant to answer to a name you choose, like "Hey Jarvis" or "Hey Computer". Usually a custom wake word needs a trained model and many recordings. Two plugins skip that step: you type the wake word in the config and the assistant listens for it. WakePhoneHuBERT is the better choice. Vosk is simpler but works for fewer phrases.</p>
 </div>
 <h2 id="try-it-in-your-browser-first">Try it in your browser first<a class="headerlink" href="#try-it-in-your-browser-first" title="Permanent link">&para;</a></h2>
 <p>The <a href="https://huggingface.co/spaces/TigreGotico/wakephonehubert-space">WakePhoneHuBERT Space</a> runs the model in your web browser. Type a wake word, or its IPA phones, then say it into the microphone or upload a WAV file. The page marks each detection and shows the score, the phones it hears and the voice activity. The audio does not leave your device. Use it to check that a phrase works for your voice before you change your device.</p>
@@ -1708,7 +1708,7 @@
 <p><a href="https://huggingface.co/TigreGotico/wakephonehubert">WakePhoneHuBERT</a> is a small speech model that hears the sounds of speech, written as IPA phones. The zero-shot engine of <code>ovos-ww-plugin-wakeforge</code> compares those sounds with the phones of your wake word. You give the phones; no recordings and no training are necessary.</p>
 <div class="admonition warning">
 <p class="admonition-title">Alpha channel only</p>
-<p>The zero-shot engine <code>ovos-ww-plugin-wakeforge-zeroshot</code> is in <code>ovos-ww-plugin-wakeforge</code> 0.11.0a1 and later. The stable release of the plugin does not have it.</p>
+<p>The zero-shot engine <code>ovos-ww-plugin-wakeforge-zeroshot</code> is in the prerelease channel of <code>ovos-ww-plugin-wakeforge</code> only. Install the plugin with <code>--pre</code>, as in step 1.</p>
 </div>
 <ol>
 <li>
@@ -1811,11 +1811,11 @@ restart them depends on how OVOS was installed:</p>
 <p>The default threshold is −0.05 for each phone above three, and it stops at −0.29 from nine phones. Use the Space to see the scores your voice gets, then set <code>threshold</code> between your scores and the scores of other speech.</p>
 <p>Two listener features also cut false activations with any wake-word engine. The pre-wake VAD gate sends audio to the engine only when someone speaks: see <a href="../ww-verifier/#pre-wake-vad">Pre-Wake VAD</a> and the blog post <a href="https://blog.openvoiceos.org/posts/2025-11-06-prewake-vad">OVOS Just Got a Noise Filter</a>. Verifier plugins check each detection after the engine fires: see <a href="../ww-verifier/">Wake-word Verifiers</a> and <a href="../answer-only-your-voice/">Make OVOS Answer Only Your Voice</a>.</p>
 <h2 id="option-2-vosk">Option 2: Vosk<a class="headerlink" href="#option-2-vosk" title="Permanent link">&para;</a></h2>
-<p><code>ovos-ww-plugin-vosk</code> runs the Vosk speech recognizer on short pieces of audio and compares the text with your wake word. It is on the stable channel.</p>
+<p><code>ovos-ww-plugin-vosk</code> runs the Vosk speech recognizer on short pieces of audio and compares the text with your wake word.</p>
 <ol>
 <li>
 <p>Install the plugin:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-ww-plugin-vosk
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-ww-plugin-vosk
 </span></code></pre></div>
 </li>
 <li>

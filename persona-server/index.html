@@ -1596,16 +1596,14 @@ endpoints, a UTCP tool surface, and vendor-compatible routers for <strong>Anthro
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-persona-server
 </span></code></pre></div>
 <p>Install the agent-engine plugin(s) your persona references, e.g.:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-openai-plugin
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>ovos-openai-plugin
 </span></code></pre></div>
 <p>Optional extras: <code>rag</code> (file/vector-store endpoints), <code>mcp</code> (pulls in <code>fastmcp&gt;=4.1.1</code> to serve the
 <code>/mcp</code> endpoint below), and <code>a2a</code> (Agent-to-Agent endpoint).</p>
 <div class="admonition warning">
 <p class="admonition-title">Alpha channel only</p>
-<p>The last stable release, <code>0.5.0</code>, declares no extras at all, and <code>a2a</code> alone arrives
-with <code>0.6.0a1</code>, so an extra needs the prerelease channel and a floor pin that carries
-the extra you want:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s1">&#39;ovos-persona-server[a2a]&gt;=0.17.2a1&#39;</span>
+<p>The extras are in the prerelease channel only. Install an extra from that channel:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s1">&#39;ovos-persona-server[a2a]&#39;</span>
 </span></code></pre></div>
 </div>
 <div class="admonition note">
@@ -1614,7 +1612,7 @@ the extra you want:</p>
 not the official <code>mcp</code> SDK. The split is deliberate: this server <em>serves</em> MCP with <code>fastmcp</code>,
 while a client consuming another MCP server (like <a href="../tool-plugins/"><code>ovos-mcp-toolbox</code></a>) uses
 the official <code>mcp</code> SDK instead. MCP SDK 2.0 has no <code>mcp.server.fastmcp.FastMCP</code>, so a server
-that imports that symbol fails to start on the 2.x SDK. <code>fastmcp</code> is the maintained standalone project that symbol used to alias.</p>
+that imports that symbol fails to start on the 2.x SDK. <code>fastmcp</code> is the maintained standalone project.</p>
 </div>
 <hr />
 <h2 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h2>
@@ -1662,7 +1660,7 @@ that imports that symbol fails to start on the 2.x SDK. <code>fastmcp</code> is 
 <tr>
 <td><code>--a2a-base-url</code></td>
 <td><code>None</code></td>
-<td>Mounts an <a href="https://a2aproject.github.io/A2A/">A2A</a>-compatible endpoint at <code>/a2a</code>, using this URL as the public base URL in the Agent Card (e.g. <code>http://myhost:8337/a2a</code>). Requires the <code>a2a</code> extra (<code>pip install --pre 'ovos-persona-server[a2a]&gt;=0.17.2a1'</code>)</td>
+<td>Mounts an <a href="https://a2aproject.github.io/A2A/">A2A</a>-compatible endpoint at <code>/a2a</code>, using this URL as the public base URL in the Agent Card (e.g. <code>http://myhost:8337/a2a</code>). Requires the <code>a2a</code> extra (<code>pip install --pre 'ovos-persona-server[a2a]'</code>)</td>
 </tr>
 </tbody>
 </table>
@@ -2050,8 +2048,7 @@ name(s) from the persona's solver config.</p>
 <code>replace</code> (client's system message wins), or <code>append</code> (persona identity first, client
 instructions added after). Applied once per chat/completions call.</p>
 <h2 id="choosing-tools-with-tool_choice">Choosing tools with <code>tool_choice</code><a class="headerlink" href="#choosing-tools-with-tool_choice" title="Permanent link">&para;</a></h2>
-<p>The OpenAI route honors <code>tool_choice</code> by shaping which tools it offers the engine
-(0.17.4a1+; before that it was accepted and silently ignored):</p>
+<p>The OpenAI route honors <code>tool_choice</code> by shaping which tools it offers the engine:</p>
 <table>
 <thead>
 <tr>
@@ -2080,7 +2077,7 @@ instructions added after). Applied once per chat/completions call.</p>
 </table>
 <h2 id="error-responses">Error responses<a class="headerlink" href="#error-responses" title="Permanent link">&para;</a></h2>
 <p>When every handler in the persona's chain declines to answer, the server returns
-HTTP <strong>422</strong> rather than a 500 or an empty 200 (0.17.3a1+). Every vendor router maps
+HTTP <strong>422</strong> rather than a 500 or an empty 200. Every vendor router maps
 this the same way; on a streaming request it arrives as an in-band SSE error event.</p>
 <h2 id="tips">Tips<a class="headerlink" href="#tips" title="Permanent link">&para;</a></h2>
 <ul>

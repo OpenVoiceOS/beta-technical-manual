@@ -1685,7 +1685,7 @@ underlying plugin's capabilities before assuming parity beyond the wire format.<
 <p>All compat routers are always loaded. No feature flag is needed.</p>
 <hr />
 <h2 id="stt-server-compat-routes">STT Server Compat Routes<a class="headerlink" href="#stt-server-compat-routes" title="Permanent link">&para;</a></h2>
-<p><code>pip install --pre "ovos-stt-http-server&gt;=0.25.1a3"</code>. Routers are implemented in <code>ovos_stt_http_server.routers</code>.</p>
+<p><code>pip install --pre ovos-stt-http-server</code>. Routers are implemented in <code>ovos_stt_http_server.routers</code>.</p>
 <table>
 <thead>
 <tr>
@@ -1766,7 +1766,7 @@ underlying plugin's capabilities before assuming parity beyond the wire format.<
 </table>
 <hr />
 <h2 id="tts-server-compat-routes">TTS Server Compat Routes<a class="headerlink" href="#tts-server-compat-routes" title="Permanent link">&para;</a></h2>
-<p><code>pip install ovos-tts-server</code>. Routers are implemented in <code>ovos_tts_server.routers</code>.</p>
+<p><code>pip install --pre ovos-tts-server</code>. Routers are implemented in <code>ovos_tts_server.routers</code>.</p>
 <table>
 <thead>
 <tr>
@@ -1819,7 +1819,7 @@ underlying plugin's capabilities before assuming parity beyond the wire format.<
 </table>
 <hr />
 <h2 id="translate-server-compat-routes">Translate Server Compat Routes<a class="headerlink" href="#translate-server-compat-routes" title="Permanent link">&para;</a></h2>
-<p><code>pip install --pre "ovos-translate-server&gt;=0.10.0a1"</code>. Routers are implemented in <code>ovos_translate_server.routers</code>.</p>
+<p><code>pip install --pre ovos-translate-server</code>. Routers are implemented in <code>ovos_translate_server.routers</code>.</p>
 <table>
 <thead>
 <tr>
@@ -1862,9 +1862,7 @@ underlying plugin's capabilities before assuming parity beyond the wire format.<
 <h2 id="persona-server-compat-routes">Persona Server Compat Routes<a class="headerlink" href="#persona-server-compat-routes" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Alpha channel only</p>
-<p><code>pip install --pre ovos-persona-server</code>. The last stable <code>ovos-persona</code>, <code>0.7.1</code>, does not
-declare <code>ovos-workshop</code>, so an install from the stable channel imports with
-<code>ModuleNotFoundError: No module named 'ovos_workshop'</code>.</p>
+<p>Install the persona server from the prerelease channel: <code>pip install --pre ovos-persona-server</code>.</p>
 </div>
 <p><code>create_persona_app()</code> mounts the routes below.
 It mounts a chat router at prefix <code>/openai/v1</code> (<code>POST /openai/v1/chat/completions</code>,

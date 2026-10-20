@@ -1389,9 +1389,9 @@
 <h2 id="start-the-server">Start the server<a class="headerlink" href="#start-the-server" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Alpha channel only</p>
-<p>The <code>a2a</code> extra has a prerelease floor, so the server installs from the
-prerelease channel:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s2">&quot;ovos-persona-server[a2a]&gt;=0.18.6a1&quot;</span><span class="w"> </span>ovos-solver-rivescript-plugin
+<p>The <code>a2a</code> extra is only in the prerelease channel. Install the server
+from that channel:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s2">&quot;ovos-persona-server[a2a]&quot;</span><span class="w"> </span>ovos-solver-rivescript-plugin
 </span></code></pre></div>
 </div>
 <ol>
@@ -1460,7 +1460,7 @@ prerelease channel:</p>
 </tr>
 <tr>
 <td>The client gets <code>-32601 Method not found</code></td>
-<td>The client sends an early A2A draft method, such as <code>tasks/send</code></td>
+<td>The client sends a method name from an A2A draft, such as <code>tasks/send</code></td>
 <td>Use a client that sends <code>SendMessage</code>, or the A2A 0.3 name <code>message/send</code>.</td>
 </tr>
 <tr>
