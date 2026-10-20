@@ -343,6 +343,24 @@
         
   
   
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../personas-and-memory/" class="md-tabs__link">
+          
+  
+  Personas and Memory
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
     
   
   
@@ -762,6 +780,48 @@
       
   
   
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../personas-and-memory/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Personas and Memory
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -782,10 +842,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
         
           
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -796,8 +856,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_8">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
             <span class="md-nav__icon md-icon"></span>
             Agents
           </label>
@@ -845,10 +905,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_9_2" id="__nav_9_2_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -859,8 +919,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_8_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9_2">
             <span class="md-nav__icon md-icon"></span>
             Personas
           </label>
@@ -1783,18 +1843,35 @@ keys) are in the <a href="#backends">per-backend sections</a> below.</p>
 <div class="admonition warning">
 <p class="admonition-title">The default mode loses the context on an OpenAI chat engine</p>
 <p><code>ovos-openai-plugin</code> removes every <code>system</code> message from a request unless
-<code>allow_system_prompts</code> is set, and that setting is off by default. A memory
-plugin left on the default <code>inject_mode</code> hands its recalled text over as a
-<code>system</code> message, so the engine discards it before the request is sent. The
-modes <code>system</code> and <code>system_prompt</code> both lose it this way; <code>developer</code>, <code>user</code>
-and <code>tool</code> all keep it.</p>
-<p>Nothing reports the loss. The reply comes back fluent and the persona simply
-answers as though it recalled nothing, which reads as a memory plugin that
-found nothing rather than a request that arrived without it.</p>
-<p>Set <code>inject_mode</code> to <code>developer</code> for a persona that needs memory on this
-engine. Setting <code>allow_system_prompts</code> also works, and costs more than it
-looks: it lets a caller's own system message through the chat API, which is
-what the setting exists to prevent.</p>
+<code>allow_system_prompts</code> is set, and that setting is off by default. The
+<code>entity</code> and <code>longterm</code> backends always hand their recalled text over as a
+<code>system</code> message. The retrieval backends <code>local-rag</code>, <code>lexical</code> and
+<code>composite</code> do the same in their default <code>inject_mode</code>. The engine discards
+the message before the request is sent. The modes <code>system</code> and
+<code>system_prompt</code> both lose the text this way.</p>
+<p>The engine logs one warning for each engine instance, the first time it
+drops a <code>system</code> message:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>dropped 1 system message(s) before the request: &#39;allow_system_prompts&#39; is off. Context a memory plugin injects as a system message is discarded with it; set &#39;allow_system_prompts&#39;, or set the memory plugin&#39;s &#39;inject_mode&#39; to one this engine keeps.
+</span></code></pre></div>
+<p>The reply still comes back fluent, and the persona answers as though it
+recalled nothing. Read the log to tell this case from a memory plugin that
+found nothing.</p>
+<p>Set <code>allow_system_prompts</code> to <code>true</code>. This works for every backend. The
+<code>entity</code> and <code>longterm</code> backends do not read <code>inject_mode</code>, so this is the
+only fix for them. For <code>local-rag</code>, <code>lexical</code> and <code>composite</code>, you can
+instead set <code>inject_mode</code> to <code>user</code>.
+In a <code>composite</code>, this moves only the retrieved passages. The blocks of
+<code>entity</code> and <code>longterm</code> members stay <code>system</code> messages and still need
+<code>allow_system_prompts</code>. The <code>user</code> mode needs no change to the
+system-message policy: it adds the text to the user message, and the engine
+keeps that message. The <code>allow_system_prompts</code> setting also lets the
+caller's own system message through the chat API, which is what the
+setting exists to prevent.</p>
+<p>The engine keeps <code>developer</code> and <code>tool</code> messages, so no warning appears for
+them. A model can still ignore them. On the public demo server with the
+<code>qwen2.5:7b</code> model, the <code>developer</code> mode delivered no context, and the
+model answered as if the documents did not exist. Test these modes with
+your own model before you rely on them.</p>
 </div>
 <h3 id="retrieval-knobs">Retrieval knobs<a class="headerlink" href="#retrieval-knobs" title="Permanent link">&para;</a></h3>
 <p>Set under the backend's <code>retrieval</code> block:</p>
@@ -1868,7 +1945,7 @@ what the setting exists to prevent.</p>
 <p>Class <code>LocalRAGMemory</code>. Runs Retrieval-Augmented Generation <strong>entirely in-process</strong>. It loads an OVOS text-embeddings plugin (<code>opm.embeddings.text</code>) and an <code>EmbeddingsDB</code> plugin directly, with no HTTP and no cloud key. It embeds every exchange and retrieves the top-k <strong>semantically</strong> similar past turns at query time. This is the local-first replacement for any server- or OpenAI-coupled RAG. Server-coupled RAG lives in <a href="../openai-plugin/"><code>ovos-openai-plugin</code></a> instead.</p>
 <p><strong>Use it when</strong> a private/offline assistant needs exact semantic recall of past detail.</p>
 <p>Install the known-good offline stack with the extra:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s1">&#39;ovos-memory-plugins[local-rag]&#39;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span><span class="s1">&#39;ovos-memory-plugins[local-rag]&#39;</span>
 </span></code></pre></div>
 <p>which pulls <code>ovos-gguf-plugin</code> (whose <code>ovos-gguf-embeddings-plugin</code> entry point provides labse
 gguf embeddings) + <code>ovos-chromadb-embeddings-plugin</code> (persistent local vector store). Any
@@ -2175,20 +2252,20 @@ embeddings + <code>EmbeddingsDB</code> pair works (e.g. point <code>embeddings_d
 </tr>
 </tbody>
 </table>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>{
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  &quot;memory_module&quot;: &quot;ovos-memory-plugin-composite&quot;,
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  &quot;ovos-memory-plugin-composite&quot;: {
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    &quot;members&quot;: [
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>      {&quot;module&quot;: &quot;ovos-memory-plugin-local-rag&quot;, &quot;weight&quot;: 1.0, &quot;config&quot;: { /* its block */ }},
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>      {&quot;module&quot;: &quot;ovos-memory-plugin-lexical&quot;,   &quot;weight&quot;: 1.0, &quot;config&quot;: { /* its block */ }},
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>      {&quot;module&quot;: &quot;ovos-memory-plugin-entity&quot;,    &quot;config&quot;: { /* its block */ }}
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    ],
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    &quot;primary&quot;: &quot;ovos-memory-plugin-local-rag&quot;,
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    &quot;fusion&quot;: &quot;rrf&quot;,
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    &quot;max_num_results&quot;: 5,
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    &quot;inject_mode&quot;: &quot;system&quot;
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>  }
-</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>{
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  &quot;memory_module&quot;: &quot;ovos-memory-plugin-composite&quot;,
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  &quot;ovos-memory-plugin-composite&quot;: {
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    &quot;members&quot;: [
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>      {&quot;module&quot;: &quot;ovos-memory-plugin-local-rag&quot;, &quot;weight&quot;: 1.0, &quot;config&quot;: { /* its block */ }},
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>      {&quot;module&quot;: &quot;ovos-memory-plugin-lexical&quot;,   &quot;weight&quot;: 1.0, &quot;config&quot;: { /* its block */ }},
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>      {&quot;module&quot;: &quot;ovos-memory-plugin-entity&quot;,    &quot;config&quot;: { /* its block */ }}
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    ],
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    &quot;primary&quot;: &quot;ovos-memory-plugin-local-rag&quot;,
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    &quot;fusion&quot;: &quot;rrf&quot;,
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    &quot;max_num_results&quot;: 5,
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    &quot;inject_mode&quot;: &quot;system&quot;
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>  }
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>}
 </span></code></pre></div>
 <p><strong>Why RRF is the default.</strong> Different retrievers score on incompatible scales: semantic cosine similarity is ~0..1, lexical BM25 is unbounded. Summing raw scores would let the larger-magnitude scale dominate. RRF (<code>score(d) = Σ weight · 1/(k + rank)</code>) throws magnitudes away and fuses on <strong>rank position</strong> only, so a semantic top-1 and a lexical top-1 count equally. This is the standard hybrid-search fusion. Give each retriever member a <strong>distinct</strong> storage path/collection so they don't collide, and leave <code>system_prompt</code> to the composite.</p>
 <hr />

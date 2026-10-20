@@ -343,6 +343,24 @@
         
   
   
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../personas-and-memory/" class="md-tabs__link">
+          
+  
+  Personas and Memory
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
     
   
   
@@ -762,6 +780,48 @@
       
   
   
+  
+  
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../personas-and-memory/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Personas and Memory
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -782,10 +842,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
         
           
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -796,8 +856,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_8">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
             <span class="md-nav__icon md-icon"></span>
             Agents
           </label>
@@ -845,10 +905,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_9_2" id="__nav_9_2_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -859,8 +919,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_8_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9_2">
             <span class="md-nav__icon md-icon"></span>
             Personas
           </label>
@@ -1854,11 +1914,12 @@ legacy paths carry <code>Deprecation</code> and <code>Link</code> headers pointi
 state. Two modes are selected by the <code>CHAT_MEMORY</code> environment variable:</p>
 <ul>
 <li><code>off</code> (default): <em>backend</em> mode, stateless. The client drives the Files /
-  Vector-Stores endpoints itself. Use this for multi-user / drop-in-OpenAI
-  deployments (a shared server memory would leak across users).</li>
-<li><code>transparent</code>: single-user <em>hosted agent</em> mode. The server keys history by
+  Vector-Stores endpoints itself. Use this for drop-in-OpenAI
+  deployments and untrusted clients (a shared server memory would leak across callers).</li>
+<li><code>transparent</code>: <em>hosted agent</em> mode for one user or several trusted users. The server keys history by
   session (the OpenAI <code>user</code> field, else a default session) and folds the persona's
-  <code>memory_module</code> into every turn.</li>
+  <code>memory_module</code> into every turn. The server trusts the <code>user</code> field and does not
+  check it, so keep this mode off for untrusted clients.</li>
 </ul>
 <p>The embeddings endpoints and vector-store search share one embeddings backend,
 configured via environment variables:</p>
