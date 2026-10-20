@@ -1279,6 +1279,48 @@
   
   
     <li class="md-nav__item">
+      <a href="../change-wake-word-without-training/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Change the Wake Word Without Training
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../answer-only-your-voice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Make OVOS Answer Only Your Voice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../stt-plugins/" class="md-nav__link">
         
   
@@ -1979,6 +2021,10 @@ restart them depends on how OVOS was installed:</p>
 <ol>
 <li>Say the new phrase. The assistant now wakes on it instead of "hey mycroft".</li>
 </ol>
+<div class="admonition tip">
+<p class="admonition-title">Pick any phrase, with no training</p>
+<p>To use your own phrase without recording clips or training a model, see <a href="../change-wake-word-without-training/">Change the Wake Word Without Training</a>. You can try a phrase in the <a href="https://huggingface.co/spaces/TigreGotico/wakephonehubert-space">WakePhoneHuBERT Space</a> first. To make the assistant answer only the people in your household, see <a href="../answer-only-your-voice/">Make OVOS Answer Only Your Voice</a>.</p>
+</div>
 <h2 id="available-plugins">Available Plugins<a class="headerlink" href="#available-plugins" title="Permanent link">&para;</a></h2>
 <p>OVOS supports different wake-word detection plugins, each with its own strengths and use cases.
 The full roster with descriptions and licenses lives in one place: the
@@ -2184,10 +2230,11 @@ audio and suppress false detections before any callback runs. Verifiers implemen
 <p><em>Diagram:</em> The flow starts when the wake-word engine fires and ends with the detection either suppressed or proceeding to run the callback, and it branches on the HotWordVerifier.verify() result, failing open on exception.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&quot;listener&quot;: {
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  &quot;ww_verifiers&quot;: {
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    &quot;ovos-ww-verifier-speaker&quot;: {&quot;threshold&quot;: 0.1}
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    &quot;ovos-ww-verifier-speaker&quot;: {&quot;threshold&quot;: 0.45, &quot;fail_open&quot;: false}
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  }
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>}
 </span></code></pre></div>
+<p>The speaker verifier is set up step by step in <a href="../answer-only-your-voice/">Make OVOS Answer Only Your Voice</a>.</p>
 <p>Verifiers fail open: if a verifier plugin raises an unexpected exception, the exception is
 logged and the detection is <strong>not</strong> suppressed. Only an explicit <code>False</code> return from
 <code>HotWordVerifier.verify()</code> discards the wake. Disable a verifier without removing it from

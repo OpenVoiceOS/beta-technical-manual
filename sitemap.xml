@@ -77,6 +77,10 @@
          <lastmod>2026-10-20</lastmod>
     </url>
     <url>
+         <loc>https://openvoiceos.github.io/beta-technical-manual/answer-only-your-voice/</loc>
+         <lastmod>2026-10-20</lastmod>
+    </url>
+    <url>
          <loc>https://openvoiceos.github.io/beta-technical-manual/architecture-overview/</loc>
          <lastmod>2026-10-20</lastmod>
     </url>
@@ -130,6 +134,10 @@
     </url>
     <url>
          <loc>https://openvoiceos.github.io/beta-technical-manual/bus-service/</loc>
+         <lastmod>2026-10-20</lastmod>
+    </url>
+    <url>
+         <loc>https://openvoiceos.github.io/beta-technical-manual/change-wake-word-without-training/</loc>
          <lastmod>2026-10-20</lastmod>
     </url>
     <url>

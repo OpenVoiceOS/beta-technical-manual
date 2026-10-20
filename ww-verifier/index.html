@@ -14,7 +14,7 @@
         <link rel="prev" href="../wake-word-plugin-development/">
       
       
-        <link rel="next" href="../stt-plugins/">
+        <link rel="next" href="../change-wake-word-without-training/">
       
       
       <link rel="icon" href="https://github.com/OpenVoiceOS/ovos_assets/blob/master/Logo/ovos-logo-512.png?raw=true">
@@ -1177,6 +1177,48 @@
   
   
     <li class="md-nav__item">
+      <a href="../change-wake-word-without-training/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Change the Wake Word Without Training
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../answer-only-your-voice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Make OVOS Answer Only Your Voice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../stt-plugins/" class="md-nav__link">
         
   
@@ -1731,6 +1773,7 @@
 <p class="admonition-title">In a nutshell</p>
 <p>A "wake word" is the phrase that gets the assistant's attention, like "Hey Mycroft". Sometimes the assistant thinks it heard that phrase when it didn't. A wake-word verifier is a second pair of ears: after the wake word seems to have been detected, it double-checks the recorded audio and can cancel a false alarm before the assistant starts listening. This cuts down on the device waking up by accident. See the <a href="../wake-word-plugins/">Wake-word plugins</a> for the detectors themselves, or the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
+<p>To make the assistant answer only enrolled voices, see <a href="../answer-only-your-voice/">Make OVOS Answer Only Your Voice</a>.</p>
 <p>The wake-word verifier framework lets one or more secondary plugins inspect the audio captured during a wake-word detection event and veto false triggers. This is separate from the detection plugin itself and runs as a post-detection gate.</p>
 <hr />
 <h2 id="pre-wake-vad">Pre-Wake VAD<a class="headerlink" href="#pre-wake-vad" title="Permanent link">&para;</a></h2>
