@@ -61,6 +61,8 @@ for the full CLI). Once the file parses cleanly, apply the change:
 }
 ```
 
+To pick your own phrase with no training, see [Change the Wake Word Without Training](change-wake-word-without-training.md). To make the assistant answer only your voice, see [Make OVOS Answer Only Your Voice](answer-only-your-voice.md).
+
 As with voices below, the plugin must be installed into the same environment OVOS runs in
 before the config can use it (`pip install ovos-ww-plugin-vosk` for this example). Take a
 custom hotword like this one, with no `fallback_ww` configured. A module that fails to
