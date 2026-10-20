@@ -222,7 +222,7 @@ dependencies = ["ovos-plugin-manager"]
 ovos-stt-plugin-mymodel = "ovos_stt_plugin_mymodel:MySTTPlugin"
 
 [project.entry-points."opm.stt.config"]
-ovos-stt-plugin-mymodel.config = "ovos_stt_plugin_mymodel:MySTTConfig"
+"ovos-stt-plugin-mymodel.config" = "ovos_stt_plugin_mymodel:MySTTConfig"
 
 ```
 

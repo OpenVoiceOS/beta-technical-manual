@@ -119,7 +119,7 @@ class MyTTSPlugin(TTS):
     """My custom text-to-speech engine."""
 
     def __init__(self, config=None):
-        super().__init__(config, audio_ext="wav")
+        super().__init__(config=config, audio_ext="wav")
 
     @classproperty
     def available_languages(cls) -> Set[str]:
@@ -169,7 +169,7 @@ Use `pyproject.toml` (older plugins may still register the same groups through a
 my-engine-stt = "my_stt_plugin:MySTTPlugin"
 
 [project.entry-points."opm.stt.config"]
-my-engine-stt.config = "my_stt_plugin:MY_STT_CONFIGS"
+"my-engine-stt.config" = "my_stt_plugin:MY_STT_CONFIGS"
 
 ```
 
