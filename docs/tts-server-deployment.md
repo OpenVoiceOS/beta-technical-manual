@@ -10,7 +10,7 @@ Point your OVOS instance at this TTS server with the companion client plugin
 `ovos-tts-plugin-server`):
 
 ```bash
-pip install ovos-tts-plugin-server
+pip install --pre ovos-tts-plugin-server
 
 ```
 
@@ -69,12 +69,11 @@ See [TTS plugins](tts-plugins.md) for fully offline voices if you'd rather not d
 
 ## MCP
 
-The STT, translate, and persona servers all moved to explicit opt-in, and so did this one.
-`ovos-tts-server` mounts its MCP endpoint only when started with the `--mcp` flag (installing
-the `mcp` extra alone is not enough):
+Like the STT, translate and persona servers, `ovos-tts-server` mounts its MCP endpoint only
+when started with the `--mcp` flag (installing the `mcp` extra alone is not enough):
 
 ```bash
-pip install 'ovos-tts-server[mcp]'
+pip install --pre 'ovos-tts-server[mcp]'
 ovos-tts-server --engine {YOUR_TTS_PLUGIN} --mcp
 ```
 
@@ -84,9 +83,9 @@ normally — but `/mcp` returns `404`, which looks like a routing problem rather
 flag. If MCP tool calls 404, check that `--mcp` was actually passed.
 
 !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
-    The extra keeps the name `mcp`, but it resolves the third-party `fastmcp>=3,<4` package, not
-    the official `mcp` SDK. MCP SDK 2.0 removed `mcp.server.fastmcp.FastMCP`, so a server still
-    importing that symbol fails to start on the 2.x SDK. This server *serves* MCP with `fastmcp`.
+    The extra is called `mcp`, but it resolves the third-party `fastmcp>=4.1.1` package, not
+    the official `mcp` SDK. MCP SDK 2.0 has no `mcp.server.fastmcp.FastMCP`, so a server that
+    imports that symbol fails to start on the 2.x SDK. This server *serves* MCP with `fastmcp`.
     A client consuming a different MCP server (like `ovos-mcp-toolbox`, see
     [Agent Tool Plugins](tool-plugins.md)) uses the official `mcp` SDK instead.
 
@@ -100,29 +99,22 @@ Config keys:
 | `verify_ssl` | `true` | Verify the server's TLS certificate. |
 | `tts_timeout` | `5` | Per-request timeout in seconds. |
 
-!!! note "Upcoming — universal server adapter"
-    A `server_type` option (plus first-class `api_key` support) is planned for the companion
-    plugin, so a single config shape can target different self-hosted or cloud TTS server APIs
-    without a dedicated plugin per vendor.
-
-
 ## Docker Deployment
 
-Plain Docker works today. A working `Dockerfile` follows below. What is still **upcoming** is
-only a ready-made Docker *Compose* proxy setup for this server.
+A working `Dockerfile` follows. The server has no ready-made Docker *Compose* setup.
 
-!!! tip "An interim path: some TTS plugins ship their own Docker image"
+!!! tip "Some TTS plugins ship their own Docker image"
     A few TTS plugin repositories (for example the eSpeak NG, S.A.M., and Mimic engines)
-    already ship their own `Dockerfile` and `docker-compose.yml` that build a ready-made
-    container serving that engine behind `ovos-tts-server`. Until the compose proxy above
-    lands, check a plugin's own repository for a Dockerfile before building one by hand.
+    ship their own `Dockerfile` and `docker-compose.yml`. These build a container that serves
+    that engine behind `ovos-tts-server`. Check a plugin's own repository for a Dockerfile
+    before you write one.
 
 **Create a Dockerfile**
 
 ```dockerfile
 FROM python:3.11-slim
-RUN pip install ovos-tts-server
-RUN pip install {YOUR_TTS_PLUGIN}
+RUN pip install --pre ovos-tts-server
+RUN pip install --pre {YOUR_TTS_PLUGIN}
 ENTRYPOINT ["ovos-tts-server", "--engine", "{YOUR_TTS_PLUGIN}"]
 
 ```
@@ -141,11 +133,6 @@ repository.
 If you cap the container's memory, size the limit well above any voice-cache budget and read
 [Memory limits and OOM kills](docker-deployment.md#memory-limits-and-oom-kills) before
 debugging a server that keeps getting slow while showing `Up`.
-
-!!! note "Upcoming — Docker Compose"
-    A default Docker Compose setup and custom-container documentation are **Upcoming**.
-
----
 
 ---
 **Read next:** [TTS Server](tts-server.md)

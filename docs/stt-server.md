@@ -20,7 +20,7 @@ The OpenVoiceOS STT HTTP Server wraps your chosen OVOS STT plugin inside a FastA
 **Install the server** 
 
 ```bash
-pip install --pre "ovos-stt-http-server>=0.25.1a3"
+pip install --pre ovos-stt-http-server
 
 ```
 
@@ -105,7 +105,7 @@ The short help text leaves out the defaults: the port defaults to `8080` and the
   `--multi` loads one engine instance per language on demand (one model per `lang`), instead of a single shared model.
 
 - **Compatibility routers**  
-  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (`POST /wit/speech`, override the SDK host with the `WIT_URL` env var) and Chromium speech-api (`POST /speech-api/v2/recognize`). The app also routes for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See `/docs` for the authoritative set. A `GET /utcp` manual advertises the endpoints to UTCP agents. An MCP endpoint mounts at `/mcp` on the same port when the server is started with `--mcp` (requires `pip install --pre 'ovos-stt-http-server[mcp]>=0.26.0a1'`). The extra alone does not mount it.
+  Beyond the native endpoints, the app mounts drop-in compatible routers so existing cloud-STT clients work unchanged. Examples are Wit.ai (`POST /wit/speech`, override the SDK host with the `WIT_URL` env var) and Chromium speech-api (`POST /speech-api/v2/recognize`). The app also routes for OpenAI Whisper, Whisper.cpp server, Deepgram, Google, AssemblyAI, Azure, IBM Watson, AWS Transcribe, Vosk, Speechmatics, Gladia, ElevenLabs Scribe, Groq, and Kaldi GStreamer. See `/docs` for the authoritative set. A `GET /utcp` manual advertises the endpoints to UTCP agents. An MCP endpoint mounts at `/mcp` on the same port when the server is started with `--mcp` (requires `pip install --pre 'ovos-stt-http-server[mcp]'`). The extra alone does not mount it.
 
     !!! note "The `mcp` extra installs `fastmcp`, not the `mcp` SDK"
         The extra is called `mcp`. It resolves the third-party `fastmcp>=4.1.1` package, not the
@@ -163,8 +163,8 @@ vendor-compat routers, the websocket streaming routes, MCP, and even UTCP.
   resolves `lang=auto` (an explicitly requested language always wins).
 - **Utterance transformers** rewrite the *transcript* after ASR, before it is returned.
 
-Loading is config-gated and opt-in via the standard `mycroft.conf` sections. With no config
-the server behaves exactly as before:
+Loading is config-gated and opt-in via the standard `mycroft.conf` sections. With no config,
+the server runs no transformers:
 
 ```json
 {
@@ -204,7 +204,7 @@ To point a OpenVoiceOS (or compatible project) to a STT server you can use the c
 **Install**  
 
 ```bash
-pip install ovos-stt-plugin-server
+pip install --pre ovos-stt-plugin-server
 
 ```
 
@@ -326,8 +326,8 @@ server-backed engine as the fallback for when the light one comes back empty.
 
 ```dockerfile
 FROM python:3.11-slim
-RUN pip install --pre "ovos-stt-http-server>=0.25.1a3"
-RUN pip install {YOUR_STT_PLUGIN}
+RUN pip install --pre ovos-stt-http-server
+RUN pip install --pre {YOUR_STT_PLUGIN}
 ENTRYPOINT ["ovos-stt-server", "--engine", "{YOUR_STT_PLUGIN}"]
 
 ```
@@ -353,7 +353,7 @@ Pre-built containers are also available via the [ovos-docker-stt](https://github
 - **Audio Formats**: the native `/stt` endpoint takes raw PCM/WAV bytes. The
   vendor-compatible multipart routers (OpenAI, ElevenLabs, Groq, and the rest) accept
   other container formats only when `pydub` is installed, which the base install omits:
-  `pip install --pre 'ovos-stt-http-server[audio]>=0.25.1a3'`. Without that extra, uploading anything
+  `pip install --pre 'ovos-stt-http-server[audio]'`. Without that extra, uploading anything
   other than WAV through those routers returns HTTP **501** naming the missing format
   support.
 

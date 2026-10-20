@@ -61,9 +61,8 @@ pip install --pre 'ovos-agentic-loop[web]'
 ```
 
 !!! warning "Alpha channel only"
-    The stable `0.1.0` release ships seven of the eight loops below. The eighth,
-    `ovos-native-toolcall-loop`, arrives with `0.2.2a1`, so it needs `>=0.2.2a1` from the
-    prerelease channel.
+    `ovos-native-toolcall-loop` is in the prerelease channel only. Install the package with
+    `--pre` to get it.
 
 ---
 

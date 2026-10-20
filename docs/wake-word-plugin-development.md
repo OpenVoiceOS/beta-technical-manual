@@ -131,9 +131,8 @@ ovos-ww-plugin-mymodel.config = "ovos_ww_plugin_mymodel:MyWWConfig"
 
 ```
 
-> **Backward Compatibility**: `ovos-plugin-manager` still supports legacy
-> `mycroft.plugin.wake_word` entry points, but new plugins should use the `opm.*`
-> namespace.
+> **Entry point group**: `ovos-plugin-manager` also reads the
+> `mycroft.plugin.wake_word` group. Register a plugin under `opm.wake_word`.
 
 ### 3. Test it without OVOS
 

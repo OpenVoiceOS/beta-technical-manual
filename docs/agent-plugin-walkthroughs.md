@@ -3,7 +3,7 @@
 !!! abstract "In a nutshell"
     This page gives two front-to-back worked examples for writing an agent engine plugin
     (a `DocumentIndexerEngine` and a `ChatEngine`), a guide for migrating an existing
-    `QuestionSolver`-family plugin to the new agent engine API, and a pre-publish
+    `QuestionSolver`-family plugin to the agent engine API, and a pre-publish
     checklist. For picking the right base class and the rules every engine follows, see
     [Building Agent Plugins](building-agent-plugins.md).
 
@@ -64,7 +64,7 @@ config:
 [project]
 name = "ovos-notes-retrieval-plugin"
 version = "0.1.0"
-dependencies = ["ovos-plugin-manager>=2.4.0a1,<3.0.0"]
+dependencies = ["ovos-plugin-manager>=2.4.0a1"]
 
 [project.entry-points."opm.agents.retrieval.documents"]
 ovos-notes-retrieval = "ovos_notes_retrieval:NotesRetrieval"
@@ -153,14 +153,14 @@ else in the stack. See [Agents & Personas](personas.md) for the persona JSON for
 
 ## Migrating a solver plugin to an agent engine
 
-The old `QuestionSolver` family (`opm.solver.*` entry points, classes in
+The legacy `QuestionSolver` family (`opm.solver.*` entry points, classes in
 `ovos_plugin_manager.templates.solvers`) is deprecated. The entry-point-to-class mapping
 lives in [Deprecated Solver Types](agent-plugins.md#deprecated-solver-types).
 This section covers the code changes, which are small but not mechanical.
 
-**1. Pick the new base class.**
+**1. Pick the agent base class.**
 
-| Old solver class | New base class |
+| Solver class | Agent base class |
 |---|---|
 | `QuestionSolver` | `ChatEngine` (or `RetrievalEngine` — see exception below) |
 | `ChatMessageSolver` | `ChatEngine` |
@@ -171,7 +171,7 @@ This section covers the code changes, which are small but not mechanical.
 
 One exception: if your `QuestionSolver` was really a knowledge lookup (Wikipedia, Wolfram
 Alpha, a database), migrate it to `RetrievalEngine` instead of `ChatEngine`. The solver API
-had no retrieval type, so lookups were forced into the Q&A shape. The new API separates them.
+has no retrieval type, so a lookup must take the Q&A shape. The agent API has a separate type for it.
 
 **2. Rename the methods.** For a `QuestionSolver` moving to `ChatEngine`, the core
 change is from string-in/string-out to messages-in/message-out:
@@ -193,18 +193,17 @@ def continue_chat(self, messages, session_id="default",
 the returned string in an `AgentMessage` and update the dict-style messages to
 `AgentMessage` dataclasses. `stream_utterances` becomes `stream_sentences`.
 
-**3. Drop the auto-translation assumptions.** This is the trap. `QuestionSolver` had
-`enable_tx` and bidirectional auto-translation: a solver could declare
+**3. Drop the auto-translation assumptions.** This is the trap. `QuestionSolver` has
+`enable_tx` and bidirectional auto-translation: a solver can declare
 `supported_langs = ["en"]` and still receive every language, because the base class
-translated the input and output behind the scenes.
+translates the input and output behind the scenes.
 
 **Agent engines never translate.** After migration your engine receives the user's
 language as-is. Either handle it or return nothing for languages you do not support.
 
 Translation is still the recommended strategy for engines whose backend is inherently
-monolingual (Wolfram Alpha and most web APIs only speak English). What changed is who
-does it: the base class no longer translates for you, so the plugin re-implements it
-explicitly. Use the translation plugin system instead of hardcoding one translator.
+monolingual (Wolfram Alpha and most web APIs only speak English). The agent base class
+does not translate for you, so the plugin translates explicitly. Use the translation plugin system instead of hardcoding one translator.
 `OVOSLangTranslationFactory.create()` (in `ovos_plugin_manager.language`) returns the
 `LanguageTranslator` the user configured in the central `"language"` section of
 `mycroft.conf`, so every plugin honors one shared translation config:
@@ -251,11 +250,11 @@ my-plugin = "my_plugin:MySolver"
 my-plugin = "my_plugin:MyChatEngine"
 ```
 
-During a transition period a plugin may register under **both** groups, with the old
-class delegating to the new one. Ship the dual registration in a minor release, then
+During a transition period a plugin may register under **both** groups, with the solver
+class delegating to the agent class. Ship the dual registration in a minor release, then
 drop the solver entry point in the next major.
 
-### How ovos-persona keeps old solvers working
+### How ovos-persona loads legacy solvers {#how-ovos-persona-keeps-old-solvers-working}
 
 You do not need to migrate everything at once, because
 [ovos-persona](https://github.com/OpenVoiceOS/ovos-persona) loads both generations side
@@ -272,7 +271,7 @@ dispatches on type:
   and the top document becomes the answer.
 - `ChatMessageSolver` (legacy) → `get_chat_completion` with the full message list.
 - `QuestionSolver` (legacy) → `spoken_answer(last_utterance)`. **Chat history is
-  silently dropped**, because the old contract is single-turn. This is the main
+  silently dropped**, because the solver contract is single-turn. This is the main
   functional reason to migrate conversational plugins: under a persona, a
   `QuestionSolver` answers every turn as if it were the first.
 
@@ -283,21 +282,14 @@ generations freely during migration:
 {
   "name": "MixedPersona",
   "solvers": [
-    "my-new-chat-engine",
+    "my-chat-engine",
     "ovos-solver-failure-plugin"
   ]
 }
 ```
 
-The `"solvers"` key is itself legacy naming. Newer configs use `"handlers"`, and
-ovos-persona accepts both. One more back-compat layer sits below all this: with
-an `ovos-plugin-manager` from before the early 2.2.x alphas the `opm.agents.*` registries
-do not exist (they landed piecemeal from 2.2.x through `2.4.0a1`, where the option-matcher
-group arrived last; the example pin of `>=2.4.0a1` above is the safe floor that has all of
-them), and
-ovos-persona stubs them out so solver-only personas keep working. None of this
-back-compat is permanent. The solver classes stay loadable until the next major OPM
-release, and new plugins must not use them.
+The `"solvers"` key is legacy naming. Use `"handlers"`. ovos-persona accepts both.
+The solver classes are deprecated, and a plugin you write must not use them.
 
 ---
 

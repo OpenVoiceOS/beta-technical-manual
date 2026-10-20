@@ -8,12 +8,6 @@ answer, rank, summarize, remember, or resolve pronouns. You don't call them dire
 them in a [persona](personas.md) and the [PersonaService](personas.md#personaservice-pipeline-plugin)
 loads them. Each plugin advertises itself to OVOS through an OPM entry-point group.
 
-!!! note "Version requirement"
-    The agent plugin system (`opm.agents.*` entry-point groups) requires
-    **`ovos-plugin-manager >= 2.4.0a1`** (cap below `<3.0.0`); that floor covers every
-    group, including `opm.agents.option_matcher`, which arrived last. Older OPM releases
-    don't know these groups.
-
 **For advanced users:** every agent engine subclasses an abstract base in
 `ovos_plugin_manager.templates.agents` and registers under one `opm.agents.*` group (each with a
 parallel `*.config` group for config metadata). The discovery helpers live in
@@ -57,8 +51,8 @@ a specific NLP sub-problem and registers under its own OPM entry point group. Th
 discoverable, configurable, and usable together with other engine types on its own.
 
 All base classes live in `ovos_plugin_manager.templates.agents`. The deprecated solver API
-(`opm.solver.*`) is covered in [Deprecated Solver Types](#deprecated-solver-types) below. Migrate
-to `opm.agents.*` for all new plugins.
+(`opm.solver.*`) is covered in [Deprecated Solver Types](#deprecated-solver-types) below. Use
+`opm.agents.*` for every plugin you write.
 
 ### ReRanker: `opm.agents.reranker`
 
@@ -79,9 +73,9 @@ best = engine.select_answer("play bohemian rhapsody", candidates)
 
 !!! note "Score semantics"
     `ReRankerEngine.rerank()` returns `(score, option)` pairs, but the base class does
-    **not** fix the score's scale. It is whatever the underlying model produces. There
-    is no `ReRankerEngine` implementation shipped by an OpenVoiceOS-org repository yet;
-    the de-facto reranker, `ovos-flashrank-reranker-plugin`, still registers only the
+    **not** fix the score's scale. It is whatever the underlying model produces. No
+    OpenVoiceOS-org repository ships a `ReRankerEngine` implementation. The reranker in
+    use, `ovos-flashrank-reranker-plugin`, registers only the
     legacy `opm.solver.multiple_choice` group (a `MultipleChoiceSolver`), which is what
     the Common Query pipeline actually loads. Its scores land in **`[0, 1]`** because
     the underlying FlashRank library normalizes cross-encoder outputs, so
@@ -106,8 +100,7 @@ best = engine.select_answer("play bohemian rhapsody", candidates)
 ```
 
 The `reranker` key names an installed legacy `opm.solver.multiple_choice` plugin (see the
-note above); it will name an `opm.agents.reranker` plugin once one ships and the pipeline
-migrates its loader.
+note above).
 
 ---
 
@@ -130,7 +123,7 @@ answer = engine.get_best_passage(evidence, "How tall is the Eiffel Tower?")
 
 ```
 
-No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
+No OVOS org plugin implements this type. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
 
 ---
 
@@ -166,7 +159,7 @@ summary_text = engine.summarize(messages)
 
 ```
 
-No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
+No OVOS org plugin implements this type. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
 
 ---
 
@@ -183,7 +176,7 @@ print(engine.predict_entailment("It is sunny.", "You need an umbrella."))       
 
 ```
 
-No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
+No OVOS org plugin implements this type. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
 
 ---
 
@@ -201,7 +194,7 @@ print(engine.yes_or_no("Ready?", "what do you mean?"))                        # 
 
 Use this in skills when `ask_yesno()` receives uncertain phrasing like "I guess" or "maybe".
 
-No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
+No OVOS org plugin implements this type. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
 
 ---
 
@@ -252,7 +245,7 @@ have `resolve()` apply previously registered context and learn new mappings from
 `context_ttl` (config key, default `120` s) controls how long a tracked context entry remains
 valid before it is pruned.
 
-No implementation ships in the OVOS org today. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
+No OVOS org plugin implements this type. The base class and entry-point group exist so a plugin can provide one — see [Building Agent Plugins](building-agent-plugins.md).
 
 ---
 
@@ -317,8 +310,8 @@ Provided by any installed `opm.agents.chat.multimodal` plugin.
 
 ## Deprecated Solver Types
 
-The legacy `opm.solver.*` entry points are deprecated and will be removed in the next major
-release. Migrate existing plugins to the corresponding `opm.agents.*` types.
+The legacy `opm.solver.*` entry points are deprecated. Migrate existing plugins to the
+corresponding `opm.agents.*` types.
 
 | Deprecated entry point | Replacement | Why |
 |---|---|---|
@@ -331,8 +324,7 @@ release. Migrate existing plugins to the corresponding `opm.agents.*` types.
 | `opm.coreference` | `opm.agents.coref` | Moved under the unified `opm.agents.*` namespace alongside the other engine types. |
 
 The deprecated classes remain in `ovos_plugin_manager.templates.solvers` and are still loaded
-by `PersonaService` and `QuestionSolversService` for backwards compatibility. But no new
-plugins should use them.
+by `PersonaService` and `QuestionSolversService`. Do not use them in a plugin you write.
 
 ---
 
@@ -359,8 +351,7 @@ plugins should use them.
 --8<-- "snippets/maturity-disclaimer.md"
 
 !!! note "`ovos-solver-YesNo-plugin` is deprecated"
-    Superseded by [ovos-YesNo-plugin](https://github.com/OpenVoiceOS/ovos-YesNo-plugin)
-    (needs `ovos-plugin-manager>=2.4.0`). See [Deprecated Repos](deprecated-repos.md).
+    Use [ovos-YesNo-plugin](https://github.com/OpenVoiceOS/ovos-YesNo-plugin) instead. See [Deprecated Repos](deprecated-repos.md).
 
 See [Tool Plugins: Available ToolBoxes](tool-plugins.md#available-toolboxes) and
 [Tool Plugins: Available Chat Engines](tool-plugins.md#available-chat-engines) for the

@@ -30,7 +30,7 @@
 
 - **GitHub**: [OpenVoiceOS/ovos-solver-plugin-aiml](https://github.com/OpenVoiceOS/ovos-solver-plugin-aiml)
 
-- **Install**: `pip install ovos-solver-aiml-plugin`. The package and handler name put the words in a different order from the repo name.
+- **Install**: `pip install --pre ovos-solver-aiml-plugin`. The package and handler name put the words in a different order from the repo name.
 
 
 - **Description**: A rule-based chatbot answer engine for OVOS, using AIML pattern matching.
@@ -142,8 +142,7 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 - **Config**: no config keys. It works out of the box with no settings to tune.
 
 !!! note "Deprecated"
-    Superseded by [ovos-YesNo-plugin](https://github.com/OpenVoiceOS/ovos-YesNo-plugin)
-    (needs `ovos-plugin-manager>=2.4.0`). See [Deprecated Repos](deprecated-repos.md).
+    Use [ovos-YesNo-plugin](https://github.com/OpenVoiceOS/ovos-YesNo-plugin) instead. See [Deprecated Repos](deprecated-repos.md).
 
 ---
 
@@ -174,9 +173,7 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 - **Install**: see [Persona server](persona-server.md).
 
     !!! warning "Alpha channel only"
-        `pip install --pre ovos-persona-server`. The last stable `ovos-persona`, `0.7.1`, does
-        not declare `ovos-workshop`, so an install from the stable channel imports with
-        `ModuleNotFoundError`.
+        Install the server from the prerelease channel: `pip install --pre ovos-persona-server`.
 
 
 - **Description**: Standalone server that exposes an OVOS persona over an HTTP API (e.g. `ovos-persona-server --persona rivescript_bot.json`).
@@ -187,7 +184,7 @@ Per-collection metadata defaults `hnsw:space` to `cosine` when not specified.
 
 - **GitHub**: [OpenVoiceOS/ovos-solver-plugin-rivescript](https://github.com/OpenVoiceOS/ovos-solver-plugin-rivescript)
 
-- **Install**: `pip install ovos-solver-rivescript-plugin`. The package and handler name put the words in a different order from the repo name.
+- **Install**: `pip install --pre ovos-solver-rivescript-plugin`. The package and handler name put the words in a different order from the repo name.
 
 
 - **Description**: A rule-based chatbot answer engine for OVOS, using RiveScript pattern matching.

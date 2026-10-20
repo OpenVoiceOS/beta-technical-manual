@@ -103,7 +103,7 @@ A package with one `ToolBox` class. The class declares its tools with Pydantic m
 
 ## Where the tool shows up
 
-| Component | How the tool appears | Story |
+| Component | How the tool appears | Task |
 |---|---|---|
 | `ovos-persona-server` | An MCP tool `add` and a UTCP tool `add` | [Use persona tools over MCP and UTCP](ai-agent-persona-tools.md) |
 | `ovos-PHAL-plugin-tools` | `ovos.tools.invoke` with `{"name": "add"}` on the messagebus | [Share tools on the messagebus](ai-agent-bus-tools.md) |

@@ -22,7 +22,7 @@ glue code is required.
 **Install the server**
 
 ```bash
-pip install ovos-tts-server
+pip install --pre ovos-tts-server
 
 ```
 
@@ -83,8 +83,8 @@ options:
 ```
 
 Flag details the short help text leaves out: the port defaults to `9666` and the host to
-`0.0.0.0`. The companion plugin defaults to `/v2/synthesize` on that port; if you point an
-old client at the legacy `/synthesize/{utterance}` path, set `"v2": false` in its config.
+`0.0.0.0`. The companion plugin defaults to `/v2/synthesize` on that port. To use the
+legacy `/synthesize/{utterance}` path, set `"v2": false` in its config.
 When `--lang` is omitted, the plugin uses its own configured `lang`, then the top-level
 config `lang`, then falls back to `"mul"`.
 
@@ -104,7 +104,7 @@ config `lang`, then falls back to `"mul"`.
   Spins up a FastAPI application exposing RESTful endpoints for synthesis and status checks.
 
 - **Plugin Loading**  
-  `--engine` names any `opm.tts` plugin entry point. It is loaded dynamically via the OVOS Plugin Manager, so no code changes are needed when adding new voices. Plugin config is read from the `tts` section of your `mycroft.conf`.
+  `--engine` names any `opm.tts` plugin entry point. It is loaded dynamically via the OVOS Plugin Manager, so you add a voice with no code changes. Plugin config is read from the `tts` section of your `mycroft.conf`.
 
 - **Caching**  
   When `--cache` is enabled, every synthesis request is stored on disk for debugging or reuse.
@@ -144,8 +144,8 @@ synthesis, on every synthesis surface (native endpoints and vendor-compat router
 - **TTS transformers** post-process the *synthesized audio* (e.g. loudness normalization,
   effects).
 
-Loading is config-gated and opt-in via the standard `mycroft.conf` sections. With no config
-the server behaves exactly as before:
+Loading is config-gated and opt-in via the standard `mycroft.conf` sections. With no config,
+the server runs no transformers:
 
 ```json
 {
