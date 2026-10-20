@@ -157,11 +157,12 @@ By default the server is a **stateless passthrough**. The client owns conversati
 state. Two modes are selected by the `CHAT_MEMORY` environment variable:
 
 - `off` (default): *backend* mode, stateless. The client drives the Files /
-  Vector-Stores endpoints itself. Use this for multi-user / drop-in-OpenAI
-  deployments (a shared server memory would leak across users).
-- `transparent`: single-user *hosted agent* mode. The server keys history by
+  Vector-Stores endpoints itself. Use this for drop-in-OpenAI
+  deployments and untrusted clients (a shared server memory would leak across callers).
+- `transparent`: *hosted agent* mode for one user or several trusted users. The server keys history by
   session (the OpenAI `user` field, else a default session) and folds the persona's
-  `memory_module` into every turn.
+  `memory_module` into every turn. The server trusts the `user` field and does not
+  check it, so keep this mode off for untrusted clients.
 
 The embeddings endpoints and vector-store search share one embeddings backend,
 configured via environment variables:
