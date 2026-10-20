@@ -295,7 +295,7 @@ separately-licensed model, that is called out under "model".
 | [ovos-ww-plugin-openWakeWord](#ovos-ww-plugin-openwakeword) | Wake-word detection using the open-source openWakeWord neural models. | Apache-2.0 (model: see model card) | Stable |
 | [ovos-ww-plugin-vosk](#ovos-ww-plugin-vosk) | Mycroft wake-word plugin for [Vosk](https://alphacephei.com/vosk/) | Apache-2.0 (model: see model card) | Stable |
 | [ovos-ww-plugin-precise-onnx](#ovos-ww-plugin-precise-onnx) | The first `hey_mycroft` engine on the alpha channel: a Precise wake-word model exported to ONNX. | Apache-2.0 | Beta |
-| [ovos-ww-plugin-wakewordlab](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakewordlab) | Compact (~240 KB) neural wake-word models with a Silero VAD pre-filter (`.wkw`/`.onnx`). **Not yet on PyPI**, install from source. | Apache-2.0 | Alpha |
+| [ovos-ww-plugin-wakewordlab](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakewordlab) | Compact (~240 KB) neural wake-word models with a Silero VAD pre-filter (`.wkw`/`.onnx`). For benchmarks only: the models are for non-commercial use, and the training code is not public. **Not yet on PyPI**, install from source. | Non-commercial (upstream models) | Alpha |
 | [ovos-ww-plugin-microwakeword](https://github.com/OpenVoiceOS/ovos-ww-plugin-microwakeword) | Runs [microWakeWord](https://github.com/kahrendt/microWakeWord) streaming TFLite models (the ESPHome wake-word engine), `hey_mycroft` included. On PyPI as an alpha. | Apache-2.0 | Alpha |
 | [ovos-ww-plugin-wakeforge](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakeforge) | Runs [ready WakeForge models](#ready-wakeforge-models), zero-shot wake words typed as IPA phones (`ovos-ww-plugin-wakeforge-zeroshot`), and custom models trained with [wakeforge](https://github.com/TigreGotico/wakeforge). A fallback for `hey_mycroft` on the alpha channel. | Apache-2.0 | Alpha |
 | ovos-ww-plugin-server | Remote wake-word detection: streams audio to an `ovos-ww-server` instance (offload detection from a thin satellite). **Not available yet** — not on PyPI, and both repositories are still private. | Apache-2.0 | Alpha |
@@ -466,4 +466,4 @@ configuration key.
 
 ---
 **Read next:** [STT Plugins](stt-plugins.md)
-**Related:** [Wake-word Plugin Development](wake-word-plugin-development.md) · [Wake-word Verifiers](ww-verifier.md) · [VAD Plugins](vad-plugins.md) · [Choosing Plugins](choosing-plugins.md) · [Precise Wake-word Engine Goes ONNX!](https://blog.openvoiceos.org/posts/2025-11-03-precise-onnx)
+**Related:** [Wake Word Guide](wake-word-guide.md) · [Wake-word Plugin Development](wake-word-plugin-development.md) · [Wake-word Verifiers](ww-verifier.md) · [VAD Plugins](vad-plugins.md) · [Choosing Plugins](choosing-plugins.md) · [Precise Wake-word Engine Goes ONNX!](https://blog.openvoiceos.org/posts/2025-11-03-precise-onnx)

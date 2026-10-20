@@ -179,6 +179,7 @@ OVOS wake-word plugin wrapping [microWakeWord](https://github.com/kahrendt/micro
 - [Wake-word Plugins](wake-word-plugins.md): detection plugin reference
 - [VAD Plugins](vad-plugins.md)
 - [Listener / Speech Service](speech-service.md)
+- [Stop Wake-ups from the TV](ww-tv.md): measured effect of each verifier
 
 ## Further reading
 
