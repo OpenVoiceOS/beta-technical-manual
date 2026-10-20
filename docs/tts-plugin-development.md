@@ -49,7 +49,29 @@ plugin as supporting no language.
 
 To make the class detectable as a TTS plugin, the package needs to provide an entry point under the `opm.tts` namespace. To expose your sample configurations (the `MyTTSConfig` dict below) for UI discovery, register them under `opm.tts.config`:
 
+The smallest package has this layout:
+
+```text
+ovos-tts-plugin-example/
+├── pyproject.toml
+└── my_tts/
+    └── __init__.py
+```
+
+The `pyproject.toml` declares the package and its two entry-point groups. Put a key that
+contains a dot in quotes. Without quotes, TOML reads `example_tts.config` as a nested table
+and the build fails:
+
 ```toml
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ovos-tts-plugin-example"
+version = "0.1.0"
+dependencies = ["ovos-plugin-manager"]
+
 [project.entry-points."opm.tts"]
 example_tts = "my_tts:MyTTSPlugin"
 
@@ -112,8 +134,8 @@ class MyTTSValidator(TTSValidator):
         pass
 
 class MyTTSPlugin(TTS):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs, validator=MyTTSValidator(self))
+    def __init__(self, config=None):
+        super().__init__(config=config, validator=MyTTSValidator(self))
 ```
 
 See [OVOS Plugin Manager: Writing a Plugin](plugin-manager.md#writing-a-plugin) for how
@@ -150,7 +172,7 @@ from ovos_utils import classproperty
 from ovos_plugin_manager.templates.tts import TTS
 
 class MyTTSPlugin(TTS):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, config=None):
         # Output format, and the SSML tags this engine GENUINELY handles.
         # Most engines support none — leave ssml_tags empty/omitted (the
         # default) and OVOS strips all SSML before get_tts() runs. Only list
@@ -158,7 +180,7 @@ class MyTTSPlugin(TTS):
         # passed through to get_tts() (optionally rewritten via modify_tag()).
         # Full SSML tag set an engine COULD support, for reference:
         #   ["speak", "s", "w", "voice", "prosody", "say-as", "break", "sub", "phoneme"]
-        super().__init__(*args, **kwargs, audio_ext="wav")
+        super().__init__(config=config, audio_ext="wav")
         
         # Read plugin-specific settings from config
         self.voice = self.config.get("voice", "default")
