@@ -48,7 +48,7 @@ New `core.pipeline`, `2.0.0` and later:
 ```
 
 `adapt_low` and `common_qa` are dropped from the default list entirely — they
-are standalone opt-in plugins now. Add `"ovos-adapt-pipeline-plugin-low"` and
+are standalone opt-in plugins. Add `"ovos-adapt-pipeline-plugin-low"` and
 the common-query plugin ID back explicitly if you still want them.
 
 These are the pipeline stages as they stood at `2.0.0`, already in the new plugin-id

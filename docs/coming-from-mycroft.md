@@ -8,7 +8,7 @@
     there is no cloud account anymore. New to the words here? See the
     [Glossary](glossary.md).
 
-This page is for people who *use* a voice assistant. If you wrote Mycroft skills and want
+This guide is for people who *use* a voice assistant. If you wrote Mycroft skills and want
 to port them, read [Migrating from Mycroft](migrating-from-mycroft.md) instead.
 
 ## What stays the same
@@ -22,8 +22,8 @@ to port them, read [Migrating from Mycroft](migrating-from-mycroft.md) instead.
 
 - **No account, no pairing.** There is no `home.mycroft.ai` and no pairing code on first
   boot. The device works out of the box.
-- **Settings live on the device.** Anything you used to change on the Mycroft web
-  dashboard is now a local setting. Most everyday changes work by voice or through a
+- **Settings live on the device.** Anything you changed on the Mycroft web
+  dashboard is a local setting. Most everyday changes work by voice or through a
   small config edit. Start with [Make it yours](personalize.md).
 - **Speech services are yours to pick.** STT and TTS come from swappable plugins. You can
   run them on-device, on your own server, or use public servers. See

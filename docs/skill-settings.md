@@ -1,14 +1,14 @@
 # Skill Settings
 
 !!! abstract "In a nutshell"
-    "Settings" are a skill's saved preferences, such as a username, an API key, or a chosen option. They stick around even after a restart. This page shows how a skill reads and writes those values, and how it reacts when a user changes them. For an optional (legacy) settings form used by community config tools, see [Skill Settings Meta](skill-settings-meta.md). For term definitions, see the [Glossary](glossary.md).
+    "Settings" are a skill's saved preferences, such as a username, an API key, or a chosen option. They stick around even after a restart. The sections below show how a skill reads and writes those values, and how it reacts when a user changes them. For an optional (legacy) settings form used by community config tools, see [Skill Settings Meta](skill-settings-meta.md). For term definitions, see the [Glossary](glossary.md).
 
 Settings provide per-skill persistent key-value storage backed by a JSON file. They let users configure skill behavior: changing defaults, providing API keys, or adjusting integration preferences.
 
 !!! tip "Which file does what"
     | File | Holds | Covered on |
     |---|---|---|
-    | `settings.json` | The runtime values a user actually set. | This page. |
+    | `settings.json` | The runtime values a user actually set. | The sections below. |
     | `settingsmeta.json`/`.yaml` | The UI declaration: which fields a settings UI should show. | [Skill Settings Meta](skill-settings-meta.md) |
     | `skill.json` | Packaging metadata for distribution (id, author, requirements). | [Skill Packaging: skill.json](skill-json.md) |
 

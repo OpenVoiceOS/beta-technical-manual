@@ -1,7 +1,7 @@
 # Server Compatibility Layers
 
 !!! abstract "In a nutshell"
-    The OVOS servers (for speech-to-text, text-to-speech, translation, and chat personas) can *impersonate* popular commercial services such as OpenAI, Google, DeepL, and ElevenLabs. This page lists which imitations each server offers. The benefit is simple: an app written to talk to one of those services can point at your own OVOS server instead, with no code changes. Think of it as a power adapter that lets the same plug fit a different socket. See the [STT Server](stt-server.md), [TTS Server](tts-server.md), [Translate Server](translate-server.md), and [Persona Server](persona-server.md) pages, or the [Glossary](glossary.md).
+    The OVOS servers (for speech-to-text, text-to-speech, translation, and chat personas) can *impersonate* popular commercial services such as OpenAI, Google, DeepL, and ElevenLabs. The tables below list which imitations each server offers. The benefit is simple: an app written to talk to one of those services can point at your own OVOS server instead, with no code changes. Think of it as a power adapter that lets the same plug fit a different socket. See the [STT Server](stt-server.md), [TTS Server](tts-server.md), [Translate Server](translate-server.md), and [Persona Server](persona-server.md) pages, or the [Glossary](glossary.md).
 
 Each OVOS service server exposes vendor-prefixed routers. Existing clients and integrations can connect without modification. Every router accepts the vendor's original request format and translates it to the native OVOS plugin call.
 

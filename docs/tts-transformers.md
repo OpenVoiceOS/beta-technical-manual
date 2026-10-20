@@ -114,7 +114,7 @@ Replace `"plugin_name"` with the identifier of the desired plugin and provide an
 ---
 
 !!! warning "Alpha channel only"
-    The following super-resolution transformers exist in their repos but are **not yet published to PyPI**, so `pip install` will not find them. They upsample/enhance the TTS audio before playback.
+    The following super-resolution transformers exist in their repos but are **not published to PyPI**, so `pip install` will not find them. They upsample/enhance the TTS audio before playback.
 
     * **OVOS FlashSR TTS Transformer** (`FlashSRTTSTransformer`): ONNX-based audio super-resolution, downloads its model from the Hugging Face Hub. Entry point `ovos-tts-transformer-FlashSR` under `opm.transformer.tts`. Source: [ovos_tts_transformer_FlashSR](https://github.com/OpenVoiceOS/ovos_tts_transformer_FlashSR).
     * **OVOS NovaSR TTS Transformer** (`NovaSRTTSTransformer`): torch-based super-resolution upsampler. Entry point `ovos-tts-transformer-NovaSR` under `opm.transformer.tts`. Source: [ovos_tts_transformer_NovaSR](https://github.com/OpenVoiceOS/ovos_tts_transformer_NovaSR).
@@ -123,10 +123,9 @@ Replace `"plugin_name"` with the identifier of the desired plugin and provide an
 
 ### **OVOS AudioSR TTS Transformer**
 
-!!! warning "Not yet on PyPI"
-    Like FlashSR and NovaSR above, `ovos-tts-transformer-audiosr` has no PyPI release yet
-    (only prerelease tags on GitHub) — the config below is for when it ships, or a
-    from-source install.
+!!! warning "Not on PyPI"
+    Like FlashSR and NovaSR above, `ovos-tts-transformer-audiosr` has no PyPI release
+    (only prerelease tags on GitHub). The config below is for a from-source install.
 
 Engine-agnostic ONNX audio super-resolution transformer (`opm.transformer.tts`). It upscales
 **any** TTS engine's output to 48 kHz just before playback, rather than being tied to one voice

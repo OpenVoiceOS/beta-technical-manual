@@ -1,7 +1,7 @@
 # linguonnx Language Plugins
 
 !!! abstract "In a nutshell"
-    One package gives OVOS offline language detection and offline translation. It runs the models on your own machine, so text never leaves the device. It reaches 593 languages by routing a translation through one or two models instead of holding a single large one. This page shows how to install it, how to configure it, and which settings bound the memory it uses. See [Translation Plugins](translation-plugins.md) and the [Glossary](glossary.md).
+    One package gives OVOS offline language detection and offline translation. It runs the models on your own machine, so text never leaves the device. It reaches 593 languages by routing a translation through one or two models instead of holding a single large one. The sections below show how to install it, how to configure it, and which settings bound the memory it uses. See [Translation Plugins](translation-plugins.md) and the [Glossary](glossary.md).
 
 `ovos-plugin-linguonnx` ships two plugins in one package:
 

@@ -16,7 +16,7 @@
 | ⬤⬤⬤◯◯ | **Beta** | Works and is in real use, but younger or still settling — expect the occasional breaking change. Fine to build on with an eye on releases. |
 | ⬤⬤◯◯◯ | **Alpha** | Functional but early: the API churns, coverage is thin, and it may change substantially. Try it, pin it, don't build a product on it yet. |
 | ⬤◯◯◯◯ | **Proof-of-concept** | A spike or reference implementation. It may work, but it is not maintained as a product and may disappear. For exploration only. |
-| ⚠️ | **Deprecated** | The repository is archived or no longer maintained. Avoid it for new work; the page notes what replaces it where a replacement exists. |
+| ⚠️ | **Deprecated** | The repository is archived or not maintained. Avoid it for new work; the page notes what replaces it where a replacement exists. |
 
 !!! info "How maturity is judged"
     A component's rating comes from the **health of its source repository**, not its version

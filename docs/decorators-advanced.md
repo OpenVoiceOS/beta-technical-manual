@@ -1,7 +1,7 @@
 # Advanced Decorators
 
 !!! abstract "In a nutshell"
-    Beyond the everyday intent and context decorators, three advanced families cover interruption handling, modal intent groups, and media playback. This page gathers the killable/abortable decorators, the intent layer decorators, and the OCP decorators. Looking for the everyday ones? See [Decorators](decorators.md).
+    Beyond the everyday intent and context decorators, three advanced families cover interruption handling, modal intent groups, and media playback. They are the killable/abortable decorators, the intent layer decorators, and the OCP decorators. Looking for the everyday ones? See [Decorators](decorators.md).
 
 ---
 
@@ -224,14 +224,13 @@ def reset_everything(self, message):
 
 ## OCP Decorators
 
-!!! warning "Media search is moving out of skills"
+!!! warning "Media search belongs in MediaProvider plugins"
     The **media search/provider** role (a skill implementing `@ocp_search` to
-    return media results) is being deprecated. A new class of **media-search
-    plugins**, consumed directly by the [OCP pipeline plugin](ocp-pipeline.md), is
-    replacing it (PRs in progress). Other OCP skill uses are **not** going away.
-    Voice games (`OVOSGameSkill`), ebook readers, and playback handlers remain
-    supported. The decorators below still work today. New media-search
-    integrations should target the upcoming media-search plugin type rather than an
+    return media results) is deprecated. **MediaProvider plugins**
+    (`opm.media.provider`), loaded in-process by the [OCP pipeline plugin](ocp-pipeline.md),
+    replace it. Other OCP skill uses stay supported:
+    voice games (`OVOSGameSkill`), ebook readers, and playback handlers. The decorators
+    below work. Write a media-search integration as a MediaProvider plugin rather than an
     `@ocp_search` skill.
 
 OCP (OpenVoiceOS [Common Play](ocp-pipeline.md)) decorators are used with `OVOSCommonPlaybackSkill` and `OVOSGameSkill`.

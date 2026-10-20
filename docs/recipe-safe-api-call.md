@@ -8,7 +8,7 @@
 !!! note
     This recipe also shows `runtime_requirements`, the declaration a skill uses to state what
     connectivity it needs. See [Runtime Requirements](skill-runtime-requirements.md) for how
-    the loader uses it. New skills don't need it for the timeout/cache/spoken-error
+    the loader uses it. A skill does not need it for the timeout/cache/spoken-error
     pattern below, which works regardless.
 
 ```python

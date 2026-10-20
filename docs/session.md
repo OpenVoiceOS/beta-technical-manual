@@ -4,7 +4,7 @@
     Long-lived and actively maintained. Depend on it freely. Rated by [repository health](maturity.md), not version.
 
 !!! abstract "In a nutshell"
-    One OVOS device can talk to several people at once: your phone, a kitchen speaker, and other connected devices may all be asking it things at the same time. A *session* is simply the information that says who is asking and in what language. If your skill remembers anything between requests, like a running game or a chat history, it needs to keep each person's information separate so two users don't get each other's answers, much like separate tables at a restaurant. Key that state by `session_id` instead of stashing it in a single instance variable. This page shows how to make a skill session aware. New terms are explained in the [Glossary](glossary.md).
+    One OVOS device can talk to several people at once: your phone, a kitchen speaker, and other connected devices may all be asking it things at the same time. A *session* is simply the information that says who is asking and in what language. If your skill remembers anything between requests, like a running game or a chat history, it needs to keep each person's information separate so two users don't get each other's answers, much like separate tables at a restaurant. Key that state by `session_id` instead of stashing it in a single instance variable. The sections below show how to make a skill session aware. New terms are explained in the [Glossary](glossary.md).
 
 ??? info "Formal specification"
     **SESSION-1 is the field registry.** Other specs *claim* fields into it (e.g. `intent_context` → CONTEXT-1, the transformer-chain lists → OVOS-TRANSFORM-1). See also the [spec index](architecture-specs.md).
@@ -105,10 +105,7 @@ For a named session, repeated calls to `SessionManager.get(message)` for the sam
     same discipline, not by any message that reconciles them from the server side.
     Connecting to the bus does not announce anything either: a client derives its own
     default session from local configuration and converges by adopting what it
-    observes on the bus, not from a push at connect time (`ovos-bus-client` >=
-    2.11.6a1, OVOS-SESSION-2 §2.7). A skill container on an older `ovos-bus-client`
-    joining a pre-spec bus (`ovos-core` 1.3.x) instead overwrote the core's default
-    session on connect, breaking local intent matching — upgrade both sides together.
+    observes on the bus, not from a push at connect time (OVOS-SESSION-2 §2.7).
 
 !!! note "A present-but-malformed session never crashes the bus client"
     `Session.from_message` treats an *absent* `session` key (or an explicit
@@ -207,7 +204,7 @@ timezone, whatever its own configuration says. The omission is conformant, so th
 keep the satellite's own timezone is to declare it, not to file a specification defect.
 
 !!! warning "Alpha channel only"
-    `ovos-bus-client` stamps the field from `2.11.19a1`. A process that constructs the
+    `ovos-bus-client` stamps the field. A process that constructs the
     session it originates, and passes no `location`, declares the `lat`, `lon` and `tz`
     its deployment configures. A session rebuilt from a received carrier keeps what that
     carrier held, so a component that derives a session it did not originate still
@@ -276,7 +273,7 @@ one, falling back to Configuration otherwise.
 
     A named `session_id` gets no such treatment. The orchestrator holds no state for it
     between utterances (OVOS-SESSION-2 §2.2). Its session is built fresh from whatever
-    that one message's carrier contains. This is why the earlier warning on this page
+    that one message's carrier contains. This is why the warning above
     insists a client replay the **complete** session on every message for a named
     session: there is nothing stored to fill in what it omits.
 

@@ -1,7 +1,7 @@
 # Skill Classes
 
 !!! abstract "In a nutshell"
-    A "skill" is an add-on that gives your voice assistant a new ability. Rather than building each one from scratch, you start from a ready-made template (a "base class") and customize it. This page lists the available templates: a general-purpose one and specialized ones for things like games, media playback, or catch-all replies, so you can pick the closest fit. Unsure what a term means? See the [Glossary](glossary.md). For hands-on basics see [Skill Best Practices](skill-best-practices.md).
+    A "skill" is an add-on that gives your voice assistant a new ability. Rather than building each one from scratch, you start from a ready-made template (a "base class") and customize it. The available templates are a general-purpose one and specialized ones for things like games, media playback, or catch-all replies, so you can pick the closest fit. Unsure what a term means? See the [Glossary](glossary.md). For hands-on basics see [Skill Best Practices](skill-best-practices.md).
 
 `ovos-workshop` provides all base classes needed to write skills for OpenVoiceOS. Every skill ultimately inherits from `OVOSSkill`.
 
@@ -201,7 +201,7 @@ the `validator`, `on_fail`, and `num_retries` options.
 ### RuntimeRequirements
 
 !!! note
-    `RuntimeRequirements` is a deprecated mechanism. See [Runtime Requirements](skill-runtime-requirements.md) for what it currently does.
+    `RuntimeRequirements` is a deprecated mechanism. See [Runtime Requirements](skill-runtime-requirements.md) for what it does.
 
 Override the class property to declare connectivity needs:
 
@@ -240,7 +240,7 @@ implement, lives on **[Skill Classes Reference](skill-classes-reference.md)**.
 
 | If you need... | Use | Extends |
 |---|---|---|
-| A plain intent-driven skill | `OVOSSkill` (this page) | — |
+| A plain intent-driven skill | [`OVOSSkill`](#ovosskill) | — |
 | Explicit converse control (`activate()`/`deactivate()`) | [ConversationalSkill](skill-classes-reference.md#conversationalskill) | `OVOSSkill` |
 | A skill that's always in the converse active-skills list | [ActiveSkill](skill-classes-reference.md#activeskill) | `ConversationalSkill` |
 | A skill that passively hears every utterance without claiming any (e.g. metrics) | `PassiveSkill` | `ActiveSkill` |

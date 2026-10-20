@@ -11,7 +11,7 @@
     3. **Send unanswered questions to it**: enable the [persona pipeline](persona-pipeline.md)
        with `handle_fallback: true`.
 
-    After these steps, the LLM answers anything that no skill handles. The rest of this page is the full
+    After these steps, the LLM answers anything that no skill handles. The sections below give the full
     architecture. You don't need it to get started.
 
 OpenVoiceOS (OVOS) provides a flexible, modular system for integrating AI agents into voice-first
@@ -28,7 +28,7 @@ Agent engines are the building blocks. Each engine type solves one well-defined 
 are discovered and loaded by `ovos-plugin-manager` at runtime using Python entry points.
 
 See [Agent Plugins](agent-plugins.md) for the full `opm.agents.*` entry-point table. The
-engine types used on this page are:
+engine types used below are:
 
 | Entry point group | Base class | Purpose |
 |---|---|---|

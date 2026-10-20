@@ -106,8 +106,7 @@ Returns a list of well-known config paths. Treat it as a rough guide, not as the
 - `/etc/xdg/mycroft/mycroft.conf` is **not** in the list, but it is loaded — merged just
   before the user config, so the user's own file wins over it.
 - The deprecated web-cache path sits fourth in this list, after default, distribution, and
-  system. `load_all_configs()` does not merge it at all. `ovos-config` 3.0.0a1 dropped the
-  remote-config layer as a breaking change.
+  system. `load_all_configs()` does not merge it at all. There is no remote-config layer.
 - The path environment variables below are ignored — the function rebuilds
   `/usr/share/<base>/<file>` and `/etc/<base>/<file>` literally.
 

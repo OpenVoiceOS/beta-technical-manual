@@ -1,10 +1,10 @@
 # Development Environment
 
 !!! abstract "In a nutshell"
-    This page covers the workflow for fixing a bug in `ovos-core` or another core repository:
-    cloning the repo, installing it editable in an isolated environment, running the service
-    you are changing against the rest of an installed stack, reloading a skill while you edit
-    it, attaching a debugger, and running the repo's own test suite. For the day-to-day
+    Fix a bug in `ovos-core` or another core repository with this workflow:
+    clone the repo, install it editable in an isolated environment, run the service
+    you change against the rest of an installed stack, reload a skill while you edit
+    it, attach a debugger, and run the repo's own test suite. For the day-to-day
     commands OVOS ships once installed, see [Command-line Tools](cli-tools.md). For the
     release pipeline a change goes through after it leaves your machine, see
     [Contributing](contributing.md).

@@ -8,7 +8,7 @@
 
 Not in the default pipeline. Add its stage IDs to `intents.pipeline` explicitly to use it.
 
-The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
+The sections below are for people who deploy or customize OVOS.
 
 ??? info "Formal specification"
     Common Query is specified by **[OVOS-COMMON-QUERY-1: Common Query Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. See the [spec index](architecture-specs.md).
@@ -130,13 +130,13 @@ The matcher class is `CommonQAService` (a `PipelinePlugin`, so it exposes a sing
 ```
 
 The config block is read from `intents.ovos-common-query-pipeline-plugin`, falling
-back to the older `intents.common_query` key.
+back to the legacy `intents.common_query` key.
 
 | Key | Default | Description |
 |-----|---------|-------------|
 | `min_self_confidence` | `0.5` | Minimum confidence a skill must self-report to be considered. |
 | `min_reranker_score` | `0.2` | Minimum reranker score to accept a reranked answer. |
-| `reranker` | `ovos-flashrank-reranker-plugin` | An installed reranker plugin name used to reorder candidate answers, if installed. The pipeline still loads this through the legacy `opm.solver.multiple_choice` group (a `MultipleChoiceSolver`), not the newer `opm.agents.reranker` contract. See [Agent Plugins](agent-plugins.md). |
+| `reranker` | `ovos-flashrank-reranker-plugin` | An installed reranker plugin name used to reorder candidate answers, if installed. The pipeline still loads this through the legacy `opm.solver.multiple_choice` group (a `MultipleChoiceSolver`), not the `opm.agents.reranker` contract. See [Agent Plugins](agent-plugins.md). |
 | `ignore_skill_scores` | `true` | When a reranker is loaded, trust its order over the skills' self-scores. |
 | `min_response_wait` | `1` | Seconds to wait before evaluating responses. |
 | `max_response_wait` | `4` | Hard cap (seconds) on gathering responses, regardless of extensions. |
@@ -169,7 +169,7 @@ self-reported confidences.
 * **Not chit-chat**: strictly factual question answering.
 * **Skills required**: with no CommonQuery skills installed, the matcher returns
   nothing immediately.
-* Skills using the old CommonQuery base class still work but log a deprecation
+* Skills using the legacy CommonQuery base class work but log a deprecation
   warning and are matched as plain `question:action`.
 
 ---

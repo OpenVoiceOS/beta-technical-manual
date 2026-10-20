@@ -2,10 +2,10 @@
 
 ## In a nutshell
 
-This page is for skill maintainers moving a skill forward from an older
-OVOS install. Entries are in date order: start at the version you are
-currently running and read forward to your target version. For the
-Big-ticket migrations (the changes with the widest blast radius, including
+The entries below move a skill forward from an older OVOS install.
+They are in date order: start at the version you run and read forward to
+your target version. For the
+big-ticket migrations (the changes with the widest blast radius, including
 the `ovos-workshop` 4.0.0 → 7.0.0 release train), see
 [Updating from Older OVOS](updating-from-older-ovos.md#big-ticket-migrations).
 
@@ -13,10 +13,10 @@ the `ovos-workshop` 4.0.0 → 7.0.0 release train), see
 
 ### Intent dispatch topics dropped the `.intent` suffix (2026-08, workshop 9.3.11a2)
 
-Per-intent dispatch topics are now the canonical `<skill_id>:<intent_name>` — the filename-leaked
+Per-intent dispatch topics use the canonical `<skill_id>:<intent_name>` form. The filename-leaked
 `.intent` suffix is gone from the wire. Nothing breaks: the `ovos-bus-client` 2.8 bridge (and
 `FakeBus` in current `ovos-utils` alphas, for tests) keeps literal `.intent` listeners working
-in both directions. New code should compute the topic with
+in both directions. Compute the topic with
 `ovos_spec_tools.intent_topics.canonical_intent_topic` instead of hard-coding either spelling.
 Details and the either-side-modernizes rule:
 [Bus namespace migration](bus-namespace-migration.md#intent-dispatch-topics-the-intent-suffix-is-gone).
@@ -81,7 +81,7 @@ load.
 
 - Migration: subclass `ovos_workshop.skills.ovos.OVOSSkill` directly, following the
   [skill design guidelines](skill-design-guidelines.md).
-  Skill lifecycle is now entirely `SkillLoader`-driven: `bus`/`skill_id`
+  `SkillLoader` drives the whole skill lifecycle: `bus`/`skill_id`
   are passed to `__init__`, not injected via metaclass into a later
   `initialize()` call.
 Lifecycle:
@@ -192,7 +192,7 @@ Lifecycle:
 Module-level `_get_dialog()` on `ovos_workshop.skills.ovos` no longer
 exists. Locale lookups (`_get_dialog`, `_get_word`,
 `CommonQuerySkill.__init__`, `translated_noise_words`) all route through
-`CoreResources`/`self.resources` now.
+`CoreResources`/`self.resources`.
 
 - Migration: use `self.speak_dialog(key)` or
   `CoreResources(lang).load_dialog_file(...)` instead of importing

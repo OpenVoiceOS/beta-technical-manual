@@ -4,12 +4,11 @@
     This is a step-by-step guide to turning a Raspberry Pi (a small, inexpensive computer) into a working OVOS voice assistant by flashing a ready-made "raspOVOS" image onto an SD card or USB drive. It walks you through hardware choices, writing the image, first boot, connecting to Wi-Fi, and the handy commands you'll use afterward. raspOVOS is a ready-made OpenVoiceOS image for the Raspberry Pi: flash it and boot into a working assistant. Read the status warning below before choosing it for a new setup. See the [Glossary](glossary.md) for unfamiliar terms.
 
 !!! warning "Project status: stable images paused, development active"
-    The last **stable** raspOVOS images date from mid-2025 and are not receiving updates,
-    so they are not the recommended install path for a new setup. The repository itself is
-    actively developed — CI work continues and newer builds tagged `raspOVOS-DEV-*` appear
-    on the [releases page](https://github.com/OpenVoiceOS/raspOVOS/releases) alongside the
-    older stable ones, but DEV images are untested builds toward the refreshed image on the
-    roadmap, not something to hand a newcomer. Check the repository for status before
+    The **stable** raspOVOS images do not receive updates, so they are not the recommended
+    install path for a new setup. The repository is actively developed. Builds tagged
+    `raspOVOS-DEV-*` appear on the
+    [releases page](https://github.com/OpenVoiceOS/raspOVOS/releases) beside the stable
+    ones, but DEV images are untested builds, not something to hand a newcomer. Check the repository for status before
     flashing. For a supported setup on a Raspberry Pi, install Raspberry Pi OS and use the
     [ovos-installer](ovos-installer.md). This guide stays for people running an existing
     raspOVOS image.
@@ -112,7 +111,7 @@ tier (see [STT Plugins](stt-plugins.md), [TTS Plugins](tts-plugins.md),
 
 !!! warning "The image's own generated config may not match what it installs"
     Both the hybrid and offline builds run `ovos-config autoconfigure` before installing
-    their plugins, and the recommendation layer that command writes now points at
+    their plugins, and the recommendation layer that command writes points at
     `ovos-stt-plugin-onnx-asr` (offline) and `ovos-tts-plugin-phoonnx` (both tiers), none of
     which either build installs. On a freshly built image, set `stt.module`/`tts.module` yourself (as below) to
     a plugin that is actually present rather than trusting the generated defaults. Optional swaps, not what ships by default, are

@@ -7,12 +7,12 @@ Want OVOS to speak your language? You don't need to be a programmer to help. **O
 Localize** is a web app where you translate the phrases OVOS says and understands,
 right in your browser. It needs no code, no setup, and no command line.
 
-!!! info "What replaced GitLocalize"
-    OVOS used to translate on a third-party service called *GitLocalize*. That has
-    been **retired** and replaced by **[OVOS Localize](https://openvoiceos.github.io/ovos-localize/)**,
+!!! info "GitLocalize"
+    OVOS does not use the third-party service *GitLocalize*. Translations happen on
+    **[OVOS Localize](https://openvoiceos.github.io/ovos-localize/)**,
     a purpose-built tool that understands OVOS resource files (intents, dialogs,
     vocabularies) and shows you the actual skill code each phrase belongs to. If you
-    have old GitLocalize bookmarks, switch to the link above.
+    have GitLocalize bookmarks, switch to the link above.
 
 > **Live site:** **[openvoiceos.github.io/ovos-localize](https://openvoiceos.github.io/ovos-localize/)**
 
@@ -152,7 +152,7 @@ Every translation makes OVOS usable for more people around the world.
 **Related:** [Bidirectional Translation](bidirectional-translation.md) · [Customizing Language Resources](lang-customization.md) · [Contributing](contributing.md)
 
 !!! note "Making your own skill translatable"
-    This page is for *translators*. If you are a skill **author** adding languages to your
+    This tutorial is for *translators*. If you are a skill **author** adding languages to your
     own skill, the workflow is different: ship a `locale/<lang>/` folder per language
     ([Customizing Language Resources](lang-customization.md) covers the file formats),
     describe per-locale metadata in [`skill.json`](skill-json.md#language-support), and

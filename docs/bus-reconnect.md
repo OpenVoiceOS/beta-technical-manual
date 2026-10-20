@@ -2,8 +2,8 @@
 
 !!! abstract "In a nutshell"
     When `ovos-messagebus` restarts, every connected client detects the drop, backs off, and
-    reconnects on its own. Messages sent during the outage are lost, not queued. This page
-    covers the reconnect mechanics and how to serve the bus over TLS.
+    reconnects on its own. Messages sent during the outage are lost, not queued. The sections below
+    cover the reconnect mechanics and how to serve the bus over TLS.
 
 ## Bus restart / reconnect behavior
 

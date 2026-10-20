@@ -191,7 +191,7 @@ Everyone else, pick your path in the grid below.
 
     ---
 
-    SBC-agnostic hardware, PHAL, and why on-device screens aren't a serious option yet.
+    SBC-agnostic hardware, PHAL, and why on-device screens aren't a serious option.
 
     [:octicons-arrow-right-24: Hardware Integrators](hardware-integrators.md)
 

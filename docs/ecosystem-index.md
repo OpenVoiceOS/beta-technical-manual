@@ -1,9 +1,9 @@
 # OVOS Repository Index
 
 !!! abstract "In a nutshell"
-    OVOS is a large ecosystem of small, focused repositories: core services, plus hundreds of swappable [plugins](plugins-index.md) and [skills](skills-overview.md). This page is the map. It lists every **public** repository in the [OpenVoiceOS GitHub organization](https://github.com/OpenVoiceOS), grouped by what it does. For each one: why it exists, what it does, and which part of the stack consumes it. Archived repositories are omitted here. See [Deprecated & Legacy Repositories](deprecated-repos.md).
+    OVOS is a large ecosystem of small, focused repositories: core services, plus hundreds of swappable [plugins](plugins-index.md) and [skills](skills-overview.md). The map below lists every **public** repository in the [OpenVoiceOS GitHub organization](https://github.com/OpenVoiceOS), grouped by what it does. For each one: why it exists, what it does, and which part of the stack consumes it. Archived repositories are omitted here. See [Deprecated & Legacy Repositories](deprecated-repos.md).
 
-There are roughly **260** public, non-archived repositories in the [`OpenVoiceOS`](https://github.com/OpenVoiceOS) organization. The exact count drifts as repos are added or archived; check `gh repo list OpenVoiceOS --no-archived` for the current figure. Browse them by category below. Click any name to open it on GitHub. Entries marked ⚠️ are experimental or pre-release. Read the repository's own README before you adopt them.
+There are roughly **260** public, non-archived repositories in the [`OpenVoiceOS`](https://github.com/OpenVoiceOS) organization. The exact count drifts as repos are added or archived; check `gh repo list OpenVoiceOS --no-archived` for the exact figure. Browse them by category below. Click any name to open it on GitHub. Entries marked ⚠️ are experimental or pre-release. Read the repository's own README before you adopt them.
 
 > Generated from the live organization repository list. If a repository is missing here it is either archived, private, or newly created — check the [organization page](https://github.com/OpenVoiceOS) for the authoritative list.
 
@@ -737,12 +737,13 @@ Unless noted otherwise, these are part of the OVOS Common Play (OCP) media stack
 
 ### MediaProvider plugins
 
-These register under the upcoming `opm.media.provider` plugin type (see [ovos-media](ovos-media.md)). The OCP pipeline calls `search()` on them directly, in-process, taking over the catalog/search half of the older OCP skill each one names.
+These register under the `opm.media.provider` plugin type (see [ovos-media](ovos-media.md)). The OCP pipeline calls `search()` on them directly, in-process, taking over the catalog/search half of the OCP skill each one names.
 
-!!! note "Early days: repos public, loading not wired up yet"
-    All eleven MediaProvider repositories are now public and ship PyPI alphas. Installing
-    one does nothing yet — `ovos-media` does not load `opm.media.provider` plugins
-    in-process yet, so OCP skills remain the way to provide media today.
+!!! note "Loaded by the OCP pipeline"
+    All eleven MediaProvider repositories ship PyPI alphas. The OCP pipeline
+    (`ovos-ocp-pipeline-plugin`) loads every installed `opm.media.provider` plugin and
+    calls `search()` on it in-process. Set `media_providers.enabled` to `false` in the OCP
+    pipeline config to turn this off.
 
 **[ovos-media-provider-bandcamp](https://github.com/OpenVoiceOS/ovos-media-provider-bandcamp)**
 :   MediaProvider plugin for Bandcamp, replacing [ovos-skill-bandcamp](https://github.com/OpenVoiceOS/ovos-skill-bandcamp).

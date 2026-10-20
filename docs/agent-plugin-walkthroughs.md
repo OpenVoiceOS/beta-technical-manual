@@ -1,10 +1,10 @@
 # Agent Plugin Walkthroughs and Migration
 
 !!! abstract "In a nutshell"
-    This page gives two front-to-back worked examples for writing an agent engine plugin
+    Two front-to-back worked examples for writing an agent engine plugin
     (a `DocumentIndexerEngine` and a `ChatEngine`), a guide for migrating an existing
     `QuestionSolver`-family plugin to the agent engine API, and a pre-publish
-    checklist. For picking the right base class and the rules every engine follows, see
+    checklist follow. For picking the right base class and the rules every engine follows, see
     [Building Agent Plugins](building-agent-plugins.md).
 
 ---
@@ -201,7 +201,7 @@ translates the input and output behind the scenes.
 **Agent engines never translate.** After migration your engine receives the user's
 language as-is. Either handle it or return nothing for languages you do not support.
 
-Translation is still the recommended strategy for engines whose backend is inherently
+Translation is the recommended strategy for engines whose backend is inherently
 monolingual (Wolfram Alpha and most web APIs only speak English). The agent base class
 does not translate for you, so the plugin translates explicitly. Use the translation plugin system instead of hardcoding one translator.
 `OVOSLangTranslationFactory.create()` (in `ovos_plugin_manager.language`) returns the

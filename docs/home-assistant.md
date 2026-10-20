@@ -5,7 +5,7 @@
     projects. They can work together in **two separate, independent directions**: OVOS can
     *lend its speech engines to* Home Assistant's own voice pipeline, or a skill on OVOS can
     *control devices inside* Home Assistant. You can use either one alone, or both at once.
-    They don't depend on each other. This page explains both directions and links to the
+    They don't depend on each other. Both directions are below, with links to the
     details.
 
 There is no single "OVOS + Home Assistant" switch. There are two unrelated integrations, and

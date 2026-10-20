@@ -1,12 +1,12 @@
 # GUI Protocol Messages
 
 !!! abstract "In a nutshell"
-    This page is the wire-level message catalog for the **legacy** Qt WebSocket GUI protocol: every `mycroft.session.*`, `mycroft.gui.list.*`, and `mycroft.events.triggered` message shape, with JSON examples. For the conceptual picture (what the protocol is for, the messagebus messages skills send, and the client architecture), see [GUI Protocol](gui-protocol.md). For terms, see the [Glossary](glossary.md).
+    The wire-level message catalog for the **legacy** Qt WebSocket GUI protocol: every `mycroft.session.*`, `mycroft.gui.list.*`, and `mycroft.events.triggered` message shape, with JSON examples. For the conceptual picture (what the protocol is for, the messagebus messages skills send, and the client architecture), see [GUI Protocol](gui-protocol.md). For terms, see the [Glossary](glossary.md).
 
-!!! danger "The OVOS GUI is deprecated: see [Screens on OVOS Today](gui-status.md) for the full picture"
-    This page documents the legacy protocol. There is no generally usable OVOS GUI,
-    and a replacement is **Upcoming**. Building a remote client? Skip this legacy protocol
-    and see [Screens on OVOS Today](gui-status.md) for the current approach.
+!!! danger "The OVOS GUI is deprecated: see [Screens on OVOS](gui-status.md) for the full picture"
+    The legacy protocol follows. There is no generally usable OVOS GUI,
+    and a replacement is planned. Building a remote client? Skip this legacy protocol
+    and see [Screens on OVOS](gui-status.md) for the current approach.
 
 ---
 
@@ -301,12 +301,12 @@ User swipes / taps on Qt:
       longer supported.
     - Instead of mirroring to Qt clients directly, template events fan out to every loaded
       `opm.gui_adapter` plugin (see [GUI Adapter Plugins](gui-adapters.md)). The Qt WebSocket
-      protocol on this page becomes one such adapter.
+      protocol becomes one such adapter.
 
-    None of this is implemented in `ovos-gui` yet. See
+    `ovos-gui` does not implement any of this. See
     [GUI Adapter Plugins](gui-adapters.md) for what the adapter plugins being built ahead of
     this rework have already settled on.
 
 ---
 **Read next:** [OVOS Shell](ovos-shell.md)
-**Related:** [GUI Protocol](gui-protocol.md) · [GUI Service (legacy)](gui-service.md) · [Screens on OVOS Today](gui-status.md)
+**Related:** [GUI Protocol](gui-protocol.md) · [GUI Service (legacy)](gui-service.md) · [Screens on OVOS](gui-status.md)

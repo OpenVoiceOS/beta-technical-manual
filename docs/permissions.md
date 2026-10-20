@@ -1,7 +1,7 @@
 # Permissions & Activation Control
 
 !!! abstract "In a nutshell"
-    Not every skill should be allowed to join every conversation. This page covers the
+    Not every skill should be allowed to join every conversation. The sections below cover the
     controls that decide which skills may participate: converse whitelists and blacklists,
     activation modes, and the global skill blacklist. For switching groups of *intents* on
     and off inside one skill, see [Intent Layers](layers.md). That page owns the layering
@@ -154,7 +154,7 @@ reach for when different satellites should have different skill sets against one
 see [Updating Remote Clients](updating-remote-clients.md) for the version notes.
 
 !!! info "Per-speaker permissions are not possible"
-    Every control on this page applies to a device or a session, never to a *person*. The
+    Every control here applies to a device or a session, never to a *person*. The
     [speaker-verification wake-word gate](ww-verifier.md#speaker-verification) can accept or
     reject an activation by voice, but it never tells the rest of the stack *who* spoke — no
     speaker identity reaches the session, the intent match, or a skill. There is no mechanism

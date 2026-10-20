@@ -3,10 +3,10 @@
 !!! abstract "In a nutshell"
     Intent matching problems fall into four buckets: nothing matched at all, the wrong skill
     answered, matching is slow or seems to "wake up" after a while, or a match happened but the
-    wrong handler ran. This page is a symptom-indexed index into checks and gotchas that live
-    scattered across the pipeline pages, plus the bus events to watch for each one. Start with
-    [Troubleshooting & Debugging](troubleshooting.md) if you have not yet confirmed the mic, wake
-    word, and STT stages are healthy. This page assumes the utterance already reached the intent
+    wrong handler ran. The sections below index, by symptom, the checks and gotchas from
+    the pipeline pages, plus the bus events to watch for each one. Start with
+    [Troubleshooting & Debugging](troubleshooting.md) until you confirm that the mic, wake
+    word, and STT stages are healthy. The checks below assume the utterance reached the intent
     pipeline.
 
 ```mermaid
@@ -21,7 +21,7 @@ flowchart TD
     D --> D1["#35;it-matched-but-the-wrong-handler-ran"]
 ```
 
-*Diagram: from the symptom question, four branches lead to the matching sections on this page: nothing matched, wrong skill answered, slow or works only after a while, and matched but wrong handler ran.*
+*Diagram: from the symptom question, four branches lead to the matching sections below: nothing matched, wrong skill answered, slow or works only after a while, and matched but wrong handler ran.*
 
 ---
 

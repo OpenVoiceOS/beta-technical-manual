@@ -166,7 +166,7 @@ There is a parallel `opm.VAD.config` group for a dict of config metadata used by
 installers and GUIs. It is optional. Add it once the plugin has settings worth
 advertising.
 
-> The legacy alias `ovos.plugin.VAD` is still accepted, but new plugins should use `opm.VAD`.
+> OPM accepts the legacy alias `ovos.plugin.VAD`. Register a plugin under `opm.VAD`.
 
 ### 3. Test it without OVOS
 
@@ -249,7 +249,7 @@ Detailed per-plugin configuration for the same roster listed in
 - **GitHub**: [OpenVoiceOS/ovos-vad-plugin-noise](https://github.com/OpenVoiceOS/ovos-vad-plugin-noise)
 
 
-- **Description**: simple VAD plugin extracted from the old [ovos-listener](https://github.com/OpenVoiceOS/ovos-listener/blob/dev/ovos_listener/silence.py)
+- **Description**: simple VAD plugin extracted from the archived [ovos-listener](https://github.com/OpenVoiceOS/ovos-listener/blob/dev/ovos_listener/silence.py)
 
 ---
 

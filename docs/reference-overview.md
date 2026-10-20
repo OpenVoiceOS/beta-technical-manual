@@ -43,7 +43,7 @@ For maintainers and contributors: how to get a change merged, and how the gh-aut
 
 ## Project Info
 
-Background on the project itself: its history, repos no longer maintained, and its license.
+Background on the project itself: its history, archived repos, and its license.
 
 - [Timeline](timeline.md), [Deprecated & Archived Repos](deprecated-repos.md), [License](license.md).
 

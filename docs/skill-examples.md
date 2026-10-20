@@ -2,7 +2,7 @@
 
 !!! abstract "In a nutshell"
     A "skill" is an add-on that teaches your assistant to do one thing: tell the weather, set an
-    alarm, play the radio, answer trivia. This page is an index of ready-made skills you can add
+    alarm, play the radio, answer trivia. Below is an index of ready-made skills you can add
     to OVOS, grouped by what they're for, each linking to a subpage with real example phrases and
     install steps. Some come pre-loaded depending on how you set OVOS up, others you add yourself. See
     [Your First Skill](first-skill.md) if you want to build your own, or the
@@ -72,7 +72,7 @@ cities around the world. Current conditions and weather forecasts come from Open
 
 Controlling actual smart-home devices (lights, plugs, thermostats, scenes) isn't built into OVOS
 itself. It is a separate skill that talks to [Home Assistant](https://www.home-assistant.io/).
-See [OVOS & Home Assistant](home-assistant.md) for the full setup story in both directions
+See [OVOS & Home Assistant](home-assistant.md) for the full setup in both directions
 (OVOS controlling HA devices, and HA using OVOS's own speech engines), including install steps
 and usage examples.
 

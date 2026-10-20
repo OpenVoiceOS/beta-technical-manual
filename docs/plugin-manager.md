@@ -76,7 +76,7 @@ All plugin types are defined in the `PluginTypes` enum (`ovos_plugin_manager.uti
 grouped into core voice-pipeline, system/hardware, transformer, language-processing,
 intent-pipeline, media, agent, embeddings/knowledge, and skill/persona plugins, plus a
 table of deprecated entry-point groups. The full, exhaustive table of every plugin type,
-its entry point group, and its template base class now lives on its own page:
+its entry point group, and its template base class is on its own page:
 **[Plugin Types Reference](plugin-types-reference.md)**.
 
 ---
@@ -161,8 +161,8 @@ class MyWakeWord(HotWordEngine):
 
 ### 2. Register the entry point
 
-Use `pyproject.toml` (older plugins may still register the same groups through a legacy
-`setup.py` `entry_points` dict, but new plugins should not):
+Use `pyproject.toml` (a legacy `setup.py` `entry_points` dict registers the same groups,
+but do not use it in a plugin you write):
 
 ```toml
 [project.entry-points."opm.stt"]
@@ -241,7 +241,7 @@ MY_STT_CONFIGS = {
 
 Override `runtime_requirements` to declare connectivity needs. See
 [Runtime Requirements](skill-runtime-requirements.md) for what OVOS actually does with this
-declaration today.
+declaration.
 
 ```python
 from ovos_utils.process_utils import RuntimeRequirements

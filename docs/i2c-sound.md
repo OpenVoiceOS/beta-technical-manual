@@ -4,7 +4,7 @@
     Many Raspberry Pi voice devices use an add-on **sound board (a "HAT")** for their microphones
     and speaker, such as the [Mark 2](mark2.md)'s SJ201 or a Respeaker. Before OVOS can hear or
     speak, that board has to be **detected**, given the **right driver**, and wired into the
-    system's **audio config**. This page covers the small OVOS tools that do that on the
+    system's **audio config**. Small OVOS tools do that on the
     [raspOVOS](install-raspovos.md) image. The [ovos-installer](ovos-installer.md) handles the
     Mark 2 differently. See [Mark 2 Hardware](mark2.md) and the [Glossary](glossary.md) for terms.
 
@@ -14,7 +14,7 @@ system's **audio routing** (sound server, default device, volume) configured. OV
 across a few focused tools, used mainly by the [raspOVOS](install-raspovos.md) image.
 
 !!! info "Two different hardware paths"
-    The tools on this page are the **raspOVOS image** path. The ansible
+    These tools are the **raspOVOS image** path. The ansible
     [ovos-installer](ovos-installer.md) does **not** use them for the [Mark 2](mark2.md). It
     builds the [`VocalFusionDriver`](mark2.md#the-ovos-kernel-driver-vocalfusiondriver) kernel
     module instead. Pick the path that matches how you installed OVOS.
@@ -103,7 +103,7 @@ When picking the default output, `soundcard-autoconfigure` follows a **fixed pri
     - `/tmp/autosink.log`: combined sink creation
 
 !!! note "Alpha"
-    `raspovos-audio-setup` is an alpha-stage project. It is useful, but still stabilizing.
+    `raspovos-audio-setup` is an alpha-stage project. It is useful, but not stable.
 
 ## `ovos-tools`: raspOVOS shell helpers
 

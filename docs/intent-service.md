@@ -239,7 +239,7 @@ write-through). See [Session Aware Skills](session.md).
     framework convention instead. The spec reserves these names, but `ovos-core`'s intent
     manifest does not reject a reserved-name registration. It only warns on
     registrations missing required fields, so this is a contract skills must honor, not one the
-    orchestrator enforces today.
+    orchestrator enforces.
     A reservation is a namespace lease, not a dispatch change. Reserved-name dispatches fire
     context stamping, routing and the handler trio like any other, except that the
     `session.active_handlers` push is suppressed, since a reserved name continues or terminates

@@ -6,7 +6,7 @@
     as root. None of this is a flaw to patch. It is the design: a local assistant that trusts
     its own machine the way any other local service does. The boundary you must not cross is
     the network. [HiveMind](hivemind-agents.md) is the supported way to reach OVOS from
-    another device. This page tells the trust-boundary story once. For the operational
+    another device. The sections below describe the trust boundary once. For the operational
     checklist (what to lock down, what to check), see [Privacy & Security](privacy-security.md).
 
 ---
@@ -117,7 +117,7 @@ for the protocol itself.
 
 ## Where to go next
 
-This page explains the shape of the trust boundary and why it exists. It intentionally does not
+The sections above explain the shape of the trust boundary and why it exists. They do not
 repeat the operational hardening steps. For those, including the network surface of a default
 install, what gets written to disk, and a concrete checklist, see
 [Privacy & Security](privacy-security.md).

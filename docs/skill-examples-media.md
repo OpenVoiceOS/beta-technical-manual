@@ -6,9 +6,9 @@
     picks it up automatically for any "play ..." request. See [MediaProvider plugins](ocp-pipeline.md#mediaprovider-plugins)
     for how the mechanism works.
 
-!!! warning "The old OCP media skills are archived"
+!!! warning "OCP media skills are archived"
     `ovos-skill-pyradios`, `ovos-skill-somafm`, `ovos-skill-news`, and `ovos-skill-local-media`
-    are archived. Their MediaProvider plugin replacements below are what to install today.
+    are archived. Install their MediaProvider plugin replacements below.
 
 ## PyRadios
 

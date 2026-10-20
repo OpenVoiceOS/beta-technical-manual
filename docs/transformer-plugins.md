@@ -11,7 +11,7 @@
 ??? info "Formal specification"
     The transformer subsystem is specified by **[OVOS-TRANSFORM-1: Transformer Plugins](https://github.com/OpenVoiceOS/architecture/blob/dev/transformer.md)** (one of the formal [architecture specs](architecture-specs.md)). It defines **six ordered chains**: `audio`, `utterance`, `metadata`, `intent`, `dialog`, `tts`. These run at fixed points in the utterance lifecycle. It also defines the per-type input/output contract for each, the per-session ordering and denylist overrides, and the utterance-cancellation signal. A transformer is identified by its `(type, transformer_id)` pair. Where this manual or the current code diverges from the spec, the spec is canonical.
 
-    **Ordering.** OVOS-TRANSFORM-1 §4 orders each chain by **ascending** `priority`. A lower number runs **earlier**, and the default is `50`. The current OVOS code follows this: a plugin with `priority=1` runs first, and later plugins see and may override its output. A legacy descending order is still available as an explicit opt-in (`sort_ascending=False`, marked deprecated in `ovos_plugin_manager/transformer_services.py`) for deployments that depend on the old behavior.
+    **Ordering.** OVOS-TRANSFORM-1 §4 orders each chain by **ascending** `priority`. A lower number runs **earlier**, and the default is `50`. OVOS follows this: a plugin with `priority=1` runs first, and later plugins see and may override its output. A legacy descending order is still available as an explicit opt-in (`sort_ascending=False`, marked deprecated in `ovos_plugin_manager/transformer_services.py`) for deployments that depend on descending order.
 
 Transformer plugins let you intercept and modify data as it flows through the transformer chain. Each type is a small class with a `transform()` method that runs at a fixed stage. Examples are turning raw audio into cleaner audio, fixing transcribed text before intent matching, enriching a matched intent, or post-processing speech before playback.
 
@@ -258,8 +258,8 @@ Writing a plugin instead of choosing one? See [Writing a Transformer Plugin](tra
 | [ovos-utterance-plugin-cancel](#ovos-utterance-plugin-cancel) | looks at the end of the transcribed phrase and ignores it if it ends with "nevermind that", "cancel it", or "ignore that". | Stable |
 | [ovos-audio-transformer-plugin-ggwave](#ovos-audio-transformer-plugin-ggwave) | plugin for [ggwave](https://github.com/ggerganov/ggwave) | Mature |
 | [ovos-tts-transformer-sox-plugin](#ovos-tts-transformer-sox-plugin) | A Text-to-Speech (TTS) transformer that uses SoX (Sound eXchange) for audio processing. The transformer applies various effects to the generated audio before playback. | Beta |
-| [ovos_tts_transformer_FlashSR](#ovos_tts_transformer_flashsr) | ONNX-based audio super-resolution that upsamples synthesized TTS audio before playback (not yet on PyPI). | Proof-of-concept |
-| [ovos_tts_transformer_NovaSR](#ovos_tts_transformer_novasr) | torch-based audio super-resolution upsampler for synthesized TTS audio (not yet on PyPI). | Proof-of-concept |
+| [ovos_tts_transformer_FlashSR](#ovos_tts_transformer_flashsr) | ONNX-based audio super-resolution that upsamples synthesized TTS audio before playback (not on PyPI). | Proof-of-concept |
+| [ovos_tts_transformer_NovaSR](#ovos_tts_transformer_novasr) | torch-based audio super-resolution upsampler for synthesized TTS audio (not on PyPI). | Proof-of-concept |
 
 Maturity reflects repository health (age, activity, open issues/PRs, in-repo docs), not version. See the [Maturity Scale](maturity.md).
 
@@ -340,7 +340,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 - **GitHub**: [OpenVoiceOS/ovos_tts_transformer_FlashSR](https://github.com/OpenVoiceOS/ovos_tts_transformer_FlashSR)
 
 
-- **Description**: ONNX-based audio super-resolution TTS transformer (`FlashSRTTSTransformer`). It upsamples synthesized audio before playback, downloading its model from the Hugging Face Hub. Entry point `ovos-tts-transformer-FlashSR` under `opm.transformer.tts`. **Upcoming**: not yet published to PyPI.
+- **Description**: ONNX-based audio super-resolution TTS transformer (`FlashSRTTSTransformer`). It upsamples synthesized audio before playback, downloading its model from the Hugging Face Hub. Entry point `ovos-tts-transformer-FlashSR` under `opm.transformer.tts`. It is not published to PyPI.
 
 ---
 
@@ -349,7 +349,7 @@ Maturity reflects repository health (age, activity, open issues/PRs, in-repo doc
 - **GitHub**: [OpenVoiceOS/ovos_tts_transformer_NovaSR](https://github.com/OpenVoiceOS/ovos_tts_transformer_NovaSR)
 
 
-- **Description**: torch-based super-resolution upsampler TTS transformer (`NovaSRTTSTransformer`). Entry point `ovos-tts-transformer-NovaSR` under `opm.transformer.tts`. **Upcoming**: not yet published to PyPI.
+- **Description**: torch-based super-resolution upsampler TTS transformer (`NovaSRTTSTransformer`). Entry point `ovos-tts-transformer-NovaSR` under `opm.transformer.tts`. It is not published to PyPI.
 
 ---
 **Read next:** [Utterance Transformers](utterance-transformers.md)

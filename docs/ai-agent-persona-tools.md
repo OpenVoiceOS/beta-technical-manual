@@ -1,10 +1,6 @@
 # Use Persona Tools from an AI Agent (MCP and UTCP)
 
-This page serves every installed OVOS tool plugin to AI agents, through the MCP and UTCP endpoints of the persona server.
-
-## Who this is for
-
-You have OVOS tool plugins, your own or the ones that OVOS ships. You want Claude Code, Claude Desktop, opencode, Mistral Vibe, or another agent to call them.
+Serve every installed OVOS tool plugin to AI agents, through the MCP and UTCP endpoints of the persona server. Use the persona server tools endpoint when Claude Code, Claude Desktop, opencode, Mistral Vibe, or another agent must call OVOS tool plugins, your own or the ones that OVOS ships.
 
 ## What you get
 
@@ -22,7 +18,7 @@ You have OVOS tool plugins, your own or the ones that OVOS ships. You want Claud
     pip install --pre "ovos-persona-server[mcp]" ovos-solver-rivescript-plugin
     ```
 
-1. Install the tool plugins in the same environment. This page uses `my-math-tools` from [Write a tool plugin](ai-agent-tool-plugin.md):
+1. Install the tool plugins in the same environment. The example uses `my-math-tools` from [Write a tool plugin](ai-agent-tool-plugin.md):
 
     ```bash
     pip install -e ./my-math-tools

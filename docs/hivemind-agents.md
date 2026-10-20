@@ -13,7 +13,7 @@
     GitHub organization (not `OpenVoiceOS`), with its own
     [community docs](https://jarbashivemind.github.io/HiveMind-community-docs/). The OVOS
     [Maturity Scale](maturity.md), which rates OVOS-org repository health, does not apply to
-    it. This page covers only how HiveMind relates to OVOS.
+    it. This manual covers only how HiveMind relates to OVOS.
 
     HiveMind has its own documentation site. This manual covers only the OVOS-side
     integration. See the [community docs](https://jarbashivemind.github.io/HiveMind-community-docs/)

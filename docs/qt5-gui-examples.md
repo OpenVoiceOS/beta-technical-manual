@@ -3,9 +3,9 @@
 !!! abstract "In a nutshell"
     Worked QML snippets for common legacy skill-display patterns: Lottie animations, sliding images, paginated text, card list views, proportional/auto-fit layouts, slideshows, event handling, and resting (idle) faces. For the QML concepts and design guidelines these examples build on, see [Mycroft-GUI QT5](qt5-gui.md).
 
-!!! danger "The OVOS GUI is deprecated: see [Screens on OVOS Today](gui-status.md) for the full picture"
-    These examples target the legacy Qt5/QML client. There is no generally usable OVOS GUI,
-    and a replacement is **Upcoming**. See [GUI Adapters](gui-adapters.md) for the rework.
+!!! danger "The OVOS GUI is deprecated: see [Screens on OVOS](gui-status.md) for the full picture"
+    These examples target the legacy Qt5/QML client. OVOS has no generally usable GUI,
+    and the replacement is not released. See [GUI Adapters](gui-adapters.md) for the rework.
 
 ---
 
@@ -363,4 +363,4 @@ Mycroft.Delegate {
 
 ---
 **Read next:** [Home Screen](homescreen.md)
-**Related:** [Mycroft-GUI QT5](qt5-gui.md) · [OVOS Shell](ovos-shell.md) · [GUI Protocol](gui-protocol.md) · [Screens on OVOS Today](gui-status.md)
+**Related:** [Mycroft-GUI QT5](qt5-gui.md) · [OVOS Shell](ovos-shell.md) · [GUI Protocol](gui-protocol.md) · [Screens on OVOS](gui-status.md)

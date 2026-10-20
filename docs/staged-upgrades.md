@@ -2,8 +2,8 @@
 
 !!! abstract "In a nutshell"
     Upgrading OVOS safely means freezing the current package set before you touch anything, so
-    you can force-reinstall it if the upgrade misbehaves. This page covers that for a single
-    device and for a fleet, plus the fleet-wide canary pattern.
+    you can force-reinstall it if the upgrade misbehaves. The recipes cover a single
+    device and a fleet, plus the fleet-wide canary pattern.
 
 ## Updating a single device
 
@@ -12,7 +12,7 @@ the same steps apply to a single, standalone device with the fleet-specific part
 back up the config, freeze the current package set, upgrade, and verify.
 
 !!! warning "Installed with `ovos-installer`? Know your method first"
-    Every `pip`/`uv pip` command on this page assumes the **`virtualenv`** install method,
+    Every `pip`/`uv pip` command below assumes the **`virtualenv`** install method,
     run **inside that venv** — activate it first (its path is shown on the installer's
     environment-summary screen; after the fact, `systemctl --user cat ovos-core.service`
     reveals it from that unit's `ExecStart` — the umbrella `ovos.service` is a no-op meta
@@ -21,7 +21,7 @@ back up the config, freeze the current package set, upgrade, and verify.
     (`docker compose pull && docker compose up -d`, run from the installer's compose
     directory so the right project is targeted) or by
     [re-running the installer](ovos-installer-scenarios.md), which detects an existing
-    install and offers only your current method. To check what you currently have installed,
+    install and offers only your current method. To check what you have installed,
     see [Checking what you have installed](release-channels.md#checking-what-you-have-installed).
 
 ```bash
@@ -67,7 +67,7 @@ flowchart LR
 
 *Diagram:* The flow starts at freezing known-good packages and ends at either the fleet rollout or a rollback, and it branches on whether the canary device passes its readiness probe and real voice check.
 
-See [Knowing when the assistant is actually ready](production-operations.md#knowing-when-the-assistant-is-actually-ready) for the readiness probe both recipes on this page reference.
+See [Knowing when the assistant is actually ready](production-operations.md#knowing-when-the-assistant-is-actually-ready) for the readiness probe both recipes use.
 
 [Release channels](release-channels.md) covers `stable`/`testing`/`alpha` constraints files.
 For a fleet, the same mechanism gives you a controlled, reversible upgrade path:

@@ -2,7 +2,7 @@
 # Reusable Workflow Reference: Lint, Docs, and Notification Workflows
 
 !!! abstract "In a nutshell"
-    This page documents the shared workflows for lint, type-checking, docs presence, and Matrix chat notifications: `lint.yml`, `type-check.yml`, `docs-check.yml`, and `notify-matrix.yml`. For coverage and dependency security scans, see [Coverage and Security Workflows](gh-automations-coverage-security.md). For the PR-comment aggregation pattern and the shared Python scripts, see [PR Comment Pattern and Scripts](gh-automations-pr-comment-scripts.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
+    Four shared workflows cover lint, type-checking, docs presence, and Matrix chat notifications: `lint.yml`, `type-check.yml`, `docs-check.yml`, and `notify-matrix.yml`. For coverage and dependency security scans, see [Coverage and Security Workflows](gh-automations-coverage-security.md). For the PR-comment aggregation pattern and the shared Python scripts, see [PR Comment Pattern and Scripts](gh-automations-pr-comment-scripts.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
 
 All reusable workflows are in `.github/workflows/` and are called via:
 
@@ -13,7 +13,7 @@ uses: OpenVoiceOS/gh-automations/.github/workflows/<name>.yml@dev
 
 > **Ref:** Always use `@dev`.
 
-**Workflows on this page:**
+**Workflows:**
 
 - [`lint.yml`](#lintyml)
 - [`type-check.yml`](#type-checkyml)

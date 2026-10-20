@@ -1,7 +1,7 @@
 # OVOSSkill
 
 !!! abstract "In a nutshell"
-    A "skill" is an add-on that teaches your voice assistant to do one new thing, like telling the weather or setting a timer. Every skill is built on top of a shared starter kit called `OVOSSkill`, which quietly handles the housekeeping: starting up, listening for commands, speaking replies, remembering settings, and shutting down. This page is a reference for that starter kit and its methods. New to all this? Start with [Skill Classes](skill-classes.md) or the [Glossary](glossary.md).
+    A "skill" is an add-on that teaches your voice assistant to do one new thing, like telling the weather or setting a timer. Every skill is built on top of a shared starter kit called `OVOSSkill`, which quietly handles the housekeeping: starting up, listening for commands, speaking replies, remembering settings, and shutting down. The reference below covers that starter kit and its methods. New to all this? Start with [Skill Classes](skill-classes.md) or the [Glossary](glossary.md).
 
 **Module:** `ovos_workshop.skills.ovos.OVOSSkill`
 
@@ -10,7 +10,7 @@
 !!! note "Constructor, lifecycle, and startup/shutdown sequence"
     The constructor signature, the lifecycle methods to override (`initialize()`, `stop()`,
     `shutdown()`, etc.), and the full startup/shutdown sequence are documented once, on
-    [Skill Classes](skill-classes.md#ovosskill). This page covers `OVOSSkill`'s remaining
+    [Skill Classes](skill-classes.md#ovosskill). The sections below cover `OVOSSkill`'s remaining
     surface: properties, speaking, user input, scheduling, `SkillApi`, and the bus events it
     handles.
 
@@ -138,7 +138,7 @@ self.cancel_scheduled_event("my-tick")
 - **`schedule_event(handler, when, data=None, name=None, context=None)`**: single-shot.
   `when` is either a `datetime` or a number of seconds from now. A naive `datetime` (no
   `tzinfo`) is stamped with the assistant's configured timezone (`location.timezone.code`),
-  not the OS/process timezone — a device on the stock config is in Lawrence, Kansas until
+  not the OS/process timezone. A device on the stock config is in Lawrence, Kansas until
   its location is set.
 - **`schedule_repeating_event(handler, when, frequency, data=None, name=None, context=None)`**:
   repeating. `frequency` is the interval **in seconds** between calls. `when=None` fires the
@@ -148,10 +148,10 @@ self.cancel_scheduled_event("my-tick")
   `cancel_scheduled_event(name)`. Re-scheduling `schedule_event` under a `name` that already
   has a pending one-shot replaces it, so a skill that re-creates its schedules on every load
   does not accumulate duplicates. `schedule_repeating_event` does not replace an existing
-  repeating schedule of the same name — cancel it first. `update_scheduled_event` changes an
+  repeating schedule of the same name. Cancel it first. `update_scheduled_event` changes an
   existing event's payload without touching its fire time; `get_scheduled_event_status`
   returns `None` (not an exception) when nothing is scheduled under that name. A repeating
-  schedule survives skill shutdown/restart — it is tied to the skill id, not the running
+  schedule survives skill shutdown/restart. It is tied to the skill id, not the running
   process.
 - Scheduled events are persisted by the [`EventScheduler`](bus-service.md) so they survive an
   `ovos-core` restart. They are not tied to the skill instance staying in memory. See
@@ -164,7 +164,7 @@ Decorate a method with `@skill_api_method` to expose it over the bus. Other skil
 ## RuntimeRequirements
 
 !!! note
-    `RuntimeRequirements` is a deprecated mechanism. See [Runtime Requirements](skill-runtime-requirements.md) for what it currently does.
+    `RuntimeRequirements` is a deprecated mechanism. See [Runtime Requirements](skill-runtime-requirements.md) for what it does.
 
 Override the class property to declare connectivity needs:
 

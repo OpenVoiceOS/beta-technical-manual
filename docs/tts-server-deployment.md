@@ -1,7 +1,7 @@
 # TTS Server Deployment
 
 !!! abstract "In a nutshell"
-    This page covers pointing a live OVOS instance at your [TTS Server](tts-server.md) through the companion client plugin, and running the server itself in Docker. For the server's own usage, CLI options, and HTTP API, see [TTS Server](tts-server.md).
+    Point a live OVOS instance at your [TTS Server](tts-server.md) through the companion client plugin, and run the server itself in Docker. For the server's own usage, CLI options, and HTTP API, see [TTS Server](tts-server.md).
 
 ## Companion Plugin
 

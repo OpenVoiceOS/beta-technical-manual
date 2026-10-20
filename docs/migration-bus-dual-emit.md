@@ -7,7 +7,7 @@
     removal. Fix it by moving every producer and consumer to `ovos.*` spec
     topics now, while both spellings still work.
 
-    This page is the migration checklist. For how the bridge works and its
+    The checklist below is the migration path. For how the bridge works and its
     flags, see [Bus Namespace Migration](bus-namespace-migration.md).
 
 !!! warning ""Dual-emit" is literal again for canonical emits"

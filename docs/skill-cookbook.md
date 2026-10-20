@@ -1,7 +1,7 @@
 # Skill Cookbook
 
 !!! abstract "In a nutshell"
-    The rest of this manual documents individual building blocks (settings, scheduling, playback, a GUI) one at a time. This page instead shows them **combined**, the way a real skill uses them: a complete, working file for each common job a skill needs to do. If you already know what `schedule_event` or `@ocp_search` does and just want to see it used correctly next to everything else it needs, start here. Newer skill authors are welcome too: the table below roughly progresses from simpler to more involved — the plain `OVOSSkill` recipes are approachable straight after [Your First Skill](first-skill.md), while the conversational-game, OCP, and MQTT recipes assume more (check the base-class column rather than relying strictly on row order).
+    The rest of this manual documents individual building blocks (settings, scheduling, playback, a GUI) one at a time. The cookbook shows them **combined**, the way a real skill uses them: a complete, working file for each common job a skill needs to do. If you already know what `schedule_event` or `@ocp_search` does and just want to see it used correctly next to everything else it needs, start here. Newer skill authors are welcome too: the table below roughly progresses from simpler to more involved — the plain `OVOSSkill` recipes are approachable straight after [Your First Skill](first-skill.md), while the conversational-game, OCP, and MQTT recipes assume more (check the base-class column rather than relying strictly on row order).
 
 Each recipe is a **complete skill module** (or a clearly-marked excerpt of one), with notes on the moving parts and links to the reference page that documents each API in full. None of these recipes invent new methods: every class, method signature, and bus event name was checked against the installed `ovos-workshop`, `ovos-bus-client`, and `ovos-utils` packages.
 
@@ -36,7 +36,7 @@ Every pattern in this cookbook also runs in a real, installable skill. Read the 
 | `FallbackSkill` + `@common_query` | [`ovos-skill-wolfie`](https://github.com/OpenVoiceOS/ovos-skill-wolfie), [`ovos-skill-ddg`](https://github.com/OpenVoiceOS/ovos-skill-ddg), [`ovos-skill-wordnet`](https://github.com/OpenVoiceOS/ovos-skill-wordnet) |
 | `@common_query` on a plain `OVOSSkill` | [`ovos-skill-wikipedia`](https://github.com/OpenVoiceOS/ovos-skill-wikipedia) |
 | Minimal `converse` | [`ovos-skill-parrot`](https://github.com/OpenVoiceOS/ovos-skill-parrot) |
-| Converse-driven game (`ConversationalGameSkill`) | `skill-moon-game` (a VoiceGamez title, not currently public) |
+| Converse-driven game (`ConversationalGameSkill`) | `skill-moon-game` (a VoiceGamez title, not public) |
 | GUI sequencing (`show_text` then `show_image`) | [`ovos-skill-camera`](https://github.com/OpenVoiceOS/ovos-skill-camera) |
 | GUI ownership handoff (`gui.release()`) | [`ovos-skill-wallpapers`](https://github.com/OpenVoiceOS/ovos-skill-wallpapers) |
 | Validated `get_response` slot collection | [`ovos-skill-mark1-ctrl`](https://github.com/OpenVoiceOS/ovos-skill-mark1-ctrl) |

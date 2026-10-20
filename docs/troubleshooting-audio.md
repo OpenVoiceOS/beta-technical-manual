@@ -1,8 +1,8 @@
 # Troubleshooting Media and Playback
 
 !!! abstract "In a nutshell"
-    This page is the deep dive for Stage 7 of [Troubleshooting & Debugging](troubleshooting.md):
-    what to check when a media request ("play some jazz") matched but nothing plays. It covers
+    The deep dive for Stage 7 of [Troubleshooting & Debugging](troubleshooting.md)
+    covers what to check when a media request ("play some jazz") matched but nothing plays:
     empty search results, stream extraction failures, and audio-sink problems. For hardware-level
     mic/speaker checks, see [Troubleshooting → Prove the microphone and speaker
     work](troubleshooting.md#prove-the-microphone-and-speaker-work) instead.

@@ -1,7 +1,7 @@
 # Microphone Plugin Development
 
 !!! abstract "In a nutshell"
-    This page is the tutorial for building your own microphone plugin: the `Microphone` base class, the entry point that makes a plugin installable, and how to test and use it standalone. Looking for a plugin to use instead of writing one? Go to [Microphone Plugins](mic-plugins.md).
+    A tutorial for building your own microphone plugin: the `Microphone` base class, the entry point that makes a plugin installable, and how to test and use it standalone. Looking for a plugin to use instead of writing one? Go to [Microphone Plugins](mic-plugins.md).
 
 ## Technical Explanation
 
@@ -109,7 +109,7 @@ There is a parallel `opm.microphone.config` group for a dict of config metadata 
 installers and GUIs. It is optional. Add it once the plugin has settings worth
 advertising.
 
-> 💡 The legacy alias `ovos.plugin.microphone` is still accepted by `ovos-plugin-manager`, but new plugins should register under `opm.microphone`.
+> 💡 `ovos-plugin-manager` accepts the legacy alias `ovos.plugin.microphone`. Register a plugin under `opm.microphone`.
 
 ### 3. Test it without OVOS
 

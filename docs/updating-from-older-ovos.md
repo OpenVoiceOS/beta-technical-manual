@@ -2,12 +2,11 @@
 
 ## In a nutshell
 
-This page is the upgrade companion for people who already run OVOS and need
-to move to a newer version. It is not for people new to OVOS
+Use this guide when you already run OVOS and must move to a later version. It is not for people new to OVOS
 (see [Coming From Mycroft](coming-from-mycroft.md)) and it is not for
 porting Mycroft skill code (see [Migrating From Mycroft](migrating-from-mycroft.md)).
 It is for a deployer or developer who has an OVOS stack from some past date
-and wants to know exactly what changed between then and now.
+and wants to know exactly what changed since that date.
 
 Use it like this:
 
@@ -15,7 +14,7 @@ Use it like this:
    device or fleet operator, or remote bus client (HiveMind and similar),
    and open that audience page.
 2. On that page, read from the top. Entries are in date order. Start at
-   the version you are currently running — not sure what that is? See
+   the version that you run — not sure what that is? See
    [Checking what you have installed](release-channels.md#checking-what-you-have-installed) —
    and read forward to your target version.
 3. For the largest breaks, open the linked migration page in the
@@ -40,11 +39,11 @@ Use it like this:
 | [Updating Remote Clients](updating-remote-clients.md) | Bus package/wire changes for HiveMind satellites and other remote bus consumers | The [bus-client dual-emit bridge](migration-bus-dual-emit.md) |
 
 !!! tip "What is coming, not what shipped"
-    This page covers released changes only. Open pull requests and the expected next
+    This guide covers released changes only. Open pull requests and the expected next
     breaking changes live on [Upcoming Changes](upcoming-changes.md).
 
 !!! tip "Supporting several versions from one codebase"
-    This page tells you what changed. If you maintain a skill or plugin that must run on
+    This guide tells you what changed. If you maintain a skill or plugin that must run on
     both sides of a break, see [Version-Compatible Skills & Plugins](version-compat-guide.md)
     for the sanctioned shim patterns.
 
@@ -83,7 +82,7 @@ release date after the commit is given instead.
 
 Before working through anything below, decide which path you are on. As a rule of thumb:
 
-- **Upgrade in place** when your install is within roughly the current stable window — none
+- **Upgrade in place** when your install is within roughly the stable release window — none
   or one of the big-ticket migrations below happened after your install date. Read your
   audience page forward from your version and you are done.
 - **Back up and reinstall** when two or more big-ticket migrations have landed since your
@@ -92,8 +91,8 @@ Before working through anything below, decide which path you are on. As a rule o
   stacked per-repo breaks in place is slower and more error-prone than a clean
   [ovos-installer](ovos-installer.md) run. Back up first ([Backup & Restore](backup-restore.md)),
   reinstall, then restore your `mycroft.conf` **selectively** — re-add your customizations to
-  the fresh file rather than copying the old file wholesale, since several old keys are
-  silently ignored now (see [Updating Deployers](updating-deployers.md)) — and reinstall your
+  the fresh file rather than copying the old file wholesale, since the latest release silently
+  ignores several old keys (see [Updating Deployers](updating-deployers.md)) — and reinstall your
   skills from PyPI rather than restoring old checkouts.
 
 ## Big-ticket migrations
@@ -167,19 +166,13 @@ does a one-time migration of the old `web_cache.json` (plugin-written location d
 `runtime.conf`, renaming the old file to `web_cache.json.migrated` afterward.
 
 `ovos-core`'s opt-in intent-metrics upload (`open_data.intent_urls`, empty/disabled by default)
-now includes `pipeline` (the matcher ids from `session.pipeline` that produced the match) and
+includes `pipeline` (the matcher ids from `session.pipeline` that produced the match) and
 `core_version` in its payload (`ovos-core` #689, first tag `3.0.12a1`).
 
-## Coming next
+## Unreleased work {#coming-next}
 
-The following work is visible on unmerged branches only and is **not
-released**. It is included so you know it is coming, not because it is
-safe to build against yet.
-
-- Unmerged `ovos-workshop` branches `feat/deprecate-ocp-skills`,
-  `feat/remove-skill-homescreens`, `feat/gameskill-and-ocp-deprecation`:
-  OCP-skill-base-class and skill-homescreen removal has not landed as of
-  this page's sources. Do not treat as shipped.
+Unmerged work is not released, and you must not build against it. Open pull requests and
+expected breaking changes are listed on [Upcoming Changes](upcoming-changes.md).
 
 ---
 

@@ -2,7 +2,7 @@
 
 !!! abstract "In a nutshell"
     Every skill ships small text files that say what phrases to listen for and what to say
-    back. This page shows how to swap in your own versions of those files, to reword a
+    back. You can swap in your own versions of those files, to reword a
     reply, fix wording for your accent or dialect, or add a language a skill doesn't
     include, all without editing the skill's actual code. You drop your edited copy into a
     personal folder, and OVOS loads yours instead, falling back to the skill's original for
@@ -19,7 +19,7 @@ of any one of those files into a user folder, and OVOS loads yours instead of th
 You only override the files you care about. Everything else falls back to the skill.
 
 ??? info "📐 Formal specification"
-    Locale resource layout and file formats are defined by **[OVOS-INTENT-2: Locale Resource Formats](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md)** (companion to [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md), the sentence-template grammar). See the [spec index](architecture-specs.md). This page describes how OVOS implements that spec. The spec is the normative reference.
+    Locale resource layout and file formats are defined by **[OVOS-INTENT-2: Locale Resource Formats](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md)** (companion to [OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md), the sentence-template grammar). See the [spec index](architecture-specs.md). The sections below describe how OVOS implements that spec. The spec is the normative reference.
 
 ---
 
@@ -60,7 +60,7 @@ my-skill/
 A language directory **may** contain subdirectories. A loader resolves a resource by searching the language directory and all its subdirectories recursively. Subdirectory names are an authoring convenience and carry no meaning to the loader.
 
 !!! note "Legacy layouts"
-    Older skills used `vocab/<lang>/` and `dialog/<lang>/` directories instead of `locale/<lang>/`. OVOS still searches these for backwards compatibility, but new skills and overrides should use `locale/`.
+    Some skills use `vocab/<lang>/` and `dialog/<lang>/` directories instead of `locale/<lang>/`. OVOS also searches these for backwards compatibility. Skills you write and overrides should use `locale/`.
 
 ---
 
@@ -77,7 +77,7 @@ Overrides apply at **whole-file granularity**: an override file replaces the cor
 lower-precedence file entirely. You do **not** merge line-by-line, and you do **not** need to
 copy files you aren't changing.
 
-`.dialog` files are honored by the user-override tier since `ovos-workshop` `9.5.3a1`,
+The user-override tier honors `.dialog` files,
 the same as `.intent`, `.voc`, `.entity`, `.rx` (regex), and the other resource roles. The
 override only takes effect if the user directory already exists when the skill loads.
 

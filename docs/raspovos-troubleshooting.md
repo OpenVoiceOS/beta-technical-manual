@@ -1,7 +1,7 @@
 # RaspOVOS Troubleshooting
 
 !!! abstract "In a nutshell"
-    raspOVOS is the ready-made, actively maintained OVOS image for the Raspberry Pi mini-computer, and this page is a fix-it guide for the common things that go wrong on those devices: weak power supplies, no sound, a wake word that won't trigger, or wrong speech-to-text results. It walks through hands-on commands you type into a terminal to diagnose and correct each problem. See the [Glossary](glossary.md) for unfamiliar terms.
+    raspOVOS is the ready-made, actively maintained OVOS image for the Raspberry Pi mini-computer. This fix-it guide covers the common things that go wrong on those devices: weak power supplies, no sound, a wake word that won't trigger, or wrong speech-to-text results. It walks through hands-on commands you type into a terminal to diagnose and correct each problem. See the [Glossary](glossary.md) for unfamiliar terms.
 
 !!! warning "raspOVOS-specific commands"
     This guide applies to raspOVOS and may assume some raspOVOS-exclusive utilities are available. If you are not using raspOVOS, [some command line utilities](https://github.com/OpenVoiceOS/raspOVOS/tree/dev/overlays/base_ovos/usr/local/bin) will not be available.

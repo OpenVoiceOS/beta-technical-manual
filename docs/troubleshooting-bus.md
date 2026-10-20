@@ -3,7 +3,7 @@
 !!! abstract "In a nutshell"
     `ovos-busmon` is a small web app that streams every message on the OVOS messagebus live to a
     browser tab, so you can watch an utterance move through the pipeline without tailing six
-    separate log files. This page is the deep dive: install, config, and a walkthrough. For the
+    separate log files. The sections below cover install, config, and a walkthrough. For the
     staged decision tree that this tool supports, see [Troubleshooting &
     Debugging](troubleshooting.md).
 

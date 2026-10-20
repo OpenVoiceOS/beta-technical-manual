@@ -2,7 +2,7 @@
 # Reusable Workflow Reference: Coverage and Security Workflows
 
 !!! abstract "In a nutshell"
-    This page documents the shared workflows for test coverage and dependency security: `coverage.yml`, the deprecated `coverage-pages.yml`, `pip-audit.yml`, and `downstream-check.yml`. For lint, type-checking, docs presence, and Matrix notifications, see [Lint and Docs Workflows](gh-automations-lint-docs.md). For the PR-comment aggregation pattern and the shared Python scripts, see [PR Comment Pattern and Scripts](gh-automations-pr-comment-scripts.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
+    These are the shared workflows for test coverage and dependency security: `coverage.yml`, the deprecated `coverage-pages.yml`, `pip-audit.yml`, and `downstream-check.yml`. For lint, type-checking, docs presence, and Matrix notifications, see [Lint and Docs Workflows](gh-automations-lint-docs.md). For the PR-comment aggregation pattern and the shared Python scripts, see [PR Comment Pattern and Scripts](gh-automations-pr-comment-scripts.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
 
 All reusable workflows are in `.github/workflows/` and are called via:
 
@@ -13,7 +13,7 @@ uses: OpenVoiceOS/gh-automations/.github/workflows/<name>.yml@dev
 
 > **Ref:** Always use `@dev`.
 
-**Workflows on this page:**
+**Workflows:**
 
 - [`coverage.yml`](#coverageyml)
 - [`coverage-pages.yml` (deprecated)](#coverage-pagesyml-deprecated)
@@ -213,7 +213,7 @@ jobs:
 
 ## `downstream-check.yml`
 
-Reports which packages in the ovos-releases alpha constraints depend on a given package. Uses `pipdeptree` and uploads the sorted report as a workflow artifact — the report is no longer committed to the repo (the `commit_branch` input below is deprecated and ignored).
+Reports which packages in the ovos-releases alpha constraints depend on a given package. Uses `pipdeptree` and uploads the sorted report as a workflow artifact. The workflow does not commit the report to the repo (the `commit_branch` input below is deprecated and ignored).
 
 **Source:** `.github/workflows/downstream-check.yml`
 

@@ -67,10 +67,11 @@ isn't behaving as expected), run `ovos-busmon`, a browser-based web UI (FastAPI 
 for live bus traffic. It subscribes like any other client and streams each message to the
 browser as it is broadcast. Install it with `pip install ovos-busmon`.
 
-!!! note "Upcoming: `AsyncMessageBusClient`"
-    An in-progress change adds an async/await-native `AsyncMessageBusClient` alongside the
-    threaded `MessageBusClient` used in the recipes above, for callers already running an
-    asyncio event loop (e.g. FastAPI servers) that would rather avoid a background thread.
+!!! warning "Alpha channel only"
+    `ovos-bus-client` ships an async/await-native `AsyncMessageBusClient` beside the
+    threaded `MessageBusClient` used in the recipes above. Use it when the caller already runs an
+    asyncio event loop (e.g. FastAPI servers) and must avoid a background thread. It needs the
+    `async` extra: `pip install --pre "ovos-bus-client[async]"`.
 
 ## From a non-Python client: the JSON round trip
 

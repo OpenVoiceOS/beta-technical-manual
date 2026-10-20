@@ -12,7 +12,7 @@
 
 Not in the default pipeline. Add its stage IDs to `intents.pipeline` explicitly to use it.
 
-The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
+The sections below are for people who deploy or customize OVOS.
 
 ??? info "📐 Formal specification"
     Hierarchical KNN is a **pipeline plugin** under **[OVOS-PIPELINE-1: Utterance Lifecycle & Pipeline](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. It fills the **template-intent** engine role of **[OVOS-INTENT-3 §5-§6](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md)** over the **[OVOS-INTENT-1 grammar](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md)**. Its embedding/k-NN matching is one of the engine-specific strategies INTENT-3 §8 leaves open. See the [spec index](architecture-specs.md).

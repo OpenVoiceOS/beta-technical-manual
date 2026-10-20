@@ -4,14 +4,14 @@
     `ovoscope` is the official tool for testing OpenVoiceOS skills and core parts. It runs a small,
     fast, pretend version of the whole assistant in one process. This lets you confirm a request is
     understood and answered correctly without real hardware. "End-to-end" just means it checks the
-    whole journey, from what the user said to what the assistant did. This page gets you started.
+    whole journey, from what the user said to what the assistant did.
     The **full, always-current reference lives in the [ovoscope repo's `docs/`](https://github.com/OpenVoiceOS/ovoscope/tree/dev/docs)**. See the [Glossary](glossary.md).
 
-!!! info "This page is a guide; the reference is in the repo"
-    `ovoscope` is actively developed, so its detailed per-harness reference is kept **in the tool's
+!!! info "Guide here, reference in the repo"
+    The detailed per-harness reference is kept **in the tool's
     own [`docs/`](https://github.com/OpenVoiceOS/ovoscope/tree/dev/docs)** rather than copied here
-    (which would drift out of sync). This page gives you the concept and a working first test, then
-    links to the authoritative reference for each harness.
+    (which would drift out of sync). The sections below give the concept and a working first test, then
+    link to the authoritative reference for each harness.
 
 **ovoscope** provides a lightweight, in-process environment for running **End-to-End (E2E) tests**
 without a full system installation. Every official OVOS skill is required to pass `ovoscope` E2E
@@ -149,7 +149,7 @@ uses `get_minicroft`. For single-language suites on the 180s CI default, use 300
 For multilingual suites, set `pytest-timeout` to at least `max_wait + 120s`. A `pytest-timeout`
 at or below the ceiling kills setup mid-wait, and the failure looks like a boot failure
 instead of a timeout. This applies to the **global** timeout in `pytest.ini` or `pyproject.toml`
-too, not just a per-test `@pytest.mark.timeout`: a low global floor kills `setUpClass` before
+too, as well as a per-test `@pytest.mark.timeout`: a low global floor kills `setUpClass` before
 `get_minicroft` even returns, regardless of any per-test marker. Full detail:
 [minicroft.md](https://github.com/OpenVoiceOS/ovoscope/blob/dev/docs/minicroft.md).
 

@@ -8,8 +8,7 @@
 
     You can start a single service on its own machine, load a single
     skill as its own process, or `pip install` a speech plugin into a separate Python
-    project and call it directly, with no bus and no assistant around it at all. This page
-    covers that second use case: OVOS the **library**, not OVOS the **product**.
+    project and call it directly, with no bus and no assistant around it at all. The second use case is the subject here: OVOS the **library**, not OVOS the **product**.
 
 ## The principle
 
@@ -29,7 +28,7 @@ prototype. This makes the two deployment styles below equally valid:
 
 Nothing in the code enforces the first style. It is a packaging convenience (`ovos-core` is a
 metapackage), not an architectural requirement. The [Architecture Overview](architecture-overview.md)
-covers how these services cooperate at runtime. This page covers how to run them apart.
+covers how these services cooperate at runtime. The sections below show how to run them apart.
 
 ## The standard split: one console script per service
 

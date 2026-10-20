@@ -1,13 +1,13 @@
 # Troubleshooting & Debugging
 
 !!! abstract "In a nutshell"
-    You said something to OVOS and nothing happened. This page is a decision tree for finding out
+    You said something to OVOS and nothing happened. The stages below form a decision tree to find out
     why. It follows the same journey as [The Life of an Utterance](life-of-an-utterance.md): mic,
     wake word, speech-to-text, intent matching, skill, text-to-speech. At each stop it shows where
     the evidence lives (which log file, which bus message), what a healthy result looks like, and
     the exact command to check it yourself. The first stages need only copy-paste: no programming
     background is required there. Later stages read log files and run command-line tools, so they
-    ask more of you as the page goes. New to the words here? See the [Glossary](glossary.md).
+    ask more of you stage by stage. New to the words here? See the [Glossary](glossary.md).
 
 Every stage below can be checked two ways: **tail a log file** (works everywhere, including headless
 boxes over SSH), or **watch the bus live** with `ovos-busmon` (works anywhere a browser can reach the
@@ -511,12 +511,12 @@ relevant OCP config pages.
 
 ## Turning up log detail
 
-By default every service logs at `INFO`. To see the `DEBUG` lines quoted throughout this page
+By default every service logs at `INFO`. To see the `DEBUG` lines quoted below
 (pipeline misses, hotword events, STT confidence filtering, etc.), raise the log level in the
 [user configuration](config.md).
 
 !!! note "`ovos-config set` only edits keys that already exist somewhere"
-    `ovos-config set -k log_level -v DEBUG` looks for `log_level` in the *currently merged*
+    `ovos-config set -k log_level -v DEBUG` looks for `log_level` in the *merged*
     configuration first, and on a fresh install nothing ships that key by default. So the
     command fails with `Error: No key that fits the query` before you've ever set a log level.
     The reliable first-time path is to add the key directly to your user config file
@@ -530,10 +530,8 @@ By default every service logs at `INFO`. To see the `DEBUG` lines quoted through
 
     Once the key exists anywhere in the merged configuration (including after you've added it
     this way once), `ovos-config set -k log_level -v DEBUG` will find it and write it to
-    `mycroft.conf` (the User layer). If `mycroft.conf` was already showing the wrong value
-    before running `set`, on an `ovos-config` release before `3.1.1a1`, `set` wrote to the
-    Assistant layer (`runtime.conf`) instead — see [Configuration](config.md#config-layer-stack) —
-    and the User layer's stale value silently won.
+    `mycroft.conf` (the User layer). See [Configuration](config.md#config-layer-stack) for the
+    layer order.
 
 This applies to every service (they all watch the same configuration and pick up the change
 without a restart). To raise the level for only one service, add the nested `"logging"` section

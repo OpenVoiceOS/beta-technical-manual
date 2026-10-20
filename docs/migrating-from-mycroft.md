@@ -5,19 +5,19 @@
     purpose: "skills", "intents", "dialog files", even the wake word "Hey Mycroft". This lets
     skills and habits carry over. The underlying Python API was cleaned up along the way. Class
     names moved, one central cloud account went away entirely, and a couple of decorators
-    merged into one. This page is a one-stop diff for anyone arriving with old
+    merged into one. The diff below is for anyone arriving with
     `mycroft-core` knowledge (a skill, a config file, a habit) who wants to know exactly what
     changed and why. New to the words here? See the [Glossary](glossary.md).
 
-This page is for skill authors and integrators. If you just used a Mycroft device and
+The diff is for skill authors and integrators. If you just used a Mycroft device and
 want to know what daily use looks like on OVOS, read
 [Coming from Mycroft](coming-from-mycroft.md) instead.
 
 ## The short version
 
 OVOS is a **backendless**, community-maintained continuation of the ideas behind Mycroft AI.
-There is no cloud account, no pairing step, and no `home.mycroft.ai`. Everything that used to
-require the Mycroft backend now runs locally or through swappable, self-hosted plugins. The
+There is no cloud account, no pairing step, and no `home.mycroft.ai`. Everything that the
+Mycroft backend did runs locally or through swappable, self-hosted plugins. The
 skill-writing model (intent files, dialog files, `locale/` folders) is the same model you already
 know. Only a handful of import paths and class/decorator names changed.
 
@@ -57,7 +57,7 @@ What changed, line by line:
 
 - `from mycroft import MycroftSkill` → `from ovos_workshop.skills import OVOSSkill`. The
   `mycroft` package and its `MycroftSkill` class do not exist in the current OVOS stack.
-  `OVOSSkill` (in `ovos-workshop`) is the base class every skill subclasses today.
+  `OVOSSkill` (in `ovos-workshop`) is the base class every skill subclasses.
 - No `__init__` / `create_skill()` boilerplate is required. A skill is loaded from a Python
   package that declares itself through an `opm.skill` entry point (see
   [Your First Skill](first-skill.md)). OVOS instantiates the class directly.
@@ -70,10 +70,10 @@ What changed, line by line:
 
 ## Concept map
 
-| mycroft-core concept | OVOS today | Notes |
+| mycroft-core concept | OVOS | Notes |
 |---|---|---|
 | `MycroftSkill` | [`OVOSSkill`](ovos-skill.md) | Base class every skill subclasses. |
-| `@intent_file_handler` | [`@intent_handler`](decorators.md) | Now handles both Padatious `.intent` files and Adapt `IntentBuilder`s. |
+| `@intent_file_handler` | [`@intent_handler`](decorators.md) | Handles both Padatious `.intent` files and Adapt `IntentBuilder`s. |
 | `self.translate()` / `translate_list()` / `translate_namedvalue()` / `translate_template()` | `self.resources.render_dialog()` / `load_list_file()` / `load_named_value_file()` / `load_template_file()` | The old `translate*` helpers were **removed**. See [Statements → Using translatable resources](statements.md#using-translatable-resources). |
 | `home.mycroft.ai` (pairing, cloud STT/TTS, remote settings) | *Nothing, removed* | OVOS is [**backendless**](deprecated-repos.md#backend-services-removed-architecture-5). There is no account, no pairing, and no central server. STT/TTS/settings all run through local or self-hosted plugins instead. |
 | Mycroft Skills Manager (`msm`, `ovos_skill_manager`) | pip / `opm.skill` entry points | Skills are ordinary Python packages installed with `pip`. Discovery goes through [OPM](plugin-manager.md), not a separate skill manager. |
@@ -114,8 +114,8 @@ What changed, line by line:
 
 - [Deprecated & Archived Repositories](deprecated-repos.md): full list of retired
   mycroft-core-era repositories and their current replacements.
-- [Your First Skill](first-skill.md): a from-scratch walkthrough using today's API.
-- [Decorators](decorators.md): every decorator available today, including the note on
+- [Your First Skill](first-skill.md): a from-scratch walkthrough of the skill API.
+- [Decorators](decorators.md): every decorator available, including the note on
   `@intent_file_handler`.
 - [Glossary](glossary.md): unfamiliar terms, including [`home.mycroft.ai`](glossary.md).
 

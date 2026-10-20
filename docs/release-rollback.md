@@ -2,9 +2,9 @@
 
 !!! abstract "In a nutshell"
     A [release channel](release-channels.md) bounds versions going forward. It does not
-    remember what you actually had installed before an upgrade. This page covers freezing a
-    known-good package set before you upgrade, rolling the whole stack back if an upgrade
-    misbehaves, and pinning or rolling back just one package instead of the whole environment.
+    remember what you actually had installed before an upgrade. Freeze a
+    known-good package set before you upgrade. If an upgrade misbehaves, roll the whole stack
+    back, or pin or roll back just one package.
 
 !!! warning "Installed with `ovos-installer`? Know your method first"
     The `pip`/`uv pip` commands here apply to the **`virtualenv`** install method, run inside

@@ -35,11 +35,11 @@ flowchart TD
     depends on them.
 
     **Looking for a no-terminal option?** The **[raspOVOS](install-raspovos.md)** image is the
-    flash-and-boot alternative: no terminal, no SSH. Its **stable** images date from mid-2025
-    and are not receiving updates (the newer DEV builds on its
+    flash-and-boot alternative: no terminal, no SSH. Its **stable** images get
+    no updates (the DEV builds on its
     [releases page](https://github.com/OpenVoiceOS/raspOVOS/releases) are untested
     work-in-progress toward a refreshed image), so check status before choosing it. This
-    installer is the supported route meanwhile, and the recommended path on the Pi and
+    installer is the supported route, and the recommended path on the Pi and
     everywhere else.
 
     **This runs in a terminal, not an app.** There's no phone app. You type commands into a
@@ -129,7 +129,7 @@ sudo apt install -y git curl
 
 ### 4. Run the OVOS Installer
 
-Now you're ready to start the installation process:
+Start the installation:
 
 This is the official `ovos-installer` script, straight from the project's `main` branch. You
 can read it yourself first at
@@ -147,7 +147,7 @@ sudo sh installer.sh
 
 !!! warning "Piping straight to root, without reading it first"
     The one-liner below runs as **root** and executes whatever the `main` branch of
-    `ovos-installer` currently holds. It is not pinned to a release, and you never see the
+    `ovos-installer` holds. It is not pinned to a release, and you never see the
     script before it runs with root privileges. Prefer the download-then-inspect version above
     unless you're already comfortable with that trade-off.
 
@@ -172,7 +172,7 @@ Once you run the script, the installer will:
 
 - Launch a **text-based user interface (TUI)** to guide you through the setup
 
-This can take anywhere from **5 to 20 minutes**, depending on your hardware, internet speed, and storage performance. Now let's walk through the installer screens!
+This can take anywhere from **5 to 20 minutes**, depending on your hardware, internet speed, and storage performance. The installer screens follow.
 
 ---
 
@@ -193,7 +193,7 @@ screenshots, see [The `ovos-installer` Wizard, Screen by Screen](ovos-installer-
 
 ## Installation Complete!
 
-OVOS is now installed and ready to use. Try saying things like:
+OVOS is installed and ready to use. Try saying things like:
 
 - "What's the weather?"
 

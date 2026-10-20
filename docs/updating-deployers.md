@@ -2,10 +2,10 @@
 
 ## In a nutshell
 
-This page is for people who operate an OVOS device or fleet and need to
+Operators of an OVOS device or fleet use these entries to
 track config-only changes: renamed keys, changed defaults, and removed
 blocks in `mycroft.conf` and `ovos.conf`. Entries are in date order: start
-at the version you are currently running and read forward to your target
+at the version you run and read forward to your target
 version. For the Big-ticket migrations (the changes with the widest blast
 radius, including the ovos-config 2.0.0 pipeline renames), see
 [Updating from Older OVOS](updating-from-older-ovos.md#big-ticket-migrations).

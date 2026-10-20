@@ -1,7 +1,7 @@
 # Writing a Wake-word Plugin
 
 !!! abstract "In a nutshell"
-    This page is the tutorial for building your own wake-word plugin: the `HotWordEngine` base class, its key methods, the entry point that makes a plugin installable, and how to test it. Looking for a plugin to use instead of writing one? Go to [Wake-word Plugins](wake-word-plugins.md).
+    A tutorial for building your own wake-word plugin: the `HotWordEngine` base class, its key methods, the entry point that makes a plugin installable, and how to test it. Looking for a plugin to use instead of writing one? Go to [Wake-word Plugins](wake-word-plugins.md).
 
 
 All wake-word plugins inherit from the `HotWordEngine` base class provided by

@@ -12,9 +12,9 @@ Install: `pip install ovos-openai-plugin`
 **GitHub**: [OpenVoiceOS/ovos-openai-plugin](https://github.com/OpenVoiceOS/ovos-openai-plugin)
 
 !!! note "Removed legacy solver"
-    The old `ovos-solver-openai-plugin` entry point and the `OpenAIChatCompletionsSolver` /
-    `OpenAICompletionsSolver` classes no longer exist. Personas that referenced them must
-    switch to the `ovos-chat-openai-plugin` agent engine (still listed under a persona's
+    The package has no `ovos-solver-openai-plugin` entry point and no `OpenAIChatCompletionsSolver` /
+    `OpenAICompletionsSolver` classes. Personas that reference them must
+    use the `ovos-chat-openai-plugin` agent engine (listed under a persona's
     `handlers` key).
 
 ---

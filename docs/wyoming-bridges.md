@@ -273,7 +273,7 @@ pipeline. For the HA side in more depth, see the
 
 ## Keeping the bridges running
 
-The commands on this page run in the foreground and die with the terminal. For a permanent
+The commands above run in the foreground and die with the terminal. For a permanent
 setup, wrap each bridge in a systemd unit (or your init system's equivalent) so it starts on
 boot and restarts on failure — the same pattern [Production Operations](production-operations.md)
 uses for the OVOS services themselves.

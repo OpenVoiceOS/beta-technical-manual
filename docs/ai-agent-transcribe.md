@@ -1,10 +1,6 @@
 # Transcribe Audio From an AI Agent: Speech to Text (STT) over MCP and UTCP
 
-This page connects an AI agent to the OVOS speech-to-text (STT) server, so the agent can transcribe audio files.
-
-## Who this is for
-
-You use Claude Code, Claude Desktop, opencode, Mistral Vibe, or your own MCP or UTCP agent. You want the agent to turn speech into text with an STT engine that runs on your own computer.
+Connect an AI agent to the OVOS speech-to-text (STT) server, so the agent can transcribe audio files. Use the STT server when Claude Code, Claude Desktop, opencode, Mistral Vibe, or your own MCP or UTCP agent must turn speech into text with an STT engine that runs on your own computer.
 
 ## What you get
 

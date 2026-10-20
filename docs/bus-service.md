@@ -7,7 +7,7 @@
     The messagebus is the shared channel that lets all the separate parts of OpenVoiceOS talk to one another. Picture a group radio frequency: whatever one part says is heard by everyone tuned in, and each part simply pays attention to the messages meant for it and ignores the rest. There's no traffic controller deciding who gets what. Every message goes to everybody. It's how the listener, the brain, the audio, and the screen all stay in sync. See the [Architecture Overview](architecture-overview.md) for how the pieces fit together, or the [Glossary](glossary.md) for unfamiliar terms.
 
 ??? info "📐 Formal specification"
-    The `{type, data, context}` envelope, the `source`/`destination` routing keys, the `forward`/`reply`/`response` derivations, and the session carrier that rides in every message are all normative. See **[OVOS-MSG-1 — Bus Message](https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md)**, **[OVOS-SESSION-1 — Session Carrier](https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md)**, **[OVOS-SESSION-2 — Session Lifecycle](https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md)**, and **[OVOS-BRIDGE-1 — Bus Bridge & Opaque Relay](https://github.com/OpenVoiceOS/architecture/blob/dev/bridge-1.md)** (how satellites relay messages across a [HiveMind](hivemind-agents.md) mesh), plus the [spec index](architecture-specs.md). This page describes the reference implementation. Where it diverges from the spec, the spec wins.
+    The `{type, data, context}` envelope, the `source`/`destination` routing keys, the `forward`/`reply`/`response` derivations, and the session carrier that rides in every message are all normative. See **[OVOS-MSG-1 — Bus Message](https://github.com/OpenVoiceOS/architecture/blob/dev/msg-1.md)**, **[OVOS-SESSION-1 — Session Carrier](https://github.com/OpenVoiceOS/architecture/blob/dev/session-1.md)**, **[OVOS-SESSION-2 — Session Lifecycle](https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md)**, and **[OVOS-BRIDGE-1 — Bus Bridge & Opaque Relay](https://github.com/OpenVoiceOS/architecture/blob/dev/bridge-1.md)** (how satellites relay messages across a [HiveMind](hivemind-agents.md) mesh), plus the [spec index](architecture-specs.md). The sections below describe the reference implementation. Where it diverges from the spec, the spec wins.
 
 The **messagebus** is the central nervous system of the OVOS platform. All services communicate by publishing and subscribing to typed `Message` objects through this central WebSocket broker.
 
@@ -106,7 +106,6 @@ All settings live under the `websocket` key in `mycroft.conf`:
 | `ssl` | `false` | Serve (and connect) over `wss://` instead of `ws://`. The Tornado `ovos-messagebus` terminates TLS itself — it uses `ssl_cert`/`ssl_key` if set, otherwise generates a self-signed pair on first start (needs the `ssl` extra). Clients (`ovos-bus-client`) build their URL from this same key. See the TLS note below; [HiveMind](hivemind-agents.md) is the other route to encrypted transport. |
 | `shared_connection` | `true` | When `true`, all skills share ovos-core's single bus connection. Set `false` to give each skill its own connection (so one skill cannot manipulate another's bus traffic). |
 | `async_sender` | `false` | Opt-in perf flag: move outbound socket writes onto one dedicated daemon thread reading a bounded queue, instead of every emitting thread serializing on the socket's send lock. Ordering is unchanged; a send error surfaces in the sender thread's log rather than the caller's. Also settable via the `OVOS_BUS_ASYNC_SENDER` env var. |
-| `local_echo_topics` | `[]` | Opt-in perf flag ([`ovos-bus-client#292`](https://github.com/OpenVoiceOS/ovos-bus-client/pull/292), not yet merged): a list of message types that, in addition to going out on the wire as usual, are delivered to this same process's own listeners immediately rather than waiting for the round trip back over the socket. Meant for hot handler-ack paths within one process (e.g. an intent dispatcher waiting on a same-process skill's ack). Each local delivery still happens exactly once — the wire copy carries a per-client marker that the client's own `on_message` recognizes and drops. |
 | `max_msg_size` | `25` | Max WebSocket frame size in megabytes. |
 
 `filter` / `filter_logs` are also recognized (code-level defaults in the messagebus event
@@ -132,8 +131,8 @@ part of the shipped `mycroft.conf` `websocket` section.
       emits on this bus, so it carries the same authority. Like the bus, it ships bound to
       `127.0.0.1`. Widening `gui_websocket.host` to `0.0.0.0` (required for a remote
       display) exposes that unauthenticated socket to the whole network. Keep the loopback
-      default unless a remote display needs it, and re-check configs from older installs
-      that may still carry a `0.0.0.0` value.
+      default unless a remote display needs it, and make sure your config does not
+      carry a `0.0.0.0` value.
 
     See [Privacy & Security](privacy-security.md) for the full trust model.
 
@@ -375,11 +374,11 @@ A separate, drop-in Rust implementation exists as its own project for deployment
     It is early/alpha and not the default: it does **not** terminate TLS and does not honour
     `websocket.max_msg_size` (it refuses to start when `websocket.ssl` is set), so serve
     `wss://` with the Tornado backend. The repo ships a benchmark (`benchmark/run_benchmark.py`,
-    `--compare`) that pits Tornado, webrockets, and the Rust server against each other. Early
+    `--compare`) that pits Tornado, webrockets, and the Rust server against each other. Its
     numbers put webrockets ahead at higher concurrency. On a stable install, stay on the
     default Tornado server unless profiling shows the bus is a bottleneck.
 
-    **Known limitations of webrockets today:** no TLS termination at all (see above).
+    **Known limitations of webrockets:** no TLS termination at all (see above).
     `max_msg_size` is silently ignored rather than enforced, so an oversized frame is not
     rejected the way it would be on the Tornado backend. It also does not implement the
     `MessageBusEventHandler.on()` emitter hook that the Tornado backend exposes for embedding

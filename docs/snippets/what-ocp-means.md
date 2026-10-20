@@ -5,5 +5,5 @@
       request. See [OCP Pipeline](ocp-pipeline.md).
     - **The OCP skill base class**: `OVOSCommonPlaybackSkill`; skills built on it provide
       or embody media for the pipeline to find. See [OCP Skills](ocp-skills.md).
-    - **The legacy OCP audio plugin**: `ovos-plugin-common-play`, the current default
+    - **The legacy OCP audio plugin**: `ovos-plugin-common-play`, the default
       playback engine running inside `ovos-audio`. See [The OCP Audio Plugin](ocp-audio-plugin.md).

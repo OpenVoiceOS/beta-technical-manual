@@ -1,7 +1,7 @@
 # Plugins Index
 
 !!! abstract "In a nutshell"
-    OpenVoiceOS is built from interchangeable building blocks called *plugins*: small add-ons that each handle one job, like turning speech into text or text into speech. This works much like browser extensions. You can mix and match the pieces you want and swap them out later. This page is a map of every plugin **type**, each linking to its catalog of available plugins. See the [Glossary](glossary.md) for related terms, or the [Plugin Manager](plugin-manager.md) for how they are discovered and loaded.
+    OpenVoiceOS is built from interchangeable building blocks called *plugins*: small add-ons that each handle one job, like turning speech into text or text into speech. This works much like browser extensions. You can mix and match the pieces you want and swap them out later. Below is a map of every plugin **type**, each linking to its catalog of available plugins. See the [Glossary](glossary.md) for related terms, or the [Plugin Manager](plugin-manager.md) for how they are discovered and loaded.
 
 Every plugin registers under an **entry-point group** (the `opm.*` name below) so the
 [Plugin Manager](plugin-manager.md) can find it. Pick a type to see the available plugins,
@@ -10,7 +10,7 @@ their config, and install commands.
 !!! tip "Too many choices? Start with **[Choosing Plugins](choosing-plugins.md)**"
     A side-by-side comparison of every plugin type: the recommended default, each option's
     maturity, offline/cloud, and licence, plus a copy-paste fully-offline stack and
-    scenario-based picks. This page is the *map of types*. That page helps you *pick one*.
+    scenario-based picks. The index below is the *map of types*. That page helps you *pick one*.
 
 ## Which plugin type do I need?
 
@@ -87,17 +87,17 @@ matchers (Padacioso, Nebulento, Palavreado, Hierarchical KNN, Markov, HiveMind).
 ## Media & GUI
 
 About 17 plugins in the catalog, across OCP stream extractors and media playback backends. OCP
-GUI Adapters exist as a spec, not yet as a shipped plugin. Media Classifiers ship — see the row below.
+GUI Adapters exist as a spec, not as a shipped plugin. Media Classifiers ship — see the row below.
 
 | Type | Entry point | What it does |
 |---|---|---|
 | [OCP Stream Extractors](ocp-plugins.md) | `opm.ocp.extractor` | Resolve a playable stream from a URL (YouTube, RSS, …) |
 | [OCP Media Classifiers](media-plugins.md#ovos-media-classifier) | `opm.media.classifier` | Recognize media intent + entities (artist, title, station, …) in an utterance. Deployed as a hard dependency of `ovos-ocp-pipeline-plugin`. See the [Media Playback](media-plugins.md#ovos-media-classifier) page. |
 | [Media Playback](media-plugins.md) | `opm.media.audio` / `.video` / `.web` | Backend players for [ovos-media](ovos-media.md) |
-| [OCP Audio Plugin](ocp-audio-plugin.md) | legacy audio backend | The current default playback engine inside ovos-audio |
+| [OCP Audio Plugin](ocp-audio-plugin.md) | legacy audio backend | The default playback engine inside ovos-audio |
 | [Stream Extractors](ocp-plugins.md) | `opm.ocp.extractor` | Resolve a stream URL before playback (YouTube, RSS, ...) |
 | [GUI Extensions](gui-service.md) | `opm.gui` | Legacy GUI service extensions. See [GUI status](gui-status.md) for the state of the GUI stack, [the GUI protocol](gui-protocol.md), [ovos-shell](ovos-shell.md), [Qt5 GUI](qt5-gui.md), and [homescreens](homescreen.md) |
-| [GUI Adapters](gui-adapters.md) | `opm.gui_adapter` **(unreleased)** | *(unreleased)* Render backends for the GUI. Not yet built or released. See the [GUI Adapters](gui-adapters.md) page. |
+| [GUI Adapters](gui-adapters.md) | `opm.gui_adapter` **(unreleased)** | *(unreleased)* Render backends for the GUI. Not released. See the [GUI Adapters](gui-adapters.md) page. |
 
 ## AI Agents & Personas
 
@@ -121,7 +121,7 @@ About 20 PHAL plugins in the catalog.
 
 ## Other plugin types
 
-These plugin types are defined by the Plugin Manager but don't yet have a dedicated catalog
+These plugin types are defined by the Plugin Manager but have no dedicated catalog
 page here. See [Plugin Types Reference](plugin-types-reference.md#plugin-types) for their
 entry-point group and template base class:
 

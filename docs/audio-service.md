@@ -18,7 +18,7 @@ music while it talks.
 !!! info "Two independent subsystems: don't conflate them"
     `ovos-audio` hosts **two separate things** that are easy to mix up:
 
-    1. **The TTS / sound playback queue** (described on this page): a single playback queue
+    1. **The TTS / sound playback queue** (described here): a single playback queue
        (`TTS.queue`, drained by one `PlaybackThread`) that plays **spoken responses *and* sound
        effects** (beeps, notification sounds). This is the core job of `ovos-audio`. It is
        **always on** and has **nothing to do** with the media audioservice or `ovos-media`.
@@ -27,7 +27,7 @@ music while it talks.
        [audioservice backends](media-plugins.md#ovos-ocp-audio-plugin) such as
        [OCP](ocp-audio-plugin.md). This is the **deprecated** part, being superseded by the
        standalone [`ovos-media`](ovos-media.md) daemon. A second top-level key,
-       `disable_ocp` (default `false`, slated to flip to `true`), gates whether the OCP
+       `disable_ocp` (default `false`), gates whether the OCP
        audioservice backend loads within this subsystem. Both keys are set at the **top
        level** of `mycroft.conf`, not under the `Audio` section. For the compatibility
        bridges and known coupling issues this legacy subsystem carries into `ovos-media`,
@@ -38,13 +38,12 @@ music while it talks.
     `enable_old_audioservice` works in both directions: flip it back to `true` to return to
     the legacy audioservice, on the same install, no reinstall needed.
 
-!!! warning "Upcoming breaking change"
-    The legacy media audioservice and standalone `ovos-media` currently coexist as
+!!! warning "Legacy audioservice and ovos-media are alternatives"
+    The legacy media audioservice and standalone `ovos-media` are
     **mutually exclusive alternatives**: which one plays media is a deployer's choice.
     Do not run both at once. The legacy media audioservice subsystem (subsystem 2 above,
-    including the [OCP audioservice backend](ocp-audio-plugin.md)) is planned to stop being
-    the default, with media playback moving wholly to [`ovos-media`](ovos-media.md). Opting
-    in today takes **two** steps: set `enable_old_audioservice: false` **and** install and
+    including the [OCP audioservice backend](ocp-audio-plugin.md)) is the deprecated
+    option. To use [`ovos-media`](ovos-media.md), do **two** steps: set `enable_old_audioservice: false` **and** install and
     run the separate `ovos-media` daemon. The flag only turns the legacy half off. It does
     not start `ovos-media` for you. The TTS / sound playback queue (subsystem 1) is
     unaffected either way.
@@ -80,7 +79,7 @@ synthesized audio **back over the bus** (base64 in the reply, nothing played loc
 `ovos.utterance.speak.b64` / `ovos.audio.speech`. See the
 [JSON round trip](bus-recipes.md#from-a-non-python-client-the-json-round-trip). Separately, and only when
 `enable_old_audioservice` is on, it also hosts the legacy media audioservice for music, news, and
-streams. See the **Two independent subsystems** note at the top of this page.
+streams. See the **Two independent subsystems** note at the top.
 
 ### Key Responsibilities
 
@@ -180,5 +179,5 @@ deprecated media path. See the **Two independent subsystems** note above.
 ---
 
 ---
-**Read next:** [Media Service (ovos-media)](ovos-media.md) · [Screens on OVOS Today](gui-status.md)
+**Read next:** [Media Service (ovos-media)](ovos-media.md) · [Screens on OVOS](gui-status.md)
 **Related:** [Bus Events Reference](bus-events.md#tts-audio-playback) · [TTS Plugins](tts-plugins.md) · [Speech Service](speech-service.md) · [Bus Service](bus-service.md) · [ovos-media Legacy Compatibility](ovos-media-compat.md)

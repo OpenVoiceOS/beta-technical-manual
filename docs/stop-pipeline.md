@@ -8,7 +8,7 @@
 
 This is a flow stage: part of every standard pipeline rather than a matcher you choose between.
 
-The rest of this page is for people deploying or customizing OVOS. If you only wanted to know what this stage does, you are done.
+The sections below are for people who deploy or customize OVOS.
 
 ??? info "📐 Formal specification"
     The stop plugin is specified by **[OVOS-STOP-1: Stop Pipeline Plugin](https://github.com/OpenVoiceOS/architecture/blob/dev/stop-1.md)**, built on **[OVOS-PIPELINE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md)**. See the [spec index](architecture-specs.md).
@@ -94,7 +94,7 @@ The plugin:
 1. Collects the session's stop candidates, skipping session-blacklisted ones and the stop plugin itself. A skill holding the session's `response_mode` window comes first, ahead of the recency list; the session's active handlers follow in recency order.
 
 
-2. Emits the `ovos.stop.ping` broadcast STOP-1 defines, and also pings each active handler on its per-skill topic `{skill_id}.stop.ping`. Both go out on every stop. The per-skill form is what reaches skills today, because the `ovos-workshop` base class subscribes to that one and not to the broadcast; keep the per-skill subscription until the base class moves. `ovos-core` logs a warning that the per-skill emission is a compatibility measure and names the release that drops it. The plugin then waits up to `0.5s` for `ovos.stop.pong` (legacy: `skill.stop.pong`) replies carrying `can_handle`.
+2. Emits the `ovos.stop.ping` broadcast STOP-1 defines, and also pings each active handler on its per-skill topic `{skill_id}.stop.ping`. Both go out on every stop. The `ovos-workshop` base class answers both forms with the same reply. The per-skill form serves skills that subscribe only to their own topic, and `ovos-core` logs a warning that names the release that removes it (`ovos-core` 4.0.0) and tells skill authors to subscribe to `ovos.stop.ping`. The plugin then waits up to `0.5s` for `ovos.stop.pong` (legacy: `skill.stop.pong`) replies carrying `can_handle`.
 
 
 3. Dispatches `<skill_id>:stop` (legacy: `{skill_id}.stop`) to the first positive responder in candidate order. Pongs are re-sorted into that order before the winner is picked, so the answer that arrived first does not decide the round.
@@ -164,8 +164,8 @@ The stop plugin interfaces with the OVOS session system:
 |---|---|---|
 | `<pipeline_id>:global_stop` (legacy: `stop:global`) | in | Global-stop dispatch — its handler emits the `ovos.stop` broadcast (and `ovos.utterance.handled`) |
 | `<skill_id>:stop` (legacy: `stop:skill` → `{skill_id}.stop`) | out | Targeted stop dispatch to one skill |
-| `ovos.stop.ping` | out | Broadcast asking active handlers whether they can stop, per STOP-1. The `ovos-workshop` base class does not subscribe to it yet |
-| `{skill_id}.stop.ping` | out | The same question addressed to one skill, emitted alongside the broadcast. The form skills actually answer, since the base class subscribes to it rather than the broadcast. Removed in a future `ovos-core` |
+| `ovos.stop.ping` | out | Broadcast asking active handlers whether they can stop, per STOP-1. The `ovos-workshop` base class answers it |
+| `{skill_id}.stop.ping` | out | The same question addressed to one skill, emitted alongside the broadcast. A compatibility form for skills that subscribe only to their own topic. `ovos-core` 4.0.0 removes it. The base class answers it too |
 | `ovos.stop.pong` (legacy: `skill.stop.pong`) | in | Handler's `can_handle` reply |
 | `ovos.stop` (legacy: `mycroft.stop`) | out | Universal stop broadcast |
 

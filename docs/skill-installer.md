@@ -55,8 +55,7 @@ The installer can be configured in `mycroft.conf`. It is **disabled unless `allo
 
 Three more booleans in the same `skills.installer` section shape the pip call itself, all
 default `false`: `upgrade` passes `--upgrade` so re-installing an already-installed package
-actually updates it (without it, a repeat install is a silent no-op, since ovos-core
-2.6.1a1); `allow_alphas` permits pre-release versions; `break_system_packages` passes the
+actually updates it (without it, a repeat install is a silent no-op); `allow_alphas` permits pre-release versions; `break_system_packages` passes the
 matching pip flag for externally-managed environments.
 
 The `constraints` file bounds allowed versions — its entries are compatible **ranges**
@@ -122,14 +121,13 @@ service of that name, and a request without it reaches every installer (OVOS-INS
 That is how a package installs into the process that actually loads it.
 
 The suffixed `ovos.pip.install.<service_name>` / `ovos.pip.uninstall.<service_name>` pair
-addresses the same thing and predates the specification. Those topics still work and log a
-deprecation, for one stable cycle. Write `data.service_name` instead: a topic carries no
+addresses the same thing and is deprecated. Those topics work and log a deprecation
+warning. Write `data.service_name` instead: a topic carries no
 target, which is what the payload is for.
 
 Four services run their own installer: `ovos-audio`
-(service name `ovos_audio`, since 2.2.0a1), `ovos-dinkum-listener` (`ovos_dinkum_listener`,
-since 0.9.0a1), `ovos-gui` (`ovos_gui`, since 1.5.0a1), and `ovos-PHAL` (since 0.3.0a1,
-service name `ovos_PHAL`, or `ovos_PHAL_admin` when running as [AdminPHAL](phal.md)).
+(service name `ovos_audio`), `ovos-dinkum-listener` (`ovos_dinkum_listener`),
+`ovos-gui` (`ovos_gui`), and `ovos-PHAL` (service name `ovos_PHAL`, or `ovos_PHAL_admin` when running as [AdminPHAL](phal.md)).
 This matters when services run in separate venvs or containers, where a broadcast install
 into core's environment would not reach the target process.
 

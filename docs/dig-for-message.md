@@ -6,7 +6,7 @@
     language of the person who is talking, not the device default. The mechanism behind
     that is `dig_for_message`, which walks the Python call stack and finds the `Message`
     your handler was called with. It is powerful, and it fails in ways that are hard to
-    guess. This page is for developers who need to rely on it, extend it, or work out why
+    guess. Read on if you need to rely on it, extend it, or work out why
     it returned `None`.
 
 `dig_for_message` lives in `ovos_bus_client.message`. It takes no required arguments and

@@ -1,10 +1,6 @@
 # Translate Text From an AI Agent (MCP and UTCP)
 
-This page connects an AI agent to the OVOS translate server, so the agent can translate text and detect its language.
-
-## Who this is for
-
-You use Claude Code, Claude Desktop, opencode, Mistral Vibe, or your own MCP or UTCP agent. You want translation that goes through a translation plugin that you choose.
+Connect an AI agent to the OVOS translate server, so the agent can translate text and detect its language. Use the translate server when Claude Code, Claude Desktop, opencode, Mistral Vibe, or your own MCP or UTCP agent must translate through a translation plugin that you choose.
 
 ## What you get
 

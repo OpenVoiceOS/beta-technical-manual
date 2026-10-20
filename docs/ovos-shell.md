@@ -1,13 +1,13 @@
 # OVOS Shell
 
 !!! abstract "In a nutshell"
-    `ovos-shell` is the old on-screen interface for OVOS. It is the full-screen app that draws the assistant's face, status, settings panel, and skill screens on devices with a display (like the Mark 2). It is the *legacy* GUI: deprecated, effectively broken today, and being replaced by a ground-up rework. This page is kept mainly for reference and for maintaining existing Mark 2 devices. See the [Glossary](glossary.md) for unfamiliar terms.
+    `ovos-shell` is the old on-screen interface for OVOS. It is the full-screen app that draws the assistant's face, status, settings panel, and skill screens on devices with a display (like the Mark 2). It is the *legacy* GUI: deprecated, effectively broken, and replaced by a ground-up rework in development. Use this reference to maintain existing Mark 2 devices. See the [Glossary](glossary.md) for unfamiliar terms.
 
-!!! danger "Maturity: Deprecated ⚠️ ⬤◯◯◯◯ — see [Screens on OVOS Today](gui-status.md) for the full picture"
-    This component's repository is archived and no longer maintained. See the
-    [Maturity Scale](maturity.md) and this page's own notes for what replaces it.
+!!! danger "Maturity: Deprecated ⚠️ ⬤◯◯◯◯ — see [Screens on OVOS](gui-status.md) for the full picture"
+    This component's repository is archived and unmaintained. See the
+    [Maturity Scale](maturity.md) and the notes below for what replaces it.
     `ovos-shell` is part of the legacy stack. There is no generally usable OVOS GUI,
-    and a replacement is **Upcoming**.
+    and a replacement is in development.
 
 [ovos-shell](https://github.com/OpenVoiceOS/ovos-shell) is the **legacy Qt5/[Kirigami](qt5-gui.md)
 shell application** for OVOS on embedded and desktop devices (Mark 2, Raspberry Pi with
@@ -121,7 +121,7 @@ Image {
   has cases for `recognizer_loop:record_end` (hide) and `mycroft.speech.recognition.unknown`
   (hide), but ovos-gui forwards those two events under their spec names
   (`ovos.listener.record.ended`, `ovos.speech.recognition.unknown`) rather than the
-  legacy strings the QML switches on, so neither branch currently fires. The
+  legacy strings the QML switches on, so neither branch fires. The
   component is embedded once, persistently, and writes `visible` in no other
   place, so as shipped it has no verified way to hide once shown (tracked
   upstream by the unmerged `fix/listener-animation-spec-events` branch).

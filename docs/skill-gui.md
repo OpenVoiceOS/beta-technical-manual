@@ -1,14 +1,14 @@
 # GUI Skills (GUIInterface)
 
 !!! abstract "In a nutshell"
-    When an OVOS device has a screen, a skill can show things on it: text, images, a page of results. This page describes the small Python toolkit a skill author uses to push data to the screen and ask for a page to be displayed. It is a developer topic, and the screen system is being rebuilt (see [GUI Adapters](gui-adapters.md)). Voice should stay the main way you interact, while the screen is a bonus. See the [Glossary](glossary.md) for terms.
+    When an OVOS device has a screen, a skill can show things on it: text, images, a page of results. A skill author uses a small Python toolkit to push data to the screen and ask for a page to be displayed. It is a developer topic. For the GUI rework, see [GUI Adapters](gui-adapters.md). Voice should stay the main way you interact, while the screen is a bonus. See the [Glossary](glossary.md) for terms.
 
-!!! danger "The OVOS GUI is deprecated — see [Screens on OVOS Today](gui-status.md) for the full picture"
-    This page documents the legacy skill GUI API. There is no generally usable OVOS GUI right
-    now, and a replacement is **Upcoming**. Voice should remain the primary interface.
+!!! danger "The OVOS GUI is deprecated — see [Screens on OVOS](gui-status.md) for the full picture"
+    The skill GUI API is legacy. OVOS has no generally usable GUI, and the replacement is
+    not released. Voice is the primary interface.
 
 ??? info "📐 Formal specification"
-    The **forward** model a skill targets is **[OVOS-GUI-1 — GUI Display Subsystem](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md)** (a formal [architecture spec](architecture-specs.md)). Under it, `self.gui` declares display intent by naming a template from the **closed `SYSTEM_*` vocabulary** (`SYSTEM_text`, `SYSTEM_image`, `SYSTEM_list`, `SYSTEM_weather`, `SYSTEM_confirm`, …) and pushing flat session-data. Interchangeable **render backends** draw it, routed by `session_id`. Two rules matter for skill authors. A skill **MUST NOT** invent template names or ship its own home/resting screen (the resting display is owned entirely by the backend, §6.9). Image keys carry an `http(s)` URL or `data:` URI, **never a local filesystem path**. The `show_*` helpers below map onto these templates. The custom-`.qml` path is legacy and unsupported under OVOS-GUI-1. Where this page and the spec differ, the spec is the canonical target.
+    The **forward** model a skill targets is **[OVOS-GUI-1 — GUI Display Subsystem](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md)** (a formal [architecture spec](architecture-specs.md)). Under it, `self.gui` declares display intent by naming a template from the **closed `SYSTEM_*` vocabulary** (`SYSTEM_text`, `SYSTEM_image`, `SYSTEM_list`, `SYSTEM_weather`, `SYSTEM_confirm`, …) and pushing flat session-data. Interchangeable **render backends** draw it, routed by `session_id`. Two rules matter for skill authors. A skill **MUST NOT** invent template names or ship its own home/resting screen (the resting display is owned entirely by the backend, §6.9). Image keys carry an `http(s)` URL or `data:` URI, **never a local filesystem path**. The `show_*` helpers below map onto these templates. The custom-`.qml` path is legacy and unsupported under OVOS-GUI-1. Where this manual and the spec differ, the spec is the canonical target.
 
 Many OVOS devices have a screen. A skill can drive that screen the same way it
 speaks: through a small Python API. You set some values, ask for a page to be
@@ -18,18 +18,18 @@ shown, and any connected GUI client (Qt shell, web, terminal, ...) renders it.
 (`self.gui["name"] = "OVOS"`), then call a `show_*` method to display a page.
 
 Under the hood, `self.gui` is a `SkillGUI` instance (a subclass of `GUIInterface`)
-created automatically for every `OVOSSkill`. On current `ovos-workshop` the base class
+created automatically for every `OVOSSkill`. In `ovos-workshop` the base class
 lives in `ovos_bus_client.apis.gui.GUIInterface`. The skill wrapper is
 `ovos_workshop.skills.ovos.SkillGUI`, namespaced to your `skill_id`.
 
 !!! warning "Alpha channel only"
     A planned breaking change rebinds `self.gui` to a
     `GUIInterface` from the standalone **`ovos-gui-api-client`** package (instead of
-    `ovos_bus_client.apis.gui`) and drops the `ui_directories` constructor argument (today,
-    `ui_directories` is a `dict` mapping a framework name, e.g. `"qt5"`, to its local resource
+    `ovos_bus_client.apis.gui`) and drops the `ui_directories` constructor argument (in the
+    released code, `ui_directories` is a `dict` mapping a framework name, e.g. `"qt5"`, to its local resource
     directory, which `GUIInterface` searches when resolving a relative image/page name to a
-    file on disk), since skills under the [GUI rework](gui-service.md) no longer ship QML. This is **not** on a released `ovos-workshop`. On stable installs `self.gui` is
-    still the `ovos_bus_client.apis.gui.GUIInterface`-based `SkillGUI` described above. Tracked in
+    file on disk), because skills under the [GUI rework](gui-service.md) do not ship QML. No published `ovos-workshop` carries this change. In every published release, `self.gui` is
+    the `ovos_bus_client.apis.gui.GUIInterface`-based `SkillGUI` described above. Tracked in
     [ovos-workshop#420](https://github.com/OpenVoiceOS/ovos-workshop/pull/420).
 
 ## Quick start
@@ -84,13 +84,13 @@ gui.show_image(url, caption=None, title=None, fill=None,
 `url` may be a local file path or an `http(s)` URL. Missing local files are
 logged and the call returns without showing anything.
 
-!!! note "Local paths work today, but the spec says not to rely on them"
+!!! note "Local paths work, but the spec says not to rely on them"
     The installed `show_image()` (`ovos_bus_client.apis.gui.GUIInterface`) does accept and
-    resolve a local filesystem path. That is the current, working behavior described above.
-    The OVOS-GUI-1 spec box further up this page nonetheless says image keys should carry only
-    an `http(s)` URL or `data:` URI, never a local path. That is the forward-looking contract
-    for interchangeable render backends, not a rule the current code enforces. Prefer a URL or
-    `data:` URI in new skills if you want to stay forward-compatible.
+    resolve a local filesystem path, as described above.
+    The OVOS-GUI-1 spec box above says image keys carry only
+    an `http(s)` URL or `data:` URI, never a local path. That is the contract
+    for interchangeable render backends. The code does not enforce it. Use a URL or
+    `data:` URI in a skill to stay compatible with the spec.
 
 #### Animated Image
 
@@ -151,15 +151,15 @@ The shipped `GUIInterface` also carries three animation helpers beyond the templ
 `show_face(awake=True, ...)` (the classic assistant face), `show_loading_animation(text, ...)`,
 and `show_status_animation(text, success, ...)`.
 
-!!! warning "Upcoming — a wider template surface in the standalone package"
-    The templates above are what today's `ovos_bus_client.apis.gui.GUIInterface` ships. The
-    forward-looking standalone **`ovos-gui-api-client`** `GUIInterface` (the package
+!!! warning "Pending change: a wider template surface in the standalone package"
+    The templates above are what `ovos_bus_client.apis.gui.GUIInterface` ships. The
+    standalone **`ovos-gui-api-client`** `GUIInterface` (the package
     [ovos-workshop#420](https://github.com/OpenVoiceOS/ovos-workshop/pull/420) rebinds
     `self.gui` to) adds more `SYSTEM_*` helpers: `show_list`, `show_grid`, `show_table`,
     `show_weather`, `show_clock`, `show_timer`, `show_map`, `show_media_player`,
     and the two voice-first dialogue helpers `show_confirm(question, ...)` and
     `show_select(items, prompt=None, ...)`. These are **not** on a released `ovos-workshop`.
-    Treat them as the template set new skills will target once the rebind lands.
+    They are the template set for skills after the rebind merges.
 
     Two behavioural notes for that package:
 
@@ -232,4 +232,4 @@ For OCP media players and idle/home screens see the
 
 ---
 **Read next:** [Runtime Requirements in OVOS](skill-runtime-requirements.md)
-**Related:** [Resource Files](resource-files.md) · [Screens on OVOS Today](gui-status.md) · [GUI Service (ovos-gui)](gui-service.md) · [GUI Adapter Plugins](gui-adapters.md)
+**Related:** [Resource Files](resource-files.md) · [Screens on OVOS](gui-status.md) · [GUI Service (ovos-gui)](gui-service.md) · [GUI Adapter Plugins](gui-adapters.md)

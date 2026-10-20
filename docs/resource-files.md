@@ -1,7 +1,7 @@
 # Resource Files
 
 !!! abstract "In a nutshell"
-    Skills keep their words in separate text files rather than buried in the program code. These "resource files" hold things like the phrases the assistant can say, the example sentences it listens for, and the keywords it recognizes. Each language gets its own folder. This separation makes a skill easy to translate and tweak without touching the code. This page explains the folder layout and the kinds of files. See also [Statements](statements.md) for spoken replies and the [Glossary](glossary.md).
+    Skills keep their words in separate text files rather than buried in the program code. These "resource files" hold things like the phrases the assistant can say, the example sentences it listens for, and the keywords it recognizes. Each language gets its own folder. This separation makes a skill easy to translate and tweak without touching the code. The sections below explain the folder layout and the kinds of files. See also [Statements](statements.md) for spoken replies and the [Glossary](glossary.md).
 
 ??? info "Formal specification"
     The locale folder layout and the plain-text resource formats are specified by **[OVOS-INTENT-2 — Locale Resource Formats](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md)** (a formal [architecture spec](architecture-specs.md)). The template grammar inside them is **[OVOS-INTENT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md)**. OVOS-INTENT-2 defines **six canonical roles** by extension: `.intent` and `.dialog` (slot-bearing, they may use `{name}` slots), `.entity`, `.voc`, and `.blacklist` (slot-free, expansion only), and `.prompt` (a whole-file language-model prompt with `{{name}}` substitution, **not** a template). Resources live under `locale/<lang>/` (BCP-47 tags, compared case-insensitively, searched recursively), resolved user, then skill, then core (§2.1). The `.rx`, `.list`, and `.word` files below are **framework extensions**, not OVOS-INTENT-2 roles. Prefer `.entity`/`.voc`/`.blacklist` for portability.
@@ -9,7 +9,7 @@
 Skills load localized resources from a structured directory layout. Resources are loaded automatically at startup for every language in `native_langs` (`core_lang` + `secondary_langs`).
 
 `.blacklist` is a spec-defined role under OVOS-INTENT-2, and `ovos-workshop` loads it
-automatically since `9.1.0a1`: a sibling `<name>.blacklist` file (matching an intent,
+automatically: a sibling `<name>.blacklist` file (matching an intent,
 slot, or entity base name) is merged into the registration blacklist with no skill code
 needed (`SkillResources.load_blacklist_file`). The `voc_blacklist=` argument on
 `@intent_handler` is a different, unrelated mechanism. It takes `.voc` filenames, not
@@ -58,7 +58,7 @@ Legacy skills may use separate `dialog/`, `vocab/`, `regex/` subdirectories. The
 | `.intent` | Intent | [Padatious](padatious-pipeline.md) training examples (OVOS-INTENT-2 role, slot-bearing) |
 | `.voc` | Vocabulary | [Adapt](adapt-pipeline.md) keyword definitions, one per line, first is canonical (OVOS-INTENT-2 role, slot-free) |
 | `.entity` | Entity | Example values for a `{slot}` (OVOS-INTENT-2 role, slot-free) |
-| `.blacklist` | Blacklist | Phrases that suppress a paired `.intent` (OVOS-INTENT-2 role, slot-free). Auto-loaded by `ovos-workshop` since `9.1.0a1` (`load_blacklist_file`). Unrelated to `voc_blacklist=` on `@intent_handler`, which takes `.voc` filenames. |
+| `.blacklist` | Blacklist | Phrases that suppress a paired `.intent` (OVOS-INTENT-2 role, slot-free). Auto-loaded by `ovos-workshop` (`load_blacklist_file`). Unrelated to `voc_blacklist=` on `@intent_handler`, which takes `.voc` filenames. |
 | `.prompt` | Prompt | A whole-file language-model prompt with `{{name}}` substitution (OVOS-INTENT-2 role) |
 | `.rx` | Regex | Adapt regex patterns (**framework extension**, not an OVOS-INTENT-2 role) |
 | `.list` | List | A flat list resource (**framework extension**) |

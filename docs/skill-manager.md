@@ -27,7 +27,7 @@ The `SkillManager` is a core component of `ovos-core`. It is a daemon `Thread` t
 
 ## Skill Discovery
 
-Skills are Python packages. They register themselves via the `opm.skill` entry point group. The older `ovos.plugin.skill` group is still accepted as a deprecated alias. `ovos-plugin-manager` discovers them with `find_skill_plugins()`, which returns a `{skill_id: SkillClass}` dict.
+Skills are Python packages. They register themselves via the `opm.skill` entry point group. `ovos-plugin-manager` also accepts the `ovos.plugin.skill` group as a deprecated alias. `ovos-plugin-manager` discovers them with `find_skill_plugins()`, which returns a `{skill_id: SkillClass}` dict.
 
 ```python
 from ovos_plugin_manager.skills import find_skill_plugins
@@ -113,11 +113,8 @@ completes (on both the trained and nothing-new-to-train paths), so tooling that 
 deterministic "training done" signal can watch for that. The manager itself never does.
 
 The manager itself never blocks on `mycroft.skills.trained`. The event exists (see
-above) but nothing in core does a `wait_for_response` on it. An earlier
-version blocked on `wait_for_response(..., "mycroft.skills.trained", timeout=60)`, which
-stalled boot for a full minute on every install without a deferred-training engine, since
-no such engine was there to answer. A single responder could not speak for every loaded
-pipeline anyway.
+above) but nothing in core does a `wait_for_response` on it. A single responder cannot
+speak for every loaded pipeline.
 
 ## Settings File Watcher
 

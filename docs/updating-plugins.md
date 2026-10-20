@@ -2,10 +2,10 @@
 
 ## In a nutshell
 
-This page is for maintainers of [STT](stt-plugins.md), [TTS](tts-plugins.md), [wake word](wake-word-plugins.md), audio-backend, [media](media-plugins.md),
+For maintainers of [STT](stt-plugins.md), [TTS](tts-plugins.md), [wake word](wake-word-plugins.md), audio-backend, [media](media-plugins.md),
 [GUI-adapter](gui-adapters.md), [PHAL](phal.md), and solver/engine plugins moving forward from an older
-OVOS install. Entries are in date order: start at the version you are
-currently running and read forward to your target version. For the
+OVOS install. Entries are in date order: start at the version you
+run and read forward to your target version. For the
 Big-ticket migrations (the changes with the widest blast radius, including
 the wake-word signature split), see
 [Updating from Older OVOS](updating-from-older-ovos.md#big-ticket-migrations).
@@ -154,7 +154,7 @@ Lifecycle:
 |---|---|---|
 | Active | before `15beb84` | |
 | Deprecated but functional | from `15beb84` (2025-07-22) | aliased, with a warning |
-| Dropped | no stated removal version as of the sweep | treat as indefinitely deprecated (ovos-plugin-manager `15beb84`, #333) |
+| Dropped | no stated removal version | treat as indefinitely deprecated (ovos-plugin-manager `15beb84`, #333) |
 
 A case-sensitivity bug in the alias table (`ovos.plugin.VAD` mapped to
 lowercase `opm.vad` instead of `opm.VAD`) silently broke discovery of
@@ -184,7 +184,7 @@ Lifecycle:
 |---|---|---|
 | Active | before `53564ce` | |
 | Deprecated but functional | from `53564ce` (2026-01-29) | `opm.solver.*` entry points still discoverable |
-| Dropped | removal target is the current major version plus one, not yet shipped as of `53564ce` | (ovos-plugin-manager, #365) |
+| Dropped | removal target is the next major version | (ovos-plugin-manager, #365) |
 
 `ovos-bus-client`'s parallel `opm.py` (`neon.plugin.solver`-based chat
 class) was already removed outright in `d526e99` (#207, 2026-05-18,

@@ -2,7 +2,7 @@
 # Reusable Workflow Reference: Plugin, License, and Repo Checks
 
 !!! abstract "In a nutshell"
-    This page documents the shared workflows that verify a package is a valid OVOS plugin and keeps its repo in good order: `opm-check.yml`, `license-check.yml`, and `repo-health.yml`. For the build-matrix checks, see [Build Checks](gh-automations-build-checks.md). For skill and locale packaging checks, see [Skill and Locale Checks](gh-automations-repo-skill-checks.md). For end-to-end skill test execution, see [Skill Test Workflows](gh-automations-skill-test-workflows.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
+    Three shared workflows verify that a package is a valid OVOS plugin and keep its repo in good order: `opm-check.yml`, `license-check.yml`, and `repo-health.yml`. For the build-matrix checks, see [Build Checks](gh-automations-build-checks.md). For skill and locale packaging checks, see [Skill and Locale Checks](gh-automations-repo-skill-checks.md). For end-to-end skill test execution, see [Skill Test Workflows](gh-automations-skill-test-workflows.md). Start with the [gh-automations overview](gh-automations-overview.md) for the big picture, or the full [Workflow Reference index](gh-automations-workflows.md).
 
 All reusable workflows are in `.github/workflows/` and are called via:
 
@@ -13,7 +13,7 @@ uses: OpenVoiceOS/gh-automations/.github/workflows/<name>.yml@dev
 
 > **Ref:** Always use `@dev`.
 
-**Workflows on this page:**
+**Workflows:**
 
 - [`opm-check.yml`](#opm-checkyml)
 - [`license-check.yml`](#license-checkyml)
@@ -39,7 +39,7 @@ Runs OPM (OVOS Plugin Manager) plugin detection and validation on a **single Pyt
 | `system_deps` | string | `""` | Extra apt packages to install before building (space-separated) |
 | `install_extras` | string | `""` | Extra dependencies to install. Accepts a bare extras name ('dev'), a bracketed list ('[dev,test]'), a full target ('.[dev]'), or raw pip arguments ('-r requirements/test.txt'). |
 | `plugin_type` | string | `auto` | Plugin type (auto, skill, tts, stt, wake_word, vad, phal, pipeline, utterance_transformer, tts_transformer) |
-| `entry_point` | string | `""` | Legacy: a single entry point ID to verify. For packages that ship multiple OPM plugins from one wheel, prefer `entry_points` (plural) or leave both empty — auto-detection enumerates every `opm.*` entry point declared in pyproject.toml. |
+| `entry_point` | string | `""` | Legacy: a single entry point ID to verify. For packages that ship multiple OPM plugins from one wheel, prefer `entry_points` (plural) or leave both empty. Auto-detection enumerates every `opm.*` entry point declared in pyproject.toml. |
 | `entry_points` | string | `""` | JSON array of entry point IDs to verify, e.g. '["foo", "bar"]'. When set, runs the OPM check once per entry point and aggregates results into the PR comment. Takes precedence over `entry_point`. |
 | `opm_require_found` | boolean | `true` | Fail if OPM cannot discover the plugin |
 | `opm_validate_interface` | boolean | `true` | Check that plugin class inherits from the correct abstract base |

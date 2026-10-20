@@ -2,12 +2,12 @@
 
 !!! abstract "In a nutshell"
     **OCP** ("OVOS Common Play") is the voice media player behind "play some jazz" or "play the
-    news". It ships as a plugin for the old [audio service](audio-service.md): the package
+    news". It ships as a plugin for the legacy [audio service](audio-service.md): the package
     `ovos-plugin-common-play`, which registers as an *audio backend* called `ovos_common_play`.
     This is the **default** way OVOS plays media. It still works and is enabled out of
     the box, but it is **legacy**: a dedicated replacement, [`ovos-media`](ovos-media.md), is
-    being built to take over the playback job. This page explains what the OCP audio plugin is,
-    why it lives inside the audio service, and how `ovos-media` will replace it. For the *intent*
+    being built to take over the playback job. The sections below explain what the OCP audio plugin is,
+    why it lives inside the audio service, and how `ovos-media` replaces it. For the *intent*
     side of OCP (deciding that "play X" is a media request) see the
     [OCP Pipeline](ocp-pipeline.md); for the skills that supply results see
     [Media Skills](ocp-skills.md).
@@ -81,7 +81,7 @@ a proper home as a standalone service instead of masquerading as an audio backen
 
 ---
 
-## Status today: legacy, but the default
+## Status: legacy, but the default {#status-today-legacy-but-the-default}
 
 The OCP audio plugin is **still the default media playback path**:
 
@@ -96,13 +96,12 @@ this plugin.
 
 !!! warning "Legacy: bug fixes only, no new features"
     `ovos-ocp-audio-plugin` still receives bug fixes, but no new functionality — active
-    development goes into [`ovos-media`](ovos-media.md). Recent fixes worth knowing about if
-    you rely on this plugin: skipping backwards through a shuffled queue no longer re-shuffles
-    the remaining tracks, and stream URLs carrying an auth token are redacted before they are
-    written to the log.
+    development goes into [`ovos-media`](ovos-media.md). Skipping backwards through a shuffled
+    queue does not re-shuffle the remaining tracks, and the plugin redacts stream URLs that
+    carry an auth token before it writes them to the log.
 
-!!! warning "Upcoming: breaking"
-    This legacy audioservice subsystem, including the OCP backend described on this page,
+!!! warning "Planned removal: breaking"
+    This legacy audioservice subsystem, including the OCP backend,
     is planned for removal from `ovos-audio` entirely. Media playback will then live wholly
     in [`ovos-media`](ovos-media.md). Plan a migration if you have not already switched.
 
@@ -165,12 +164,12 @@ register OCP's intents.
 ## How `ovos-media` replaces it
 
 [`ovos-media`](ovos-media.md) is the **final step** of the decomposition described
-[above](#background-why-ocp-is-an-audio-service-plugin) and the **upcoming, opt-in** replacement
+[above](#background-why-ocp-is-an-audio-service-plugin) and the **opt-in** replacement
 for this plugin. With the NLP, search, and extraction layers already split out into their own
 repos, what remains is the player itself. Instead of cramming it into the audio service,
 `ovos-media` gives it a **dedicated media daemon** with a cleaner design:
 
-| | OCP audio plugin (legacy, default) | `ovos-media` (upcoming) |
+| | OCP audio plugin (legacy, default) | `ovos-media` (opt-in) |
 |---|---|---|
 | Where it runs | Inside [`ovos-audio`](audio-service.md) as a `mycroft.plugin.audioservice` backend | Its own service/daemon |
 | Player plugins | One bundled player; delegates to `mpv`/`vlc`/`simple` audio backends | Typed plugins on `opm.media.audio` / `opm.media.video` / `opm.media.web` (see [Media Playback](media-plugins.md)) |
@@ -179,9 +178,8 @@ repos, what remains is the player itself. Instead of cramming it into the audio 
 
 What stays the same: the **search layer is shared**. The [OCP pipeline](ocp-pipeline.md)
 (intent matching) and [OCP skills](ocp-skills.md) (media providers) are used by *both*. Only the
-*playback backend* changes. `ovos-media` no longer carries a
-`mycroft.audio.service.*` bridge of its own (its `LegacyAudioServiceCompat` shim was dropped
-in 1.0.0a1): clients on the old topics are served by the legacy ovos-audio/OCP stack, and the
+*playback backend* changes. `ovos-media` has no
+`mycroft.audio.service.*` bridge of its own: clients on the legacy topics are served by the legacy ovos-audio/OCP stack, and the
 OCP pipeline plugin's own fallback, not by the `ovos-media` daemon.
 
 To switch to `ovos-media`: set **`"enable_old_audioservice": false`** in `mycroft.conf` and run

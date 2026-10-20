@@ -24,7 +24,7 @@ These files live in the skill's `locale/<lang>/` directory (e.g. `locale/en-us/P
 They can have one or more lines listing synonyms or terms with the same meaning in the
 context of this skill. OVOS matches _any_ of these keywords with the intent.
 
-> Language directories are named with BCP-47 tags and compared case-insensitively, so `en-us` and `en-US` denote the same language (OVOS-INTENT-2 §3). The older split layout (`vocab/<lang>/`, `regex/<lang>/`, `dialog/<lang>/`) is still supported for legacy skills, but new skills should use a single `locale/<lang>/` folder per language.
+> Language directories are named with BCP-47 tags and compared case-insensitively, so `en-us` and `en-US` denote the same language (OVOS-INTENT-2 §3). The legacy split layout (`vocab/<lang>/`, `regex/<lang>/`, `dialog/<lang>/`) also loads, but a skill you write should use a single `locale/<lang>/` folder per language.
 
 Consider a simple `Potato.voc`. Within this file we might include:
 
@@ -113,8 +113,7 @@ message.data.get('Type')
 
 ## Using Keyword Intents in a Skill
 
-Now that we have a vocab and a regular expression defined, let's look at how to use these in a
-simple skill.
+This section uses the vocab and the regular expression above in a simple skill.
 
 For the following example we will use the two files we outlined above:
 
@@ -123,7 +122,7 @@ For the following example we will use the two files we outlined above:
 
 * `type.rx`
 
-We will also add some new `.voc` files:
+Add these `.voc` files too:
 
 * `Like.voc`: containing a single line "like"
 
@@ -187,7 +186,7 @@ _Neither the `You` nor `I` keyword is found._
 
 ### Including it in a Skill
 
-Now we can create our Potato Skill:
+Create the Potato Skill:
 
 ```python
 from ovos_workshop.intents import IntentBuilder

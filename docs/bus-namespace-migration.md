@@ -17,15 +17,15 @@ trio, are deliberately **not** bridged. See that page's "Not bridged" note.
 Renaming a topic across an
 ecosystem of independently-released repos cannot happen in one coordinated step.
 So **`ovos-bus-client` migrates automatically and incrementally**. The legacy
-and the new names interoperate transparently while the ecosystem moves over.
+and the spec names interoperate while components move over.
 
 The canonical legacy to spec topic map lives in the `NamespaceTranslator` from
 [`ovos-spec-tools`](spec-tooling.md), and each `MessageBusClient` applies it in two
 directions. On the **receive** side, an incoming message re-dispatches to local listeners
-under the other spelling (`modernize`). On the **emit** side, since bus-client 2.8.3a1 a
+under the other spelling (`modernize`). On the **emit** side, a
 canonical emit of any mapped topic also puts a real, marked legacy-spelled twin frame on
 the wire (gated on `emit_legacy`; escape hatch `OVOS_BUS_WIRE_LEGACY_TWINS` env var /
-`websocket.wire_legacy_twins` config key, default on, added in 2.8.4a1). Legacy-spelled
+`websocket.wire_legacy_twins` config key, default on). Legacy-spelled
 emits are not twinned — their canonical counterpart is delivered receive-side only. Intent
 topics go through the separate intent bridge instead:
 
@@ -79,10 +79,7 @@ the legacy delivery, and disable `modernize` once no legacy producers remain.
 !!! warning "`modernize` is required, not cosmetic, on a canonical-only skill container"
     A skill container that only registers `ovos.*` handlers is not automatically safe from an
     older producer still emitting legacy topics. The wire frame it receives may be legacy-only.
-    That skill hears it at all *because* its own `MessageBusClient` (any `ovos-bus-client`
-    since 2.6.3a1, where the bridge became receive-side in commit 0f0a241, PR #258; before
-    that the counterpart was a second wire message, and 2.8.3a1 re-added marked wire twins
-    for canonical emits — see above)
+    That skill hears it at all *because* its own `MessageBusClient`
     re-dispatches the legacy arrival under its `ovos.*` counterpart on receive, per `modernize`
     being on. Disabling `modernize` on such a container does not just drop a redundant delivery.
     It silently stops that container from ever hearing a legacy producer again. Never disable
@@ -92,25 +89,24 @@ the legacy delivery, and disable `modernize` once no legacy producers remain.
 
 ### Intent dispatch topics: the `.intent` suffix is gone
 
-A related, separately-bridged rename: per-intent dispatch topics are now the canonical
-`<skill_id>:<intent_name>` with **no `.intent` suffix**. Old `ovos-workshop` releases built
+A related, separately-bridged rename: per-intent dispatch topics use the canonical
+`<skill_id>:<intent_name>` with **no `.intent` suffix**. Older `ovos-workshop` releases build
 the topic from the Padatious resource *filename*, so the extension leaked onto the wire. A
-skill with `food.order.intent` listened on `<skill_id>:food.order.intent`. Current workshop
+skill with `food.order.intent` listens on `<skill_id>:food.order.intent` there. `ovos-workshop`
 registers `<skill_id>:food.order` (OVOS-MSG-1 §2.1.1).
 
-`ovos-bus-client` 2.8 bridges the skew with two stateless rules: every canonical intent topic
+`ovos-bus-client` bridges the skew with two stateless rules: every canonical intent topic
 emitted also goes out as its `.intent`-suffixed twin (marked as a twin, so nothing double-fires),
 and every *unmarked* suffixed topic received is locally re-dispatched under its canonical
-spelling. Config-gated, on by default. Test rigs get the same behavior from `FakeBus` as of the
-`ovos-utils` alpha released 2026-08-14.
+spelling. Config-gated, on by default. Test rigs get the same behavior from `FakeBus` in `ovos-utils`.
 
 Two practical rules for authors:
 
-- New code and tests should **compute** the canonical topic with
+- Code and tests should **compute** the canonical topic with
   `ovos_spec_tools.intent_topics.canonical_intent_topic(...)`, rather than hard-coding either
   spelling. Literal `.intent` listeners are deprecated but not broken.
 - The spelling goes canonical when **either** side modernizes: the skill registers canonical
-  (workshop ≥ 9.3.11a2) **or** the matcher canonicalizes (padatious ≥ 2.0.1a1 strips the suffix at
+  (`ovos-workshop`) **or** the matcher canonicalizes (`ovos-padatious` strips the suffix at
   registration. Adapt is unaffected: its intent names come from `IntentBuilder`, never from
   filenames, so there was no suffix to strip). Pinning one side back does **not** restore the
   old spelling.

@@ -1,7 +1,7 @@
 # Skill Classes Reference
 
 !!! abstract "In a nutshell"
-    This page is the per-class reference for every specialized skill base class in
+    The per-class reference for every specialized skill base class in
     `ovos-workshop` beyond the universal `OVOSSkill`: converse-aware skills, fallback
     skills, media/game skills, auto-translating skills, and standalone applications,
     plus the skill launcher and the decorator quick reference. For `OVOSSkill` itself
@@ -41,7 +41,7 @@ unimplemented raises `NotImplementedError` there, so `converse()` is never reach
 
 Additional bus events registered:
 
-- `{skill_id}.converse.ping`: capability advertisement (plus the broadcast `ovos.converse.ping`, answered only when the skill is named in the session's `active_handlers`, since ovos-workshop 9.4.0a1)
+- `{skill_id}.converse.ping`: capability advertisement (plus the broadcast `ovos.converse.ping`, answered only when the skill is named in the session's `active_handlers`)
 
 
 - `{skill_id}.converse.request`: converse request from pipeline

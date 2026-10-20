@@ -1,10 +1,6 @@
 # Talk to an OVOS Persona over A2A
 
-This page publishes an OVOS persona as an A2A agent, so that other agents can send it questions and get its answers.
-
-## Who this is for
-
-You run an OVOS persona and want agents from other frameworks to use it. The other agent speaks the Agent-to-Agent (A2A) protocol, for example a LangGraph, CrewAI or Google ADK agent, or a client built on `a2a-sdk`.
+Publish an OVOS persona as an A2A agent, so that other agents can send it questions and get its answers. Use the A2A server when agents from other frameworks must use an OVOS persona. The other agent speaks the Agent-to-Agent (A2A) protocol, for example a LangGraph, CrewAI or Google ADK agent, or a client built on `a2a-sdk`.
 
 ## What you get
 

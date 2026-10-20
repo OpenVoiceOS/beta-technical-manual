@@ -1,9 +1,9 @@
 # OCP Plugins Reference
 
 !!! abstract "In a nutshell"
-    OCP (the OpenVoiceOS Common Play system) is the part of OVOS that plays media: music, podcasts, news, radio and the like. Each plugin on this page teaches it to handle one kind of source, such as YouTube links, Bandcamp pages, RSS feeds, or local files. So if you ask to play something, the right plugin knows how to find the actual audio stream and start it. See the [Glossary](glossary.md) for unfamiliar terms.
+    OCP (the OpenVoiceOS Common Play system) is the part of OVOS that plays media: music, podcasts, news, radio and the like. Each plugin below teaches it to handle one kind of source, such as YouTube links, Bandcamp pages, RSS feeds, or local files. So if you ask to play something, the right plugin knows how to find the actual audio stream and start it. See the [Glossary](glossary.md) for unfamiliar terms.
 
-This page covers stream extractors: plugins that turn a URL or search request into a playable
+The plugins here are stream extractors: plugins that turn a URL or search request into a playable
 stream. The playback engine that plays that stream is [OCP Audio Plugin](ocp-audio-plugin.md).
 The playback backends it can use are [Media Playback Plugins](media-plugins.md).
 
@@ -25,8 +25,8 @@ Writing a plugin instead of choosing one? See [Writing an OCP Stream Extractor P
 
 --8<-- "snippets/maturity-disclaimer.md"
 
-!!! note "Maturity not yet rated for this family"
-    These plugins are not yet individually rated in the manual (see the OCP comparison
+!!! note "Maturity not rated for this family"
+    The manual does not rate these plugins individually (see the OCP comparison
     table in [Choosing Plugins](choosing-plugins.md#speech-input)). "not rated" means
     unrated, not unmature.
 
@@ -52,7 +52,7 @@ Writing a plugin instead of choosing one? See [Writing an OCP Stream Extractor P
   skills can hand it a raw provider URL without the `news//` prefix. At playback time it looks
   the URL up in that table and calls the matching extractor function to resolve the real,
   playable stream. The TSF (Portugal) source resolves the current bulletin by scraping it from
-  TSF's listing page rather than guessing a predictable URL, since TSF now hosts bulletins on a
+  TSF's listing page rather than guessing a predictable URL, since TSF hosts bulletins on a
   CDN with unpredictable per-bulletin filenames. The GR1 (Italy) source resolves Rai's relinker
   URL server-side with a browser-like User-Agent before handing back the final stream, since the
   relinker rejects requests without one.
@@ -91,7 +91,7 @@ Writing a plugin instead of choosing one? See [Writing an OCP Stream Extractor P
 
 
 - **Description**: A stream extractor for YouTube and YouTube Music links. Unlike the other
-  extractors on this page, it is a small router over multiple interchangeable backends:
+  extractors here, it is a small router over multiple interchangeable backends:
   `youtube-dl`/`yt-dlp`, `pytube`, an Invidious mirror, or a webview fallback, selectable via
   the `youtube_backend` / `ydl_backend` / `invidious_host` settings, since any single scraping
   approach tends to break whenever YouTube changes its page format. It also has a dedicated path
@@ -119,13 +119,13 @@ Writing a plugin instead of choosing one? See [Writing an OCP Stream Extractor P
 - **GitHub**: [ovos-media-classifier](https://github.com/OpenVoiceOS/ovos-media-classifier)
 
 
-- **Description**: ⚠️ **Experimental. Work in progress, not yet deployed in OpenVoiceOS.**
+- **Description**: ⚠️ **Experimental.** The `ovos-ocp-pipeline-plugin` alpha installs it as a dependency.
   A self-describing, pluggable media-intent classifier: given a spoken request, it decides
   whether it is a media request at all and, if so, classifies it along several axes at once
   (media type, playback modality, structure, explicitness, tags, qualifiers) so OCP can route
   it to the right `MediaProvider`s and apply content policy. It is a router, not a
   resolver. It does not turn a title into a playable stream. The OCP stream-extractor
-  plugins on this page do that.
+  plugins above do that.
 
 ---
 **Read next:** [Media Playback Plugins](media-plugins.md)

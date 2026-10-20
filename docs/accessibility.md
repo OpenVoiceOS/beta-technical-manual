@@ -4,10 +4,10 @@
     OVOS is a **voice-first** assistant. Talking to it and hearing it talk back is the primary
     way to use it, not a fallback for a graphical app. That matters if you, or someone you're
     setting this up for, can't reliably use a screen, mouse, or keyboard. A voice interface
-    removes those requirements entirely for day-to-day use. This page states plainly what OVOS
-    does and does not offer today: the install path that avoids a screen reader fighting an
+    removes those requirements entirely for day-to-day use. Below is a plain statement of what OVOS
+    does and does not offer: the install path that avoids a screen reader fighting an
     installer wizard, how to slow down or change the speaking voice for long listening sessions,
-    and an honest note on where support is currently thin. See the [Glossary](glossary.md) for
+    and an honest note on where support is thin. See the [Glossary](glossary.md) for
     terms and [Troubleshooting](troubleshooting.md) if something isn't working.
 
 ---
@@ -18,8 +18,8 @@ Every core interaction works with sound alone, no display required. That include
 assistant, asking a question, hearing the answer, adjusting [volume](skill-examples-utilities.md#volume),
 and asking what it can do. This isn't a design aspiration. A skill is not required to register
 any [GUI](gui-service.md) page at all, and a skill with nothing to show on screen simply speaks
-its response instead. The current OVOS GUI stack is itself
-[deprecated and not generally usable](gui-service.md) while its replacement is built. So today,
+its response instead. The OVOS GUI stack is itself
+[deprecated and not generally usable](gui-service.md) while its replacement is built. So
 voice-only really is how most OVOS devices operate in practice, screen or no screen.
 
 ## Installing without fighting a screen reader
@@ -47,12 +47,12 @@ the plugin's module name, under `tts` in `mycroft.conf`, following the pattern
 [`ovos-tts-plugin-phoonnx`](tts-plugins-reference.md#ovos-tts-plugin-phoonnx)
 and [`ovos-tts-plugin-edge-tts`](tts-plugins-reference.md#ovos-tts-plugin-edge-tts) each expose their own
 `voice` key for picking a specific speaker. This manual's [TTS Plugins](tts-plugins.md) reference
-does not currently document a dedicated rate or speed key for any individual plugin. Check that
+does not document a dedicated rate or speed key for any individual plugin. Check that
 plugin's own repository for one before falling back to SSML below.
 
 Rate control is per-plugin config, so check the active plugin's page first. [SSML](ssml.md)'s
 `<prosody rate="...">` tag is a niche fallback, applied per-utterance from a skill. It is
-**experimental** and only honored by a couple of TTS plugins (currently espeakNG and Amazon
+**experimental** and only honored by a couple of TTS plugins (espeakNG and Amazon
 Polly). Every other plugin just strips the tag and speaks the plain text, so it does nothing for
 most voices:
 
@@ -91,7 +91,7 @@ tuning specifically for this:
   clarifications. Keep requests short and literal. [What can I say?](skill-examples.md) lists the
   phrasing each skill actually expects, which avoids triggering a clarification round-trip at
   all. This is a usage pattern more than a config switch. OVOS has no built-in setting that slows
-  down or simplifies its clarification dialog today.
+  down or simplifies its clarification dialog.
 - **If speaking isn't reliable.** Voice-first is itself a barrier for non-verbal users and anyone
   with a motor speech disorder, severe stutter, or temporary voice loss. The documented
   text-input fallback is `ovos-simple-cli` (see [Command-line Tools](cli-tools.md)), which opens
@@ -120,9 +120,9 @@ easily. The full trigger table lives at
 - **Speaking-rate control is per-plugin, not a single global switch** (see above). Expect to look
   up the specific voice or plugin in use rather than finding one universal setting.
 - **No visual transcript or captioning of spoken output exists for Deaf or Hard-of-Hearing
-  users.** What OVOS speaks is not also written to a screen anywhere in the stack today. The
+  users.** What OVOS speaks is not also written to a screen anywhere in the stack. The
   deprecated GUI stack noted above never implemented this either. A Deaf or Hard-of-Hearing user
-  currently has no supported way to read what the assistant said.
+  has no supported way to read what the assistant said.
 - **No dedicated tuning exists for limited dexterity or cognitive load beyond what's described
   above.** Wake-word sensitivity and phrasing choices help, but there is no built-in "simplified
   mode" or slower confirmation flow.

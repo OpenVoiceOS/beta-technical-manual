@@ -6,13 +6,12 @@
     OVOS) is a different job. You need services that restart themselves when they crash,
     a way to know the assistant is actually ready before you rely on it, logs you can ship
     somewhere central, and a safe way to upgrade a device (and undo the upgrade if it goes
-    wrong) without physically touching it. This page collects the real, verified pieces for
-    that job: systemd units, a readiness probe, log locations, staged upgrades with
+    wrong) without physically touching it. The pieces for that job are: systemd units, a readiness probe, log locations, staged upgrades with
     rollback, and how to run one shared speech backend for many thin clients. It assumes you
     are already comfortable with [installing OVOS](ovos-installer.md) and the
-    [release channels](release-channels.md) page.
+    [release channels](release-channels.md).
 
-!!! tip "Is this page for you?"
+!!! tip "When to read this"
     One assistant on your desk needs almost none of this. Read
     [Privacy & Security](privacy-security.md) instead. Several devices, a shared backend, or
     an assistant you don't sit next to: keep reading here.
@@ -148,8 +147,7 @@ voice pipeline can actually hear and answer you yet.
 !!! note "Requires the boot-finished skill to be installed"
     `mycroft.ready` is emitted by a skill, not by `ovos-core` itself. It is pulled in by the
     `skills-audio` [extra](release-channels.md#what-are-ovos-extras)
-    (`ovos-core[skills-audio]`, which pins `ovos-skill-boot-finished>=0.5.5a2` in `ovos-core`'s
-    own `pyproject.toml`) and is installed by default on most full setups, but a from-scratch,
+    (`ovos-core[skills-audio]`) and is installed by default on most full setups, but a from-scratch,
     headless, or minimal install must include it explicitly for the readiness probe below to
     ever get a response.
 
@@ -261,7 +259,7 @@ does not include a log-shipping client.
 
 Two kinds of state matter on an OVOS device: the packages that are installed, and everything
 under a user's config/data directories. The full backup recipe, the restore-onto-fresh-install
-steps, and the exact config/data paths have moved to their own page:
+steps, and the exact config/data paths are on their own page:
 **[Backup and Restore](backup-restore.md)**.
 
 ---
@@ -270,7 +268,7 @@ steps, and the exact config/data paths have moved to their own page:
 
 Upgrading safely means freezing the current package set before you touch anything, so you can
 roll back with `--force-reinstall` if the upgrade misbehaves. The single-device recipe, the
-fleet canary pattern, and how to detect a partially-failed rollback have moved to their own
+fleet canary pattern, and how to detect a partially-failed rollback are on their own
 page: **[Staged Upgrades and Rollback](staged-upgrades.md)**.
 
 !!! warning "Check the breaking-change reference before any version jump"
@@ -323,7 +321,7 @@ leaves localhost, and the HiveMind alternative to opening the bus directly: see
 OVOS has no built-in metrics endpoint or dashboard. Day-to-day debugging leans on `ovos-busmon`
 (a live bus monitor) and the logs described above. Fleet-wide alerting is something you build
 yourself on top of the readiness probe. The full picture, including a ready-to-adapt
-`systemd` timer for polling the readiness probe, has moved to its own page:
+`systemd` timer for polling the readiness probe, is on its own page:
 **[Observability](observability.md)**.
 
 ---

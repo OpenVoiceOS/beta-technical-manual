@@ -1,9 +1,9 @@
 # Mycroft Mark 2 Hardware
 
-!!! tip "Looking for a device to buy or flash today?"
+!!! tip "Looking for a device to buy or flash?"
     Don't start here. The Mark 2 is discontinued, best-effort legacy hardware with rough edges.
     See [raspOVOS](install-raspovos.md) for the turnkey image that's the closest thing to a
-    ready-to-buy-and-flash OVOS device today.
+    ready-to-buy-and-flash OVOS device.
 
 !!! abstract "In a nutshell"
     The **Mark 2** is Mycroft's second smart-speaker: a Raspberry Pi 4 with a touchscreen and a
@@ -12,12 +12,12 @@
     a custom kernel driver, a firmware (EEPROM) update, and board-specific tweaks. This makes the
     Mark 2 a **best-effort, not-actively-maintained legacy platform**, even more so than the
     [Mark 1](mark1.md). There are also **two slightly different boards** (an early "dev kit" and
-    the retail unit) that need slightly different setup. This page documents the OVOS way to set
+    the retail unit) that need slightly different setup. The sections below cover the OVOS way to set
     it up (via the [ovos-installer](ovos-installer.md)), the kernel driver involved, and the one
     thing you must **not** do: mix in Neon packages (see the warning below). Audio, fan control,
-    the touchscreen, and the hardware buttons all work through the installer today. The LED ring
+    the touchscreen, and the hardware buttons all work through the installer. The LED ring
     works out of the box on the **dev kit**; on the **retail** Mark II it is the one piece of
-    the SJ201 board the installer path doesn't drive yet. New to the terms
+    the SJ201 board the installer path does not drive. New to the terms
     here? See the [Glossary](glossary.md).
 
 The **Mycroft Mark 2** is built around a **Raspberry Pi 4** carrying the **SJ201** HAT. This is an
@@ -187,11 +187,10 @@ the Raspberry Pi and the Mark 2. It is the project where OpenVoiceOS itself bega
 Mycroft AI, HassOS and SkiffOS). It builds the SJ201 audio stack from its own Buildroot packages
 for the VocalFusion/XVF3510 driver, baked into the image at build time.
 
-It is now a **legacy / dormant** project: it is not formally archived, but it has no current
-releases and little recent activity. New installs should use the
+It is a **legacy / dormant** project: it is not formally archived, but it has no
+releases and little activity. A fresh install uses the
 [ovos-installer](ovos-installer.md) or the [raspOVOS](#the-raspovos-image-path)
-images instead. It is documented here because it is a meaningful part of OVOS history and still
-the ancestor of today's Mark 2 audio packaging.
+images instead. It is the ancestor of the Mark 2 audio packaging.
 
 ---
 

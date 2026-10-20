@@ -1,7 +1,7 @@
 # Configuration Internals
 
 !!! abstract "In a nutshell"
-    This page covers how `ovos-config` is built under the hood: the Python classes
+    The sections below cover how `ovos-config` is built under the hood: the Python classes
     backing each config layer, the in-memory patch overlay, the bus events that keep
     processes in sync, environment-variable overrides, XDG path helpers, and the
     package layout. Most users never need this. If you only want to change a setting,
@@ -71,9 +71,9 @@ Each layer is a `LocalConf` instance, a file-backed `dict` subclass.
 
 `MycroftDefaultConfig`/`OvosDistributionConfig`/`MycroftSystemConfig`/`MycroftUserConfig` are
 deprecated aliases of the classes above, kept for backward compatibility and slated for removal.
-`MycroftXDGConfig` is a deprecated alias of `UserConfig`. `RemoteConf` (the old backend /
+`MycroftXDGConfig` is a deprecated alias of `UserConfig`. `RemoteConf` (the legacy backend /
 paired-server cache) is deprecated without replacement — constructing it emits a
-`DeprecationWarning`, and `Configuration` no longer instantiates it at all.
+`DeprecationWarning`, and `Configuration` does not instantiate it.
 
 ```python
 from ovos_config.models import LocalConf, MycroftUserConfig
@@ -119,9 +119,8 @@ Configuration.assistant     # AssistantConfig — OVOS's own runtime-write layer
 Configuration.xdg_configs   # list[LocalConf] — the user/XDG layer(s)
 ```
 
-There is no `Configuration.remote` — the old Mycroft Home / `mycroft.ai` backend layer was
-removed as a breaking change (`ovos-config` `5a7d1a3`, #194, first tag `3.0.0a1`). Accessing
-`Configuration.remote` now raises `AttributeError`, both from the class and from an instance.
+There is no `Configuration.remote`: `ovos-config` has no Mycroft Home / `mycroft.ai` backend
+layer. Accessing `Configuration.remote` raises `AttributeError`, both from the class and from an instance.
 `RemoteConf` stays importable as a deprecated class that warns on construction.
 
 There is no `.user` attribute. The editable user config is the **last** entry in
