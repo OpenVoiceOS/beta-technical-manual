@@ -98,8 +98,8 @@ of the admin CLI.
 
     The server chooses its database backend from configuration, so this message
     means the machine's configuration selects a backend that is not installed.
-    Install that backend, or set the configured one back to the JSON backend
-    that ships with the server. A fresh install selects the JSON backend and
+    Install that backend, or set the configured one back to the SQLite backend
+    that ships with the server. A fresh install selects the SQLite backend and
     does not raise this.
 
 !!! warning "A new client is allowed nothing until you say otherwise"
@@ -109,13 +109,18 @@ of the admin CLI.
     from it. The command prints a note saying so; the failure it prevents is a
     satellite that authenticates, connects, and is mute.
 
-    Grant each type the client needs, one call per type:
+    Grant the types the client needs. One call takes several types, and the
+    last argument is the client id:
 
     ```bash
-    hivemind-core allow-msg recognizer_loop:utterance <client_id>
+    hivemind-core allow-msg recognizer_loop:utterance ovos.utterance.handle <client_id>
     ```
 
-    The whitelist covers both directions. A satellite sends `recognizer_loop:*`
+    The hub admits a client on the exact topic that it sends. It treats both
+    utterance topics as an utterance, and a satellite sends one of them. Grant
+    both, so that the hub admits an older and a newer satellite.
+
+    The whitelist covers both directions. A satellite sends an utterance
     and receives `speak`, `speak:b64_audio.response`, `mycroft.audio.play_sound`
     and `ovos.utterance.handled`, so a client granted only what it sends will
     talk to the hub and hear nothing back. Messages the hub addresses to one
