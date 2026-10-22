@@ -94,6 +94,9 @@ footprint classes, lives in
 
 ---
 
+The notebook [`arena_prediction_runner`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/arena_prediction_runner.ipynb) is such an offline prediction job for a speech recogniser. It
+runs the recogniser over a test set on Kaggle or Colab, and writes the predictions.
+
 ## Prediction Contract (HuggingFace)
 
 Predictions live in HF dataset repos — one per benchmark modality, named `ovos-<modality>-bench-<dataset_id>` (league underscores dashed), as per-competitor JSON lines at `predictions/<competitor_id>.jsonl`, one row per sample (language is a field on each row, not a path segment).

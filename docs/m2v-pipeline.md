@@ -246,6 +246,9 @@ for producing the published `Jarbas/ovos-model2vec-intents-*` models.
 
 ---
 
+The notebook [`ovos_intent_eval_and_train`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/ovos_intent_eval_and_train.ipynb) measures how often each published intent classifier names the
+right intent, language by language. It runs for free on Kaggle or Colab.
+
 ## Gotcha: ordering against the deterministic engines
 
 Model2Vec generalizes well. This also means it can claim an utterance a more

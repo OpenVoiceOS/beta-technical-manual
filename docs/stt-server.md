@@ -381,6 +381,11 @@ Pre-built containers are also available via the [ovos-docker-stt](https://github
 
 ---
 
+## Use the server from an AI agent
+
+The notebook [`interop_mcp_utcp_clients`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/interop_mcp_utcp_clients.ipynb) calls the OVOS TTS and STT servers through MCP and UTCP, the protocols
+that AI agents use to call tools.
+
 ## Links & References
 
 - OVOS STT HTTP Server GitHub: [OpenVoiceOS/ovos-stt-http-server](https://github.com/OpenVoiceOS/ovos-stt-http-server)
