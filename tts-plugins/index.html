@@ -1219,6 +1219,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#train-your-own-voice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Train your own voice
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tts-plugins-reference" class="md-nav__link">
     <span class="md-ellipsis">
       TTS Plugins Reference
@@ -1664,6 +1673,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#train-your-own-voice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Train your own voice
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tts-plugins-reference" class="md-nav__link">
     <span class="md-ellipsis">
       TTS Plugins Reference
@@ -1803,6 +1821,35 @@ a skill.</p>
 picks a recommended offline/online voice for your language automatically. See
 <a href="../lang-support/#auto-configuration">Language Support</a>.</p>
 </div>
+<h2 id="train-your-own-voice">Train your own voice<a class="headerlink" href="#train-your-own-voice" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/README.md">ngi0-notebooks</a> repository holds Jupyter notebooks that make a TTS voice for a language. They
+run for free on Kaggle or Colab. The voice they make is an <code>.onnx</code> file for <code>ovos-tts-plugin-phoonnx</code>, the plugin of
+the <code>phoonnx</code> package. <a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/docs/pipeline.md">Train a TTS voice</a> explains the notebooks in two tutorials.</p>
+<table>
+<thead>
+<tr>
+<th>Notebook</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_dataset_gen.ipynb"><code>tts_dataset_gen</code></a></td>
+<td>Makes a dataset: a speech model reads about 2,000 sentences in your language in one voice</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/asr2tts.ipynb"><code>asr2tts</code></a></td>
+<td>Makes a dataset from recordings and their text, such as Common Voice, and changes them to one voice</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/train_vits.ipynb"><code>train_vits</code></a></td>
+<td>Trains the voice from a finished voice in your language, and exports it as an <code>.onnx</code> file</td>
+</tr>
+</tbody>
+</table>
+<p>Each step also has a notebook of its own: <a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_corpus_ingest.ipynb"><code>tts_corpus_ingest</code></a>, <a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_enhance.ipynb"><code>tts_enhance</code></a>, <a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_measure.ipynb"><code>tts_measure</code></a>,
+<a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_select.ipynb"><code>tts_select</code></a>, <a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_voice_convert.ipynb"><code>tts_voice_convert</code></a> and <a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_publish.ipynb"><code>tts_publish</code></a>.
+<a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/docs/tts-step-by-step.md">The TTS notebooks step by step</a> explains them.</p>
 <h2 id="tts-plugins-reference">TTS Plugins Reference<a class="headerlink" href="#tts-plugins-reference" title="Permanent link">&para;</a></h2>
 <p>Code license is the SPDX license of the plugin's own repository. Where the plugin wraps a
 separately-licensed model or a paid cloud service, that is called out under "model".</p>

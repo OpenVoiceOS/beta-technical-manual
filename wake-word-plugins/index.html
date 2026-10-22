@@ -1051,6 +1051,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#train-your-own-wake-word" class="md-nav__link">
+    <span class="md-ellipsis">
+      Train your own wake word
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#available-plugins" class="md-nav__link">
     <span class="md-ellipsis">
       Available Plugins
@@ -1826,6 +1835,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#train-your-own-wake-word" class="md-nav__link">
+    <span class="md-ellipsis">
+      Train your own wake word
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#available-plugins" class="md-nav__link">
     <span class="md-ellipsis">
       Available Plugins
@@ -2085,6 +2103,36 @@ restart them depends on how OVOS was installed:</p>
 <p class="admonition-title">Pick any phrase, with no training</p>
 <p>To use your own phrase without recording clips or training a model, see <a href="../change-wake-word-without-training/">Change the Wake Word Without Training</a>. You can try a phrase in the <a href="https://huggingface.co/spaces/TigreGotico/wakephonehubert-space">WakePhoneHuBERT Space</a> first. To make the assistant answer only the people in your household, see <a href="../answer-only-your-voice/">Make OVOS Answer Only Your Voice</a>.</p>
 </div>
+<h2 id="train-your-own-wake-word">Train your own wake word<a class="headerlink" href="#train-your-own-wake-word" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/README.md">ngi0-notebooks</a> repository holds Jupyter notebooks that train a wake-word model for any phrase.
+They run for free on Kaggle or Colab, and the model they make is for <code>ovos-ww-plugin-wakeforge</code>.
+<a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/docs/wake-words.md">Train a wake word</a> explains how to use the model on your device.</p>
+<table>
+<thead>
+<tr>
+<th>Notebook</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/kaggle_quickstart_ww.ipynb"><code>kaggle_quickstart_ww</code></a></td>
+<td>Trains a wake-word model for any phrase, from start to end</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/synthetic_ww_dataset.ipynb"><code>synthetic_ww_dataset</code></a></td>
+<td>Makes a wake-word dataset with speech models</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts2ww_full_pipeline.ipynb"><code>tts2ww_full_pipeline</code></a></td>
+<td>Makes a larger set of examples of your phrase, with noise and room echo</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/ww_train_streaming.ipynb"><code>ww_train_streaming</code></a></td>
+<td>Trains a streaming wake-word model from a dataset of <code>synthetic_ww_dataset</code></td>
+</tr>
+</tbody>
+</table>
 <h2 id="available-plugins">Available Plugins<a class="headerlink" href="#available-plugins" title="Permanent link">&para;</a></h2>
 <p>OVOS supports different wake-word detection plugins, each with its own strengths and use cases.
 The full roster with descriptions and licenses lives in one place: the

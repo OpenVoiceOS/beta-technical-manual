@@ -1905,6 +1905,8 @@ benchmarking, monolingual, and multilingual classifier training. It is in
 It is not the canonical <code>train/</code> toolchain above. Use it for experimentation, not
 for producing the published <code>Jarbas/ovos-model2vec-intents-*</code> models.</p>
 <hr />
+<p>The notebook <a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/ovos_intent_eval_and_train.ipynb"><code>ovos_intent_eval_and_train</code></a> measures how often each published intent classifier names the
+right intent, language by language. It runs for free on Kaggle or Colab.</p>
 <h2 id="gotcha-ordering-against-the-deterministic-engines">Gotcha: ordering against the deterministic engines<a class="headerlink" href="#gotcha-ordering-against-the-deterministic-engines" title="Permanent link">&para;</a></h2>
 <p>Model2Vec generalizes well. This also means it can claim an utterance a more
 precise parser would have nailed. The usual setup is to place
