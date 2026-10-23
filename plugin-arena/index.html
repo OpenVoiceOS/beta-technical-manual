@@ -1597,8 +1597,6 @@ populates the fighter's card in the browser. The full field reference, including
 footprint classes, lives in
 <a href="https://github.com/OpenVoiceOS/ovos-plugin-arena/blob/dev/docs/add-a-fighter.md">add-a-fighter</a>.</p>
 <hr />
-<p>The notebook <a href="https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/arena_prediction_runner.ipynb"><code>arena_prediction_runner</code></a> is such an offline prediction job for a speech recogniser. It
-runs the recogniser over a test set on Kaggle or Colab, and writes the predictions.</p>
 <h2 id="prediction-contract-huggingface">Prediction Contract (HuggingFace)<a class="headerlink" href="#prediction-contract-huggingface" title="Permanent link">&para;</a></h2>
 <p>Predictions live in HF dataset repos — one per benchmark modality, named <code>ovos-&lt;modality&gt;-bench-&lt;dataset_id&gt;</code> (league underscores dashed), as per-competitor JSON lines at <code>predictions/&lt;competitor_id&gt;.jsonl</code>, one row per sample (language is a field on each row, not a path segment).</p>
 <p>Core <code>PredictionRow</code> fields (<code>arena/models.py</code>):</p>
