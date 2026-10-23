@@ -32,16 +32,8 @@ Wake-word plugins let Open Voice OS detect specific words or sounds, typically t
 
 ## Train your own wake word
 
-The [ngi0-notebooks](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/README.md) repository holds Jupyter notebooks that train a wake-word model for any phrase.
-They run for free on Kaggle or Colab, and the model they make is for `ovos-ww-plugin-wakeforge`.
-[Train a wake word](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/docs/wake-words.md) explains how to use the model on your device.
-
-| Notebook | What it does |
-|---|---|
-| [`kaggle_quickstart_ww`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/kaggle_quickstart_ww.ipynb) | Trains a wake-word model for any phrase, from start to end |
-| [`synthetic_ww_dataset`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/synthetic_ww_dataset.ipynb) | Makes a wake-word dataset with speech models |
-| [`tts2ww_full_pipeline`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts2ww_full_pipeline.ipynb) | Makes a larger set of examples of your phrase, with noise and room echo |
-| [`ww_train_streaming`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/ww_train_streaming.ipynb) | Trains a streaming wake-word model from a dataset of `synthetic_ww_dataset` |
+The notebook [`kaggle_quickstart_ww`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/kaggle_quickstart_ww.ipynb) trains a model for any phrase, for free on Kaggle or Colab. The model is
+for `ovos-ww-plugin-wakeforge`. [Train a wake word](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/docs/wake-words.md) explains how to use it on your device.
 
 ## Available Plugins
 

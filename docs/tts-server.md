@@ -213,11 +213,6 @@ but ignored. A self-hosted server has no keys to check.
 
 ---
 
-## Use the server from an AI agent
-
-The notebook [`interop_mcp_utcp_clients`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/interop_mcp_utcp_clients.ipynb) calls the OVOS TTS and STT servers through MCP and UTCP, the protocols
-that AI agents use to call tools.
-
 ## Links & References
 
 - **TTS Server GitHub**: https://github.com/OpenVoiceOS/ovos-tts-server

@@ -147,9 +147,6 @@ Use case: household authorization, a shared-wake-word deployment where each regi
 
 ---
 
-The notebook [`speaker_verification`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/speaker_verification.ipynb) enrols a speaker and verifies them by voice. It runs for free on
-Kaggle or Colab.
-
 ## Precise-ONNX Plugin
 
 `ovos-ww-plugin-precise-onnx` provides high-accuracy wake-word detection from `.onnx` model files, without TensorFlow Lite dependency.

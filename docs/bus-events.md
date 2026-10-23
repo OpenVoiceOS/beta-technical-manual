@@ -349,11 +349,6 @@ in the producer and consumer, not a topic swap:
     forms `{skill_id}.stop` and `{skill_id}.stop.ping`, plus the bridged `mycroft.stop`. When a
     core emits both pings in one round, the skill answers with one pong.
 
-## Check messages against their schemas
-
-The notebook [`bus_message_validation`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/bus_message_validation.ipynb) checks OVOS bus messages against their schemas in
-`ovos-pydantic-models`. It shows which messages are valid, and why the others fail.
-
 ---
 **Read next:** [Command-line Tools](cli-tools.md)
 **Related:** [Bus Service](bus-service.md) · [Life of an Utterance](life-of-an-utterance.md) · [Intent Service](intent-service.md) · [OVOSSkill API](ovos-skill.md)

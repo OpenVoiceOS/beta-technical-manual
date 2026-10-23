@@ -101,19 +101,10 @@ flowchart TD
 
 ## Train your own voice
 
-The [ngi0-notebooks](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/README.md) repository holds Jupyter notebooks that make a TTS voice for a language. They
-run for free on Kaggle or Colab. The voice they make is an `.onnx` file for `ovos-tts-plugin-phoonnx`, the plugin of
-the `phoonnx` package. [Train a TTS voice](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/docs/pipeline.md) explains the notebooks in two tutorials.
-
-| Notebook | What it does |
-|---|---|
-| [`tts_dataset_gen`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_dataset_gen.ipynb) | Makes a dataset: a speech model reads about 2,000 sentences in your language in one voice |
-| [`asr2tts`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/asr2tts.ipynb) | Makes a dataset from recordings and their text, such as Common Voice, and changes them to one voice |
-| [`train_vits`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/train_vits.ipynb) | Trains the voice from a finished voice in your language, and exports it as an `.onnx` file |
-
-Each step also has a notebook of its own: [`tts_corpus_ingest`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_corpus_ingest.ipynb), [`tts_enhance`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_enhance.ipynb), [`tts_measure`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_measure.ipynb),
-[`tts_select`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_select.ipynb), [`tts_voice_convert`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_voice_convert.ipynb) and [`tts_publish`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_publish.ipynb).
-[The TTS notebooks step by step](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/docs/tts-step-by-step.md) explains them.
+The [ngi0-notebooks](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/README.md) repository holds Jupyter notebooks that train a TTS voice for a language, for
+free on Kaggle or Colab. The voice is an `.onnx` file for `ovos-tts-plugin-phoonnx`, the plugin of the `phoonnx`
+package. [`tts_dataset_gen`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/tts_dataset_gen.ipynb) or [`asr2tts`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/asr2tts.ipynb) makes the dataset, and [`train_vits`](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/notebooks/train_vits.ipynb) trains the voice.
+[Train a TTS voice](https://github.com/OpenVoiceOS/ngi0-notebooks/blob/dev/docs/pipeline.md) explains each step.
 
 ## TTS Plugins Reference
 
