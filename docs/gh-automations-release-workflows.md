@@ -34,7 +34,7 @@ Runs on PR merge to `dev`. Bumps the version, optionally updates changelog and c
 |-------|------|---------|-------------|
 | `runner` | string | `ubuntu-latest` |  |
 | `version_file` | string | `""` | Path to version.py (relative to repo root). If empty, auto-detects root or pkg/version.py. |
-| `setup_py` | string | `setup.py` | Deprecated. The workflow reads the version from version_file. |
+| `setup_py` | string | `setup.py` | Deprecated. Version is now read from version_file directly. |
 | `branch` | string | `dev` | Development branch where changes are made |
 | `base_branch` | string | `master` | Target branch for the release PR (e.g. master/main). |
 | `publish_prerelease` | boolean | `false` |  |
@@ -136,7 +136,7 @@ Runs on push to `master` (typically triggered by merging the release PR). Remove
 |-------|------|---------|-------------|
 | `runner` | string | `ubuntu-latest` |  |
 | `version_file` | string | `""` | Path to version.py (relative to repo root). If empty, auto-detects root or pkg/version.py. |
-| `setup_py` | string | `setup.py` | Deprecated. The workflow reads the version from version_file. |
+| `setup_py` | string | `setup.py` | Deprecated. Version is now read from version_file directly. |
 | `branch` | string | `master` | Stable branch where the release happens (e.g. master/main). If 'master' is requested but missing, detects default branch. |
 | `publish_release` | boolean | `true` |  |
 | `publish_pypi` | boolean | `false` | Publish to PyPI after declaring stable |
@@ -214,6 +214,7 @@ Reads `version.py`, predicts the next version from PR labels and/or title using 
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_version` | string | `3.14` | Python version |
 | `package_name` | string | `""` | Package name (for channel compatibility check). If empty, attempt to read from setup.py/pyproject.toml. |

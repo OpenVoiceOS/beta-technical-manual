@@ -34,13 +34,17 @@ Runs `ruff` and/or `pre-commit` and posts results to the OVOS PR Checks comment.
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.11` |  |
 | `ruff` | boolean | `true` | Run ruff check |
 | `ruff_args` | string | `. --exclude _gh_automations` | Arguments passed to ruff check (e.g. '. --select E,F'). Default excludes _gh_automations/, which is where other reusable workflows in this repo check themselves out as a sibling for PR comment scripts. Without this exclude, consumers see ruff errors from this repo's own scripts in their skill PRs. |
 | `pre_commit` | boolean | `false` | Run pre-commit run --all-files (requires .pre-commit-config.yaml) |
+| `actionlint` | boolean | `true` | Run actionlint over .github/workflows: expression syntax, action inputs, runner labels, job and step shapes. External linters (shellcheck, pyflakes) are off, so a run block's shell style is not judged. A workflow GitHub refuses at parse time fails every push to every branch with no job created and no filter applied (hivemind-test-harness docs-mirror.yml, 60 runs); this catches it on the pull request. |
+| `actionlint_fail` | boolean | `true` | A finding from actionlint fails the job. ruff and pre-commit stay informational; a workflow file GitHub cannot parse is a different class of defect. Set false to report only. |
 | `pr_comment` | boolean | `true` | Post a section in the OVOS PR Checks comment on pull_request events |
+| `section_key` | string | `""` | Key of the PR comment section. The comment keeps one section per id, so a caller that runs this workflow more than once on one pull request (one ruff_args per package, say) gives each call its own key, or the last call overwrites the section of the others. Empty keeps the historical id "lint"; a value gives "lint-<key>" and the title "Lint (<key>)". |
 <!-- END GENERATED -->
 
 ---
@@ -57,6 +61,7 @@ Runs `mypy` and posts a `Type Check` section. Informational only, never blocks m
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.11` |  |
@@ -83,6 +88,7 @@ Verifies required documentation files exist and optionally lints Markdown. Posts
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `runner` | string | `ubuntu-latest` |  |
 | `required_files` | string | `README.md` | Comma-separated list of files that must exist at the repo root. Checked with a simple exists() test — no content validation. |
 | `markdownlint` | boolean | `false` | Run markdownlint-cli2 on *.md files. Requires Node.js (available on ubuntu-latest runners). Results are reported in the PR comment but never block merges regardless of fail_on_missing. |
