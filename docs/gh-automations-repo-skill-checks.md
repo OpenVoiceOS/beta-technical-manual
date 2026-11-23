@@ -33,13 +33,14 @@ Analyses an OVOS skill repository for locale structure, language coverage, and `
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_version` | string | `3.14` | Python version |
 | `locale_dir` | string | `""` | Locale root path. Empty = auto-detect. |
 | `skip_if_not_skill` | boolean | `true` | Silently pass if no ovos.plugin.skill entry point found |
 | `fail_on_missing_en_us` | boolean | `true` | Fail if en-US locale directory is absent |
 | `fail_on_invalid_skill_json` | boolean | `false` | Fail if en-US skill.json is missing or invalid |
-| `pr_comment` | boolean | `true` | Post a '🎙️ Skill' section in the shared 'OVOS PR Checks' comment on the PR. Only runs when a pull_request event triggers the workflow. |
+| `pr_comment` | boolean | `true` | Post a '🎙️ Skill' section in the shared 'OVOS PR Checks' comment on the PR. Only runs when the workflow is triggered by a pull_request event. |
 | `spec_lint` | boolean | `true` | Also run ovos-spec-lint (spec-lint.yml) against the skill's locale folder. Every ovos-skill-* repo already calls this workflow, so this is how spec-lint reaches the fleet without a per-repo caller PR. Set to false to opt a repo out. |
 | `spec_lint_locale_path` | string | `locale` | Path passed to spec-lint.yml's locale_path input. |
 <!-- END GENERATED -->
@@ -127,6 +128,7 @@ Verifies that locale folders are correctly included in the package build, by che
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` |  |
 | `python_version` | string | `3.11` |  |
@@ -148,6 +150,7 @@ Runs `ovos-spec-lint` against a skill's locale folder to validate it against OVO
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `gh_automations_ref` | string | `dev` | Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls. |
 | `uv_prerelease` | string | `allow` | uv prerelease resolution mode (allow \| if-necessary \| explicit \| disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did. |
 | `runner` | string | `ubuntu-latest` | Runner label |
 | `python_version` | string | `3.14` | Python version |
@@ -156,7 +159,7 @@ Runs `ovos-spec-lint` against a skill's locale folder to validate it against OVO
 | `strict` | boolean | `false` | Treat warnings as errors (passes --strict to ovos-spec-lint) |
 | `skip_if_no_locale` | boolean | `true` | Silently pass if locale_path does not exist |
 | `ovos_spec_tools_spec` | string | `ovos-spec-tools` | Pip requirement spec for the linter. Override to pin a version or install from a git URL during alpha. |
-| `pr_comment` | boolean | `true` | Post a '🧪 Spec Lint' section in the shared 'OVOS PR Checks' comment. Only runs when a pull_request event triggers the workflow. |
+| `pr_comment` | boolean | `true` | Post a '🧪 Spec Lint' section in the shared 'OVOS PR Checks' comment. Only runs when the workflow is triggered by a pull_request event. |
 <!-- END GENERATED -->
 
 ---
