@@ -1991,16 +1991,34 @@
 </thead>
 <tbody>
 <tr>
+<td><code>gh_automations_ref</code></td>
+<td>string</td>
+<td><code>dev</code></td>
+<td>Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls.</td>
+</tr>
+<tr>
 <td><code>uv_prerelease</code></td>
 <td>string</td>
 <td><code>allow</code></td>
 <td>uv prerelease resolution mode (allow | if-necessary | explicit | disallow). Defaults to "allow": the OVOS ecosystem ships pre-1.0 alphas and relies on prerelease floor-pins resolving the way pip did.</td>
 </tr>
 <tr>
+<td><code>test_timeout</code></td>
+<td>number</td>
+<td><code>600</code></td>
+<td>Seconds a single test may take before pytest-timeout fails it and dumps its stack. The first test that boots a MiniCroft pays the Padatious compile: a measured two-skill boot with 37 intents took 486 s on a cold cache and 21 s warm. The old default of 180 s cut that boot and reported a hang that was not one, so the default is 600 s, above the measured cold cost. The step ceiling is timeout_minutes minus five, so this default only fits when timeout_minutes is 16 or more; below that the step is cut before any per-test timeout can fire, and the job reports a cut rather than naming a test. A caller that lowers timeout_minutes lowers test_timeout with it. With the intent cache restored the same test returns in seconds; a real hang still names the test instead of taking the job with it.</td>
+</tr>
+<tr>
+<td><code>timeout_minutes</code></td>
+<td>number</td>
+<td><code>30</code></td>
+<td>Ceiling for the whole job. Most healthy runs take one to three minutes and the slowest measured across the fleet takes ten, so thirty leaves that one three times its room while a hung run still reports within the hour rather than at the runner's own limit. The test step runs under its own timeout five minutes below this, so the log says the run was cut.</td>
+</tr>
+<tr>
 <td><code>pytest_workers</code></td>
 <td>string</td>
-<td><code>auto</code></td>
-<td>pytest-xdist worker count for the e2e suite. Each ovoscope test boots its own in-process MiniCroft and is independent, so they parallelize cleanly. "auto" = one worker per core; "0" runs serially (disable xdist).</td>
+<td><code>2</code></td>
+<td>pytest-xdist worker count for the e2e suite. Each worker boots its own in-process MiniCroft and trains its own intent engines. The default is 2: with "auto" (4 workers on ubuntu-latest) the parallel trainers starved each other, and utterances returned ovos.intent.unmatched or a worker crashed. A repository can set a higher value or "auto". "0" runs serially (disable xdist).</td>
 </tr>
 <tr>
 <td><code>runner</code></td>
@@ -2103,6 +2121,18 @@
 <td>boolean</td>
 <td><code>true</code></td>
 <td>Post a '🔌 Skill Tests (ovoscope)' section in the OVOS PR Checks comment. Only runs on pull_request events.</td>
+</tr>
+<tr>
+<td><code>intent_cache</code></td>
+<td>boolean</td>
+<td><code>true</code></td>
+<td>Restore and save the Padatious intent cache between runs. Padatious compiles every intent with FANN on a cold cache: a measured two-skill MiniCroft with 37 intents took 486 s cold and 21 s warm from the cache the first run wrote (388 files, 2.3 MB). The cache holds a .hash and a .net per intent, so an entry whose intent text changed is retrained and the rest is reused.</td>
+</tr>
+<tr>
+<td><code>intent_cache_lang</code></td>
+<td>string</td>
+<td><code>en-US</code></td>
+<td>The locale the cache key names. Padatious keeps one directory per language, so a repository that tests another locale names it here and does not share a key with the en-US runs.</td>
 </tr>
 </tbody>
 </table>
@@ -2237,6 +2267,12 @@
 </thead>
 <tbody>
 <tr>
+<td><code>gh_automations_ref</code></td>
+<td>string</td>
+<td><code>dev</code></td>
+<td>Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls.</td>
+</tr>
+<tr>
 <td><code>uv_prerelease</code></td>
 <td>string</td>
 <td><code>allow</code></td>
@@ -2360,6 +2396,12 @@
 </thead>
 <tbody>
 <tr>
+<td><code>gh_automations_ref</code></td>
+<td>string</td>
+<td><code>dev</code></td>
+<td>Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls.</td>
+</tr>
+<tr>
 <td><code>uv_prerelease</code></td>
 <td>string</td>
 <td><code>allow</code></td>
@@ -2384,6 +2426,12 @@
 <td>Extra apt packages to install before testing (space-separated), e.g. 'espeak-ng sox'. Engines backed by a system binary need this.</td>
 </tr>
 <tr>
+<td><code>pre_test_command</code></td>
+<td>string</td>
+<td><code>""</code></td>
+<td>Command run after the package is installed and before pytest, in the repository root. For test dependencies that are not pip packages: a model download, a generated fixture, a service the tests talk to.</td>
+</tr>
+<tr>
 <td><code>install_extras</code></td>
 <td>string</td>
 <td><code>test</code></td>
@@ -2394,6 +2442,12 @@
 <td>string</td>
 <td><code>test/end2end/test_tts_intelligibility.py</code></td>
 <td>Path passed to pytest — the intelligibility test file</td>
+</tr>
+<tr>
+<td><code>timeout_minutes</code></td>
+<td>number</td>
+<td><code>45</code></td>
+<td>Ceiling for the whole job. A healthy run synthesises and transcribes a handful of sentences in a few minutes; this leaves room for a cold model cache and still reports within the hour. The test step runs under its own timeout five minutes below this, so the log can say the run was cut instead of the runner killing the job silently.</td>
 </tr>
 <tr>
 <td><code>max_wer</code></td>

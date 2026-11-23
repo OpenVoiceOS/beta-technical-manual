@@ -1991,6 +1991,12 @@
 </thead>
 <tbody>
 <tr>
+<td><code>gh_automations_ref</code></td>
+<td>string</td>
+<td><code>dev</code></td>
+<td>Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls.</td>
+</tr>
+<tr>
 <td><code>runner</code></td>
 <td>string</td>
 <td><code>ubuntu-latest</code></td>
@@ -2030,7 +2036,7 @@
 <td><code>pr_comment</code></td>
 <td>boolean</td>
 <td><code>true</code></td>
-<td>Post a '🎙️ Skill' section in the shared 'OVOS PR Checks' comment on the PR. Only runs when a pull_request event triggers the workflow.</td>
+<td>Post a '🎙️ Skill' section in the shared 'OVOS PR Checks' comment on the PR. Only runs when the workflow is triggered by a pull_request event.</td>
 </tr>
 <tr>
 <td><code>spec_lint</code></td>
@@ -2151,6 +2157,12 @@ summary line counts languages in each band. Non-skill repos:
 </thead>
 <tbody>
 <tr>
+<td><code>gh_automations_ref</code></td>
+<td>string</td>
+<td><code>dev</code></td>
+<td>Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls.</td>
+</tr>
+<tr>
 <td><code>uv_prerelease</code></td>
 <td>string</td>
 <td><code>allow</code></td>
@@ -2201,6 +2213,12 @@ summary line counts languages in each band. Non-skill repos:
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>gh_automations_ref</code></td>
+<td>string</td>
+<td><code>dev</code></td>
+<td>Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls.</td>
+</tr>
 <tr>
 <td><code>uv_prerelease</code></td>
 <td>string</td>
@@ -2253,7 +2271,7 @@ summary line counts languages in each band. Non-skill repos:
 <td><code>pr_comment</code></td>
 <td>boolean</td>
 <td><code>true</code></td>
-<td>Post a '🧪 Spec Lint' section in the shared 'OVOS PR Checks' comment. Only runs when a pull_request event triggers the workflow.</td>
+<td>Post a '🧪 Spec Lint' section in the shared 'OVOS PR Checks' comment. Only runs when the workflow is triggered by a pull_request event.</td>
 </tr>
 </tbody>
 </table>

@@ -1986,6 +1986,12 @@
 </thead>
 <tbody>
 <tr>
+<td><code>gh_automations_ref</code></td>
+<td>string</td>
+<td><code>dev</code></td>
+<td>Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls.</td>
+</tr>
+<tr>
 <td><code>uv_prerelease</code></td>
 <td>string</td>
 <td><code>allow</code></td>
@@ -2022,10 +2028,28 @@
 <td>Run pre-commit run --all-files (requires .pre-commit-config.yaml)</td>
 </tr>
 <tr>
+<td><code>actionlint</code></td>
+<td>boolean</td>
+<td><code>true</code></td>
+<td>Run actionlint over .github/workflows: expression syntax, action inputs, runner labels, job and step shapes. External linters (shellcheck, pyflakes) are off, so a run block's shell style is not judged. A workflow GitHub refuses at parse time fails every push to every branch with no job created and no filter applied (hivemind-test-harness docs-mirror.yml, 60 runs); this catches it on the pull request.</td>
+</tr>
+<tr>
+<td><code>actionlint_fail</code></td>
+<td>boolean</td>
+<td><code>true</code></td>
+<td>A finding from actionlint fails the job. ruff and pre-commit stay informational; a workflow file GitHub cannot parse is a different class of defect. Set false to report only.</td>
+</tr>
+<tr>
 <td><code>pr_comment</code></td>
 <td>boolean</td>
 <td><code>true</code></td>
 <td>Post a section in the OVOS PR Checks comment on pull_request events</td>
+</tr>
+<tr>
+<td><code>section_key</code></td>
+<td>string</td>
+<td><code>""</code></td>
+<td>Key of the PR comment section. The comment keeps one section per id, so a caller that runs this workflow more than once on one pull request (one ruff_args per package, say) gives each call its own key, or the last call overwrites the section of the others. Empty keeps the historical id "lint"; a value gives "lint-<key>" and the title "Lint (<key>)".</td>
 </tr>
 </tbody>
 </table>
@@ -2048,6 +2072,12 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>gh_automations_ref</code></td>
+<td>string</td>
+<td><code>dev</code></td>
+<td>Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls.</td>
+</tr>
 <tr>
 <td><code>uv_prerelease</code></td>
 <td>string</td>
@@ -2129,6 +2159,12 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>gh_automations_ref</code></td>
+<td>string</td>
+<td><code>dev</code></td>
+<td>Branch or sha of OpenVoiceOS/gh-automations to take the helper scripts from. A caller testing a gh-automations branch passes that branch here so the scripts match the workflow it calls.</td>
+</tr>
 <tr>
 <td><code>runner</code></td>
 <td>string</td>
