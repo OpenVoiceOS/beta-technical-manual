@@ -1454,7 +1454,7 @@
 <tr>
 <td><code>streaming</code></td>
 <td><code>false</code></td>
-<td>Use the streaming call of the agent.</td>
+<td>Use the streaming call of the agent. The persona then speaks each sentence when the agent has sent it. With <code>false</code>, the persona speaks the whole answer after the agent has finished.</td>
 </tr>
 </tbody>
 </table>
@@ -1463,7 +1463,8 @@
 <p>The OVOS persona server from <a href="../ai-agent-a2a-server/">Talk to an OVOS persona over A2A</a> is a valid remote agent. Set <code>agent_url</code> to the value of its <code>--a2a-base-url</code> flag, for example <code>http://localhost:8337/a2a</code>. A persona that sent "what is the speed of light?" to a persona server with a RiveScript persona gave this answer:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Are such questions much on your mind?
 </span></code></pre></div>
-<p>The plugin sends only the newest user message. The remote agent keeps the conversation for each OVOS session.</p>
+<p>The plugin sends only the newest user message. The first message of an OVOS session goes without a context id. The agent assigns one, and the plugin sends it with every later message of that session. The agent keeps the conversation for each context id.</p>
+<p>When <code>streaming</code> is <code>true</code> and the agent card says that the agent does not stream, the plugin logs a warning and sends each message without streaming.</p>
 <h2 id="if-it-fails">If it fails<a class="headerlink" href="#if-it-fails" title="Permanent link">&para;</a></h2>
 <p>The persona speaks one line of its error dialog when the remote agent cannot answer. The log line that starts with <code>A2AChatEngine: task failed</code> gives the cause.</p>
 <table>
@@ -1494,7 +1495,7 @@
 </table>
 <h2 id="more-information">More information<a class="headerlink" href="#more-information" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin#configuration">Configuration</a> in the <code>ovos-a2a-agent-plugin</code> README.</li>
+<li><a href="https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin#settings">Settings</a> in the <code>ovos-a2a-agent-plugin</code> README.</li>
 <li><a href="../personas/">Personas</a> for persona files and handlers.</li>
 <li>The <a href="https://a2a-protocol.org/">A2A specification</a>.</li>
 </ul>

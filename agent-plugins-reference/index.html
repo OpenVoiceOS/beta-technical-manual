@@ -1828,9 +1828,9 @@ Start at <a href="../agent-plugins/">Agent Plugins</a> to pick a plugin, come he
 <p><strong>Description</strong>: Answers computational and factual questions via the Wolfram Alpha API.</p>
 </li>
 <li>
-<p><strong>Config</strong>: <code>"appid"</code>: your own Wolfram Alpha AppID. Without one, queries go to Wolfram's
-  servers on a shared demo key. Either way this solver is a call to a third-party cloud
-  service. It has no offline mode.</p>
+<p><strong>Config</strong>: <code>"appid"</code>: your own Wolfram Alpha AppID. It is required: the plugin has no
+  built-in key, and without one it logs an error and returns no answer. This solver is a
+  call to a third-party cloud service. It has no offline mode.</p>
 </li>
 </ul>
 <hr />

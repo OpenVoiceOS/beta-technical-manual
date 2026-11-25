@@ -1439,7 +1439,7 @@
 </ol>
 <p>The keys have the same meaning as for the <a href="../ai-agent-a2a-solver/#steps">A2A solver</a>. With <code>streaming</code> set to <code>true</code>, each chunk from the agent becomes one <code>speak</code> message.</p>
 <h2 id="which-agents-it-can-reach">Which agents it can reach<a class="headerlink" href="#which-agents-it-can-reach" title="Permanent link">&para;</a></h2>
-<p>The plugin uses the <code>a2a-sdk</code> client, the same as the <a href="../ai-agent-a2a-solver/#which-agents-it-can-reach">A2A solver</a>. It speaks A2A 1.0 and A2A 0.3, so the OVOS persona server is a valid agent. <code>hivemind-core</code> passes no session id, so each query starts its own A2A conversation.</p>
+<p>The plugin uses the <code>a2a-sdk</code> client, the same as the <a href="../ai-agent-a2a-solver/#which-agents-it-can-reach">A2A solver</a>. It speaks A2A 1.0 and A2A 0.3, so the OVOS persona server is a valid agent. For a <code>QUERY</code> or <code>CASCADE</code> message, <code>hivemind-core</code> passes no session id, so each query starts its own A2A conversation. A satellite that sends an utterance as a <code>BUS</code> message keeps one A2A conversation for its session.</p>
 <h2 id="if-it-fails">If it fails<a class="headerlink" href="#if-it-fails" title="Permanent link">&para;</a></h2>
 <p>When the agent cannot answer, the plugin sends an error sentence to the client, and then the end of the query.</p>
 <table>
@@ -1451,11 +1451,6 @@
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>A voice satellite gets no answer</td>
-<td>The satellite sends a <code>BUS</code> message, and the plugin answers <code>QUERY</code> and <code>CASCADE</code> messages</td>
-<td>Send the question in a <code>QUERY</code> or <code>CASCADE</code> message.</td>
-</tr>
 <tr>
 <td><code>Error validating A2A agent ... (HTTP 404)</code></td>
 <td><code>agent_url</code> is wrong, or the agent publishes only the A2A 0.2 card path</td>
@@ -1475,7 +1470,7 @@
 </table>
 <h2 id="more-information">More information<a class="headerlink" href="#more-information" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/JarbasHiveMind/hivemind-a2a-agent-plugin#configuration">Configuration</a> in the <code>hivemind-a2a-agent-plugin</code> README.</li>
+<li><a href="https://github.com/JarbasHiveMind/hivemind-a2a-agent-plugin#settings">Settings</a> in the <code>hivemind-a2a-agent-plugin</code> README.</li>
 <li><a href="../hivemind-agents/">HiveMind Agents</a> for how HiveMind relates to OVOS.</li>
 <li>The <a href="https://a2a-protocol.org/">A2A specification</a>.</li>
 </ul>
