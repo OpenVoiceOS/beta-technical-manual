@@ -648,7 +648,7 @@ Most register under the `opm.tts` entry-point group and are loaded by ovos-audio
 ## Agent Engine plugins (8)
 
 **[ovos-a2a-agent-plugin](https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin)**
-:   An OVOS ChatEngine plugin that lets an ovos-persona delegate its reasoning to any external agent that speaks the Agent2Agent (A2A) protocol. Used by ovos-persona and the Common Query/fallback pipelines (via Agent Engines) to answer free-form questions or drive agentic behavior.
+:   An OVOS ChatEngine plugin that lets an ovos-persona delegate its reasoning to any external agent that speaks the Agent2Agent (A2A) protocol. It registers one plugin, `ovos-a2a-solver`, in the `opm.agents.chat` entry-point group. ovos-persona loads it as a persona handler.
 
 **[ovos-agentic-loop](https://github.com/OpenVoiceOS/ovos-agentic-loop)**
 :   Agent-loop ChatEngine plugins for OVOS. Implements eight agentic reasoning patterns (ReAct, Native-ToolCall, Plan-and-Execute, Reflexion, Self-Ask, Chain-of-Thought, CRITIC, Tree-of-Thoughts), six built-in toolboxes, SKILL.md integration, and AGENTS.md context management — all as standard OPM plugins. Used by ovos-persona and the Common Query/fallback pipelines (via Agent Engines) to answer free-form questions or drive agentic behavior.

@@ -43,7 +43,7 @@ The keys have the same meaning as for the [A2A solver](ai-agent-a2a-solver.md#st
 
 ## Which agents it can reach
 
-The plugin uses the `a2a-sdk` client, the same as the [A2A solver](ai-agent-a2a-solver.md#which-agents-it-can-reach). It speaks A2A 1.0 and A2A 0.3, so the OVOS persona server is a valid agent. `hivemind-core` passes no session id, so each query starts its own A2A conversation.
+The plugin uses the `a2a-sdk` client, the same as the [A2A solver](ai-agent-a2a-solver.md#which-agents-it-can-reach). It speaks A2A 1.0 and A2A 0.3, so the OVOS persona server is a valid agent. For a `QUERY` or `CASCADE` message, `hivemind-core` passes no session id, so each query starts its own A2A conversation. A satellite that sends an utterance as a `BUS` message keeps one A2A conversation for its session.
 
 ## If it fails
 
@@ -51,14 +51,13 @@ When the agent cannot answer, the plugin sends an error sentence to the client, 
 
 | What you see | Cause | What to do |
 |---|---|---|
-| A voice satellite gets no answer | The satellite sends a `BUS` message, and the plugin answers `QUERY` and `CASCADE` messages | Send the question in a `QUERY` or `CASCADE` message. |
 | `Error validating A2A agent ... (HTTP 404)` | `agent_url` is wrong, or the agent publishes only the A2A 0.2 card path | Make sure that `<agent_url>/.well-known/agent-card.json` answers. |
 | `Error contacting A2A agent: Client Request timed out` | The agent took longer than `timeout` | Increase `timeout`. |
 | `A2A agent not configured` | `agent_url` is not set | Set `agent_url`. |
 
 ## More information
 
-- [Configuration](https://github.com/JarbasHiveMind/hivemind-a2a-agent-plugin#configuration) in the `hivemind-a2a-agent-plugin` README.
+- [Settings](https://github.com/JarbasHiveMind/hivemind-a2a-agent-plugin#settings) in the `hivemind-a2a-agent-plugin` README.
 - [HiveMind Agents](hivemind-agents.md) for how HiveMind relates to OVOS.
 - The [A2A specification](https://a2a-protocol.org/).
 

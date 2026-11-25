@@ -15,8 +15,8 @@
 | Call the tools of a persona from an AI agent | [Use persona tools over MCP and UTCP](ai-agent-persona-tools.md) | `ovos-persona-server` | [API surfaces](https://github.com/OpenVoiceOS/ovos-persona-server#api-surfaces) |
 | Share tools with every program on an OVOS device | [Share tools on the messagebus](ai-agent-bus-tools.md) | `ovos-PHAL-plugin-tools` | [Bus API reference](https://github.com/OpenVoiceOS/ovos-PHAL-plugin-tools#bus-api-reference) |
 | Give a persona tools from an MCP or UTCP server | [Give a persona MCP and UTCP tools](ai-agent-persona-uses-tools.md) | `ovos-agentic-loop`, `ovos-tool-adapters` | [Toolboxes](https://github.com/OpenVoiceOS/ovos-agentic-loop/blob/dev/docs/toolboxes.md), [MCP](https://github.com/OpenVoiceOS/ovos-tool-adapters/blob/dev/docs/mcp.md), [UTCP](https://github.com/OpenVoiceOS/ovos-tool-adapters/blob/dev/docs/utcp.md) |
-| Let a persona answer through an agent on another server | [Answer through a remote A2A agent](ai-agent-a2a-solver.md) | `ovos-a2a-agent-plugin` | [Configuration](https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin#configuration) |
-| Connect HiveMind voice satellites to an A2A agent | [Connect a HiveMind satellite to an A2A agent](ai-agent-hivemind-a2a.md) | `hivemind-a2a-agent-plugin` | [Configuration](https://github.com/JarbasHiveMind/hivemind-a2a-agent-plugin#configuration) |
+| Let a persona answer through an agent on another server | [Answer through a remote A2A agent](ai-agent-a2a-solver.md) | `ovos-a2a-agent-plugin` | [Settings](https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin#settings) |
+| Connect HiveMind voice satellites to an A2A agent | [Connect a HiveMind satellite to an A2A agent](ai-agent-hivemind-a2a.md) | `hivemind-a2a-agent-plugin` | [Settings](https://github.com/JarbasHiveMind/hivemind-a2a-agent-plugin#settings) |
 
 ## The three protocols
 

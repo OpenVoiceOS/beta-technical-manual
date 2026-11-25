@@ -34,7 +34,7 @@ The persona handler `ovos-a2a-solver` from the `ovos-a2a-solver-plugin` package.
 | `agent_url` | none | Base URL of the A2A agent. Required. |
 | `auth_header` | none | The value of the `Authorization` header, for example `Bearer <token>`. |
 | `timeout` | `60` | Seconds for each call. |
-| `streaming` | `false` | Use the streaming call of the agent. |
+| `streaming` | `false` | Use the streaming call of the agent. The persona then speaks each sentence when the agent has sent it. With `false`, the persona speaks the whole answer after the agent has finished. |
 
 ## Which agents it can reach
 
@@ -46,7 +46,9 @@ The OVOS persona server from [Talk to an OVOS persona over A2A](ai-agent-a2a-ser
 Are such questions much on your mind?
 ```
 
-The plugin sends only the newest user message. The remote agent keeps the conversation for each OVOS session.
+The plugin sends only the newest user message. The first message of an OVOS session goes without a context id. The agent assigns one, and the plugin sends it with every later message of that session. The agent keeps the conversation for each context id.
+
+When `streaming` is `true` and the agent card says that the agent does not stream, the plugin logs a warning and sends each message without streaming.
 
 ## If it fails
 
@@ -60,7 +62,7 @@ The persona speaks one line of its error dialog when the remote agent cannot ans
 
 ## More information
 
-- [Configuration](https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin#configuration) in the `ovos-a2a-agent-plugin` README.
+- [Settings](https://github.com/OpenVoiceOS/ovos-a2a-agent-plugin#settings) in the `ovos-a2a-agent-plugin` README.
 - [Personas](personas.md) for persona files and handlers.
 - The [A2A specification](https://a2a-protocol.org/).
 
