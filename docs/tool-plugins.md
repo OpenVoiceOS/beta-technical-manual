@@ -309,7 +309,7 @@ bus via `ovos.persona.tools.{toolbox_id}.call`.
 |---|---|---|---|
 | `ovos-wikipedia-tools` | `search_wikipedia` | `ovos-wikipedia-plugin` | None, public Wikipedia REST API |
 | `ovos-ddg-tools` | `search_duckduckgo`, `duckduckgo_infobox`, `duckduckgo_image` | `ovos-ddg-plugin` | None, DuckDuckGo Instant Answer API |
-| `ovos-wolfram-alpha-tools` | `search_wolfram_alpha` | `ovos-wolfram-alpha-plugin` | Optional, free key at developer.wolframalpha.com; a demo key ships in the plugin |
+| `ovos-wolfram-alpha-tools` | `search_wolfram_alpha` | `ovos-wolfram-alpha-plugin` | Required, a free appid from developer.wolframalpha.com, set as `appid` in the plugin config |
 | `ovos-wordnet-tools` | `define_word`, `word_relations` | `ovos-wordnet-plugin` | None, local `wn` (Open English WordNet) corpus, auto-downloaded |
 
 Skills are a natural place for more of these — weather, date and time, the ISS tracker — but
