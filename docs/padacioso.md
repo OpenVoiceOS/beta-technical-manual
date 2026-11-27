@@ -43,9 +43,15 @@ container.calc_intent('say something, whatever')
 
 Both `padacioso.IntentContainer.add_intent()`, called directly as above, and the OVOS
 pipeline's `.intent`-file path share the same `ovos-spec-tools` slot-name validator, which
-enforces the OVOS grammar (`{lowercase_with_underscores}`) — `simplematch`'s colon-typed
-slot syntax (`{number:int}`) is **not** supported by either path, and fails with
-`MalformedTemplate`.
+enforces the OVOS grammar (`{lowercase_with_underscores}`). A slot name outside that grammar,
+such as `{Number}`, fails with `MalformedTemplate`. The colon-typed form `{number:int}` becomes
+the typed placeholder `{int}`, and the match binds the value under the name `int`:
+
+```python
+container.add_intent('timer', ['set timer {number:int}'])
+container.calc_intent('set timer 5')
+# {'entities': {'int': '5'}, 'conf': 0.96, 'name': 'timer'}
+```
 
 The two paths differ only in how they handle that failure. Calling `add_intent()` directly
 propagates the exception — it crashes. The pipeline plugin catches it per sample instead:
@@ -81,6 +87,7 @@ Intents can be gated at runtime by session context or suppressed by keyword:
 - `set_context(intent_name, context_name, context_val=None)` / `require_context(intent_name, context_name)`: only consider the intent when the given context is active. `unset_context` / `unrequire_context` reverse them.
 - `exclude_context(intent_name, context_name)`: suppress the intent while a context is active (`unexclude_context` reverses it).
 - `exclude_keywords(intent_name, samples)`: drop the intent from matching when the query contains any of the given keywords.
+- `require_keywords(intent_name, samples)`: drop the intent from matching when the query contains none of the given keywords. The pipeline plugin fills it from the intent's `.required` file.
 
 These let a container activate or hide intents based on conversational state without rebuilding it.
 

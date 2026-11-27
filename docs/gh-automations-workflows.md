@@ -40,6 +40,10 @@ uses: OpenVoiceOS/gh-automations/.github/workflows/<name>.yml@dev
 | `type-check.yml` | Runs `mypy`, informational only unless `fail_on_errors: true`. | [Lint and Docs Workflows](gh-automations-lint-docs.md#type-checkyml) |
 | `docs-check.yml` | Verifies required documentation files exist and optionally lints Markdown. | [Lint and Docs Workflows](gh-automations-lint-docs.md#docs-checkyml) |
 | `notify-matrix.yml` | Sends a message to the OVOS Matrix channel. | [Lint and Docs Workflows](gh-automations-lint-docs.md#notify-matrixyml) |
+| `golden-utterances.yml` | Runs a skill's golden-utterance corpus with `ovoscope golden`. | [Source](https://github.com/OpenVoiceOS/gh-automations/blob/dev/.github/workflows/golden-utterances.yml) |
+| `locale-lint.yml` | Runs `ovos-spec-lint` on the locale folder in one job, and the OVOS locale checks in a second job. | [Source](https://github.com/OpenVoiceOS/gh-automations/blob/dev/.github/workflows/locale-lint.yml) |
+| `markdown-check.yml` | Lints a Markdown-content repository (a spec set, a docs tree, a blog) with `markdownlint-cli2`. | [Source](https://github.com/OpenVoiceOS/gh-automations/blob/dev/.github/workflows/markdown-check.yml) |
+| `redistribution-guard.yml` | Fails a build that redistributes a library whose licence exception holds only without redistribution. | [Source](https://github.com/OpenVoiceOS/gh-automations/blob/dev/.github/workflows/redistribution-guard.yml) |
 
 The [PR Checks Comment Pattern](gh-automations-pr-comment-scripts.md#pr-checks-comment-pattern) and [Scripts Reference](gh-automations-pr-comment-scripts.md#scripts-reference) sections, describing the shared PR-comment mechanism and the Python scripts used across all of the above workflows, live on the PR Comment Pattern and Scripts page.
 

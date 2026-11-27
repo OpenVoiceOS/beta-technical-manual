@@ -58,7 +58,7 @@ is direct:
 | Spec | What it covers |
 |------|----------------|
 | [**OVOS-INTENT-1: Sentence Template Grammar**](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md) | The `(a\|b)` / `[optional]` / `{slot}` / `<vocab>` grammar shared by `.intent`, `.voc`, `.dialog`, `.entity` resource files. |
-| [**OVOS-INTENT-2: Locale Resource Formats**](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md) | The `locale/` folder layout and the plain-text resource file formats (`.intent`, `.dialog`, `.voc`, `.entity`, `.prompt`). |
+| [**OVOS-INTENT-2: Locale Resource Formats**](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md) | The `locale/` folder layout and the plain-text resource file formats (`.intent`, `.dialog`, `.voc`, `.entity`, `.prompt`, `.blacklist`, `.required`). |
 | [**OVOS-INTENT-3: Intent Definition**](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md) | What an intent *is*: keyword vs template definition, skill/intent identity, and the match-result shape. |
 | [**OVOS-INTENT-4: Intent & Entity Registration**](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md) | The broadcast bus messages a skill uses to declare its intents and entities, and the orchestrator's introspection manifest. |
 
@@ -71,6 +71,7 @@ is direct:
 | [**OVOS-SESSION-2: Session Lifecycle & State Ownership**](https://github.com/OpenVoiceOS/architecture/blob/dev/session-2.md) | Who owns session state, when it may be mutated, the reserved `"default"` device session, and out-of-band sync. |
 | [**OVOS-BRIDGE-1: Bus Bridge & Opaque Relay**](https://github.com/OpenVoiceOS/architecture/blob/dev/bridge-1.md) | How a satellite / remote deployment relays messages and preserves sessions across a [HiveMind](https://github.com/JarbasHiveMind) mesh. |
 | [**OVOS-INSTALL-1: Plugin Installation Bus Contract**](https://github.com/OpenVoiceOS/architecture/blob/dev/install-1.md) | How a client asks for a plugin to be installed, and how it names the environment the install must land in, since a plugin installed into the wrong container is never loaded. |
+| [**OVOS-TOOLS-1: Agent Tools Bus Contract**](https://github.com/OpenVoiceOS/architecture/blob/dev/tools-1.md) | How a component offers tools on the bus, and how an agent lists and calls them. |
 
 ### Orchestrator stack: what processes utterances
 
@@ -92,7 +93,7 @@ is direct:
 |------|----------------|
 | [**OVOS-AUDIO-IN-1: Audio Input Service**](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-in.md) | Capture → audio-transformer chain → STT → utterance, plus the listening-lifecycle signals. |
 | [**OVOS-AUDIO-1: Audio Output Service**](https://github.com/OpenVoiceOS/architecture/blob/dev/audio-out.md) | Dialog-transformer chain → TTS → tts-transformer chain → playback queue, plus remote-client rendering. |
-| [**OVOS-GUI-1: GUI Display Subsystem**](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md) | The closed `SYSTEM_*` template vocabulary and the interchangeable render backends that draw it. |
+| [**OVOS-GUI-1: GUI Display Subsystem**](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md) | The closed `SYSTEM_*` template vocabulary, the interchangeable render backends that draw it, the `gui.*` wire protocol, and the `ovos.notification.*` topics shown outside the templates. |
 
 ### Media stack: playback and transport
 
