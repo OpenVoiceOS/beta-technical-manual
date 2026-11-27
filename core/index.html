@@ -1130,6 +1130,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Key Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intent-pipeline-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intent pipeline limits
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill-loading-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill loading events
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1709,6 +1733,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Key Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intent-pipeline-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intent pipeline limits
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill-loading-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill loading events
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1806,6 +1854,48 @@
 <li><strong>Transformer Plugins</strong>: modify utterances, metadata, or intent matches as they move through the pipeline.</li>
 <li><strong><a href="../skill-installer/">Skill Installer</a></strong>: installs and manages skills and Python packages dynamically at runtime.</li>
 </ul>
+<h3 id="intent-pipeline-limits">Intent pipeline limits<a class="headerlink" href="#intent-pipeline-limits" title="Permanent link">&para;</a></h3>
+<p>The intent service bounds each match call of a pipeline plugin:</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Default</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>intents.&lt;pipe_id&gt;.match_timeout</code></td>
+<td><code>intents.match_timeout</code></td>
+<td>Seconds that one match call of this plugin can take</td>
+</tr>
+<tr>
+<td><code>intents.match_timeout</code></td>
+<td><code>10</code></td>
+<td>Value for each plugin that has no own setting</td>
+</tr>
+<tr>
+<td><code>intents.&lt;pipe_id&gt;.match_workers</code></td>
+<td><code>intents.match_workers</code></td>
+<td>Threads in the worker pool of this plugin</td>
+</tr>
+<tr>
+<td><code>intents.match_workers</code></td>
+<td><code>4</code></td>
+<td>Value for each plugin that has no own setting</td>
+</tr>
+</tbody>
+</table>
+<p><code>&lt;pipe_id&gt;</code> is the plugin id without the <code>-high</code>, <code>-medium</code> or <code>-low</code> suffix. A match call that does not return before its timeout is a decline, and the pipeline continues to the next plugin. Each plugin has its own worker pool, so a plugin that stops responding fills only its own pool. When all workers of a pool are held by calls past their timeout, the plugin declines each new call immediately.</p>
+<h3 id="skill-loading-events">Skill loading events<a class="headerlink" href="#skill-loading-events" title="Permanent link">&para;</a></h3>
+<p>The skill manager loads plugin skills when these events occur:</p>
+<ul>
+<li><code>ovos.skills.install.complete</code> or <code>ovos.pip.install.complete</code>: it reloads each loaded skill that the installer upgraded, then loads each skill that the installer made available.</li>
+<li><code>ovos.skills.uninstall.complete</code> or <code>ovos.pip.uninstall.complete</code>: it unloads each skill whose package is no longer installed.</li>
+<li><code>skillmanager.rescan</code>: it scans for skills that are not loaded and loads them. It replies <code>skillmanager.rescan.response</code> with the data <code>{"loaded": [...]}</code>, the list of skill ids that the scan loaded.</li>
+</ul>
+<p>A periodic scan every 30 seconds loads each skill that these events did not load.</p>
 <hr />
 <h2 id="entry-points">Entry Points<a class="headerlink" href="#entry-points" title="Permanent link">&para;</a></h2>
 <p>If you are running OVOS manually, you can use these commands:</p>

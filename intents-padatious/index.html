@@ -1027,6 +1027,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#required-slots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Required slots
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#entities-with-unknown-tokens" class="md-nav__link">
     <span class="md-ellipsis">
       Entities with unknown tokens
@@ -1039,6 +1048,24 @@
   <a href="#parentheses-expansion" class="md-nav__link">
     <span class="md-ellipsis">
       Parentheses Expansion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-keywords-the-required-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Required keywords: the .required file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blocked-phrases-the-blacklist-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blocked phrases: the .blacklist file
     </span>
   </a>
   
@@ -1790,6 +1817,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#required-slots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Required slots
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#entities-with-unknown-tokens" class="md-nav__link">
     <span class="md-ellipsis">
       Entities with unknown tokens
@@ -1802,6 +1838,24 @@
   <a href="#parentheses-expansion" class="md-nav__link">
     <span class="md-ellipsis">
       Parentheses Expansion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-keywords-the-required-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Required keywords: the .required file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blocked-phrases-the-blacklist-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blocked phrases: the .blacklist file
     </span>
   </a>
   
@@ -1928,7 +1982,7 @@ new intent file: <code>locale/en-us/do.you.like.intent</code></p>
 <p>Note the <code>{type}</code> in the above examples. These are wild cards where matching content is
 forwarded to the skill's intent handler.</p>
 <blockquote>
-<p><strong>WARNING</strong>: digits are not allowed in the entity name inside the <code>{}</code>. <strong>Do NOT</strong> use <code>{room1}</code>, use <code>{room_one}</code>.</p>
+<p><strong>WARNING</strong>: a slot name uses lowercase ASCII letters, digits and underscores. It does not begin with a digit, so <code>{room1}</code> is a valid name. Padatious supports a digit in a slot name only in part. The neural matcher binds <code>{room1}</code>. The exact-match tier and the context slot fill do not recognize a digit in a slot name. Use <code>{room_one}</code> to get all three.</p>
 </blockquote>
 <h3 id="specific-entities">Specific Entities<a class="headerlink" href="#specific-entities" title="Permanent link">&para;</a></h3>
 <p>In the above example, <code>{type}</code> matches anything. This makes the intent flexible, but it will
@@ -2056,34 +2110,47 @@ the whole utterance rather than a single named slot. Both read from
 matching; a handler never has to reach into that map directly.</p>
 <p>A typed slot does not make the slot required. An utterance that matches
 the template without producing a <code>{date:when}</code> still fires the handler,
-with <code>typed_slot</code> returning <code>None</code> for <code>when</code>. Forcing a match to fail
-unless a given slot bound something is a separate, orchestrator-level
-<code>required_slots</code> check tied to an intent's registration; no
-skill-facing API declares it directly, so a handler that truly
-cannot proceed without a value still validates for <code>None</code> itself, as in
-the example above.</p>
+with <code>typed_slot</code> returning <code>None</code> for <code>when</code>. To reject a match that
+does not bind a slot, declare the slot as required.</p>
+<h3 id="required-slots">Required slots<a class="headerlink" href="#required-slots" title="Permanent link">&para;</a></h3>
+<p><code>@intent_handler</code>, <code>register_intent</code> and <code>register_intent_file</code> take a
+<code>required_slots</code> keyword. It lists bare slot names, with no braces and
+no type prefix. <code>required_slots</code> applies only to a <code>.intent</code> template.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;set.reminder.intent&quot;</span><span class="p">,</span> <span class="n">required_slots</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;when&quot;</span><span class="p">,</span> <span class="s2">&quot;task&quot;</span><span class="p">])</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">def</span> <span class="nf">handle_reminder_intent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="n">when</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">typed_slot</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="s2">&quot;when&quot;</span><span class="p">)</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="n">task</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;task&quot;</span><span class="p">]</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="o">...</span>
+</span></code></pre></div>
+<p>A slot name must match <code>[a-z_][a-z0-9_]*</code>. A name that does not match,
+or a value that is not a list of strings, raises <code>ValueError</code> when the
+skill registers the intent.</p>
+<p><code>ovos-core</code> checks each match against the required slots of its intent.
+A match that does not have a value for each required slot is a decline:
+the pipeline continues to the next plugin, and no bus event is emitted.
+A slot that the session's intent context can fill counts as present.</p>
 <h3 id="entities-with-unknown-tokens">Entities with unknown tokens<a class="headerlink" href="#entities-with-unknown-tokens" title="Permanent link">&para;</a></h3>
 <p>Let's say you want to create an intent to match places:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Directions to {place}.
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Navigate me to {place}.
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Open maps to {place}.
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Show me how to get to {place}.
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>How do I get to {place}?
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Directions to {place}.
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Navigate me to {place}.
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Open maps to {place}.
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>Show me how to get to {place}.
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>How do I get to {place}?
 </span></code></pre></div>
 <p>This alone will work, but it will still get a high confidence with a phrase like "How do I get
 to the boss in my game?" We can try creating a <code>.entity</code> file with things like:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>New York City
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>#### Georgia Street
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>San Francisco
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>New York City
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>#### Georgia Street
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>San Francisco
 </span></code></pre></div>
 <p>The problem is that anything that is not specifically a mix of New York City, San
 Francisco, or something on Georgia Street won't match. Instead, we can specify an unknown word
 with <code>:0</code>. This would be written as:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>:0 :0 City
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>#### :0 Street
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>:0 :0
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>:0 :0 City
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>#### :0 Street
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>:0 :0
 </span></code></pre></div>
 <p>This still matches quite a lot, but it matches things like "Directions to
 Baldwin City" more than "How do I get to the boss in my game?"</p>
@@ -2092,70 +2159,102 @@ match quite liberally.</em></p>
 <h3 id="parentheses-expansion">Parentheses Expansion<a class="headerlink" href="#parentheses-expansion" title="Permanent link">&para;</a></h3>
 <p>Sometimes you might find yourself writing many variations of the same thing. For example, to
 write a skill that orders food, you might write the following intent:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Order some {food}.
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Order some {food} from {place}.
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>Grab some {food}.
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>Grab some {food} from {place}.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Order some {food}.
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Order some {food} from {place}.
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Grab some {food}.
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>Grab some {food} from {place}.
 </span></code></pre></div>
 <p>Rather than writing out all combinations of possibilities, you can embed them into one or more
 lines by writing each possible option inside parentheses with <code>|</code> between each part. For
 example, that same intent above could be written as:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>(Order | Grab) some {food}
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>(Order | Grab) some {food} from {place}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>(Order | Grab) some {food}
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>(Order | Grab) some {food} from {place}
 </span></code></pre></div>
 <p>or even on a single-line:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>(Order | Grab) some {food} (from {place} | )
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>(Order | Grab) some {food} (from {place} | )
 </span></code></pre></div>
 <blockquote>
 <p>The empty-branch trick <code>(from {place} | )</code> makes a segment optional. The portable <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-1.md">OVOS-INTENT-1</a> equivalent is the square-bracket optional <code>[from {place}]</code>. <code>[x]</code> is defined as exactly equivalent to <code>(x|)</code>. Prefer the bracket form when you want spec-conformant templates.</p>
 </blockquote>
 <p>Nested parentheses are supported to create even more complex combinations, such as the following:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>(Look (at | for) | Find) {object}.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>(Look (at | for) | Find) {object}.
 </span></code></pre></div>
 <p>Which would expand to:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Look at {object}
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>Look for {object}
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>Find {object}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Look at {object}
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Look for {object}
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>Find {object}
 </span></code></pre></div>
 <p>There is no performance benefit to using parentheses expansion. When used appropriately, this
 syntax can be much clearer to read. However, break more complex structures down into multiple
 lines to aid readability and reduce false utterances in the model. Overuse can even cause the
 model training to time out, making the skill unusable.</p>
+<h3 id="required-keywords-the-required-file">Required keywords: the <code>.required</code> file<a class="headerlink" href="#required-keywords-the-required-file" title="Permanent link">&para;</a></h3>
+<p>A <code>&lt;intent&gt;.required</code> file in the same locale folder as <code>&lt;intent&gt;.intent</code>
+lists keywords, one for each line. The intent matches only when the
+utterance contains one or more of these keywords. When the utterance
+contains none of them, Padatious suppresses the intent.</p>
+<p>This is a hard
+reject: the confidence of the match is not important, and an exact
+template match is also suppressed.</p>
+<p>For <code>locale/en-us/weather.intent</code>, the file <code>locale/en-us/weather.required</code> can contain:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>weather
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>forecast
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>(rain|snow)
+</span></code></pre></div>
+<h3 id="blocked-phrases-the-blacklist-file">Blocked phrases: the <code>.blacklist</code> file<a class="headerlink" href="#blocked-phrases-the-blacklist-file" title="Permanent link">&para;</a></h3>
+<p>A <code>&lt;intent&gt;.blacklist</code> file lists phrases, one for each line. When the
+utterance contains one of these phrases, Padatious suppresses the intent.
+This is also a hard reject.</p>
+<p>Both files use the same rules:</p>
+<ul>
+<li>The skill loads each file when it registers the intent with <code>register_intent_file</code> or <code>@intent_handler</code>.</li>
+<li>A line can use alternation <code>(a|b)</code>, optional words <code>[the]</code> and <code>&lt;name&gt;</code> references to a <code>.voc</code> file. Each line expands to all of its phrases.</li>
+<li>A keyword or phrase matches at word boundaries, without case. <code>install</code> occurs in "install firefox", but not in "installment".</li>
+</ul>
+<p>A <code>&lt;slot&gt;.blacklist</code> file has a different function. It lists values that
+must not bind to the slot <code>{slot}</code>. When the full slot value is in the
+list, Padatious does not fill the slot.</p>
+<p>For example, a <code>person.blacklist</code> file that contains <code>he</code> and <code>she</code> keeps
+pronouns out of <code>{person}</code>.</p>
 <h2 id="using-it-in-a-skill">Using it in a Skill<a class="headerlink" href="#using-it-in-a-skill" title="Permanent link">&para;</a></h2>
 <p>The <code>intent_handler()</code> decorator can create an examples-based intent handler by passing in the
 filename of the <code>.intent</code> file as a string.</p>
-<p>You may also see the <code>@intent_file_handler</code> decorator used in skills. This is deprecated. You
-can replace any instance of this with the simpler <code>@intent_handler</code> decorator.</p>
+<p>Older skills use the <code>@intent_file_handler</code> decorator. <code>ovos-workshop</code> does not have this
+decorator, so an import of it fails. Replace each instance with <code>@intent_handler</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># before: from ovos_workshop.decorators import intent_file_handler</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="c1"># before: @intent_file_handler(&quot;what.is.a.tomato.intent&quot;)</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="nd">@intent_handler</span><span class="p">(</span><span class="s2">&quot;what.is.a.tomato.intent&quot;</span><span class="p">)</span>
+</span></code></pre></div>
 <p>From our first example above, we created a file <code>locale/en-us/what.is.a.tomato.intent</code>. To
 register an intent using this file we can use the following decorator, shown on its own.
 Place it above a handler method inside your skill class:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nd">@intent_handler</span><span class="p">(</span><span class="s1">&#39;what.is.a.tomato.intent&#39;</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nd">@intent_handler</span><span class="p">(</span><span class="s1">&#39;what.is.a.tomato.intent&#39;</span><span class="p">)</span>
 </span></code></pre></div>
 <p>This <em>decorator</em> must be imported before it is used:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
 </span></code></pre></div>
 <p><a href="https://en.wikipedia.org/wiki/Python_syntax_and_semantics#Decorators">Learn more about <em>decorators</em> in Python</a>.</p>
 <p>Now we can create our Tomato Skill:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="k">class</span> <span class="nc">TomatoSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
-</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>
-</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">register_entity_file</span><span class="p">(</span><span class="s1">&#39;type.entity&#39;</span><span class="p">)</span>
-</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
-</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s1">&#39;what.is.a.tomato.intent&#39;</span><span class="p">)</span>
-</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>    <span class="k">def</span> <span class="nf">handle_what_is</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;tomato.description&#39;</span><span class="p">)</span>
-</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>
-</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s1">&#39;do.you.like.intent&#39;</span><span class="p">)</span>
-</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>    <span class="k">def</span> <span class="nf">handle_do_you_like</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>        <span class="n">tomato_type</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
-</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>        <span class="k">if</span> <span class="n">tomato_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;like.tomato.type&#39;</span><span class="p">,</span>
-</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>                              <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">tomato_type</span><span class="p">})</span>
-</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="__span-18-20"><a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;like.tomato.generic&#39;</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kn">from</span> <span class="nn">ovos_workshop.skills</span> <span class="kn">import</span> <span class="n">OVOSSkill</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="kn">from</span> <span class="nn">ovos_workshop.decorators</span> <span class="kn">import</span> <span class="n">intent_handler</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="k">class</span> <span class="nc">TomatoSkill</span><span class="p">(</span><span class="n">OVOSSkill</span><span class="p">):</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">register_entity_file</span><span class="p">(</span><span class="s1">&#39;type.entity&#39;</span><span class="p">)</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s1">&#39;what.is.a.tomato.intent&#39;</span><span class="p">)</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>    <span class="k">def</span> <span class="nf">handle_what_is</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;tomato.description&#39;</span><span class="p">)</span>
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>    <span class="nd">@intent_handler</span><span class="p">(</span><span class="s1">&#39;do.you.like.intent&#39;</span><span class="p">)</span>
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>    <span class="k">def</span> <span class="nf">handle_do_you_like</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>        <span class="n">tomato_type</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>        <span class="k">if</span> <span class="n">tomato_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;like.tomato.type&#39;</span><span class="p">,</span>
+</span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>                              <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">tomato_type</span><span class="p">})</span>
+</span><span id="__span-21-19"><a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-21-20"><a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak_dialog</span><span class="p">(</span><span class="s1">&#39;like.tomato.generic&#39;</span><span class="p">)</span>
 </span></code></pre></div>
 <p>See <a href="../first-skill/">Your First Skill</a> for a complete, minimal example of a template-intent skill from scratch.</p>
 <h2 id="common-problems">Common Problems<a class="headerlink" href="#common-problems" title="Permanent link">&para;</a></h2>

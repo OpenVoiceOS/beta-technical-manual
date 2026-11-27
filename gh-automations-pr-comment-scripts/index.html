@@ -1726,6 +1726,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#other-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other scripts
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1939,6 +1948,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#other-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other scripts
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1992,7 +2010,7 @@
 </tr>
 <tr>
 <td><code>pip-audit.yml</code></td>
-<td><code>Security (pip-audit)</code></td>
+<td><code>Security (pip-audit)</code>, or <code>Security (pip-audit: &lt;category&gt;)</code> when <code>sarif_category</code> is not <code>pip-audit</code></td>
 <td>lock</td>
 </tr>
 <tr>
@@ -2009,6 +2027,26 @@
 <td><code>opm-check.yml</code></td>
 <td><code>Plugin Detection</code></td>
 <td>plug</td>
+</tr>
+<tr>
+<td><code>channel-compat.yml</code></td>
+<td><code>Channel Compat — &lt;channel&gt;</code></td>
+<td>satellite antenna</td>
+</tr>
+<tr>
+<td><code>downstream-check.yml</code></td>
+<td><code>Downstream Dependents</code></td>
+<td>link</td>
+</tr>
+<tr>
+<td><code>locale-check.yml</code></td>
+<td><code>Locale Build</code></td>
+<td>globe</td>
+</tr>
+<tr>
+<td><code>spec-lint.yml</code></td>
+<td><code>Spec Lint</code></td>
+<td>test tube</td>
 </tr>
 </tbody>
 </table>
@@ -2028,7 +2066,7 @@
 </tr>
 <tr>
 <td><code>intent-case-tests.yml</code></td>
-<td><code>Intent-Case Accuracy</code></td>
+<td><code>Intent-Case Accuracy</code>, with <code>(&lt;lang&gt;)</code> for a language shard</td>
 <td>target</td>
 </tr>
 <tr>
@@ -2058,8 +2096,8 @@
 </tr>
 <tr>
 <td><code>lint.yml</code></td>
-<td>lint results</td>
-<td>none</td>
+<td><code>Lint</code>, or <code>Lint (&lt;section_key&gt;)</code> when <code>section_key</code> is set</td>
+<td>magnifying glass</td>
 </tr>
 <tr>
 <td><code>python-support.yml</code> <em>(deprecated)</em></td>
@@ -2068,6 +2106,7 @@
 </tr>
 </tbody>
 </table>
+<p>The section IDs are <code>health</code>, <code>welcome</code>, <code>release</code>, <code>security</code> (or <code>security-&lt;category&gt;</code>), <code>license</code>, <code>build</code>, <code>opm</code>, <code>channel-&lt;channel&gt;</code>, <code>downstream</code>, <code>locale</code>, <code>spec-lint</code>, <code>ovoscope</code>, <code>bus-coverage</code>, <code>intent-accuracy</code> (or <code>intent-accuracy-&lt;lang&gt;</code>), <code>tts-intelligibility</code>, <code>coverage</code>, <code>skill</code>, <code>type_check</code>, <code>docs_check</code>, <code>lint</code> (or <code>lint-&lt;section_key&gt;</code>) and <code>python_support</code>.</p>
 <p>The HTML marker <code>&lt;!-- ovos-pr-checks --&gt;</code> identifies the comment in its body. Each workflow manages its own section:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&lt;!-- ovos-pr-checks --&gt;
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
@@ -2235,7 +2274,7 @@
 </span></code></pre></div>
 <p>Output example: <code>1.2.3a4</code> or <code>1.2.3</code></p>
 <h3 id="scriptscheck_downstreampy"><code>scripts/check_downstream.py</code><a class="headerlink" href="#scriptscheck_downstreampy" title="Permanent link">&para;</a></h3>
-<p>Reports which installed packages depend on a given package, using <code>pipdeptree</code>. Output is sorted deterministically and uploaded as a workflow artifact. The older commit-to-repo behavior is gone. The <code>commit_branch</code> input is deprecated and ignored.</p>
+<p>Reports which installed packages depend on a given package, using <code>pipdeptree</code>. Output is sorted deterministically. <code>downstream-check.yml</code> uploads it as a workflow artifact. The <code>commit_branch</code> input of that workflow is deprecated and ignored.</p>
 <p><strong>Key function:</strong> <code>get_downstream(package_name: str) -&gt; str</code></p>
 <p><strong>Helper:</strong> <code>sort_pipdeptree_output(text: str) -&gt; str</code></p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>usage: check_downstream.py --package &lt;name&gt; --output &lt;file&gt;
@@ -2342,6 +2381,21 @@
 </span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
 </span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>environment: GITHUB_TOKEN   (required)
 </span></code></pre></div>
+<h3 id="other-scripts">Other scripts<a class="headerlink" href="#other-scripts" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>scripts/aggregate_python_results.py</code>: combines the per-version results of the Python matrix jobs into one Markdown table for the PR comment.</li>
+<li><code>scripts/build_espeak_ng.sh</code>: builds espeak-ng from source at a pinned tag into a prefix, and prints the prefix. Usage: <code>build_espeak_ng.sh &lt;version&gt; &lt;prefix&gt;</code>.</li>
+<li><code>scripts/check_locale_build.py</code>: checks that the locale folders exist in the source tree, are in the package data, and are in the built package.</li>
+<li><code>scripts/check_release_channels.py</code>: compares a predicted version with the constraints files of the <code>ovos-releases</code> channels.</li>
+<li><code>scripts/check_repo_health.py</code>: checks required files, contributor status and breaking changes, and writes the JSON report that <code>repo-health.yml</code> posts.</li>
+<li><code>scripts/check_test_path_coverage.py</code>: reports the test files that an explicit <code>test_path</code> allowlist of <code>build-tests.yml</code> leaves out.</li>
+<li><code>scripts/format_ovoscope_results.py</code>: formats an ovoscope pytest JSON report into the PR Checks section.</li>
+<li><code>scripts/format_tts_intel.py</code>: reads the TTS-intelligibility markers from a pytest JSON report and writes a per-voice WER/CER table.</li>
+<li><code>scripts/locale_gate.py</code>: runs the review-stage checks on a locale PR in one <code>ovos-skill-*</code> checkout, and exits non-zero when a check fails.</li>
+<li><code>scripts/pip_audit_report.py</code>: turns a pip-audit JSON report into annotations, a job summary and the PR comment section.</li>
+<li><code>scripts/pip_audit_sarif.py</code>: converts a pip-audit JSON report into a SARIF 2.1.0 report.</li>
+<li><code>scripts/ste_lint.py</code>: the STE and slop linter of the <code>ste-writing</code> skill.</li>
+</ul>
 <hr />
 <p><em>Source code: <a href="https://github.com/OpenVoiceOS/gh-automations">OpenVoiceOS/gh-automations</a>.</em></p>
 <hr />
