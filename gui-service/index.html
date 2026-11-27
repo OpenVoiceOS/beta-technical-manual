@@ -2085,8 +2085,9 @@ namespace holds session data (key/value pairs) and an ordered list of displayed 
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>music ends         → stack empty → idle view shown
 </span></code></pre></div>
 <blockquote>
-<p><strong>Note:</strong> GUI does not track namespaces per <a href="../session/">Session</a>. All clients
-share one global display stack.</p>
+<p><strong>Note:</strong> In <code>ovos-gui</code> 1.3.x, GUI does not track namespaces per <a href="../session/">Session</a>.
+All clients share one global display stack. From 1.6.0a1, <code>ovos-gui</code> keeps one stack per
+<code>session_id</code>.</p>
 </blockquote>
 <hr />
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
@@ -2143,26 +2144,25 @@ transport.</p>
 <hr />
 <div class="admonition warning">
 <p class="admonition-title">Alpha channel only</p>
-<p>The following describes a <strong>plugin-based rendering rework</strong> that is <strong>unreleased</strong>
-and not present on any published package. It is specified by the
-<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1</a> spec
-and implemented in <code>ovos-gui</code>, with adapters in
-<code>ovos-legacy-mycroft-gui-plugin</code> and <code>pyhtmx-gui-client</code>.
-Do not rely on any of this on a stable install. Tracked in
-<a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377">ovos-plugin-manager#377</a>,
-<a href="https://github.com/OpenVoiceOS/ovos-gui/pull/112">ovos-gui#112</a>,
-<a href="https://github.com/OpenVoiceOS/ovos-gui/pull/117">ovos-gui#117</a>, and
+<p>The following describes a <strong>plugin-based rendering rework</strong>. It is specified by the
+<a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1</a> spec.
+<code>ovos-gui</code> 1.6.0a1 contains the router, and the adapters are in
+<code>ovos-legacy-mycroft-gui-plugin</code> and <code>ovos-gui-plugin-ag-ui</code>. The router fails at import,
+because its adapter loader is in no <code>ovos-plugin-manager</code> release (<a href="https://github.com/OpenVoiceOS/ovos-gui/issues/145">ovos-gui#145</a>).
+Do not rely on any of this on a stable install. The open parts are
+<a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377">ovos-plugin-manager#377</a> and
 <a href="https://github.com/OpenVoiceOS/ovos-legacy-mycroft-gui-plugin/pull/3">ovos-legacy-mycroft-gui-plugin#3</a>.</p>
 <p><strong>What changes.</strong> Per OVOS-GUI-1, <code>ovos-gui</code> becomes a <strong>pure state-and-dispatch hub</strong>.
 It runs <strong>no WebSocket server</strong> and renders nothing. It loads every installed
 <strong>GUI adapter plugin</strong> (<code>opm.gui_adapter</code> entry-point group) via
-<code>OVOSGUIAdapterFactory.create_all(bus, config)</code> and fans each display event out to all
+<code>OVOSGUIAdapterFactory.create_all(bus, config)</code> (not in any <code>ovos-plugin-manager</code> release) and fans each display event out to all
 of them at once. This enables multi-modal output (Qt + browser + terminal at once). A
 headless device with zero adapters degrades to a no-op dispatch. It never crashes. The
 Qt WebSocket server moves into the <code>ovos-legacy-mycroft-gui-plugin</code> adapter.</p>
 <p><strong>Templates instead of QML page names.</strong> Skills display one of a <strong>closed vocabulary of
 22 <code>SYSTEM_*</code> templates</strong> (<code>SYSTEM_weather</code>, <code>SYSTEM_text</code>, <code>SYSTEM_list</code>, and more) defined by
-the spec. The router does not accept custom QML page names. The template-based
+the spec. The router sends a custom QML page name to the adapter's <code>on_legacy_page</code> hook,
+with a warning. The template-based
 <code>GUIInterface</code> moves into the standalone <code>ovos-gui-api-client</code> package (separate from the
 current <code>ovos_bus_client.apis.gui.GUIInterface</code>).</p>
 <p><strong>Addressing is <code>session_id</code>-only.</strong> The spec drops any separate site/room/location

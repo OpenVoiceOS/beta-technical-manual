@@ -1708,7 +1708,7 @@ read <a href="../updating-from-older-ovos/">Updating from Older OVOS</a> instead
 <p><a href="../architecture-specs/">OVOS-GUI-1</a> is a ground-up rework of how OVOS renders a
 screen: interchangeable render-backend plugins instead of one built-in
 WebSocket/QML renderer. See <a href="../gui-status/">Screens on OVOS</a> for the full
-picture. Until this work merges, the GUI stack (<code>ovos-gui</code> +
+picture. Until this work runs, the GUI stack (<code>ovos-gui</code> +
 <code>ovos-shell</code> + <code>mycroft-gui-qt5</code>) stays <strong>deprecated but shipped</strong>, because it is
 the only screen stack that runs.</p>
 <table>
@@ -1724,17 +1724,10 @@ the only screen stack that runs.</p>
 <tbody>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/112">ovos-gui#112</a></td>
-<td>State/dispatch hub, no built-in renderer, routes by <code>session_id</code> (blocked on <code>opm#377</code>)</td>
+<td>State/dispatch hub, no built-in renderer, routes by <code>session_id</code>. It fails at import until <code>opm#377</code> and the adapter loader land (<a href="https://github.com/OpenVoiceOS/ovos-gui/issues/145">ovos-gui#145</a>)</td>
 <td>deployers, GUI-adapter authors, <code>site_id</code> skill authors</td>
 <td>Yes</td>
-<td>2.0.0</td>
-</tr>
-<tr>
-<td><a href="https://github.com/OpenVoiceOS/ovos-gui/pull/117">ovos-gui#117</a></td>
-<td>Adds <code>SYSTEM_</code> template-name gate, partitions display state per session</td>
-<td>skill authors emitting GUI pages, GUI-adapter authors</td>
-<td>No</td>
-<td>1.5.0</td>
+<td>1.6.0a1 (merged, on <code>dev</code>)</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377">opm#377</a></td>
@@ -1747,13 +1740,6 @@ the only screen stack that runs.</p>
 <td><a href="https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/406">opm#406</a></td>
 <td>Drops legacy Mark-1 <code>enclosure.*</code> wiring from <code>PHALPlugin</code></td>
 <td>PHAL/enclosure plugin authors, GUI integration maintainers</td>
-<td>Yes</td>
-<td>3.0.0</td>
-</tr>
-<tr>
-<td><a href="https://github.com/OpenVoiceOS/ovos-bus-client/pull/197">ovos-bus-client#197</a></td>
-<td>Deprecates <code>EnclosureAPI</code>, adds <code>PageTemplates</code> constants</td>
-<td>consumers of <code>EnclosureAPI</code> and <code>GUIInterface</code></td>
 <td>Yes</td>
 <td>3.0.0</td>
 </tr>
@@ -1851,17 +1837,10 @@ fleets no longer run legacy-namespace consumers.</p>
 <tbody>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/802">ovos-core#802</a></td>
-<td>Reworks stop dispatch onto one spec path (requires <code>opm&gt;=2.9.0a1</code>, supersedes <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/777" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #777">#777</a>)</td>
+<td>Reworks stop dispatch onto one spec path (requires <code>opm&gt;=2.9.0a1</code>)</td>
 <td>skill authors, deployers of legacy skills, remote/HiveMind stop consumers</td>
 <td>Yes</td>
 <td>3.0.0a1 (merged, on <code>dev</code>)</td>
-</tr>
-<tr>
-<td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/777">ovos-core#777 (closed)</a></td>
-<td>OVOS-STOP-1 bus surface bridged to legacy topics (superseded by <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/802" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #802">#802</a>)</td>
-<td>n/a</td>
-<td>No</td>
-<td>2.6.0</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/786">ovos-core#786</a></td>
@@ -1907,7 +1886,7 @@ fleets no longer run legacy-namespace consumers.</p>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-utils/pull/411">ovos-utils#411</a></td>
-<td>Mirrors the <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/271" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #271">#271</a> bridge in <code>FakeBus</code>/<code>AsyncFakeBus</code> — <strong>shipped</strong> via the superseding <a href="https://github.com/OpenVoiceOS/ovos-utils/pull/417">#417</a> in 0.13.10a1; <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/411" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #411">#411</a> itself stays open as a duplicate</td>
+<td>Mirrors the <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/OpenVoiceOS/beta-technical-manual/issues/271" title="GitHub Issue: OpenVoiceOS/beta-technical-manual #271">#271</a> bridge in <code>FakeBus</code>/<code>AsyncFakeBus</code> — merged, with the superseding <a href="https://github.com/OpenVoiceOS/ovos-utils/pull/417">#417</a> in 0.13.10a1</td>
 <td>test-harness authors (ovoscope, skill test suites)</td>
 <td>No</td>
 <td>shipped (0.13.10a1)</td>
@@ -1918,13 +1897,6 @@ fleets no longer run legacy-namespace consumers.</p>
 <td>deployers with legacy-namespace consumers</td>
 <td>Yes</td>
 <td>3.0.0</td>
-</tr>
-<tr>
-<td><a href="https://github.com/OpenVoiceOS/ovos-core/pull/837">ovos-core#837</a></td>
-<td>Kill-switch: drops the last legacy-topic literals from <code>ovos-core</code></td>
-<td>deployers/plugin authors on legacy topic spellings</td>
-<td>Yes</td>
-<td>not yet released</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-workshop/pull/501">ovos-workshop#501</a></td>
@@ -1949,7 +1921,7 @@ fleets no longer run legacy-namespace consumers.</p>
 </tr>
 </tbody>
 </table>
-<p>The four kill-switch PRs above (<code>ovos-bus-client#272</code>, <code>ovos-core#837</code>,
+<p>The three kill-switch PRs above (<code>ovos-bus-client#272</code>,
 <code>ovos-workshop#501</code>, <code>ovos-utils#412</code>) must merge together. <code>ovos-bus-client#272</code>
 is explicit: "do not merge until then." <code>ovos-utils#412</code> would also be that
 package's first stable 1.0 release.</p>
@@ -1959,8 +1931,7 @@ read/write compatibility view over the three-key shape; ovos-workshop's location
 properties and <code>ovos-skill-weather</code> still read it.</p>
 <h2 id="other-changes-by-repository">Other changes by repository<a class="headerlink" href="#other-changes-by-repository" title="Permanent link">&para;</a></h2>
 <p>Entries here are PRs that change behavior but don't fit the three
-headline efforts above. Most are still open; rows marked <strong>merged</strong> have
-already landed on that repo's <code>dev</code>.</p>
+headline efforts above. Rows marked <strong>merged</strong> are on that repo's <code>dev</code>.</p>
 <h3 id="ovos-audio">ovos-audio<a class="headerlink" href="#ovos-audio" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1978,7 +1949,7 @@ already landed on that repo's <code>dev</code>.</p>
 <td>Adds duration to the <code>utterance_start</code> recognizer event</td>
 <td>skill authors, remote bus consumers, analytics tooling</td>
 <td>No</td>
-<td>not yet released</td>
+<td>merged, on <code>dev</code></td>
 </tr>
 </tbody>
 </table>
@@ -1999,28 +1970,14 @@ already landed on that repo's <code>dev</code>.</p>
 <td>Adds offline STT/TTS recommends for 49 languages</td>
 <td>deployers running <code>autoconfigure --offline</code>, langpack maintainers</td>
 <td>No</td>
-<td>not yet released</td>
+<td>merged, on <code>dev</code></td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-config/pull/274">#274</a></td>
 <td>Moves the <code>--gpu</code> STT tier onto <code>onnx-asr</code> with <code>use_cuda</code></td>
 <td>deployers running the <code>--gpu</code> autoconfigure tier</td>
 <td>No</td>
-<td>not yet released</td>
-</tr>
-<tr>
-<td><a href="https://github.com/OpenVoiceOS/ovos-config/pull/267">#267</a></td>
-<td>Fixes a wrong fasterwhisper model id in the GPU-tier recommend</td>
-<td>deployers on the GPU-tier <code>en-us</code> recommend</td>
-<td>No</td>
-<td>not yet released</td>
-</tr>
-<tr>
-<td><a href="https://github.com/OpenVoiceOS/ovos-config/pull/82">#82</a></td>
-<td>Turns on audio ducking by default</td>
-<td>end users/deployers of the legacy <code>ovos-audio</code> service</td>
-<td>Not breaking, but changes default audio behavior</td>
-<td>not yet released</td>
+<td>merged, on <code>dev</code></td>
 </tr>
 </tbody>
 </table>
@@ -2062,7 +2019,7 @@ already landed on that repo's <code>dev</code>.</p>
 <td>Adds opt-in upload of wake word/STT samples</td>
 <td>deployers who opt in to data-sharing</td>
 <td>No</td>
-<td>not yet released</td>
+<td>merged, on <code>dev</code></td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-dinkum-listener/pull/215">#215</a></td>

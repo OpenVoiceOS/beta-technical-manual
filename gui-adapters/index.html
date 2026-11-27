@@ -1666,9 +1666,9 @@
 <p>For developers: the <strong>unfinished</strong> design for how OVOS draws things on a screen, the planned replacement for the deprecated GUI. The idea: instead of OVOS talking to one kind of screen directly, it sends a generic "show this weather card" message. Small plugins called <strong>adapters</strong> translate that into whatever the actual display is (a touchscreen, a web browser, even a terminal). Several adapters can run at once, so the same content shows on multiple screens. It is work in progress, not the everyday path. See the <a href="../gui-protocol/">GUI Protocol</a> for the legacy screen and the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
 <div class="admonition warning">
-<p class="admonition-title">The adapter router and base class are not released</p>
+<p class="admonition-title">The adapter base class is not released, so the router does not run</p>
 <p>The adapter design is the <strong>in-progress replacement</strong> for the deprecated
-<a href="../gui-service/">legacy GUI</a>. None of it is usable on any install. Until it
+<a href="../gui-service/">legacy GUI</a>. None of it runs on any install. Until it
 ships, there is no generally usable OVOS GUI. <strong>Mark 2</strong> devices keep a screen via the
 legacy stack that the <a href="../ovos-installer/"><code>ovos-installer</code></a> sets up. The pieces are at
 different stages:</p>
@@ -1677,10 +1677,10 @@ different stages:</p>
 <li><code>ovos-legacy-mycroft-gui-plugin</code> and <code>ovos-gui-plugin-ag-ui</code> implement the
   adapter-side contract described below (an <code>AbstractGUIPlugin</code> subclass registered under
   <code>opm.gui_adapter</code>). But that base class does not exist in any released
-  <code>ovos-plugin-manager</code>, and <code>ovos-gui</code> does not contain the router that would dispatch
-  events to these adapters. These plugins are therefore built ahead of their own dependency.
-  The router described below (connection status, <code>handle_show_*</code>
-  dispatch) is not built either.</li>
+  <code>ovos-plugin-manager</code>.</li>
+<li><code>ovos-gui</code> 1.6.0a1 contains the router. It imports <code>OVOSGUIAdapterFactory</code> from
+  <code>ovos-plugin-manager</code>, and no release of that package contains it, so the service fails at
+  import (<a href="https://github.com/OpenVoiceOS/ovos-gui/issues/145">ovos-gui#145</a>).</li>
 <li>The formal contract is specified by
   <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1</a>, an
   <a href="../architecture-specs/">architecture spec</a>. The spec deliberately leaves the exact
@@ -1749,9 +1749,9 @@ id, default <code>"default"</code>). All default to no-ops, so partial implement
 </thead>
 <tbody>
 <tr>
-<td><code>handle_show_idle</code></td>
-<td><code>SYSTEM_idle</code></td>
-<td>none</td>
+<td><code>handle_show_input</code></td>
+<td><code>SYSTEM_input</code></td>
+<td><code>prompt</code>, <code>placeholder</code>, <code>secret</code></td>
 </tr>
 <tr>
 <td><code>handle_show_loading</code></td>
@@ -1875,9 +1875,9 @@ id, default <code>"default"</code>). All default to no-ops, so partial implement
 </tr>
 </tbody>
 </table>
-<p>The three <code>SYSTEM_ocp_*</code> rows are a <strong>legacy-adapter extension</strong>, not part of OVOS-GUI-1's
+<p><code>SYSTEM_idle</code> is not in OVOS-GUI-1: the spec forbids an application resting screen (§6.9), and the session's idle state reaches the adapter through <code>on_idle(session_id)</code>. The three <code>SYSTEM_ocp_*</code> rows are a <strong>legacy-adapter extension</strong>, not part of OVOS-GUI-1's
 closed vocabulary of 22 templates (see <a href="../gui-service/">GUI Service</a>): the legacy
-mycroft-gui adapter implements them, the ag-ui adapter implements only the spec's 22, and a
+mycroft-gui adapter implements them, the ag-ui adapter implements 22 templates (with <code>SYSTEM_idle</code> and without <code>SYSTEM_input</code>), and a
 spec-conformant adapter is not required to handle them.</p>
 <h3 id="lifecycle-hooks">Lifecycle hooks<a class="headerlink" href="#lifecycle-hooks" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span> <span class="nf">on_namespace_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skill_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1886,7 +1886,7 @@ spec-conformant adapter is not required to handle them.</p>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">def</span> <span class="nf">on_namespace_deactivated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skill_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Called when a namespace is removed from the display stack.&quot;&quot;&quot;</span>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">def</span> <span class="nf">on_idle</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">def</span> <span class="nf">on_idle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Called when the display returns to the idle/resting state.&quot;&quot;&quot;</span>
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="k">def</span> <span class="nf">on_session_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skill_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1896,8 +1896,10 @@ spec-conformant adapter is not required to handle them.</p>
 </span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Called for system status events (wakeword, utterance handled, etc.).&quot;&quot;&quot;</span>
 </span></code></pre></div>
 <h3 id="dispatch">Dispatch<a class="headerlink" href="#dispatch" title="Permanent link">&para;</a></h3>
-<p>The router (not built) is expected to map each <code>SYSTEM_*</code> template name to the matching
-<code>handle_show_*</code> method. The naming convention <code>handle_show_&lt;template suffix&gt;</code> is fixed
+<p>The router calls one hook per page. A <code>SYSTEM_*</code> first page goes to
+<code>dispatch_template(page, namespace, data, session_id)</code>, and any other first page goes to
+<code>on_legacy_page(namespace, page, data, session_id)</code>. The base class maps each template name in
+<code>dispatch_template</code> to the matching <code>handle_show_*</code> method. The naming convention <code>handle_show_&lt;template suffix&gt;</code> is fixed
 by the adapter plugins that implement this contract. An adapter overrides only the
 individual <code>handle_show_*</code> methods it cares about. Unimplemented ones default to no-ops.</p>
 <h3 id="connection-status">Connection status<a class="headerlink" href="#connection-status" title="Permanent link">&para;</a></h3>
@@ -1905,8 +1907,7 @@ individual <code>handle_show_*</code> methods it cares about. Unimplemented ones
 whether any display is connected. An adapter is expected to optionally provide an
 <code>any_client_connected() -&gt; bool</code> method, so a future router can fold it into that response. The
 legacy adapter ships a concrete module-level <code>any_client_connected()</code>
-(<code>ovos_legacy_mycroft_gui/websocket.py</code>) as a reference implementation. Since the base class and
-router are not built, treat the exact hook-up (duck-typing or otherwise) as illustrative:</p>
+(<code>ovos_legacy_mycroft_gui/websocket.py</code>) as a reference implementation. Since the base class is not released, treat the exact hook-up (duck-typing or otherwise) as illustrative:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span> <span class="nf">any_client_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_my_connected_clients</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
 </span></code></pre></div>
