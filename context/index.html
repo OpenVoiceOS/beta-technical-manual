@@ -1820,7 +1820,7 @@
 </tr>
 </tbody>
 </table>
-<p>The sections below cover the third (and the field that holds it). It is not <code>Message.context</code>, and a context entry is not a <code>Match.slot</code>. CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a <code>requires_context</code> key also names a slot, its value fills that slot if the utterance did not. This is exactly the "remember which person" mechanism below.</p>
+<p>The sections below cover the third (and the field that holds it). It is not <code>Message.context</code>, and a context entry is not a <code>Match.slot</code>. CONTEXT-1 §7's context-supplied-slot rule is the bridge, and it is independent of <code>requires_context</code>. A live, non-null entry whose key is the name of a slot or vocabulary of the intent is a candidate for that slot. A private <code>&lt;skill_id&gt;:k</code> entry has precedence over a shared <code>k</code> entry. <code>requires_context</code> and <code>excludes_context</code> only gate the match. This is exactly the "remember which person" mechanism below.</p>
 <p><strong>A capped store.</strong> CONTEXT-1 §2 says the orchestrator SHOULD enforce a maximum
 live-entry count per session, evicting the entry closest to natural expiry when a write
 would exceed it. <code>ovos-spec-tools</code> ships the eviction helper with
@@ -1968,7 +1968,10 @@ gates.</p>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Generic shared names are effectively global</p>
-<p>A shared-scope context entry is stored under its bare, un-namespaced key. A plain,
+<p>A shared-scope context entry is stored under its bare, un-namespaced key. The munged
+key that <code>set_context</code>, <code>@adds_context</code> and <code>.require()</code> use is also a bare key, because
+it has no <code>:</code>. CONTEXT-1 §3 reads it as a shared entry (see
+<a href="#using-context-to-enable-intents">Using context to enable Intents</a>). A plain,
 generic name (<code>prev_dialog</code>, <code>date</code>, <code>person</code>, <code>sleeping_state</code>) can satisfy any
 other legacy skill's <code>require()</code>/<code>requires_context</code> gate of that same name, because
 the legacy (pre-CONTEXT-1) Adapt lookup also probes the plain, un-munged keyword
@@ -2010,7 +2013,7 @@ context gate: present in the current context, or the intent does not match.</p>
 <h2 id="using-context-to-enable-intents">Using context to enable <strong>Intents</strong><a class="headerlink" href="#using-context-to-enable-intents" title="Permanent link">&para;</a></h2>
 <p>Context can create "bubbles" of available intent handlers, so certain <strong>intents</strong> can't trigger unless some previous stage in a conversation has occurred.</p>
 <blockquote>
-<p>This is the <em>idea</em> behind the <strong><code>requires_context</code></strong> gate of CONTEXT-1 §6, expressed through the legacy mechanism: <code>MilkContext</code> is a private flag (the <code>@adds_context</code> decorator stores it under the skill's own prefix), and an intent that <code>.require('MilkContext')</code> declares it as an Adapt keyword precondition, so the <code>yes</code>/<code>no</code> intents are invisible except in the narrow window between the question and the reply, with no skill-side state machine. Note that <code>.require()</code> keyword matching and the declarative <code>requires_context=</code> / <code>excludes_context=</code> intent kwargs are <strong>different code paths</strong>: the declarative gate looks entries up under the resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> shape, which <code>set_context</code> / <code>@adds_context</code> also write (see "Both spellings are written, with one decay policy" below). The complementary <code>excludes_context</code> gate (CONTEXT-1 §6.1) handles fire-once intents (for example, "greet only once per session").</p>
+<p>This is the <em>idea</em> behind the <strong><code>requires_context</code></strong> gate of CONTEXT-1 §6, expressed through the legacy mechanism: <code>@adds_context</code> stores <code>MilkContext</code> under the skill's munged key (the alphanumeric skill id followed directly by the keyword). That key has no <code>:</code>, so CONTEXT-1 §3 reads it as a <strong>shared</strong> entry, not a private one. Only the <code>&lt;skill_id&gt;:&lt;key&gt;</code> spelling is private. An intent that <code>.require('MilkContext')</code> declares it as an Adapt keyword precondition, so the <code>yes</code>/<code>no</code> intents are invisible except in the narrow window between the question and the reply, with no skill-side state machine. Note that <code>.require()</code> keyword matching and the declarative <code>requires_context=</code> / <code>excludes_context=</code> intent kwargs are <strong>different code paths</strong>: the declarative gate looks entries up under the resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> shape, which <code>set_context</code> / <code>@adds_context</code> also write (see the note "Two write paths into <code>intent_context</code>" below). The complementary <code>excludes_context</code> gate (CONTEXT-1 §6.1) handles fire-once intents (for example, "greet only once per session").</p>
 </blockquote>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>User: Hey Mycroft, bring me some Tea
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>OVOS: Of course, would you like Milk with that?
@@ -2099,21 +2102,24 @@ CONTEXT-1's declarative <code>requires_context</code> / <code>excludes_context</
 <code>set_cross_skill_context</code> and the deprecated <code>set_adapt_context</code> /
 <code>remove_adapt_context</code> shortcuts carry the same additive <code>key</code>.</p>
 <div class="admonition note">
-<p class="admonition-title">Two distinct mechanisms, not one dual-write</p>
-<p><code>set_context</code> writes <code>intent_context</code> directly into the session bound to the dispatch
-message (<code>SessionManager.get(message)</code>, CONTEXT-1 §5.3). Because that write lands on
-the live session object the handler is already running against, context set inside a
-handler is visible to the dispatch that immediately follows it, in the same handler
-invocation, with no race. It writes <strong>two</strong> entries there: the legacy munged
-<code>skillidkey</code> spelling and the resolved <code>&lt;skill_id&gt;:&lt;key&gt;</code> spelling the declarative gate
-looks up. One computed <code>expires_at</code> applies to both, so <code>set_context</code> entries decay
-normally (<code>context.timeout</code>, minutes, default <code>2</code>) and a re-set refreshes the expiry of
-both keys.</p>
-<p>Separately, the legacy <code>add_context</code> bus message is also emitted, for pre-spec
-orchestrators that only understand <code>Session.context</code>. This is a different consumer, not
-a second write path into <code>intent_context</code>. The two live in different session fields.
-The legacy emit logs a deprecation warning once per process; it is scheduled for
-removal at <code>ovos-workshop</code> 10.0.0.</p>
+<p class="admonition-title">Two write paths into <code>intent_context</code></p>
+<p>The skill-side write and the core-side write are two different paths.</p>
+<ul>
+<li><strong>Skill side.</strong> <code>set_context</code> (<code>_AdaptIntentApi.set_context</code> in <code>ovos_workshop</code>)
+  writes one entry directly into the session bound to the dispatch message
+  (<code>SessionManager.get(message)</code>, CONTEXT-1 §5.3): the private <code>&lt;skill_id&gt;:&lt;key&gt;</code>
+  spelling. Because that write lands on the live session object that the handler runs
+  against, the next dispatch sees it, with no race.</li>
+<li><strong>Core side.</strong> <code>set_context</code> also emits the legacy <code>add_context</code> bus message. When
+  <code>ovos-core</code> gets it, <code>handle_add_context</code> writes the munged bare key into
+  <code>intent_context</code>. When the message carries the original <code>key</code> and a <code>skill_id</code>, it
+  also writes the <code>&lt;skill_id&gt;:&lt;key&gt;</code> spelling. The munged key is a shared entry
+  (CONTEXT-1 §3).</li>
+</ul>
+<p>Both paths compute <code>expires_at</code> from <code>context.timeout</code> (minutes, default <code>2</code>), so the
+entries decay normally and a re-set refreshes the expiry. The legacy emit logs a
+deprecation warning once per process. It is scheduled for removal at <code>ovos-workshop</code>
+10.0.0.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Writing a key replaces it wholesale; there is no read-back</p>

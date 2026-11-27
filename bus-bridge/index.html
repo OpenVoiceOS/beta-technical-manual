@@ -1713,6 +1713,13 @@ on the identifier staying stable across the gap. How the bridge
 recognizes a returning participant as the same one is a deployment
 concern outside the specification; that the mapping survives the
 reconnect once recognized is not.</p>
+<p>When a bridge maps <code>session_id</code>, the mapping is <strong>total</strong>. The bridge
+maps every inbound <code>session_id</code>, including the reserved value
+<code>"default"</code> and the forms that resolve to it: an empty or omitted
+<code>session_id</code>, and an empty or absent <code>session</code>. The one exception is a
+participant that a layer-2 grant authorises to act on the default
+session. An unmapped <code>"default"</code> reaches the orchestrator's own
+default-session store, not a hub-side identifier.</p>
 <h2 id="two-ways-to-carry-a-session">Two ways to carry a session<a class="headerlink" href="#two-ways-to-carry-a-session" title="Permanent link">&para;</a></h2>
 <p>A bridge relates to the sessions it carries in one of two ways, chosen
 per participant:</p>
@@ -1760,9 +1767,16 @@ describe.</p>
 enforce policy simply by setting fields on the way in, no separate
 protocol needed. A layer sitting at the bridge boundary can deny a
 participant access to specific skills, intents, or pipeline stages by
-populating the relevant denylist fields; there is no matching allowlist,
+populating the relevant denylist fields: <code>blacklisted_skills</code>,
+<code>blacklisted_intents</code>, <code>blacklisted_pipelines</code>, and the six transformer
+fields <code>blacklisted_audio_transformers</code>,
+<code>blacklisted_utterance_transformers</code>, <code>blacklisted_metadata_transformers</code>,
+<code>blacklisted_intent_transformers</code>, <code>blacklisted_dialog_transformers</code> and
+<code>blacklisted_tts_transformers</code>. There is no matching allowlist,
 so policy can only narrow what a participant reaches, never grant it
-something the platform would not otherwise offer. A participant can
+something the platform would not otherwise offer. A gate that refuses a
+field that the client supplied MAY emit <code>ovos.policy.denied</code> to make the
+refusal observable. A participant can
 likewise express a pipeline or transformer preference, and policy always
 wins over preference where the two conflict.</p>
 <p>The one rule this depends on: a boundary component that injects policy
