@@ -100,10 +100,8 @@ The plugin:
 3. Dispatches `<skill_id>:stop` (legacy: `{skill_id}.stop`) to the first positive responder in candidate order. Pongs are re-sorted into that order before the winner is picked, so the answer that arrived first does not decide the round.
 
 
-4. If no skill is active, or the utterance matched `global_stop`, emits a **global stop**: `ovos.stop` (legacy: `mycroft.stop`). If skills are active but no responder answered positively, the high-confidence matcher returns no match, and the later stop tiers get the utterance.
+4. If no skill is active, or the utterance matched `global_stop`, emits a **global stop**: `ovos.stop` (legacy: `mycroft.stop`). If skills are active but no responder answered positively, the plugin falls back to recency and dispatches `<skill_id>:stop` to the most recent candidate (STOP-1 §4.1 step 5). It does not escalate to a global stop.
 
-!!! warning "Divergence from STOP-1: no positive responder"
-    STOP-1 §4.1 step 5 and §5.1 say: when no pong is positive and `active_handlers` is not empty, the plugin MUST fall back to the most recent `active_handlers` entry, and MUST NOT escalate to `global_stop`. `ovos-core` does not fall back to recency. In `stop_service.py`, `match_high` returns no match in this case, and `match_low` (which `match_medium` also calls) escalates to a global stop. [ovos-core#1043](https://github.com/OpenVoiceOS/ovos-core/issues/1043) tracks this defect.
 
 ### Medium-confidence (`stop_medium`)
 
@@ -125,7 +123,7 @@ flowchart TD
     W -->|no, medium or low tier| G
 ```
 
-*Diagram: an utterance that matches the stop vocabulary either targets the highest-ranked candidate skill that confirms it can stop, or falls back to a global stop broadcast when there is nothing to target. When no skill confirms, the high tier returns no match and the medium and low tiers emit a global stop, which differs from STOP-1 §4.1 step 5.*
+*Diagram: an utterance that matches the stop vocabulary either targets the highest-ranked candidate skill that confirms it can stop, or falls back to a global stop broadcast when there is nothing to target. When no skill confirms, the stop goes to the most recent candidate.*
 
 ---
 
@@ -202,7 +200,7 @@ The orchestrator bounds each match call of the plugin with `intents.ovos-stop-pi
 * **Localized**: matching is language-aware via per-language vocab
 
 
-* **Resilient**: falls back to a global `ovos.stop` broadcast when there is nothing to target. When no handler responds positively, the medium and low tiers also broadcast `ovos.stop`, which differs from STOP-1 §4.1 step 5
+* **Resilient**: falls back to a global `ovos.stop` broadcast when there is nothing to target. When no handler responds positively, it stops the most recent candidate
 
 ---
 
