@@ -1744,22 +1744,22 @@
 <div class="admonition note">
 <p class="admonition-title">Spec model vs. current code names</p>
 <p>OVOS-CONVERSE-1 frames converse as an <strong>ordinary pipeline plugin</strong>. It is not a special case in the orchestrator. During <code>match</code> it inspects two session fields and returns a <code>Match</code> on a <strong>reserved <code>intent_name</code></strong> (PIPELINE-1 §7.3), which the orchestrator then dispatches like any other intent: <code>&lt;skill_id&gt;:converse</code> for a converse claim, <code>&lt;skill_id&gt;:response</code> for delivery of a solicited reply.</p>
-<p>Converse depends on session state ("is a skill still active?", "is someone awaiting a reply?"), so it must be placed <strong>before</strong> the other pipeline plugins in <code>session.pipeline</code>. First-match-wins then lets converse intercept before a generic matcher sees the utterance. Two name mappings exist between spec and current code:</p>
+<p>Converse depends on session state ("is a skill still active?", "is someone awaiting a reply?"), so it must be placed <strong>before</strong> the other pipeline plugins in <code>session.pipeline</code>. First-match-wins then lets converse intercept before a generic matcher sees the utterance. The code uses the spec names. This table maps each spec name to the code that implements it:</p>
 <table>
 <thead>
 <tr>
-<th>OVOS-CONVERSE-1 (canonical)</th>
-<th>Current <code>ovos-core</code> code</th>
+<th>OVOS-CONVERSE-1</th>
+<th><code>ovos-core</code> code</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>session.converse_handlers</code> — the recency-ordered eligibility list the plugin polls</td>
-<td><code>Session.active_handlers</code> (the deprecated <code>Session.active_skills</code> view is a legacy projection of it)</td>
+<td><code>session.converse_handlers</code>, read by <code>get_active_skills</code> and pruned by <code>_prune_converse_handlers</code></td>
 </tr>
 <tr>
 <td><code>session.response_mode</code> <code>{skill_id, expires_at}</code> — the single-shot response window for <code>get_response</code></td>
-<td>per-session <code>UtteranceState.RESPONSE</code> lock</td>
+<td><code>session.response_mode</code>, set by <code>session.enable_response_mode</code> and cleared by <code>session.disable_response_mode</code></td>
 </tr>
 <tr>
 <td>poll round-trip <code>&lt;skill_id&gt;.converse.ping</code> / <code>.pong</code> (non-dispatch, dotted form)</td>
@@ -1771,7 +1771,7 @@
 </tr>
 </tbody>
 </table>
-<p>The mechanics below describe the current code. The spec names are the target. Note that the two lists are distinct in the spec: <code>converse_handlers</code> (converse eligibility) is drained independently of <code>active_handlers</code> (the stop cascade's recency record, PIPELINE-1 §7.1).</p>
+<p>The two lists are separate: <code>converse_handlers</code> (converse eligibility) is drained independently of <code>active_handlers</code> (the stop cascade's recency record, PIPELINE-1 §7.1).</p>
 </div>
 <hr />
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
@@ -1839,7 +1839,7 @@
 <p>A skill can activate or deactivate itself at any time via <code>self.activate()</code> / <code>self.deactivate()</code>.</p>
 </li>
 </ol>
-<p>Active skills are tracked in <code>Session.active_handlers</code> (<code>ovos_bus_client.session.Session</code>; the deprecated <code>Session.active_skills</code> view logs a warning on every access). The converse service reads and updates this list via <code>session.activate_skill()</code> / <code>session.deactivate_skill()</code> (back-compat shims over <code>add_active_handler</code> / <code>remove_active_handler</code>), which also forward <code>intent.service.skills.activated</code> / <code>intent.service.skills.deactivated</code> on the bus.</p>
+<p>Converse candidates are tracked in <code>session.converse_handlers</code>. Each intent dispatch adds the skill to this list (<code>sess.add_converse_handler</code>). <code>ConverseService</code> sends <code>intent.service.skills.activated</code> and <code>intent.service.skills.deactivated</code> on the bus. A deactivation removes the skill from both <code>converse_handlers</code> and <code>active_handlers</code>.</p>
 <hr />
 <h2 id="pipeline-stages">Pipeline Stages<a class="headerlink" href="#pipeline-stages" title="Permanent link">&para;</a></h2>
 <table>

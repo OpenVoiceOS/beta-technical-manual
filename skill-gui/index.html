@@ -1941,13 +1941,11 @@ according to its local capabilities.</p>
 <code>url</code> may be a local file path or an <code>http(s)</code> URL. Missing local files are
 logged and the call returns without showing anything.</p>
 <div class="admonition note">
-<p class="admonition-title">Local paths work, but the spec says not to rely on them</p>
-<p>The installed <code>show_image()</code> (<code>ovos_bus_client.apis.gui.GUIInterface</code>) does accept and
-resolve a local filesystem path, as described above.
-The OVOS-GUI-1 spec box above says image keys carry only
-an <code>http(s)</code> URL or <code>data:</code> URI, never a local path. That is the contract
-for interchangeable render backends. The code does not enforce it. Use a URL or
-<code>data:</code> URI in a skill to stay compatible with the spec.</p>
+<p class="admonition-title">A local path becomes a <code>data:</code> URI</p>
+<p><code>show_image()</code> and <code>show_animated_image()</code> (<code>ovos_bus_client.apis.gui.GUIInterface</code>)
+accept a local filesystem path. Before the message goes on the bus, they encode the file
+as a base64 <code>data:</code> URI. An <code>http(s)</code> URL or a <code>data:</code> URI passes through unchanged.
+So the bus carries only the forms that the OVOS-GUI-1 spec allows.</p>
 </div>
 <h4 id="animated-image">Animated Image<a class="headerlink" href="#animated-image" title="Permanent link">&para;</a></h4>
 <p>Display an animated image such as a gif (same arguments as <code>show_image</code>).</p>

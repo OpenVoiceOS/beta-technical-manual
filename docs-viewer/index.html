@@ -1557,10 +1557,10 @@
 <h1 id="ovos-docs-viewer-documentation-index"><code>ovos-docs-viewer</code> - Documentation Index<a class="headerlink" href="#ovos-docs-viewer-documentation-index" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">In a nutshell</p>
-<p><code>ovos-docs-viewer</code> lets you read the OVOS documentation inside your terminal, without a web browser. Run <code>ovos-docs-viewer technical</code> to open this manual. Use the arrow keys to browse pages and press <code>q</code> to quit. It downloads the docs the first time and reuses them after that, so later visits work offline. See the <a href="../glossary/">Glossary</a> for terms.</p>
+<p><code>ovos-docs-viewer</code> lets you read the OVOS documentation inside your terminal, without a web browser. Run <code>ovos-docs-viewer technical</code> to open this manual. Use the arrow keys to browse pages and press <code>q</code> to quit. It downloads the docs the first time and reuses them after that. Each launch fetches <code>live-status</code> again, so each launch needs network access. See the <a href="../glossary/">Glossary</a> for terms.</p>
 </div>
 <p><code>ovos-docs-viewer</code> is a terminal-based documentation browser for OpenVoiceOS. It downloads Markdown documentation from GitHub. It then renders the docs inside the terminal using a <a href="https://textual.textualize.io/">Textual</a> TUI with a file-tree sidebar and a Markdown viewer panel.</p>
-<p><strong>Minimal use:</strong> <code>ovos-docs-viewer technical</code> opens the technical manual in your terminal. Pass one of the documentation keys below as the single argument. The first run downloads and caches the docs. Later runs read from the cache. Use the arrow keys to walk the file tree, press Enter to open a file, and press <code>q</code> to quit. The tool is read-only. It needs network access only on first use, and every time for <code>live-status</code>.</p>
+<p><strong>Minimal use:</strong> <code>ovos-docs-viewer technical</code> opens the technical manual in your terminal. Pass one of the documentation keys below as the single argument. The first run downloads and caches the docs. Later runs read from the cache. Use the arrow keys to walk the file tree, press Enter to open a file, and press <code>q</code> to quit. The tool is read-only. Each launch needs network access, because each launch fetches <code>live-status</code> again, whatever key you open. When a download fails, the tool stops with an error.</p>
 <h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
 <ol>
 <li>
@@ -1587,7 +1587,7 @@ which loops over <strong>all</strong> sources. This includes the four zip archiv
 READMEs via <code>download_skills()</code>. It downloads each one that is not already cached.
 So <code>ovos-docs-viewer technical</code> on a clean machine populates the entire <code>ovos_docs/</code>
 cache, not just the <code>technical</code> tree. The first run is slow and needs network
-access to all sources. Later runs only re-fetch <code>live-status</code>.</p>
+access to all sources. Later runs fetch only <code>live-status</code>, and they still need network access for it.</p>
 </div>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ovos-docs-viewer
@@ -1665,12 +1665,13 @@ access to all sources. Later runs only re-fetch <code>live-status</code>.</p>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>├── technical/docs/             ← ovos-technical-manual markdown tree (from zip)
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>├── messages/docs/              ← message spec markdown tree (from zip)
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>├── hivemind/docs/              ← HiveMind documentation tree (from zip)
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>├── live-status/docs/live-status.md  ← single README, always refreshed
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>├── raspOVOS/docs/raspOVOS.md        ← single README
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>├── installer/docs/installer.md      ← single README
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>└── skills/docs/                ← one .md per skill (e.g. ovos-skill-alerts.md)
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>├── architecture/               ← architecture spec markdown tree (from zip, repo root)
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>├── live-status/docs/live-status.md  ← single README, always refreshed
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>├── raspOVOS/docs/raspOVOS.md        ← single README
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>├── installer/docs/installer.md      ← single README
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>└── skills/docs/                ← one .md per skill (e.g. ovos-skill-alerts.md)
 </span></code></pre></div>
-<p>Zip-archive sources (<code>technical</code>, <code>messages</code>, <code>hivemind</code>) keep their full <code>docs/</code> tree; <code>architecture</code> keeps its repo-root markdown tree directly under <code>&lt;key&gt;/</code>. Single-README sources (<code>live-status</code>, <code>raspOVOS</code>, <code>installer</code>) are written as <code>&lt;key&gt;/docs/&lt;key&gt;.md</code>. <code>$XDG_DATA_HOME</code> resolves via <code>ovos_utils.xdg_utils.xdg_data_home</code>, typically <code>~/.local/share</code>.</p>
+<p>The zip-archive sources <code>technical</code>, <code>messages</code> and <code>hivemind</code> keep their full <code>docs/</code> tree. The fourth zip source, <code>architecture</code>, keeps its repo-root markdown tree directly under <code>&lt;key&gt;/</code>. Single-README sources (<code>live-status</code>, <code>raspOVOS</code>, <code>installer</code>) are written as <code>&lt;key&gt;/docs/&lt;key&gt;.md</code>. <code>$XDG_DATA_HOME</code> resolves via <code>ovos_utils.xdg_utils.xdg_data_home</code>, typically <code>~/.local/share</code>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Seeing stale docs? Use <code>--refresh</code></p>
 <p>Cached sources are never re-fetched on their own (except <code>live-status</code>). If a page
