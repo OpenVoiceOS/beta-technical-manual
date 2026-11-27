@@ -79,8 +79,11 @@ flowchart TD
      }
     }
     ```
-    Leaving out a `"voice"` key like this is a valid, minimal config. The plugin picks the
-    first bundled model that supports the configured language. See the
+    Leaving out a `"voice"` key like this is a valid, minimal config. The plugin then
+    uses the `lang2voice` entry for the language, then the `PHOONNX_DEFAULT_VOICE_<LANG>`
+    environment variable, then the first voice-index entry for the language. It downloads
+    that voice on the first synthesis. If no voice matches the language, it raises
+    `ValueError`. See the
     [ovos-tts-plugin-phoonnx](tts-plugins-reference.md#ovos-tts-plugin-phoonnx) entry for how to pin a
     specific voice.
 
@@ -130,7 +133,7 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 | [ovos-tts-plugin-server](tts-plugins-reference.md#ovos-tts-server-plugin) | Companion plugin for an [OVOS TTS Server](https://github.com/OpenVoiceOS/ovos-tts-server). Install name is `ovos-tts-plugin-server`; the repo is `ovos-tts-server-plugin` (words swapped). **Uses public community servers unless you set `host`** | Apache-2.0 | Mature |
 | [ovos-tts-plugin-coqui](tts-plugins-reference.md#ovos-tts-plugin-coqui) | OVOS TTS plugin for [Coqui TTS](https://coqui-tts.readthedocs.io/en/latest) | Apache-2.0 | Stable |
 | [ovos-tts-plugin-pico](tts-plugins-reference.md#ovos-tts-plugin-pico) | SVOX Pico lightweight offline text-to-speech. | Apache-2.0 | Mature |
-| [ovos-tts-plugin-lux](https://github.com/OpenVoiceOS/ovos-tts-plugin-lux) | LuxTTS: zipvoice-based voice-cloning TTS (48 kHz, en-US). *(not on PyPI, no dedicated section, see repo)* | Apache-2.0 | Beta |
+| [ovos-tts-plugin-lux](https://github.com/OpenVoiceOS/ovos-tts-plugin-lux) | LuxTTS: zipvoice-based voice-cloning TTS (48 kHz, en-US). Warning: archived, deprecated. *(not on PyPI, no dedicated section, see repo)* | Apache-2.0 | Deprecated |
 | [ovos-tts-plugin-phoonnx](tts-plugins-reference.md#ovos-tts-plugin-phoonnx) | Built into [phoonnx](https://pypi.org/project/phoonnx), OVOS's own ONNX-based multilingual neural TTS engine. It is the default choice for fully offline synthesis, with automatic model fetching. | Apache-2.0 (code); models: see model card | Stable |
 | [ovos-tts-plugin-omnivoice](https://github.com/OpenVoiceOS/ovos-tts-plugin-omnivoice) | Wraps [OmniVoice](https://github.com/k2-fsa/OmniVoice), a massively multilingual (600+ languages) zero-shot TTS model with `auto`, voice-design (`instruct`), and voice-cloning (`ref_audio`) modes. *(alpha on PyPI, no dedicated section, see repo)* | Apache-2.0 (model: see model card) | Alpha |
 
@@ -168,11 +171,11 @@ toolkit (VITS, XTTS, YourTTS, Bark, and more) with top naturalness and voice clo
 but transformer/diffusion-class weights that prefer a GPU for real-time use. MPL-2.0
 code, per-model licenses vary.
 
-**Zero-shot cloning engines** (lux/ZipVoice, omnivoice). Clone any voice from a few
-seconds of reference audio. OmniVoice
+**Zero-shot cloning engines** (omnivoice). Clone any voice from a few seconds of
+reference audio. OmniVoice
 ([k2-fsa/OmniVoice](https://github.com/k2-fsa/OmniVoice), Apache-2.0) claims 600+
-languages and ~40x real-time. LuxTTS is ZipVoice-based, English-only, GPU-oriented. Both
-are early-stage: promising, not proven for production.
+languages and ~40x real-time. It is early-stage: promising, not proven for production.
+The ZipVoice-based LuxTTS plugin (English only, GPU-oriented) is archived.
 
 **Pre-neural engines** (mimic, espeak-ng, pico, marytts). [Mimic
 1](https://github.com/MycroftAI/mimic1) (Festival/Flite concatenative) and

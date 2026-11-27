@@ -94,7 +94,7 @@ Source: `ovos_dinkum_listener/voice_loop/voice_loop.py:36` (`ListeningState`) an
   follows a wake word. Same CPU cost as continuous, fewer false activations.
 - **Recording mode** is a niche listening *state*, not a mode: raw dictation capture to a
   file under the recordings directory, started over the bus with a `recording_name`,
-  stopped by the stop hotword or after `listener.recording_mode_max_silence_seconds` of
+  stopped by the stop hotword (`listener.stop_word`, default `"stop_recording"`) or after `listener.recording_mode_max_silence_seconds` of
   silence (default `30`). Alpha quality; used by recording skills rather than end users.
 
 ## Bus Events
@@ -172,7 +172,7 @@ STT/loop values):
 
 ## Configuration
 
-The speech service is configured in the `listener`, `hotwords`, and `stt` sections of `mycroft.conf`.
+The speech service is configured in the `listener`, `hotwords`, and `stt` sections of `mycroft.conf`. The audio-transformer chain reads its plugins from the `audio_transformers` section. The default configuration does not contain this section.
 
 ```json
 {
@@ -195,8 +195,22 @@ The speech service is configured in the `listener`, `hotwords`, and `stt` sectio
     Set `listener.record_wake_words: true` and the listener writes each detected
     wake word clip to disk (under its `wake_words` save directory) and adds the
     `filename` to the wake word message. This is handy for gathering training data or
-    debugging false triggers. The clips stay on the device. The listener itself does
-    not upload anything.
+    debugging false triggers. These clips stay on the device.
+
+!!! note "Uploading samples to an open data server"
+    The listener uploads audio samples only when the `open_data` section sets target
+    URLs. With no URL set, it uploads nothing. The default configuration sets no URL.
+
+    | Key | Type | Effect |
+    | :--- | :--- | :--- |
+    | `open_data.ww_urls` | string or list | Each detected wake word clip goes to each URL, with the wake word name, language and plugin. |
+    | `open_data.stt_urls` | string or list | Each STT audio clip goes to each URL, with the transcript, language and plugin. |
+    | `open_data.api_key` | string | Sent in the `X-API-Key` header. |
+    | `open_data.user_agent` | string | The `User-Agent` header. Default `"ovos-metrics"`. |
+
+    The listener sends each sample as a multipart POST in a background thread, with a
+    5 s timeout. The receiving server is
+    [ovos-opendata-server](https://github.com/OpenVoiceOS/ovos-opendata-server).
 
 ---
 **Read next:** [Audio Service](audio-service.md) · [Concepts Overview](concepts-overview.md)

@@ -76,10 +76,10 @@ class IceCreamSkill(OVOSSkill):
 - `validator`: A function `(str) -> bool` to check if the user response is valid
 
 
-- `on_fail`: A fallback string, or a `(str) -> str` callable, to say if validation fails
+- `on_fail`: A fallback string to say if validation fails, or a callable that receives the list of transcriptions and returns that string
 
 
-- `num_retries`: How many times to retry if the response isn't valid (default `-1`, retry until valid)
+- `num_retries`: How many consecutive silent answers stop the question (default `-1`, which means that silence never stops the question). An answer that fails validation causes a reprompt and sets the count to zero. A time limit of `(skills.get_response_timeout + 15)` seconds × (`num_retries + 1`, or `2` for `-1`) stops the question, and `get_response()` then returns `None`.
 
 `get_response()` returns the matched utterance as a `str`, or `None` if no valid response
 was captured. The first argument is the dialog to speak.

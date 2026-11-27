@@ -35,8 +35,13 @@ sibling out of the exact combination you are trying to validate.
 
 The harness is **not a package**. There is no `pip install .`.
 Its [`requirements.txt`](https://github.com/OpenVoiceOS/ovos-test-harness) is the
-**stack under test**: every line pins one repo to an exact git ref or version, so
-CI never re-resolves and never downgrades a component. Each test then:
+**stack under test**. Most lines install a repo from its `dev` branch (`@dev`). A
+few lines are floor pins (`>=`) on a published alpha. CI installs this list
+as one set, so the resolver cannot downgrade a component out of the
+combination. The `test/backcompat/` matrix installs the stack at two vintages
+at once, for example an old skill with a new core. Its cells and pruning rules
+are in [`docs/matrix-design.md`](https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/matrix-design.md).
+Each test then:
 
 - imports the spec vocabulary from [`ovos-spec-tools`](spec-tools-lib.md), so a topic name is *provably spec-defined* rather than a magic string.
 - drives and captures the live bus through [`ovoscope`](https://github.com/OpenVoiceOS/ovoscope) (see [Testing Skills](ovoscope-overview.md)).
@@ -44,10 +49,10 @@ CI never re-resolves and never downgrades a component. Each test then:
 
 ## Coverage
 
-Every spec document on the architecture `dev` branch has a conformance suite —
-the harness's own matrix counts 20 spec IDs with 20 suites (SESSION-1 and SESSION-2 share
-one suite; INTENT-4 has both an orchestrator suite and a per-plugin registration-compliance
-suite). The authoritative spec→suite traceability matrix lives in the repo's
+The harness tests a pinned revision of the architecture specs. The file
+`test/meta/architecture.sha` holds that revision. The architecture `dev` branch
+can hold draft specs that are not in the pinned revision. The spec-to-suite
+traceability matrix, with the specs that have no suite, is in the repo's
 [`docs/coverage.md`](https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/coverage.md).
 Documented conformance gaps are recorded as `xfail` entries and catalogued in
 [`docs/known-gaps.md`](https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/known-gaps.md).

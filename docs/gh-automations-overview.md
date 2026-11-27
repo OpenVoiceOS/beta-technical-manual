@@ -39,11 +39,11 @@ jobs:
 `secrets: inherit` passes your repo's secrets (e.g. `GITHUB_TOKEN`, and `PYPI_TOKEN`/`MATRIX_TOKEN` for the publish workflows) through to the called workflow. See [Workflow Reference](gh-automations-workflows.md) for every input.
 
 !!! info "`install_extras` accepts any spelling"
-    Every reusable workflow that takes `install_extras` accepts a bare extras name (`'test'`), a bracketed list (`'[dev,test]'`), a full install target (`'.[dev]'`), or raw pip arguments (`'-r requirements/test.txt'`), normalizing internally ([OpenVoiceOS/gh-automations#88](https://github.com/OpenVoiceOS/gh-automations/pull/88)). Use whichever spelling reads clearest; the per-workflow input tables below and on the linked reference pages may still show one particular spelling in their example, but any of the four forms works.
+    Every reusable workflow that takes `install_extras` accepts a bare extras name (`'test'`), a bracketed list (`'[dev,test]'`), a full install target (`'.[dev]'`), or raw pip arguments (`'-r requirements/test.txt'`), and normalizes it ([OpenVoiceOS/gh-automations#88](https://github.com/OpenVoiceOS/gh-automations/pull/88)). An example on the [Workflow Reference](gh-automations-workflows.md) pages can show one spelling, but all four forms work.
 
 ### Scripts checkout
 
-Several reusable workflows check this repo out again at runtime to reach `scripts/` (the PR-comment helper, version utilities, etc.), pinned to `ref: dev`. You do not write this yourself: it lives inside the reusable workflow.
+Several reusable workflows check this repo out again at runtime to reach `scripts/` (the PR-comment helper, version utilities, etc.). The ref comes from the `gh_automations_ref` input, which defaults to `dev`. Only `downstream-check.yml`, `publish-alpha.yml` and `publish-stable.yml` hard-code `ref: dev`. You do not write this step: it is inside the reusable workflow.
 
 ??? example "What the reusable workflow does internally"
 
@@ -52,7 +52,7 @@ Several reusable workflows check this repo out again at runtime to reach `script
     - uses: actions/checkout@v7
       with:
         repository: OpenVoiceOS/gh-automations
-        ref: dev
+        ref: ${{ inputs.gh_automations_ref }}
         path: _gh_automations/
 
     ```
@@ -150,9 +150,11 @@ Each table below names the PR-comment section a workflow posts. The bot prefixes
 
 | Workflow | Purpose |
 |---|---|
-| `build-tests.yml` | Build/install/test matrix across Python versions. Posts `Build Tests`. |
+| `build-tests.yml` | Build/install/test matrix across Python versions. Posts `Build Tests`. The `gh_token` secret authenticates git clones of private dependencies. Set `test_path_strict: true` to fail, not warn, when `test_path` does not cover the tests. |
+| `test.yml` | The CI of this repo: runs its own tests on pushes to `dev` and on pull requests. It is not a reusable workflow. |
 | `channel-compat.yml` | Run the test suite at the versions an OVOS distro release channel pins, to catch what is green on `dev` but broken on the fleet. Posts `Channel Compat`. |
-| `coverage.yml` | Run pytest with coverage. Post `Coverage`. Optionally deploy the HTML report to Pages (`deploy_pages: true`). |
+| `coverage.yml` | Run pytest with coverage. Post `Coverage`. Optionally deploy the HTML report to Pages (`deploy_pages: true`). The `timeout_minutes` input sets the job limit (default 45). |
+| `golden-utterances.yml` | Run a skill's golden-utterance corpus (`test/end2end/golden_utterances*.jsonl`) with `ovoscope golden`, one MiniCroft per locale. |
 | `ovoscope.yml` | Run [ovoscope](ovoscope-overview.md) end-to-end skill tests. Post `Skill Tests (ovoscope)`. |
 | `intent-case-tests.yml` | Run the file-based ovoscope intent-routing accuracy matrix (sharded by language). Post `Intent-Case Accuracy`. |
 | `tts-intelligibility.yml` | Synthesise speech, transcribe it back with reference STT, and score WER/CER. Post `TTS Intelligibility`. |
@@ -164,7 +166,9 @@ Each table below names the PR-comment section a workflow posts. The bot prefixes
 |---|---|
 | `license-check.yml` | Scan dependencies for copyleft/incompatible licenses (universal-donor policy). Post `License Check`. |
 | `pip-audit.yml` | Scan installed dependencies for CVEs, with optional SARIF upload. Post `Security (pip-audit)`. |
-| `lint.yml` | Run ruff and/or pre-commit. Post lint results. |
+| `lint.yml` | Run ruff and actionlint by default, and pre-commit when `pre_commit: true`. An actionlint finding fails the job (`actionlint_fail`, default `true`). Post `Lint`, or `Lint (<section_key>)` when `section_key` is set. |
+| `markdown-check.yml` | For a repo of Markdown content: run markdownlint-cli2 on every Markdown file and lychee on every link. Both jobs block. |
+| `redistribution-guard.yml` | Fail when a built artifact contains a library whose licence exception holds only if we do not redistribute it. |
 | `type-check.yml` | Run mypy. Post `Type Check` (informational unless `fail_on_errors: true`). |
 | `docs-check.yml` | Verify required docs files exist, with optional markdownlint. Post `Docs`. |
 | `repo-health.yml` | Check required files and the version block, and greet first-time contributors. Post `Repo Health`. |
@@ -175,6 +179,7 @@ Each table below names the PR-comment section a workflow posts. The bot prefixes
 |---|---|
 | `skill-check.yml` | Locale structure, language coverage, `skill.json` validity. Post `Skill`. |
 | `locale-check.yml` | Verify locale folders are correctly included in the package build. |
+| `locale-lint.yml` | Two jobs: `spec` runs `ovos-spec-lint` on the locale folders, and `policy` runs `scripts/locale_gate.py` against the base branch on pull requests. |
 | `spec-lint.yml` | Run `ovos-spec-lint` against a skill's locale folder (OVOS-INTENT-1 / OVOS-INTENT-2). Also invoked automatically from `skill-check.yml` (input `spec_lint`, default `true`), which is how it reaches every `ovos-skill-*` repo without per-repo caller changes; set `spec_lint: false` there to opt a repo out. |
 
 ### Notifications & dependency tracking
@@ -190,6 +195,8 @@ Each table below names the PR-comment section a workflow posts. The bot prefixes
 |---|---|
 | `python-support.yml` | `build-tests.yml` (multi-version build/install/test). |
 | `coverage-pages.yml` | `coverage.yml` with `deploy_pages: true`. |
+
+The `self-check-*.yml` files are internal checks of this repo. Other repos do not call them.
 
 Full input/output/job reference: [Workflow Reference](gh-automations-workflows.md)
 
@@ -243,7 +250,7 @@ VERSION_ALPHA = 4   # 0 = stable
 
 | Repo | Role |
 |---|---|
-| [ovos-releases](https://github.com/OpenVoiceOS/ovos-releases) | Holds `constraints-alpha/testing/stable.txt`, updated after stable releases. The channel-compatibility check and `downstream-check.yml` read these files. |
+| [OpenVoiceOS/OpenVoiceOS](https://github.com/OpenVoiceOS/OpenVoiceOS) | Holds `constraints-alpha/testing/stable.txt`, updated after stable releases. `downstream-check.yml` and `release-preview.yml` read these files. `channel-compat.yml` reads the `channel_url` input, which the caller must pass. |
 | [raspOVOS](https://github.com/OpenVoiceOS/raspOVOS) | Uses a `constraints-*.txt` URL as the `CONSTRAINTS` env var during image builds. |
 
 ---

@@ -339,18 +339,33 @@ the table doesn't cover.
 
 ```
 
-> If `"voice"` is omitted, the plugin picks the first bundled model that supports the configured language.
+> If `"voice"` is omitted, the plugin uses the `lang2voice` entry for the language, then the `PHOONNX_DEFAULT_VOICE_<LANG>` environment variable, then the first voice-index entry for the language. It downloads that voice on the first synthesis. If no voice matches the language, it raises `ValueError`.
 
 ### Per-language default voices
 
 A configured `voice` pins one voice regardless of request language. For multilingual serving,
 the `lang2voice` config map, e.g. `{"pt-br": "...", "gl": "..."}`, and
 `PHOONNX_DEFAULT_VOICE_<LANG>` env vars resolve the default voice per request language. Keys
-are BCP-47 tags, full tag tried before primary subtag, and resolution is table-major: the
+are BCP-47 tags. The lookup tries three tags in this order: the standard tag, the tag with
+its default region added (a bare `en` also matches an `en-GB` key), and the primary subtag.
+Resolution is table-major: the
 whole `lang2voice` table wins outright for any language it names before env vars are consulted
 at all. Spellings are normalized on both sides (`gl-ES`/`gl`, `pt-br`/`pt_BR` agree). An entry
 naming a nonexistent voice logs the mistake and falls back to the voice index's own default
 rather than refusing to serve the language.
+
+### Runtime and SSML options
+
+| Key | Effect | Default |
+|---|---|---|
+| `onnx_providers` (alias `providers`) | Ordered list of ONNX Runtime execution providers, for example `["ROCMExecutionProvider", "CPUExecutionProvider"]`. A string sets one provider. | unset: `PHOONNX_ONNX_PROVIDERS`, else auto-detection |
+| `onnx_threads` | Threads per graph operator in each ONNX session. `0` gives the ONNX Runtime default. | unset: `PHOONNX_ORT_THREADS`, else the ONNX Runtime default |
+| `stretch_pace` | For an engine that cannot change its pace, apply `length_scale` and the SSML rate with a time stretch. | `false` |
+
+The plugin accepts these SSML tags: `speak`, `break`, `prosody`, `emphasis`, `say-as`,
+`phoneme`, `lang`, `voice`, `p`, `s`, `sub`, `w`, `token`, `lookup`, `mark`, `audio`, `seq`,
+`par`, `media`, `desc`, `metadata`, `meta`, `lexicon`, `amazon:effect`, `amazon:auto-breaths`,
+`amazon:breath`, `amazon:domain`, `amazon:emotion` and `alexa:name`. See [SSML](ssml.md).
 
 ### Bounding the voice cache
 

@@ -8,7 +8,7 @@
 
 ### Volume
 
-**Installer default**
+**Installer default (not on the server profile)**
 
 Control the volume of OVOS with verbal commands.
 
@@ -17,7 +17,7 @@ Control the volume of OVOS with verbal commands.
 - unmute volume
 - volume low
 - mute audio
-- volume to high level
+- set the volume level to low
 - reset volume
 
 - volume to high
@@ -37,10 +37,10 @@ Network connection information.
 
 **Usage examples:**
 
-- What's your IP address?
-- What's your network address?
-- Tell me your network address
-- Tell me your IP address
+- What's my IP address?
+- What's my network address?
+- Tell me my network address
+- Tell me my IP address
 
 !!! note "\"What network are you connected to?\" asks something else"
     That phrasing answers with the WiFi network **name**, not the IP address — a separate
@@ -57,14 +57,14 @@ Runs an internet bandwidth test using speedtest.net.
 
 **Usage examples:**
 
-- run a speedtest
+- run a speed test
 
 ??? note "Install"
     [:material-github: OpenVoiceOS/ovos-skill-speedtest](https://github.com/OpenVoiceOS/ovos-skill-speedtest) · `pip install ovos-skill-speedtest` · Maturity: Stable
 
 ### Boot Finished
 
-**Installer default**
+**Installer default (not on the server profile)**
 
 Provides notifications when OpenVoiceOS has fully started and all core services are ready. It
 listens for the `mycroft.ready` bus event (emitted once every core service reports ready) and
@@ -82,7 +82,7 @@ finished.
 
 ### Dictation
 
-**Installer default**
+**Installer default (not on the server profile)**
 
 Continuously transcribes user speech to a text file while enabled.
 
@@ -96,7 +96,7 @@ Continuously transcribes user speech to a text file while enabled.
 
 ### Audio Recording
 
-**Installer default**
+**Installer default (not on the server profile)**
 
 Record and manage audio clips directly from your assistant.
 
