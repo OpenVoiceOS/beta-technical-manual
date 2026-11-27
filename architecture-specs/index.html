@@ -1828,7 +1828,7 @@ is direct:</p>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-2.md"><strong>OVOS-INTENT-2: Locale Resource Formats</strong></a></td>
-<td>The <code>locale/</code> folder layout and the plain-text resource file formats (<code>.intent</code>, <code>.dialog</code>, <code>.voc</code>, <code>.entity</code>, <code>.prompt</code>).</td>
+<td>The <code>locale/</code> folder layout and the plain-text resource file formats (<code>.intent</code>, <code>.dialog</code>, <code>.voc</code>, <code>.entity</code>, <code>.prompt</code>, <code>.blacklist</code>, <code>.required</code>).</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md"><strong>OVOS-INTENT-3: Intent Definition</strong></a></td>
@@ -1868,6 +1868,10 @@ is direct:</p>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/install-1.md"><strong>OVOS-INSTALL-1: Plugin Installation Bus Contract</strong></a></td>
 <td>How a client asks for a plugin to be installed, and how it names the environment the install must land in, since a plugin installed into the wrong container is never loaded.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/tools-1.md"><strong>OVOS-TOOLS-1: Agent Tools Bus Contract</strong></a></td>
+<td>How a component offers tools on the bus, and how an agent lists and calls them.</td>
 </tr>
 </tbody>
 </table>
@@ -1937,7 +1941,7 @@ is direct:</p>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md"><strong>OVOS-GUI-1: GUI Display Subsystem</strong></a></td>
-<td>The closed <code>SYSTEM_*</code> template vocabulary and the interchangeable render backends that draw it.</td>
+<td>The closed <code>SYSTEM_*</code> template vocabulary, the interchangeable render backends that draw it, the <code>gui.*</code> wire protocol, and the <code>ovos.notification.*</code> topics shown outside the templates.</td>
 </tr>
 </tbody>
 </table>

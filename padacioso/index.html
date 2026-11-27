@@ -1583,9 +1583,13 @@
 </span></code></pre></div>
 <p>Both <code>padacioso.IntentContainer.add_intent()</code>, called directly as above, and the OVOS
 pipeline's <code>.intent</code>-file path share the same <code>ovos-spec-tools</code> slot-name validator, which
-enforces the OVOS grammar (<code>{lowercase_with_underscores}</code>) — <code>simplematch</code>'s colon-typed
-slot syntax (<code>{number:int}</code>) is <strong>not</strong> supported by either path, and fails with
-<code>MalformedTemplate</code>.</p>
+enforces the OVOS grammar (<code>{lowercase_with_underscores}</code>). A slot name outside that grammar,
+such as <code>{Number}</code>, fails with <code>MalformedTemplate</code>. The colon-typed form <code>{number:int}</code> becomes
+the typed placeholder <code>{int}</code>, and the match binds the value under the name <code>int</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">container</span><span class="o">.</span><span class="n">add_intent</span><span class="p">(</span><span class="s1">&#39;timer&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;set timer {number:int}&#39;</span><span class="p">])</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">container</span><span class="o">.</span><span class="n">calc_intent</span><span class="p">(</span><span class="s1">&#39;set timer 5&#39;</span><span class="p">)</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># {&#39;entities&#39;: {&#39;int&#39;: &#39;5&#39;}, &#39;conf&#39;: 0.96, &#39;name&#39;: &#39;timer&#39;}</span>
+</span></code></pre></div>
 <p>The two paths differ only in how they handle that failure. Calling <code>add_intent()</code> directly
 propagates the exception — it crashes. The pipeline plugin catches it per sample instead:
 the malformed line is skipped with a <code>LOG.warning</code>, and registration only fails outright if
@@ -1617,6 +1621,7 @@ instead of relying on the sampler to cover it.</p>
 <li><code>set_context(intent_name, context_name, context_val=None)</code> / <code>require_context(intent_name, context_name)</code>: only consider the intent when the given context is active. <code>unset_context</code> / <code>unrequire_context</code> reverse them.</li>
 <li><code>exclude_context(intent_name, context_name)</code>: suppress the intent while a context is active (<code>unexclude_context</code> reverses it).</li>
 <li><code>exclude_keywords(intent_name, samples)</code>: drop the intent from matching when the query contains any of the given keywords.</li>
+<li><code>require_keywords(intent_name, samples)</code>: drop the intent from matching when the query contains none of the given keywords. The pipeline plugin fills it from the intent's <code>.required</code> file.</li>
 </ul>
 <p>These let a container activate or hide intents based on conversational state without rebuilding it.</p>
 <div class="admonition tip">
@@ -1646,7 +1651,7 @@ matching, use <a href="../palavreado/">Palavreado</a>. For the full neural versi
 </tbody>
 </table>
 <p>Configure it under <code>intents.ovos-padacioso-pipeline-plugin</code>:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;ovos-padacioso-pipeline-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;conf_high&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.95</span><span class="p">}}}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;ovos-padacioso-pipeline-plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;conf_high&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.95</span><span class="p">}}}</span>
 </span></code></pre></div>
 <table>
 <thead>

@@ -1876,6 +1876,26 @@
 <td>Sends a message to the OVOS Matrix channel.</td>
 <td><a href="../gh-automations-lint-docs/#notify-matrixyml">Lint and Docs Workflows</a></td>
 </tr>
+<tr>
+<td><code>golden-utterances.yml</code></td>
+<td>Runs a skill's golden-utterance corpus with <code>ovoscope golden</code>.</td>
+<td><a href="https://github.com/OpenVoiceOS/gh-automations/blob/dev/.github/workflows/golden-utterances.yml">Source</a></td>
+</tr>
+<tr>
+<td><code>locale-lint.yml</code></td>
+<td>Runs <code>ovos-spec-lint</code> on the locale folder in one job, and the OVOS locale checks in a second job.</td>
+<td><a href="https://github.com/OpenVoiceOS/gh-automations/blob/dev/.github/workflows/locale-lint.yml">Source</a></td>
+</tr>
+<tr>
+<td><code>markdown-check.yml</code></td>
+<td>Lints a Markdown-content repository (a spec set, a docs tree, a blog) with <code>markdownlint-cli2</code>.</td>
+<td><a href="https://github.com/OpenVoiceOS/gh-automations/blob/dev/.github/workflows/markdown-check.yml">Source</a></td>
+</tr>
+<tr>
+<td><code>redistribution-guard.yml</code></td>
+<td>Fails a build that redistributes a library whose licence exception holds only without redistribution.</td>
+<td><a href="https://github.com/OpenVoiceOS/gh-automations/blob/dev/.github/workflows/redistribution-guard.yml">Source</a></td>
+</tr>
 </tbody>
 </table>
 <p>The <a href="../gh-automations-pr-comment-scripts/#pr-checks-comment-pattern">PR Checks Comment Pattern</a> and <a href="../gh-automations-pr-comment-scripts/#scripts-reference">Scripts Reference</a> sections, describing the shared PR-comment mechanism and the Python scripts used across all of the above workflows, live on the PR Comment Pattern and Scripts page.</p>
