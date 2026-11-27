@@ -1792,13 +1792,9 @@ recording is in progress. Neither cancels speech on its own.</p>
 <p>Dispatches <code>&lt;skill_id&gt;:stop</code> (legacy: <code>{skill_id}.stop</code>) to the first positive responder in candidate order. Pongs are re-sorted into that order before the winner is picked, so the answer that arrived first does not decide the round.</p>
 </li>
 <li>
-<p>If no skill is active, or the utterance matched <code>global_stop</code>, emits a <strong>global stop</strong>: <code>ovos.stop</code> (legacy: <code>mycroft.stop</code>). If skills are active but no responder answered positively, the high-confidence matcher returns no match, and the later stop tiers get the utterance.</p>
+<p>If no skill is active, or the utterance matched <code>global_stop</code>, emits a <strong>global stop</strong>: <code>ovos.stop</code> (legacy: <code>mycroft.stop</code>). If skills are active but no responder answered positively, the plugin falls back to recency and dispatches <code>&lt;skill_id&gt;:stop</code> to the most recent candidate (STOP-1 §4.1 step 5). It does not escalate to a global stop.</p>
 </li>
 </ol>
-<div class="admonition warning">
-<p class="admonition-title">Divergence from STOP-1: no positive responder</p>
-<p>STOP-1 §4.1 step 5 and §5.1 say: when no pong is positive and <code>active_handlers</code> is not empty, the plugin MUST fall back to the most recent <code>active_handlers</code> entry, and MUST NOT escalate to <code>global_stop</code>. <code>ovos-core</code> does not fall back to recency. In <code>stop_service.py</code>, <code>match_high</code> returns no match in this case, and <code>match_low</code> (which <code>match_medium</code> also calls) escalates to a global stop. <a href="https://github.com/OpenVoiceOS/ovos-core/issues/1043">ovos-core#1043</a> tracks this defect.</p>
-</div>
 <h3 id="medium-confidence-stop_medium">Medium-confidence (<code>stop_medium</code>)<a class="headerlink" href="#medium-confidence-stop_medium" title="Permanent link">&para;</a></h3>
 <p>A fuzzy (<code>exact=False</code>) match of the same <code>stop</code> / <code>global_stop</code> vocab, for phrases that contain a stop command but are not exact. When it matches, it delegates to <code>match_low</code> to compute a confidence score.</p>
 <h3 id="low-confidence-stop_low">Low-confidence (<code>stop_low</code>)<a class="headerlink" href="#low-confidence-stop_low" title="Permanent link">&para;</a></h3>
@@ -1812,7 +1808,7 @@ recording is in progress. Neither cancels speech on its own.</p>
     W --&gt;|yes| D[Dispatch stop to\nfirst candidate responder]
     W --&gt;|no, high tier| N
     W --&gt;|no, medium or low tier| G</code></pre>
-<p><em>Diagram: an utterance that matches the stop vocabulary either targets the highest-ranked candidate skill that confirms it can stop, or falls back to a global stop broadcast when there is nothing to target. When no skill confirms, the high tier returns no match and the medium and low tiers emit a global stop, which differs from STOP-1 §4.1 step 5.</em></p>
+<p><em>Diagram: an utterance that matches the stop vocabulary either targets the highest-ranked candidate skill that confirms it can stop, or falls back to a global stop broadcast when there is nothing to target. When no skill confirms, the stop goes to the most recent candidate.</em></p>
 <hr />
 <h2 id="localization">Localization<a class="headerlink" href="#localization" title="Permanent link">&para;</a></h2>
 <p>The plugin supports stop commands in multiple languages using <code>.voc</code> files bundled in <code>ovos-core</code> under <code>ovos_core/intent_services/locale/&lt;lang&gt;/</code>:</p>
@@ -1906,7 +1902,7 @@ recording is in progress. Neither cancels speech on its own.</p>
 <p><strong>Localized</strong>: matching is language-aware via per-language vocab</p>
 </li>
 <li>
-<p><strong>Resilient</strong>: falls back to a global <code>ovos.stop</code> broadcast when there is nothing to target. When no handler responds positively, the medium and low tiers also broadcast <code>ovos.stop</code>, which differs from STOP-1 §4.1 step 5</p>
+<p><strong>Resilient</strong>: falls back to a global <code>ovos.stop</code> broadcast when there is nothing to target. When no handler responds positively, it stops the most recent candidate</p>
 </li>
 </ul>
 <hr />
