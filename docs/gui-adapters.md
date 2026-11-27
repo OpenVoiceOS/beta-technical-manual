@@ -3,9 +3,9 @@
 !!! abstract "In a nutshell"
     For developers: the **unfinished** design for how OVOS draws things on a screen, the planned replacement for the deprecated GUI. The idea: instead of OVOS talking to one kind of screen directly, it sends a generic "show this weather card" message. Small plugins called **adapters** translate that into whatever the actual display is (a touchscreen, a web browser, even a terminal). Several adapters can run at once, so the same content shows on multiple screens. It is work in progress, not the everyday path. See the [GUI Protocol](gui-protocol.md) for the legacy screen and the [Glossary](glossary.md) for terms.
 
-!!! warning "The adapter router and base class are not released"
+!!! warning "The adapter base class is not released, so the router does not run"
     The adapter design is the **in-progress replacement** for the deprecated
-    [legacy GUI](gui-service.md). None of it is usable on any install. Until it
+    [legacy GUI](gui-service.md). None of it runs on any install. Until it
     ships, there is no generally usable OVOS GUI. **Mark 2** devices keep a screen via the
     legacy stack that the [`ovos-installer`](ovos-installer.md) sets up. The pieces are at
     different stages:
@@ -14,10 +14,10 @@
     - `ovos-legacy-mycroft-gui-plugin` and `ovos-gui-plugin-ag-ui` implement the
       adapter-side contract described below (an `AbstractGUIPlugin` subclass registered under
       `opm.gui_adapter`). But that base class does not exist in any released
-      `ovos-plugin-manager`, and `ovos-gui` does not contain the router that would dispatch
-      events to these adapters. These plugins are therefore built ahead of their own dependency.
-      The router described below (connection status, `handle_show_*`
-      dispatch) is not built either.
+      `ovos-plugin-manager`.
+    - `ovos-gui` 1.6.0a1 contains the router. It imports `OVOSGUIAdapterFactory` from
+      `ovos-plugin-manager`, and no release of that package contains it, so the service fails at
+      import ([ovos-gui#145](https://github.com/OpenVoiceOS/ovos-gui/issues/145)).
     - The formal contract is specified by
       [OVOS-GUI-1](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md), an
       [architecture spec](architecture-specs.md). The spec deliberately leaves the exact
@@ -87,7 +87,7 @@ id, default `"default"`). All default to no-ops, so partial implementations are 
 
 | Method | Template | Key data keys |
 |---|---|---|
-| `handle_show_idle` | `SYSTEM_idle` | none |
+| `handle_show_input` | `SYSTEM_input` | `prompt`, `placeholder`, `secret` |
 | `handle_show_loading` | `SYSTEM_loading` | `label` |
 | `handle_show_status` | `SYSTEM_status` | `label`, `success` |
 | `handle_show_error` | `SYSTEM_error` | `label`, `detail` |
@@ -113,9 +113,9 @@ id, default `"default"`). All default to no-ops, so partial implementations are 
 | `handle_show_ocp_search` | `SYSTEM_ocp_search` | search-result fields |
 | `handle_show_ocp_playlist` | `SYSTEM_ocp_playlist` | playlist fields |
 
-The three `SYSTEM_ocp_*` rows are a **legacy-adapter extension**, not part of OVOS-GUI-1's
+`SYSTEM_idle` is not in OVOS-GUI-1: the spec forbids an application resting screen (§6.9), and the session's idle state reaches the adapter through `on_idle(session_id)`. The three `SYSTEM_ocp_*` rows are a **legacy-adapter extension**, not part of OVOS-GUI-1's
 closed vocabulary of 22 templates (see [GUI Service](gui-service.md)): the legacy
-mycroft-gui adapter implements them, the ag-ui adapter implements only the spec's 22, and a
+mycroft-gui adapter implements them, the ag-ui adapter implements 22 templates (with `SYSTEM_idle` and without `SYSTEM_input`), and a
 spec-conformant adapter is not required to handle them.
 
 ### Lifecycle hooks
@@ -127,7 +127,7 @@ def on_namespace_activated(self, skill_id: str, session_id: str = "default") -> 
 def on_namespace_deactivated(self, skill_id: str, session_id: str = "default") -> None:
     """Called when a namespace is removed from the display stack."""
 
-def on_idle(self) -> None:
+def on_idle(self, session_id: str) -> None:
     """Called when the display returns to the idle/resting state."""
 
 def on_session_update(self, skill_id: str, data: dict, session_id: str = "default") -> None:
@@ -139,8 +139,10 @@ def on_status_event(self, event_name: str, data: dict, session_id: str = "defaul
 
 ### Dispatch
 
-The router (not built) is expected to map each `SYSTEM_*` template name to the matching
-`handle_show_*` method. The naming convention `handle_show_<template suffix>` is fixed
+The router calls one hook per page. A `SYSTEM_*` first page goes to
+`dispatch_template(page, namespace, data, session_id)`, and any other first page goes to
+`on_legacy_page(namespace, page, data, session_id)`. The base class maps each template name in
+`dispatch_template` to the matching `handle_show_*` method. The naming convention `handle_show_<template suffix>` is fixed
 by the adapter plugins that implement this contract. An adapter overrides only the
 individual `handle_show_*` methods it cares about. Unimplemented ones default to no-ops.
 
@@ -150,8 +152,7 @@ The legacy [`gui.status.request`](gui-protocol.md) bus message exists and answer
 whether any display is connected. An adapter is expected to optionally provide an
 `any_client_connected() -> bool` method, so a future router can fold it into that response. The
 legacy adapter ships a concrete module-level `any_client_connected()`
-(`ovos_legacy_mycroft_gui/websocket.py`) as a reference implementation. Since the base class and
-router are not built, treat the exact hook-up (duck-typing or otherwise) as illustrative:
+(`ovos_legacy_mycroft_gui/websocket.py`) as a reference implementation. Since the base class is not released, treat the exact hook-up (duck-typing or otherwise) as illustrative:
 
 ```python
 def any_client_connected(self) -> bool:

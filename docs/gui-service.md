@@ -144,8 +144,9 @@ clock times out    → music player namespace at position 0
 music ends         → stack empty → idle view shown
 ```
 
-> **Note:** GUI does not track namespaces per [Session](session.md). All clients
-> share one global display stack.
+> **Note:** In `ovos-gui` 1.3.x, GUI does not track namespaces per [Session](session.md).
+> All clients share one global display stack. From 1.6.0a1, `ovos-gui` keeps one stack per
+> `session_id`.
 
 ---
 
@@ -191,28 +192,27 @@ The GUI WebSocket server is configured under `gui_websocket` in `mycroft.conf`:
 ---
 
 !!! warning "Alpha channel only"
-    The following describes a **plugin-based rendering rework** that is **unreleased**
-    and not present on any published package. It is specified by the
-    [OVOS-GUI-1](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md) spec
-    and implemented in `ovos-gui`, with adapters in
-    `ovos-legacy-mycroft-gui-plugin` and `pyhtmx-gui-client`.
-    Do not rely on any of this on a stable install. Tracked in
-    [ovos-plugin-manager#377](https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377),
-    [ovos-gui#112](https://github.com/OpenVoiceOS/ovos-gui/pull/112),
-    [ovos-gui#117](https://github.com/OpenVoiceOS/ovos-gui/pull/117), and
+    The following describes a **plugin-based rendering rework**. It is specified by the
+    [OVOS-GUI-1](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md) spec.
+    `ovos-gui` 1.6.0a1 contains the router, and the adapters are in
+    `ovos-legacy-mycroft-gui-plugin` and `ovos-gui-plugin-ag-ui`. The router fails at import,
+    because its adapter loader is in no `ovos-plugin-manager` release ([ovos-gui#145](https://github.com/OpenVoiceOS/ovos-gui/issues/145)).
+    Do not rely on any of this on a stable install. The open parts are
+    [ovos-plugin-manager#377](https://github.com/OpenVoiceOS/ovos-plugin-manager/pull/377) and
     [ovos-legacy-mycroft-gui-plugin#3](https://github.com/OpenVoiceOS/ovos-legacy-mycroft-gui-plugin/pull/3).
 
     **What changes.** Per OVOS-GUI-1, `ovos-gui` becomes a **pure state-and-dispatch hub**.
     It runs **no WebSocket server** and renders nothing. It loads every installed
     **GUI adapter plugin** (`opm.gui_adapter` entry-point group) via
-    `OVOSGUIAdapterFactory.create_all(bus, config)` and fans each display event out to all
+    `OVOSGUIAdapterFactory.create_all(bus, config)` (not in any `ovos-plugin-manager` release) and fans each display event out to all
     of them at once. This enables multi-modal output (Qt + browser + terminal at once). A
     headless device with zero adapters degrades to a no-op dispatch. It never crashes. The
     Qt WebSocket server moves into the `ovos-legacy-mycroft-gui-plugin` adapter.
 
     **Templates instead of QML page names.** Skills display one of a **closed vocabulary of
     22 `SYSTEM_*` templates** (`SYSTEM_weather`, `SYSTEM_text`, `SYSTEM_list`, and more) defined by
-    the spec. The router does not accept custom QML page names. The template-based
+    the spec. The router sends a custom QML page name to the adapter's `on_legacy_page` hook,
+    with a warning. The template-based
     `GUIInterface` moves into the standalone `ovos-gui-api-client` package (separate from the
     current `ovos_bus_client.apis.gui.GUIInterface`).
 
