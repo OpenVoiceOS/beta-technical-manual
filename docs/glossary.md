@@ -31,16 +31,25 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
 
 ## B
 
+**[Bus bridge](bus-bridge.md)**
+:   A participant on the internal messagebus that terminates an external channel and relays messages between the bus and remote participants. Specified by [OVOS-BRIDGE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/bridge-1.md).
+
 **Bus / [messagebus](bus-service.md)**
 :   The WebSocket-based communication backbone of OVOS. Every service talks by sending JSON [messages](bus-service.md) over it.
 
 ## C
 
-**[Common Play](ocp-pipeline.md) ([OCP](ocp-pipeline.md))**
-:   OpenVoiceOS Common Play: a framework and intent handler specialized in finding and playing media (music, video, podcasts). The per-session *virtual media player* it arbitrates is specified by [OVOS-OCP-1](https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md).
+**[Common Playback](ocp-pipeline.md) ([OCP](ocp-pipeline.md))**
+:   OpenVoiceOS Common Playback: a framework and intent handler specialized in finding and playing media (music, video, podcasts). The per-session *virtual media player* it arbitrates is specified by [OVOS-OCP-1](https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md).
+
+**[Common Query](common-query.md)**
+:   A pipeline plugin that sends a general-knowledge question to all skills that can answer it, then selects the best answer. Specified by [OVOS-COMMON-QUERY-1](https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md).
 
 **Constraints file**
 :   A version "filter" (a pip [constraints file](release-channels.md)) that pins which package versions a [release channel](release-channels.md) allows.
+
+**[Context](context.md)**
+:   Short-term conversational memory that a skill sets, so that a follow-up utterance can match an intent that requires it. Specified by [OVOS-CONTEXT-1](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md).
 
 **[Converse](converse-pipeline.md)**
 :   A mechanism that allows skills to intercept utterances during an active session (continuous conversation). Specified by [OVOS-CONVERSE-1](https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md).
@@ -90,7 +99,7 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
 :   The process of converting written text into phonetic representations for pronunciation. See [G2P plugins](g2p-plugins.md).
 
 **GUI Service**
-:   The component (`ovos-gui`) that manages visual displays and [QML](qt5-gui.md)/HTML interfaces. Warning: the current ("legacy") GUI is [deprecated](gui-service.md). There is no usable OVOS GUI. A replacement is in progress.
+:   The component (`ovos-gui`) that manages visual displays and [QML](qt5-gui.md)/HTML interfaces. Warning: the current ("legacy") GUI is [deprecated](gui-service.md). There is no usable OVOS GUI. [OVOS-GUI-1](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md) specifies the target display subsystem. [ovos-legacy-mycroft-gui-plugin](https://github.com/OpenVoiceOS/ovos-legacy-mycroft-gui-plugin) is the reference `opm.gui_adapter` implementation. The `ovos-gui` adapter changes that are not merged are in [Upcoming Changes](upcoming-changes.md).
 
 ## H
 
@@ -110,6 +119,9 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
 
 **Intent**
 :   The identified goal or request of a user's utterance (e.g., "WeatherIntent").
+
+**Intent engine**
+:   A classifier and slot extractor. It reads intent definitions and identifies the intent that an utterance triggers. A **pipeline plugin** can contain an intent engine. Intent definitions are specified by [OVOS-INTENT-3](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md), and their registration on the bus by [OVOS-INTENT-4](https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md).
 
 **Intent file (`.intent`)**
 :   A list of example sentences **a user might say** to trigger a [skill](skill-design-guidelines.md): a *template (example-based)* intent matched by [Padatious](padatious-pipeline.md).
@@ -176,7 +188,7 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
 :   An example-based intent parser that uses a small neural network to match utterances against sample sentences.
 
 **[Persona](personas.md)**
-:   A configurable AI personality (backed by an [agent engine](agent-plugins.md) / LLM) that answers open-ended questions.
+:   A configurable AI personality (backed by an [agent engine](agent-plugins.md) / LLM) that answers open-ended questions. Its pipeline plugin is specified by [OVOS-PERSONA-1](https://github.com/OpenVoiceOS/architecture/blob/dev/persona.md).
 
 **[PHAL](phal.md)**
 :   Platform & Hardware Abstraction Layer. A service that handles low-level hardware interactions (volume, buttons, etc.).
@@ -210,6 +222,9 @@ This glossary defines common terms, acronyms, and concepts used throughout the O
 :   A small set of intent names (`stop`, `converse`, `response`, `fallback`, `common_query`) that skills **must not** register, because the orchestrator dispatches them on `<skill_id>:<intent_name>` on behalf of a pipeline plugin (e.g. [Converse](converse-pipeline.md) emits `response`, **Stop** emits `stop`). Each is leased to its owning spec. [OVOS-PIPELINE-1 §7.3](https://github.com/OpenVoiceOS/architecture/blob/dev/pipeline-1.md).
 
 ## S
+
+**[Scheduled event](scheduler-service.md)**
+:   An event that a skill asks the scheduler to emit at a later time, once or on a repeat. Specified by [OVOS-SCHEDULER-1](https://github.com/OpenVoiceOS/architecture/blob/dev/scheduler-1.md).
 
 **Satellite**
 :   In [HiveMind](hivemind-agents.md), a lightweight device (e.g. a small Pi) that captures voice and forwards it to `hivemind-core`.
@@ -299,8 +314,8 @@ current name in new writing:
 | Old term | Current term |
 |---|---|
 | Solver | [Agent Engine](agent-plugins.md) |
-| Intent engine / intent parser | [Pipeline plugin](pipelines-overview.md) |
-| Hotword / wake word (as a standalone term) | [Wake word](wake-word-plugins.md). Note: this stays as written inside real identifiers, such as the `wakeword` config keys and the `recognizer_loop:wakeword` bus message. |
+| Intent parser | [Pipeline plugin](pipelines-overview.md) or **Intent engine** (see the I section), as the context shows |
+| Hotword / wake word (as a standalone term) | [Wake word](wake-word-plugins.md). Note: this stays as written inside real identifiers, such as the `hotwords` config key and the `recognizer_loop:wakeword` bus message. |
 
 ---
 

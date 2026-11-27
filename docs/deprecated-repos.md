@@ -15,7 +15,7 @@ The list covers **repo-level** deprecations (an entire repository retired). For
 canonical one while the plugin itself keeps working, see
 [Plugin Types Reference: Deprecated Types](plugin-types-reference.md#deprecated-types).
 
-There are roughly **85** archived repositories (the exact count drifts as more get archived). They are grouped by area below. Each row gives the reason and the current replacement where one exists.
+To list every archived repository, run `gh repo list OpenVoiceOS --archived --limit 400`. The repositories are grouped by area below. Each row gives the reason and the current replacement where one exists.
 
 
 ## Backend services (removed architecture) (5)
@@ -30,9 +30,9 @@ There are roughly **85** archived repositories (the exact count drifts as more g
 | [ovos-personal-backend](https://github.com/OpenVoiceOS/ovos-personal-backend) | personal backend - self-hosted backend to manage multiple OVOS devices | Removed: OVOS is backendless |
 | [ovos-stt-plugin-selene](https://github.com/OpenVoiceOS/ovos-stt-plugin-selene) | STT plugin to use selene backend services | Removed: OVOS is backendless |
 
-## Skills (renamed, or folded into pipelines/services) (11)
+## Skills (renamed, or folded into pipelines/services) (22)
 
-*Old Mycroft-era skills. Most were renamed `skill-ovos-*` → `ovos-skill-*` or folded into core pipelines.*
+*Archived skills. Most Mycroft-era skills were renamed `skill-ovos-*` → `ovos-skill-*` or folded into core pipelines. The media skills were replaced by the `ovos-media-provider-*` plugins.*
 
 | Repository | What it was | Replacement / status |
 |---|---|---|
@@ -47,8 +47,19 @@ There are roughly **85** archived repositories (the exact count drifts as more g
 | [skill-ovos-setup](https://github.com/OpenVoiceOS/skill-ovos-setup) | OpenVoiceOS Setup Skill - configure your device and optionally connect it to a backend server | Removed, OVOS is backendless. Onboarding is via ovos-installer |
 | [skill-ovos-stop](https://github.com/OpenVoiceOS/skill-ovos-stop) | stop whatever the assistant is doing | Stop pipeline (ovos-stop-pipeline-plugin) |
 | [skill-ovos-timer](https://github.com/OpenVoiceOS/skill-ovos-timer) | Timer Skill | [ovos-skill-alerts](https://github.com/OpenVoiceOS/ovos-skill-alerts) |
+| [ovos-skill-bandcamp](https://github.com/OpenVoiceOS/ovos-skill-bandcamp) | OCP media skill | MediaProvider plugin [ovos-media-provider-bandcamp](https://github.com/OpenVoiceOS/ovos-media-provider-bandcamp), configured under `intents.ovos-ocp-pipeline-plugin.media_providers` |
+| [ovos-skill-local-media](https://github.com/OpenVoiceOS/ovos-skill-local-media) | OCP media skill | MediaProvider plugin [ovos-media-provider-local](https://github.com/OpenVoiceOS/ovos-media-provider-local), configured under `intents.ovos-ocp-pipeline-plugin.media_providers` |
+| [ovos-skill-music-assistant](https://github.com/OpenVoiceOS/ovos-skill-music-assistant) | OCP media skill | MediaProvider plugin [ovos-media-provider-mass](https://github.com/OpenVoiceOS/ovos-media-provider-mass), configured under `intents.ovos-ocp-pipeline-plugin.media_providers` |
+| [ovos-skill-news](https://github.com/OpenVoiceOS/ovos-skill-news) | OCP media skill | MediaProvider plugin [ovos-media-provider-news](https://github.com/OpenVoiceOS/ovos-media-provider-news), configured under `intents.ovos-ocp-pipeline-plugin.media_providers` |
+| [ovos-skill-pyradios](https://github.com/OpenVoiceOS/ovos-skill-pyradios) | OCP media skill | MediaProvider plugin [ovos-media-provider-pyradios](https://github.com/OpenVoiceOS/ovos-media-provider-pyradios), configured under `intents.ovos-ocp-pipeline-plugin.media_providers` |
+| [ovos-skill-somafm](https://github.com/OpenVoiceOS/ovos-skill-somafm) | OCP media skill | MediaProvider plugin [ovos-media-provider-somafm](https://github.com/OpenVoiceOS/ovos-media-provider-somafm), configured under `intents.ovos-ocp-pipeline-plugin.media_providers` |
+| [ovos-skill-soundcloud](https://github.com/OpenVoiceOS/ovos-skill-soundcloud) | OCP media skill | MediaProvider plugin [ovos-media-provider-soundcloud](https://github.com/OpenVoiceOS/ovos-media-provider-soundcloud), configured under `intents.ovos-ocp-pipeline-plugin.media_providers` |
+| [ovos-skill-spotify](https://github.com/OpenVoiceOS/ovos-skill-spotify) | OCP media skill | MediaProvider plugin [ovos-media-provider-spotify](https://github.com/OpenVoiceOS/ovos-media-provider-spotify), configured under `intents.ovos-ocp-pipeline-plugin.media_providers` |
+| [ovos-skill-tunein](https://github.com/OpenVoiceOS/ovos-skill-tunein) | OCP media skill | MediaProvider plugin [ovos-media-provider-tunein](https://github.com/OpenVoiceOS/ovos-media-provider-tunein), configured under `intents.ovos-ocp-pipeline-plugin.media_providers` |
+| [ovos-skill-youtube](https://github.com/OpenVoiceOS/ovos-skill-youtube) | OCP media skill | MediaProvider plugin [ovos-media-provider-youtube](https://github.com/OpenVoiceOS/ovos-media-provider-youtube), configured under `intents.ovos-ocp-pipeline-plugin.media_providers` |
+| [ovos-skill-youtube-music](https://github.com/OpenVoiceOS/ovos-skill-youtube-music) | OCP media skill | MediaProvider plugin [ovos-media-provider-youtube-music](https://github.com/OpenVoiceOS/ovos-media-provider-youtube-music), configured under `intents.ovos-ocp-pipeline-plugin.media_providers` |
 
-## STT plugins (5)
+## STT plugins (9)
 
 *Superseded STT engines.*
 
@@ -59,8 +70,12 @@ There are roughly **85** archived repositories (the exact count drifts as more g
 | [ovos-stt-plugin-mms](https://github.com/OpenVoiceOS/ovos-stt-plugin-mms) | STT plugin for Meta's MMS (Massively Multilingual Speech) models | [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2) |
 | [ovos-stt-plugin-nos](https://github.com/OpenVoiceOS/ovos-stt-plugin-nos) | Galician STT plugin using Proxecto Nós models | [ovos-stt-plugin-wav2vec2](https://github.com/OpenVoiceOS/ovos-stt-plugin-wav2vec2) |
 | [ovos-stt-plugin-projectAINA-remote](https://github.com/OpenVoiceOS/ovos-stt-plugin-projectAINA-remote) | STT plugin calling a remote demo server hosted by Project AINA (Catalan speech models) | Remote demo server is gone, but it served a Catalan **Whisper** model: run that model locally with [ovos-stt-plugin-fasterwhisper](https://github.com/OpenVoiceOS/ovos-stt-plugin-fasterwhisper) or [ovos-stt-plugin-whisper](https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper) |
+| [ovos-stt-plugin-MyNorthAI](https://github.com/OpenVoiceOS/ovos-stt-plugin-MyNorthAI) | Whisper STT plugin that wraps ovos-stt-plugin-whisper | None named in the repository |
+| [ovos-stt-plugin-whisper-projectAINA](https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper-projectAINA) | Whisper STT plugin that wraps ovos-stt-plugin-whisper | None named in the repository |
+| [ovos-stt-plugin-whisper-turbo](https://github.com/OpenVoiceOS/ovos-stt-plugin-whisper-turbo) | Whisper STT plugin that wraps ovos-stt-plugin-whisper | None named in the repository |
+| [ovos-stt-plugin-xabier-zuazo](https://github.com/OpenVoiceOS/ovos-stt-plugin-xabier-zuazo) | Whisper STT plugin that wraps ovos-stt-plugin-whisper | None named in the repository |
 
-## TTS plugins (7)
+## TTS plugins (8)
 
 *Superseded TTS engines.*
 
@@ -73,6 +88,7 @@ There are roughly **85** archived repositories (the exact count drifts as more g
 | [ovos-tts-plugin-mimic3-server](https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic3-server) | Client plugin calling a remote Mimic3 TTS server | The Mimic3 server API is gone, but [phoonnx](https://github.com/TigreGotico/phoonnx) runs the Mimic3 voices directly |
 | [ovos-tts-plugin-nos](https://github.com/OpenVoiceOS/ovos-tts-plugin-nos) | Galician TTS | [phoonnx](https://github.com/TigreGotico/phoonnx): runs the Proxecto Nós Galician voices |
 | [ovos-tts-plugin-piper](https://github.com/OpenVoiceOS/ovos-tts-plugin-piper) | TTS plugin running Piper ONNX voices | [phoonnx](https://github.com/TigreGotico/phoonnx): runs Piper ONNX voices (incl. the `kusal` voice) |
+| [ovos-tts-plugin-lux](https://github.com/OpenVoiceOS/ovos-tts-plugin-lux) | TTS plugin for LuxTTS, a ZipVoice-based voice-cloning model | None named in the repository |
 
 ## Wake-word & VAD plugins (8)
 
@@ -83,10 +99,10 @@ There are roughly **85** archived repositories (the exact count drifts as more g
 | [ovos-vad-plugin-precise](https://github.com/OpenVoiceOS/ovos-vad-plugin-precise) | tflite GRU VAD detector | [ovos-vad-plugin-silero](https://github.com/OpenVoiceOS/ovos-vad-plugin-silero) |
 | [ovos-ww-plugin-nyumaya-legacy](https://github.com/OpenVoiceOS/ovos-ww-plugin-nyumaya-legacy) | wake-word plugin for mycroft-core | Removed: use [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) / openWakeWord |
 | [ovos-ww-plugin-precise](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise) | mycroft plugin for detecting wake word with precise | [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) |
-| [ovos-ww-plugin-precise-lite](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite) | TFLite Precise wake-word plugin | Archived, but still the shipped **fallback** (`fallback_ww`) wake-word engine in the bundled `mycroft.conf` (the primary is `ovos-ww-plugin-precise-onnx`): [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) is the maintained successor for new setups |
+| [ovos-ww-plugin-precise-lite](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite) | TFLite Precise wake-word plugin | [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx). The bundled `mycroft.conf` does not use precise-lite. Its `hey_mycroft` chain is `ovos-ww-plugin-precise-onnx`, then `ovos-ww-plugin-wakeforge` with the streaming wakehubert model, then `ovos-ww-plugin-wakeforge` with the wakehubert model, then `ovos-ww-plugin-vosk` |
 | [ovos-ww-plugin-snowboy](https://github.com/OpenVoiceOS/ovos-ww-plugin-snowboy) | snowboy plugin for mycroft | Removed: use [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) / openWakeWord |
 | [precise-lite](https://github.com/OpenVoiceOS/precise-lite) | A lightweight, simple-to-use, RNN wake-word listener | [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) |
-| [precise-lite-trainer](https://github.com/OpenVoiceOS/precise-lite-trainer) | train wake-word models | Archived: superseded by [WakeForge](https://github.com/TigreGotico/wakeforge) (prerelease) with [ovos-ww-plugin-wakeforge](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakeforge); [openWakeWord](https://github.com/dscripka/openWakeWord)/[microWakeWord](https://github.com/kahrendt/microWakeWord) also train new phrases |
+| [precise-lite-trainer](https://github.com/OpenVoiceOS/precise-lite-trainer) | train wake-word models | Archived: superseded by [WakeForge](https://github.com/TigreGotico/wakeforge) with [ovos-ww-plugin-wakeforge](https://github.com/OpenVoiceOS/ovos-ww-plugin-wakeforge); [openWakeWord](https://github.com/dscripka/openWakeWord)/[microWakeWord](https://github.com/kahrendt/microWakeWord) also train new phrases |
 | [precise_lite_runner](https://github.com/OpenVoiceOS/precise_lite_runner) | Standalone runner library for using Precise Lite wake-word models outside OVOS | [ovos-ww-plugin-precise-onnx](https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-onnx) |
 
 ## PHAL & GUI plugins (16)
@@ -112,7 +128,7 @@ There are roughly **85** archived repositories (the exact count drifts as more g
 | [ovos-media-plugin-qt5](https://github.com/OpenVoiceOS/ovos-media-plugin-qt5) | default GUI implementation for OCP framework | GUI rework (ovos-gui adapters) |
 | [ovos-shell](https://github.com/OpenVoiceOS/ovos-shell) | The Qt5 (mycroft-gui-qt5-embedding) shell application for EGLFS display platforms | GUI rework: [pyhtmx-gui-client](https://github.com/OpenVoiceOS/pyhtmx-gui-client) |
 
-## Core, libraries & tooling (11)
+## Core, libraries & tooling (18)
 
 *Old metapackages/utilities, merged elsewhere or retired.*
 
@@ -129,8 +145,15 @@ There are roughly **85** archived repositories (the exact count drifts as more g
 | [mycroft-legacy](https://github.com/OpenVoiceOS/mycroft-legacy) | Restored select deprecated mycroft-core functionality for installs that still depended on it | Archived, no replacement |
 | [scripts](https://github.com/OpenVoiceOS/scripts) | Grab-bag of small helper scripts for OVOS maintenance tasks | Archived; log tooling lives in ovos-utils (`ovos-logs`) |
 | [zzz-old-ovos-utils](https://github.com/OpenVoiceOS/zzz-old-ovos-utils) | collection of simple utilities for use across the mycroft ecosystem | [ovos-utils](https://github.com/OpenVoiceOS/ovos-utils) |
+| [ovos-solver-personal-llm](https://github.com/OpenVoiceOS/ovos-solver-personal-llm) | Solver that stores user facts and answers questions about them with an LLM | None named in the repository |
+| [ovos-solver-plugin-llamacpp](https://github.com/OpenVoiceOS/ovos-solver-plugin-llamacpp) | Solver that runs LLaMA models through llamacpp-python | None named in the repository |
+| [ovos-rag-solver](https://github.com/OpenVoiceOS/ovos-rag-solver) | Retrieval-augmented generation solver | None named in the repository |
+| [ovos-gguf-embeddings-plugin](https://github.com/OpenVoiceOS/ovos-gguf-embeddings-plugin) | GGUF embeddings plugin | [ovos-gguf-plugin](https://github.com/OpenVoiceOS/ovos-gguf-plugin), which keeps the plugin name `ovos-gguf-embeddings-plugin` |
+| [ovos-gguf-translate-plugin](https://github.com/OpenVoiceOS/ovos-gguf-translate-plugin) | GGUF translation plugin | [ovos-gguf-plugin](https://github.com/OpenVoiceOS/ovos-gguf-plugin) (translate wrapper) |
+| [ovos-messagebus-cpp](https://github.com/OpenVoiceOS/ovos-messagebus-cpp) | Alternative messagebus service (WebSocket server) in C++ | None named in the repository. [ovos-messagebus](https://github.com/OpenVoiceOS/ovos-messagebus) is the maintained bus service |
+| [ZZZZ_lingua_plus](https://github.com/OpenVoiceOS/ZZZZ_lingua_plus) | Copy of the Lingua Franca text parsing and formatting library | See ovos-lingua-franca above |
 
-## Datasets, lists & images (8)
+## Datasets, lists & images (9)
 
 *Reference/data repos kept for history.*
 
@@ -144,8 +167,9 @@ There are roughly **85** archived repositories (the exact count drifts as more g
 | [ovos-gitlocalize-intent-dataset](https://github.com/OpenVoiceOS/ovos-gitlocalize-intent-dataset) | Exported dataset of intent utterances collected via GitLocalize translation | [ovos-localize](https://github.com/OpenVoiceOS/ovos-localize) |
 | [ovos-ww-auto-synth-dataset](https://github.com/OpenVoiceOS/ovos-ww-auto-synth-dataset) | Pipeline that auto-synthesized wake-word training audio from submitted configs | [ovos-ww-community-dataset](https://github.com/OpenVoiceOS/ovos-ww-community-dataset) |
 | [raspovos-manual](https://github.com/OpenVoiceOS/raspovos-manual) | User manual for the raspOVOS image | raspOVOS README / ovos-installer |
+| [precise-lite-models](https://github.com/OpenVoiceOS/precise-lite-models) | Free models for precise-lite | Archived, but the bundled `mycroft.conf` still downloads its `hey_mycroft.onnx` model from this repository for `ovos-ww-plugin-precise-onnx` |
 
-## Test, template & internal repos (14)
+## Test, template & internal repos (17)
 
 *Scaffolding/test/dummy repos, not user-facing.*
 
@@ -165,6 +189,9 @@ There are roughly **85** archived repositories (the exact count drifts as more g
 | [template-package-repo](https://github.com/OpenVoiceOS/template-package-repo) | Starter template repo for scaffolding a new plugin package | Removed: use [gh-automations](https://github.com/OpenVoiceOS/gh-automations) shared workflows |
 | [tskill-ocp-cps](https://github.com/OpenVoiceOS/tskill-ocp-cps) | Internal test skill exercising the OCP common-play-service contract | Removed: internal test skill |
 | [tskill-osm_parsing](https://github.com/OpenVoiceOS/tskill-osm_parsing) | Repository to test OSM parser testing | Removed: internal test skill |
+| [ovos-intent-benchmark](https://github.com/OpenVoiceOS/ovos-intent-benchmark) | Paradigm-neutral benchmark spec for OVOS intent engines | None named in the repository |
+| [ovos-site](https://github.com/OpenVoiceOS/ovos-site) | The OVOS Foundation web site | None named in the repository |
+| [hugo-site](https://github.com/OpenVoiceOS/hugo-site) | WordPress-to-Hugo export of the web site, kept for its assets | None named in the repository |
 
 ---
 **Read next:** [License](license.md)

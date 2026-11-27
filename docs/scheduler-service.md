@@ -114,13 +114,16 @@ name.
 A request that carries no `skill_id` in its context is refused outright
 (`invalid_record`), before the scheduler even looks at the id it named. A
 request naming an event outside its own `<skill_id>.` namespace is refused
-the same way (`bad_event`). Cancelling, reading, or listing a schedule that
-belongs to a different `skill_id` is refused as `skill_id_mismatch`; that
-answer is distinct from asking about an id that genuinely does not exist
-anywhere, which still answers not-found. One allowlisted administrative
-`skill_id` may list and cancel any component's schedules; that grant does
-not extend to scheduling a new one or reading one back on another
-component's behalf.
+the same way (`bad_event`). Cancelling or reading a schedule that
+belongs to a different `skill_id` is refused as `skill_id_mismatch`. An id
+that does not exist for any owner is not an error: a cancel answers
+`ok: true` with `existed: false`, and a get answers `ok: true` with
+`existed: false` and `record` and `state` set to `null`. A list never
+names one schedule, so it is never refused as a mismatch: it returns only
+the caller's own schedules. An administrative `skill_id` that the
+deployment grants `*` (in `ovos-bus-client`, the `scheduler.admins` list)
+may list and cancel the schedules of every component. That grant does
+not let it create a schedule or read one back for another component.
 
 A schedule outlives the process that created it by default. A component
 that stops and does not want its pending schedules to fire in its absence

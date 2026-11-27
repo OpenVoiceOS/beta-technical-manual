@@ -129,16 +129,19 @@ The (potentially modified) utterance is now evaluated against the **Intent Pipel
 
 (Other matchers such as [Model2Vec](m2v-pipeline.md) and, if installed, [Common Query](cq-pipeline.md) for general-knowledge questions, slot into this order too — see [Pipelines](pipelines-overview.md) for the full default and how to customize it.)
 
-Each `match` call is invoked directly inside a `try/except`. If a matcher **raises**, the orchestrator logs it and moves on to the next matcher as a no-match. A matcher that merely *hangs* (never returns, never raises) is a different story: keep matchers fast.
+Each `match` call runs on a worker thread, and the orchestrator waits for it for a limited time (PIPELINE-1 §4.4). If a matcher **raises**, the orchestrator logs the error and continues to the next matcher as a no-match. If a matcher does not return within its bound, the orchestrator also counts the call as a no-match and the next stage runs. The orchestrator cannot stop a call that is running: the call keeps its worker until it returns.
+
+The bound is `intents.<pipe_id>.match_timeout`, and `intents.match_timeout` (default 10 s, the value that PIPELINE-1 §4.4 recommends) applies to each plugin that has no own setting. The `pipe_id` is the plugin id without its `-high`, `-medium` or `-low` suffix, so all tiers of one plugin share one setting. Each plugin has its own pool of worker threads, so a plugin that hangs fills only its own pool. When all workers of a plugin are held by calls past their bound, that plugin declines new calls at once. When a call from an earlier utterance is still running for the same session and the same pipeline entry, the orchestrator skips that entry for this utterance and does not cancel the earlier call. See [Core](core.md) for the configuration table.
 
 !!! warning "Operational limits"
     | Limit | Detail |
     |---|---|
     | Default pipeline order | See [Pipelines Overview](pipelines-overview.md) for the full default and how to customize it |
-    | Per-match timeout | **None.** A hung matcher blocks the pipeline until it returns |
+    | Per-match timeout | `intents.<pipe_id>.match_timeout`, else `intents.match_timeout` (default 10 s). A call past the bound counts as a no-match |
+    | Match workers | `intents.<pipe_id>.match_workers`, else `intents.match_workers` (default 4) per plugin. When all are held, the plugin declines new calls |
     | Handler timeout | 5 minutes by default (`intents.handler_timeout`). Bounds the *skill handler* invoked after a match, not the match calls themselves |
-    | `websocket.shared_connection: true` (default) | `ovos-core` runs on a single shared bus connection, and that same thread services the bus. A hung matcher stalls the whole service |
-    | Self-blocking `match()` calls | A matcher that does its own bus round-trip inside `match()` (e.g. a stop plugin gathering `stop.pong` replies) waits on the same thread that would deliver the replies. Such reply-collection waits (e.g. the stop pipeline's ~0.5 s pong wait) usually expire without receiving any replies, because the thread that would deliver them is the one doing the waiting. Only `websocket.shared_connection: false` gives skills their own connections and threads, and even then the orchestrator and pipeline plugins stay on the one shared bus |
+    | `websocket.shared_connection: true` (default) | `ovos-core` runs on a single shared bus connection. A slow matcher delays the utterance by up to its bound, and the bus thread waits during that time |
+    | Self-blocking `match()` calls | `match()` runs on a worker thread, but the thread that handles the utterance waits for its result. A matcher that does its own bus round-trip inside `match()` (e.g. a stop plugin gathering `stop.pong` replies) can need that waiting thread to deliver the replies. Such reply-collection waits (e.g. the stop pipeline's ~0.5 s pong wait) then usually expire without any replies. Only `websocket.shared_connection: false` gives skills their own connections and threads, and even then the orchestrator and pipeline plugins stay on the one shared bus |
 
 ---
 

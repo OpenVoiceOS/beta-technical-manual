@@ -20,7 +20,7 @@ Because stopping is a **fundamental feature of a voice assistant**, it is implem
 !!! note "Spec model and topic names"
     STOP-1 distinguishes two outcomes, both via reserved `intent_name`s. A generic **stop** cascades to the handler with the strongest claim on the session: the plugin builds its candidate list from `session.response_mode` and `session.active_handlers` (the recency record, PIPELINE-1 §7.1), pings them with `ovos.stop.ping`, collects `ovos.stop.pong` (`can_handle`) within a recommended 0.5s ceiling, and returns a `Match` on the reserved `stop` name targeting the first positive responder in candidate order, dispatched on `<skill_id>:stop`. A handler that does not answer within the timeout counts as `can_handle: false`.
 
-    `global_stop` covers the three cases where there is nothing to target (STOP-1 §5.1): explicit "stop everything" vocabulary, a generic stop with `active_handlers` empty (or containing only the stop plugin itself), and a ping round that produced **no positive responder** (§4.1 step 5). Its `Match` clears `active_handlers`, `converse_handlers` and `response_mode` atomically, and its handler broadcasts `ovos.stop`, which every active component subscribes to.
+    `global_stop` covers two cases (STOP-1 §5.1): explicit "stop everything" vocabulary, and a generic stop with `active_handlers` empty (or containing only the stop plugin itself). When a ping round produces **no positive responder** and `active_handlers` is not empty, STOP-1 §4.1 step 5 says that the plugin MUST fall back to recency and select the most recent `active_handlers` entry, and MUST NOT escalate to `global_stop`. Its `Match` clears `active_handlers`, `converse_handlers` and `response_mode` atomically, and its handler broadcasts `ovos.stop`, which every active component subscribes to.
 
     | Spec topic (STOP-1 §8) | Legacy name |
     |---|---|
@@ -100,7 +100,10 @@ The plugin:
 3. Dispatches `<skill_id>:stop` (legacy: `{skill_id}.stop`) to the first positive responder in candidate order. Pongs are re-sorted into that order before the winner is picked, so the answer that arrived first does not decide the round.
 
 
-4. If no skill is active, no responder answered positively, or the utterance matched `global_stop`, emits a **global stop**: `ovos.stop` (legacy: `mycroft.stop`).
+4. If no skill is active, or the utterance matched `global_stop`, emits a **global stop**: `ovos.stop` (legacy: `mycroft.stop`). If skills are active but no responder answered positively, the high-confidence matcher returns no match, and the later stop tiers get the utterance.
+
+!!! warning "Divergence from STOP-1: no positive responder"
+    STOP-1 §4.1 step 5 and §5.1 say: when no pong is positive and `active_handlers` is not empty, the plugin MUST fall back to the most recent `active_handlers` entry, and MUST NOT escalate to `global_stop`. `ovos-core` does not fall back to recency. In `stop_service.py`, `match_high` returns no match in this case, and `match_low` (which `match_medium` also calls) escalates to a global stop. [ovos-core#1043](https://github.com/OpenVoiceOS/ovos-core/issues/1043) tracks this defect.
 
 ### Medium-confidence (`stop_medium`)
 
@@ -118,10 +121,11 @@ flowchart TD
     V -->|yes, skills active| P[Ping active skills\n{skill_id}.stop.ping]
     P --> W{Any skill replies\ncan_handle?}
     W -->|yes| D[Dispatch stop to\nfirst candidate responder]
-    W -->|no, timeout| G
+    W -->|no, high tier| N
+    W -->|no, medium or low tier| G
 ```
 
-*Diagram: an utterance that matches the stop vocabulary either targets the highest-ranked candidate skill that confirms it can stop, or falls back to a global stop broadcast when there is nothing to target or no skill responds in time.*
+*Diagram: an utterance that matches the stop vocabulary either targets the highest-ranked candidate skill that confirms it can stop, or falls back to a global stop broadcast when there is nothing to target. When no skill confirms, the high tier returns no match and the medium and low tiers emit a global stop, which differs from STOP-1 §4.1 step 5.*
 
 ---
 
@@ -185,6 +189,8 @@ The service reads its config from `mycroft.conf` under `skills.stop`. The only k
 }
 ```
 
+The orchestrator bounds each match call of the plugin with `intents.ovos-stop-pipeline-plugin.match_timeout` (else `intents.match_timeout`, default 10 s; see [Core](core.md)). PIPELINE-1 §4.4 says that a deployment MUST set a plugin's match bound at or above any collection wait that the plugin runs internally. For this plugin, that wait is the 0.5 s pong window of STOP-1 §4.1 step 2, so a bound below 0.5 s stops each stop round before the pongs arrive.
+
 ## Design Philosophy
 
 * **Low latency**: skills are pinged with a 0.5s wait, so stop resolves quickly
@@ -196,7 +202,7 @@ The service reads its config from `mycroft.conf` under `skills.stop`. The only k
 * **Localized**: matching is language-aware via per-language vocab
 
 
-* **Resilient**: falls back to a global `ovos.stop` broadcast if no handler responds positively
+* **Resilient**: falls back to a global `ovos.stop` broadcast when there is nothing to target. When no handler responds positively, the medium and low tiers also broadcast `ovos.stop`, which differs from STOP-1 §4.1 step 5
 
 ---
 
