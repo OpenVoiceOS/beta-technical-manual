@@ -18,16 +18,16 @@ The **Converse Pipeline** in **OpenVoiceOS (OVOS)** manages active conversationa
 !!! note "Spec model vs. current code names"
     OVOS-CONVERSE-1 frames converse as an **ordinary pipeline plugin**. It is not a special case in the orchestrator. During `match` it inspects two session fields and returns a `Match` on a **reserved `intent_name`** (PIPELINE-1 §7.3), which the orchestrator then dispatches like any other intent: `<skill_id>:converse` for a converse claim, `<skill_id>:response` for delivery of a solicited reply.
 
-    Converse depends on session state ("is a skill still active?", "is someone awaiting a reply?"), so it must be placed **before** the other pipeline plugins in `session.pipeline`. First-match-wins then lets converse intercept before a generic matcher sees the utterance. Two name mappings exist between spec and current code:
+    Converse depends on session state ("is a skill still active?", "is someone awaiting a reply?"), so it must be placed **before** the other pipeline plugins in `session.pipeline`. First-match-wins then lets converse intercept before a generic matcher sees the utterance. The code uses the spec names. This table maps each spec name to the code that implements it:
 
-    | OVOS-CONVERSE-1 (canonical) | Current `ovos-core` code |
+    | OVOS-CONVERSE-1 | `ovos-core` code |
     |---|---|
-    | `session.converse_handlers` — the recency-ordered eligibility list the plugin polls | `Session.active_handlers` (the deprecated `Session.active_skills` view is a legacy projection of it) |
-    | `session.response_mode` `{skill_id, expires_at}` — the single-shot response window for `get_response` | per-session `UtteranceState.RESPONSE` lock |
+    | `session.converse_handlers` — the recency-ordered eligibility list the plugin polls | `session.converse_handlers`, read by `get_active_skills` and pruned by `_prune_converse_handlers` |
+    | `session.response_mode` `{skill_id, expires_at}` — the single-shot response window for `get_response` | `session.response_mode`, set by `session.enable_response_mode` and cleared by `session.disable_response_mode` |
     | poll round-trip `<skill_id>.converse.ping` / `.pong` (non-dispatch, dotted form) | a broadcast `ovos.converse.ping` (OVOS-CONVERSE-1 §4.2) is emitted alongside a legacy per-skill `{skill_id}.converse.ping`, and pongs are heard on both `ovos.converse.pong` and `skill.converse.pong`; dispatch via `converse:skill` → `{skill_id}.converse.request` |
     | reserved-name dispatch `<skill_id>:converse` / `<skill_id>:response` | `converse:skill` handler |
 
-    The mechanics below describe the current code. The spec names are the target. Note that the two lists are distinct in the spec: `converse_handlers` (converse eligibility) is drained independently of `active_handlers` (the stop cascade's recency record, PIPELINE-1 §7.1).
+    The two lists are separate: `converse_handlers` (converse eligibility) is drained independently of `active_handlers` (the stop cascade's recency record, PIPELINE-1 §7.1).
 
 ---
 
@@ -103,7 +103,7 @@ Because the Weather Skill was called, it is added to the front of the Active Ski
 
 4. A skill can activate or deactivate itself at any time via `self.activate()` / `self.deactivate()`.
 
-Active skills are tracked in `Session.active_handlers` (`ovos_bus_client.session.Session`; the deprecated `Session.active_skills` view logs a warning on every access). The converse service reads and updates this list via `session.activate_skill()` / `session.deactivate_skill()` (back-compat shims over `add_active_handler` / `remove_active_handler`), which also forward `intent.service.skills.activated` / `intent.service.skills.deactivated` on the bus.
+Converse candidates are tracked in `session.converse_handlers`. Each intent dispatch adds the skill to this list (`sess.add_converse_handler`). `ConverseService` sends `intent.service.skills.activated` and `intent.service.skills.deactivated` on the bus. A deactivation removes the skill from both `converse_handlers` and `active_handlers`.
 
 ---
 

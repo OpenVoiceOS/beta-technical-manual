@@ -25,7 +25,7 @@ Fallback Skills each have a **priority** and are tried in order from low priorit
 
 Pick your priority number by how broad your handler is. Remember, a smaller number runs **earlier**, a larger number runs **later**:
 
-- Very specific handlers should use a **small number** (e.g. `0–49`) so they run before broad ones and get first refusal.
+- Very specific handlers should use a **small number** (e.g. `1–49`; priority `0` is outside every fallback stage, so a handler at `0` never runs) so they run before broad ones and get first refusal.
 - Handlers that fit a middle ground should use `50–74`.
 - Broad, catch-all handlers (an LLM, "I don't understand") should use a **large number** (`75–100`) so specific skills run and win first.
 

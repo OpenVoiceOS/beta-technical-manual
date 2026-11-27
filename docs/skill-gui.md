@@ -84,13 +84,11 @@ gui.show_image(url, caption=None, title=None, fill=None,
 `url` may be a local file path or an `http(s)` URL. Missing local files are
 logged and the call returns without showing anything.
 
-!!! note "Local paths work, but the spec says not to rely on them"
-    The installed `show_image()` (`ovos_bus_client.apis.gui.GUIInterface`) does accept and
-    resolve a local filesystem path, as described above.
-    The OVOS-GUI-1 spec box above says image keys carry only
-    an `http(s)` URL or `data:` URI, never a local path. That is the contract
-    for interchangeable render backends. The code does not enforce it. Use a URL or
-    `data:` URI in a skill to stay compatible with the spec.
+!!! note "A local path becomes a `data:` URI"
+    `show_image()` and `show_animated_image()` (`ovos_bus_client.apis.gui.GUIInterface`)
+    accept a local filesystem path. Before the message goes on the bus, they encode the file
+    as a base64 `data:` URI. An `http(s)` URL or a `data:` URI passes through unchanged.
+    So the bus carries only the forms that the OVOS-GUI-1 spec allows.
 
 #### Animated Image
 
