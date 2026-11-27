@@ -22,7 +22,6 @@ class AbortIntent(AbortEvent):
 
 class AbortQuestion(AbortEvent):
     """Gracefully abort get_response queries."""
-
 ```
 
 These exceptions are **raised inside the handler thread** when the kill message is received. They propagate through the call stack. Wrap long-running loops to catch and clean up:
@@ -38,7 +37,6 @@ def handle_long_task(self, message):
         except AbortIntent:
             self.speak("Task was cancelled.")
             return
-
 ```
 
 ---
@@ -47,18 +45,14 @@ def handle_long_task(self, message):
 
 `killable_intent`: `ovos_workshop/decorators/killable.py`
 
-Mark an intent handler that can be interrupted mid-execution. Spawns the handler in a daemon thread. When the kill message arrives:
+Mark an intent handler that can be interrupted while it runs. The decorated call starts the handler in a daemon thread and returns that thread at once. When the abort message arrives from the same session, the decorator does these steps in this order:
 
-1. Optionally emits `mycroft.audio.speech.stop` (if `stop_tts=True`).
+1. It emits `mycroft.audio.speech.stop`, if `stop_tts=True`.
+2. It calls `skill.stop()`, if `call_stop=True`.
+3. It raises `AbortIntent` in the handler thread until the thread ends.
+4. It calls `callback`, if you gave one. A callback with one parameter gets the skill instance.
 
-
-2. Optionally calls `skill.stop()` (if `call_stop=True`).
-
-
-3. Raises `AbortIntent` in the handler thread.
-
-
-4. Calls `callback` if one was provided.
+With `react_to_stop=True`, the handler also aborts on `<skill_id>.stop` and on the global `ovos.stop` broadcast. An abort message from another session is ignored. Each listener is a one-time listener, and the decorator removes all of them when the handler ends on its own.
 
 ```python
 from ovos_workshop.decorators import killable_intent
@@ -66,7 +60,7 @@ from ovos_workshop.decorators import killable_intent
 @killable_intent(
     msg="mycroft.skills.abort_execution",  # bus message that triggers abort
     callback=None,                          # optional cleanup callable
-    react_to_stop=True,                     # also react to stop messages
+    react_to_stop=True,                     # also abort on <skill_id>.stop and ovos.stop
     call_stop=True,                         # call skill.stop() on abort
     stop_tts=True,                          # stop TTS playback on abort
 )
@@ -75,7 +69,6 @@ def handle_long_task(self, message):
     for i in range(60):
         self.speak(f"Counting {i}")
         time.sleep(1)
-
 ```
 
 Default parameters:
@@ -91,13 +84,12 @@ Default parameters:
 **Abort flow:**
 
 ```text
-Bus receives "mycroft.skills.abort_execution"
-  └─► abort() called in main thread
+Bus receives "mycroft.skills.abort_execution" (same session)
+  └─► abort() runs on the bus thread
       ├─► emit "mycroft.audio.speech.stop"  (if stop_tts=True)
       ├─► skill.stop()                       (if call_stop=True)
-      ├─► t.raise_exc(AbortIntent)           ← raised inside handler thread
+      ├─► t.raise_exc(AbortIntent)           ← repeated until the handler thread ends
       └─► callback()                         (if provided)
-
 ```
 
 ---
@@ -123,10 +115,9 @@ from ovos_workshop.decorators.killable import killable_event, AbortEvent
 def handle_background_task(self, message):
     # long-running work here
     pass
-
 ```
 
-The `check_skill_id=True` option prevents accidental termination when another skill's abort message is received.
+With `check_skill_id=True`, an abort message whose `skill_id` names another skill is ignored. A message with no `skill_id` still aborts the handler.
 
 ---
 
@@ -138,7 +129,7 @@ Intent layers let you enable or disable groups of intents at runtime, implementi
 
 `layer_intent`: `ovos_workshop/decorators/layers.py`
 
-Register an intent handler that belongs to a named layer. The intent is disabled until the layer is activated.
+Register an intent handler that belongs to a named layer. The decorator makes the intent require the context token of the layer, so the intent matches only while the layer is active in the session.
 
 ```python
 from ovos_workshop.decorators.layers import layer_intent
@@ -146,7 +137,6 @@ from ovos_workshop.intents import IntentBuilder
 
 @layer_intent(IntentBuilder("MoveIntent").require("Move"), layer_name="game_active")
 def handle_move(self, message): ...
-
 ```
 
 ---
@@ -168,7 +158,6 @@ def start_game(self, message):
 @disables_layer("game_active")
 def stop_game_intent(self, message):
     self.speak("Game stopped!")
-
 ```
 
 ---
@@ -184,7 +173,6 @@ from ovos_workshop.decorators.layers import replaces_layer
 
 @replaces_layer("my_layer", intent_list=["NewIntent1", "NewIntent2"])
 def transition(self, message): ...
-
 ```
 
 ---
@@ -200,7 +188,6 @@ from ovos_workshop.decorators.layers import removes_layer
 
 @removes_layer("temporary_layer")
 def finish_flow(self, message): ...
-
 ```
 
 ---
@@ -217,7 +204,6 @@ from ovos_workshop.decorators.layers import resets_layers
 @resets_layers()
 def reset_everything(self, message):
     self.speak("All modes cleared.")
-
 ```
 
 ---
@@ -237,15 +223,15 @@ OCP (OpenVoiceOS [Common Play](ocp-pipeline.md)) decorators are used with `OVOSC
 
 **Source:** `ovos_workshop/decorators/ocp.py`
 
-| Decorator | Attribute set | Description | Source line |
-|---|---|---|---|
-| `@ocp_search()` | `is_ocp_search_handler` | Search for playable content; yield/return `MediaEntry` results. | `ocp.py` |
-| `@ocp_play()` | `is_ocp_playback_handler` | Handle a play request (start playback). | `ocp.py` |
-| `@ocp_pause()` | `is_ocp_pause_handler` | Handle a pause request. | `ocp.py` |
-| `@ocp_resume()` | `is_ocp_resume_handler` | Handle a resume request. | `ocp.py` |
-| `@ocp_next()` | `is_ocp_next_handler` | Handle skip-forward. | `ocp.py` |
-| `@ocp_previous()` | `is_ocp_prev_handler` | Handle skip-backward. | `ocp.py` |
-| `@ocp_featured_media()` | `is_ocp_featured_handler` | Provide featured/recommended media for the OCP GUI. | `ocp.py` |
+| Decorator | Attribute set | Description |
+|---|---|---|
+| `@ocp_search()` | `is_ocp_search_handler` | Search for playable content; yield/return `MediaEntry` results. |
+| `@ocp_play()` | `is_ocp_playback_handler` | Handle a play request (start playback). |
+| `@ocp_pause()` | `is_ocp_pause_handler` | Handle a pause request. |
+| `@ocp_resume()` | `is_ocp_resume_handler` | Handle a resume request. |
+| `@ocp_next()` | `is_ocp_next_handler` | Handle skip-forward. |
+| `@ocp_previous()` | `is_ocp_prev_handler` | Handle skip-backward. |
+| `@ocp_featured_media()` | `is_ocp_featured_handler` | Provide featured/recommended media for the OCP GUI. |
 
 ```python
 from ovos_workshop.skills.common_play import OVOSCommonPlaybackSkill
@@ -276,7 +262,6 @@ class MyMusicSkill(OVOSCommonPlaybackSkill):
                                 media_type=MediaType.MUSIC,
                                 match_confidence=90))
         return pl
-
 ```
 
 ---
