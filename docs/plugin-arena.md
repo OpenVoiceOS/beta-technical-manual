@@ -3,11 +3,11 @@
 !!! abstract "In a nutshell"
     OVOS lets you swap in different plugins for jobs like understanding speech or recognizing commands. Which one is best? The Plugin Arena answers that by comparing them two ways: objective scores measured against test data, and a "which sounds better?" vote where people blindly pick between two plugins' results, scored a bit like chess rankings. It is purely a scoreboard for comparing plugins. It never installs or runs them itself. See the [Glossary](glossary.md) for unfamiliar terms.
 
-The arena runs live at [openvoiceos.github.io/ovos-plugin-arena](https://openvoiceos.github.io/ovos-plugin-arena), with source and battle definitions at [OpenVoiceOS/ovos-plugin-arena](https://github.com/OpenVoiceOS/ovos-plugin-arena). The **intent**, **STT**, **VAD**, **TTS**, and **wake word** leagues all carry live automated A/B battles and ELO standings, seeded from benchmarks; human votes have not yet been cast for every league and further refine the ratings as they come in.
+The arena runs live at [openvoiceos.github.io/ovos-plugin-arena](https://openvoiceos.github.io/ovos-plugin-arena), with source and battle definitions at [OpenVoiceOS/ovos-plugin-arena](https://github.com/OpenVoiceOS/ovos-plugin-arena). Each league has automated A/B battles and ELO standings, seeded from benchmarks. Human votes refine the ratings.
 
 **What this is:** a way to answer *"which OVOS plugin should I use?"* It compares plugins on two signals:
 
-1. **Benchmarks**: accuracy/F1 for intent, WER for STT, detection metrics for wake word. These are
+1. **Benchmarks**: accuracy/F1 for intent, WER for STT, detection metrics and false wake-ups per hour for wake word. These are
    computed offline against labeled datasets and published openly as HuggingFace datasets.
 2. **Human preference**: chess-style ELO ratings from blind A/B "battles" where people pick the
    better of two plugin outputs. The initial ELO is seeded from the benchmarks. Human votes refine
@@ -45,13 +45,11 @@ Forking the repo and editing JSON yields a working arena. A local FastAPI shim m
 
 ## Leagues (Modalities)
 
-Each modality is an independent league with its own benchmarks, battle pools and ELO standings: `stt`, `tts`, `wake_word`, `vad`, and **three intent leagues** (keyword and template paradigms consume different supervision, so they are never ranked against each other):
+Each league has its own datasets, benchmark boards and ELO standings. The leagues are `stt`, `tts`, `vad`, `wake_word`, `ww_stream` and four intent leagues. The [leagues page](https://github.com/OpenVoiceOS/ovos-plugin-arena/blob/dev/docs/leagues.md) lists each league with its task and primary metric.
 
-| League | Who competes |
-|---|---|
-| `intent_template` | template/embedding engines (Padatious, Padacioso, Nebulento, …) |
-| `intent_keyword` | keyword engines (Adapt, Palavreado, …) |
-| `intent` | open league — mixed-paradigm pipeline **fusions** (ensembles) |
+- The four intent leagues (`intent_zero_shot`, `intent_online`, `intent_offline`, `intent_keyword`) share one `intent` battle pool, because a blind vote cannot see how each engine was prepared. `intent` and `intent_template` are dataset namespaces, not leagues: no competitor is filed under them.
+- `ww_stream` is the false wake-up league. Its fighters are the `wake_word` fighters that can stream. They listen to hours of audio with no wake word, and the board ranks them on `fa_per_hour`, lower is better.
+- The site lists a wake word board only when it compares trained models: the test set must hold enough positive clips, and at least two trained models must rank on it. The [false wake-up page](https://github.com/OpenVoiceOS/ovos-plugin-arena/blob/dev/docs/leagues/ww_stream.md) gives the rule.
 
 A "competitor" is a **shippable config**, not only a plugin. A single-stage pipeline benchmarks one engine. A multi-stage pipeline is an ensemble fighter in its own right. The same plugin under a different config is a *different competitor*. `competitor_id` is the stable key for predictions, battles, ELO and leaderboards.
 
@@ -76,8 +74,8 @@ publish](tts-plugin-development.md#package-and-publish) or [Writing a Transforme
 publish](transformer-plugin-development.md#package-and-publish) for the steps to get there.
 
 1. Add a JSON file at `registry/competitors/<modality>/<competitor-id>.json`, where `<modality>`
-   is one of `stt`, `tts`, `wake_word`, `vad`, `intent`, `intent_keyword`, `intent_template`
-   (the three intent leagues are separate competitor directories). Required fields are `competitor_id`, `modality`
+   is a league that has a competitor directory (`ww_stream` has none: it reuses `wake_word`
+   fighters). See the [leagues page](https://github.com/OpenVoiceOS/ovos-plugin-arena/blob/dev/docs/leagues.md). Required fields are `competitor_id`, `modality`
    and `config` (a valid `mycroft.conf` fragment). Non-intent fighters also need `plugin`, the OPM
    entry-point name. Intent fighters describe an ordered `config.intents.pipeline` of
    `<plugin>-<tier>` stages. A single stage benchmarks one engine, several stages make an
@@ -96,7 +94,7 @@ footprint classes, lives in
 
 ## Prediction Contract (HuggingFace)
 
-Predictions live in HF dataset repos — one per benchmark modality, named `ovos-<modality>-bench-<dataset_id>` (league underscores dashed), as per-competitor JSON lines at `predictions/<competitor_id>.jsonl`, one row per sample (language is a field on each row, not a path segment).
+Predictions live in HF dataset repos — one per benchmark modality, named `ovos-<modality>-bench-<dataset_id>` (league underscores dashed). Intent predictions use one repo per paradigm, `ovos-intent-<paradigm>-bench-<dataset_id>`. Rows are stored as per-competitor JSON lines at `predictions/<competitor_id>.jsonl`, one row per sample (language is a field on each row, not a path segment).
 
 Core `PredictionRow` fields (`arena/models.py`):
 
@@ -129,15 +127,9 @@ Modality-specific fields (kept inline or in `extras`):
 
 ---
 
-## Supported Modalities
+## Benchmarks
 
-| Modality | Status |
-|----------|--------|
-| Intent | Live (`benchmarks/intent_intents_for_eval.py`, multiple engines × languages) |
-| STT | Live (`benchmarks/stt_minds14.py`, multiple languages) |
-| VAD | Live (`benchmarks/vad_speech.py`, many languages) |
-| Wake word | Live (`benchmarks/ww_hey_jarvis.py`, `ww_hey_mycroft.py`, `ww_computer.py`) |
-| TTS | Live, automated blind A/B battles between synthesized clips (no objective accuracy metric, so ELO is seeded and moved entirely by votes); human votes are still pending and will refine the ratings further |
+The [benchmarks page](https://github.com/OpenVoiceOS/ovos-plugin-arena/blob/dev/docs/benchmarks.md) lists the benchmark notebooks and scripts for each league, and tells how to run them.
 
 ---
 

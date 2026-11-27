@@ -17,7 +17,7 @@
     | **intent context** (the term) | the decaying key/value state itself — the entries in that field | (entries of the above) |
     | `Match.slots` | the slot map produced *at match time* for one dispatch | `data.slots` |
 
-    The sections below cover the third (and the field that holds it). It is not `Message.context`, and a context entry is not a `Match.slot`. CONTEXT-1 §7's context-supplied-slot rule is the bridge: when a `requires_context` key also names a slot, its value fills that slot if the utterance did not. This is exactly the "remember which person" mechanism below.
+    The sections below cover the third (and the field that holds it). It is not `Message.context`, and a context entry is not a `Match.slot`. CONTEXT-1 §7's context-supplied-slot rule is the bridge, and it is independent of `requires_context`. A live, non-null entry whose key is the name of a slot or vocabulary of the intent is a candidate for that slot. A private `<skill_id>:k` entry has precedence over a shared `k` entry. `requires_context` and `excludes_context` only gate the match. This is exactly the "remember which person" mechanism below.
 
     **A capped store.** CONTEXT-1 §2 says the orchestrator SHOULD enforce a maximum
     live-entry count per session, evicting the entry closest to natural expiry when a write
@@ -202,7 +202,10 @@ gates.
 
 
 !!! warning "Generic shared names are effectively global"
-    A shared-scope context entry is stored under its bare, un-namespaced key. A plain,
+    A shared-scope context entry is stored under its bare, un-namespaced key. The munged
+    key that `set_context`, `@adds_context` and `.require()` use is also a bare key, because
+    it has no `:`. CONTEXT-1 §3 reads it as a shared entry (see
+    [Using context to enable Intents](#using-context-to-enable-intents)). A plain,
     generic name (`prev_dialog`, `date`, `person`, `sleeping_state`) can satisfy any
     other legacy skill's `require()`/`requires_context` gate of that same name, because
     the legacy (pre-CONTEXT-1) Adapt lookup also probes the plain, un-munged keyword
@@ -257,7 +260,7 @@ The full, worked-through version of this `TeaSkill`, with every handler, is in
 
 Context can create "bubbles" of available intent handlers, so certain **intents** can't trigger unless some previous stage in a conversation has occurred.
 
-> This is the *idea* behind the **`requires_context`** gate of CONTEXT-1 §6, expressed through the legacy mechanism: `MilkContext` is a private flag (the `@adds_context` decorator stores it under the skill's own prefix), and an intent that `.require('MilkContext')` declares it as an Adapt keyword precondition, so the `yes`/`no` intents are invisible except in the narrow window between the question and the reply, with no skill-side state machine. Note that `.require()` keyword matching and the declarative `requires_context=` / `excludes_context=` intent kwargs are **different code paths**: the declarative gate looks entries up under the resolved `<skill_id>:<key>` shape, which `set_context` / `@adds_context` also write (see "Both spellings are written, with one decay policy" below). The complementary `excludes_context` gate (CONTEXT-1 §6.1) handles fire-once intents (for example, "greet only once per session").
+> This is the *idea* behind the **`requires_context`** gate of CONTEXT-1 §6, expressed through the legacy mechanism: `@adds_context` stores `MilkContext` under the skill's munged key (the alphanumeric skill id followed directly by the keyword). That key has no `:`, so CONTEXT-1 §3 reads it as a **shared** entry, not a private one. Only the `<skill_id>:<key>` spelling is private. An intent that `.require('MilkContext')` declares it as an Adapt keyword precondition, so the `yes`/`no` intents are invisible except in the narrow window between the question and the reply, with no skill-side state machine. Note that `.require()` keyword matching and the declarative `requires_context=` / `excludes_context=` intent kwargs are **different code paths**: the declarative gate looks entries up under the resolved `<skill_id>:<key>` shape, which `set_context` / `@adds_context` also write (see the note "Two write paths into `intent_context`" below). The complementary `excludes_context` gate (CONTEXT-1 §6.1) handles fire-once intents (for example, "greet only once per session").
 
 ```text
 User: Hey Mycroft, bring me some Tea
@@ -341,22 +344,24 @@ CONTEXT-1's declarative `requires_context` / `excludes_context` gate (above) exp
 `set_cross_skill_context` and the deprecated `set_adapt_context` /
 `remove_adapt_context` shortcuts carry the same additive `key`.
 
-!!! note "Two distinct mechanisms, not one dual-write"
-    `set_context` writes `intent_context` directly into the session bound to the dispatch
-    message (`SessionManager.get(message)`, CONTEXT-1 §5.3). Because that write lands on
-    the live session object the handler is already running against, context set inside a
-    handler is visible to the dispatch that immediately follows it, in the same handler
-    invocation, with no race. It writes **two** entries there: the legacy munged
-    `skillidkey` spelling and the resolved `<skill_id>:<key>` spelling the declarative gate
-    looks up. One computed `expires_at` applies to both, so `set_context` entries decay
-    normally (`context.timeout`, minutes, default `2`) and a re-set refreshes the expiry of
-    both keys.
+!!! note "Two write paths into `intent_context`"
+    The skill-side write and the core-side write are two different paths.
 
-    Separately, the legacy `add_context` bus message is also emitted, for pre-spec
-    orchestrators that only understand `Session.context`. This is a different consumer, not
-    a second write path into `intent_context`. The two live in different session fields.
-    The legacy emit logs a deprecation warning once per process; it is scheduled for
-    removal at `ovos-workshop` 10.0.0.
+    - **Skill side.** `set_context` (`_AdaptIntentApi.set_context` in `ovos_workshop`)
+      writes one entry directly into the session bound to the dispatch message
+      (`SessionManager.get(message)`, CONTEXT-1 §5.3): the private `<skill_id>:<key>`
+      spelling. Because that write lands on the live session object that the handler runs
+      against, the next dispatch sees it, with no race.
+    - **Core side.** `set_context` also emits the legacy `add_context` bus message. When
+      `ovos-core` gets it, `handle_add_context` writes the munged bare key into
+      `intent_context`. When the message carries the original `key` and a `skill_id`, it
+      also writes the `<skill_id>:<key>` spelling. The munged key is a shared entry
+      (CONTEXT-1 §3).
+
+    Both paths compute `expires_at` from `context.timeout` (minutes, default `2`), so the
+    entries decay normally and a re-set refreshes the expiry. The legacy emit logs a
+    deprecation warning once per process. It is scheduled for removal at `ovos-workshop`
+    10.0.0.
 
 !!! note "Writing a key replaces it wholesale; there is no read-back"
     Writing an entry under a key that already exists **replaces the whole entry**, value and

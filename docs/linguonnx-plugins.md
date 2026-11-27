@@ -1,7 +1,7 @@
 # linguonnx Language Plugins
 
 !!! abstract "In a nutshell"
-    One package gives OVOS offline language detection and offline translation. It runs the models on your own machine, so text never leaves the device. It reaches 593 languages by routing a translation through one or two models instead of holding a single large one. The sections below show how to install it, how to configure it, and which settings bound the memory it uses. See [Translation Plugins](translation-plugins.md) and the [Glossary](glossary.md).
+    One package gives OVOS offline language detection and offline translation. It runs the models on your own machine, so text never leaves the device. It reaches hundreds of languages by routing a translation through one or two models instead of holding a single large one. The sections below show how to install it, how to configure it, and which settings bound the memory it uses. See [Translation Plugins](translation-plugins.md) and the [Glossary](glossary.md).
 
 `ovos-plugin-linguonnx` ships two plugins in one package:
 
@@ -51,28 +51,47 @@ Every setting is optional. A setting you leave out is not defaulted by the plugi
 
 | Setting | Default | What it does |
 |---|---|---|
+| `models` | unset | Exact registry ids to route over. Overrides every other filter. |
+| `model` | unset | Pins one model. Shorthand for `models: [<id>]`. |
 | `prefer` | `"fewest_hops"` | Route ranking. `"dedicated"` prefers a bilingual model over a multilingual one, even at the cost of an extra hop. |
 | `max_hops` | `2` | How many models a route may chain. `1` allows direct models only. `2` allows one pivot language. |
+| `pivot_ranking` | `"auto"` | How to order pivot languages. `"auto"` uses phonological distance when `linguonnx[distance]` is installed, and the curated table otherwise. `"phonological"` and `"table"` force one. |
+| `pivot_preference` | library list | Ordered pivot languages for a two-hop route. |
+| `max_routes` | `10` | How many candidate routes the router keeps for a pair. |
+| `include_noncommercial` | `false` | Adds models with a non-commercial licence, such as NLLB-200, to the graph. |
 | `precision` | `"int8"` | `"int8"` uses the quantized models. `"fp32"` uses the full ones, at roughly four times the disk and memory. `null` allows both. |
-| `max_model_mb` | unset | Size cap, in MB, on a single model in the routing graph. |
-| `oversize_fallback` | `false` | Turns `max_model_mb` from a filter into a preference. |
-| `count_cached_as_free` | picked by the library | Whether a model already in the local cache is exempt from `max_model_mb`. |
+| `max_model_mb` | `2048`, or `LINGUONNX_MAX_DOWNLOAD_MB` when that is lower | Size cap, in MB, on a single model in the routing graph. The environment variable `LINGUONNX_MAX_MODEL_MB` replaces the default. `null` removes the cap. |
+| `oversize_fallback` | on, unless you set a cap | Turns `max_model_mb` from a filter into a preference. When unset, it is on under the library default cap, and off under a cap from `max_model_mb` or `LINGUONNX_MAX_MODEL_MB`. |
+| `count_cached_as_free` | the opposite of `oversize_fallback` | Whether a model already in the local cache is exempt from `max_model_mb`. |
 | `model_cache_size` | `4` | How many loaded models stay in memory, least-recently-used evicted first. |
 | `max_loaded_mb` | unset | Byte budget, in MB, for the loaded-model cache. |
 | `max_concurrent_translations` | unset | How many translations may run at once. |
 | `exclude_flagged` | `false` | Drops any model the `linguonnx` quality sweep flags. |
 | `min_chrf` | unset | Drops any model scoring below this chrF against FLORES-200. |
+| `num_beams` | `4` | Beam width. `1` is greedy decoding, about four times faster. |
+| `max_new_tokens` | `128` | Output length cap per hop, in tokens. |
+| `length_penalty` | `1.0` | Length term in the beam score. |
+| `no_repeat_ngram_size` | `0` | Blocks a repeated n-gram of this size. `0` blocks nothing. |
+| `fetch_on_demand` | `true` | Lets a request download a model that is not in the cache. `false` routes over cached models only. |
+| `providers` | unset | ONNX Runtime execution providers. |
+
+### What the translator does for you
+
+- Long input is translated one sentence at a time, and the sentences are joined with the source whitespace. A model given several sentences at once can stop early and lose the rest.
+- When the output reaches `max_new_tokens` before the model ends the sentence, `translate()` raises `OutputTruncatedError`. It does not return a cut translation. Raise `max_new_tokens` for long sentences.
+- A model that needs an optional extra that is not installed is never put on a route.
+- A model that the quality sweep flags serves a pair only when no other model does.
 
 ### The size cap prefers small models
 
-`max_model_mb` is a routing filter, not a download guard. On its own it is strict: a language that lives only inside an oversized model becomes unroutable.
+The library default already prefers small models. With no cap set, `max_model_mb` is 2048 MB and `oversize_fallback` is on, so a large model serves only the pairs that no smaller model covers.
 
-Set `oversize_fallback: true` to make the cap a preference instead. Every pair a model under the cap can serve is still served by that small model. Only a pair that nothing under the cap covers escalates to the smallest sufficient model above the cap. The cap then shrinks load latency without deleting the long tail of languages.
+A cap that you set, in `max_model_mb` or `LINGUONNX_MAX_MODEL_MB`, is strict: a language that lives only inside an oversized model becomes unroutable. Set `oversize_fallback: true` to make your cap a preference instead. Every pair a model under the cap can serve is still served by that small model. Only a pair that nothing under the cap covers escalates to the smallest sufficient model above the cap. The cap then shrinks load latency without deleting the long tail of languages.
 
 With `max_model_mb: 500` and `count_cached_as_free: false`, `en -> ca` routes through a 157 MB `opus-mt` model instead of a 1.7 GB multilingual one. `en -> cv` (Chuvash) has no model under 500 MB at all, so the fallback escalates to the smallest model that covers it.
 
 !!! warning "`LINGUONNX_MAX_DOWNLOAD_MB` ceilings the escalation"
-    `LINGUONNX_MAX_DOWNLOAD_MB` is an environment variable, not a config key. It defaults to `8192` (MB) and caps how large a model the escalation may fetch. Set it at or near your `max_model_mb` value and the escalation collapses: routable languages on a 500 MB budget drop from 593 (with `oversize_fallback` escalating past the cap) to 251, the same result as no fallback at all. Leave it at the default unless you deliberately want to bound the fallback.
+    `LINGUONNX_MAX_DOWNLOAD_MB` is an environment variable, not a config key. It defaults to `8192` (MB) and caps how large a model the escalation may fetch. Set it at or near your `max_model_mb` value and the escalation collapses: routable languages drop to the same set as no fallback at all. For the coverage of each budget, see [What a budget costs in coverage](https://github.com/TigreGotico/linguonnx/blob/dev/docs/routing.md#what-a-budget-costs-in-coverage). Keep the default unless you want to bound the fallback.
 
 ### Bounding memory
 
@@ -104,6 +123,7 @@ The plugin repository documents detection, translation, routing and error handli
 
 - [`ovos-plugin-linguonnx`](https://github.com/OpenVoiceOS/ovos-plugin-linguonnx) — the plugins.
 - [`linguonnx`](https://github.com/TigreGotico/linguonnx) — the engine, the model list, and the routing rules.
+- [`linguonnx` documentation index](https://github.com/TigreGotico/linguonnx/blob/dev/docs/index.md) — the generated list of languages and models.
 
 ---
 **Read next:** [Translation Plugins](translation-plugins.md)

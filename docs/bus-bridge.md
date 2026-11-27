@@ -60,6 +60,14 @@ recognizes a returning participant as the same one is a deployment
 concern outside the specification; that the mapping survives the
 reconnect once recognized is not.
 
+When a bridge maps `session_id`, the mapping is **total**. The bridge
+maps every inbound `session_id`, including the reserved value
+`"default"` and the forms that resolve to it: an empty or omitted
+`session_id`, and an empty or absent `session`. The one exception is a
+participant that a layer-2 grant authorises to act on the default
+session. An unmapped `"default"` reaches the orchestrator's own
+default-session store, not a hub-side identifier.
+
 ## Two ways to carry a session
 
 A bridge relates to the sessions it carries in one of two ways, chosen
@@ -112,9 +120,16 @@ Because a bridge carries session fields transparently, a deployment can
 enforce policy simply by setting fields on the way in, no separate
 protocol needed. A layer sitting at the bridge boundary can deny a
 participant access to specific skills, intents, or pipeline stages by
-populating the relevant denylist fields; there is no matching allowlist,
+populating the relevant denylist fields: `blacklisted_skills`,
+`blacklisted_intents`, `blacklisted_pipelines`, and the six transformer
+fields `blacklisted_audio_transformers`,
+`blacklisted_utterance_transformers`, `blacklisted_metadata_transformers`,
+`blacklisted_intent_transformers`, `blacklisted_dialog_transformers` and
+`blacklisted_tts_transformers`. There is no matching allowlist,
 so policy can only narrow what a participant reaches, never grant it
-something the platform would not otherwise offer. A participant can
+something the platform would not otherwise offer. A gate that refuses a
+field that the client supplied MAY emit `ovos.policy.denied` to make the
+refusal observable. A participant can
 likewise express a pipeline or transformer preference, and policy always
 wins over preference where the two conflict.
 

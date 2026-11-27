@@ -297,8 +297,21 @@ User swipes / taps on Qt:
     [OVOS-GUI-1](https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md) spec
     (see [GUI Service](gui-service.md)), the bus contract changes:
 
-    - `gui.page.show` will accept **only** `SYSTEM_*` template names. Custom QML pages are no
-      longer supported.
+    - The first `page_names` entry of `gui.page.show` must be a `SYSTEM_*` template name. A
+      `gui.page.show` with a different first entry is not a template request. The GUI
+      service does not send it to adapters as a template. It MAY reject it or send it to a
+      legacy path (GUI-1 §4.2).
+    - The namespace is the `skill_id` of the Message context, never a `data` field
+      (GUI-1 §4.1). The GUI service ignores a GUI Message with no `skill_id` in its context
+      and logs a diagnostic.
+    - `persist` is a field of `gui.page.show`: `true` (stays until cleared), `false` (same as
+      omitted), or a number *N* (removed after *N* seconds). When it is omitted, a deployment
+      default applies. The recommended default is `30`.
+    - A render backend sends `gui.page.focus` through its adapter to ask for another entry of
+      `page_names` or to touch the page. This message has the role of
+      `gui.page_gained_focus` and `gui.page_interaction` in the legacy protocol.
+    - `gui.value.replace` replaces all session data of a namespace in one step.
+    - A JSON `null` on a key in `gui.value.set` removes that key.
     - Instead of mirroring to Qt clients directly, template events fan out to every loaded
       `opm.gui_adapter` plugin (see [GUI Adapter Plugins](gui-adapters.md)). The Qt WebSocket
       protocol becomes one such adapter.

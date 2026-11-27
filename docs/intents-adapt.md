@@ -24,7 +24,7 @@ These files live in the skill's `locale/<lang>/` directory (e.g. `locale/en-us/P
 They can have one or more lines listing synonyms or terms with the same meaning in the
 context of this skill. OVOS matches _any_ of these keywords with the intent.
 
-> Language directories are named with BCP-47 tags and compared case-insensitively, so `en-us` and `en-US` denote the same language (OVOS-INTENT-2 §3). The legacy split layout (`vocab/<lang>/`, `regex/<lang>/`, `dialog/<lang>/`) also loads, but a skill you write should use a single `locale/<lang>/` folder per language.
+> Language directories are named with BCP-47 tags and compared case-insensitively, so `en-us` and `en-US` denote the same language (OVOS-INTENT-2 §2). The legacy split layout (`vocab/<lang>/`, `regex/<lang>/`, `dialog/<lang>/`) also loads, but a skill you write should use a single `locale/<lang>/` folder per language.
 
 Consider a simple `Potato.voc`. Within this file we might include:
 
