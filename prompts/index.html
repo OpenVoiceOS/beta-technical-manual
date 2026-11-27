@@ -1861,10 +1861,10 @@ the <a href="../skill-design-guidelines/">Skill Design Guidelines</a>.</p>
 <p><code>validator</code>: A function <code>(str) -&gt; bool</code> to check if the user response is valid</p>
 </li>
 <li>
-<p><code>on_fail</code>: A fallback string, or a <code>(str) -&gt; str</code> callable, to say if validation fails</p>
+<p><code>on_fail</code>: A fallback string to say if validation fails, or a callable that receives the list of transcriptions and returns that string</p>
 </li>
 <li>
-<p><code>num_retries</code>: How many times to retry if the response isn't valid (default <code>-1</code>, retry until valid)</p>
+<p><code>num_retries</code>: How many consecutive silent answers stop the question (default <code>-1</code>, which means that silence never stops the question). An answer that fails validation causes a reprompt and sets the count to zero. A time limit of <code>(skills.get_response_timeout + 15)</code> seconds × (<code>num_retries + 1</code>, or <code>2</code> for <code>-1</code>) stops the question, and <code>get_response()</code> then returns <code>None</code>.</p>
 </li>
 </ul>
 <p><code>get_response()</code> returns the matched utterance as a <code>str</code>, or <code>None</code> if no valid response

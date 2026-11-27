@@ -1799,8 +1799,11 @@ every voice you ship, not just the code license. See <a href="../license/">Licen
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w"> </span><span class="p">}</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">}</span>
 </span></code></pre></div>
-    Leaving out a <code>"voice"</code> key like this is a valid, minimal config. The plugin picks the
-    first bundled model that supports the configured language. See the
+    Leaving out a <code>"voice"</code> key like this is a valid, minimal config. The plugin then
+    uses the <code>lang2voice</code> entry for the language, then the <code>PHOONNX_DEFAULT_VOICE_&lt;LANG&gt;</code>
+    environment variable, then the first voice-index entry for the language. It downloads
+    that voice on the first synthesis. If no voice matches the language, it raises
+    <code>ValueError</code>. See the
     <a href="../tts-plugins-reference/#ovos-tts-plugin-phoonnx">ovos-tts-plugin-phoonnx</a> entry for how to pin a
     specific voice.</p>
 <p>Installing a plugin's package (like <code>pip install phoonnx</code>) only makes it available to
@@ -1943,9 +1946,9 @@ separately-licensed model or a paid cloud service, that is called out under "mod
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/ovos-tts-plugin-lux">ovos-tts-plugin-lux</a></td>
-<td>LuxTTS: zipvoice-based voice-cloning TTS (48 kHz, en-US). <em>(not on PyPI, no dedicated section, see repo)</em></td>
+<td>LuxTTS: zipvoice-based voice-cloning TTS (48 kHz, en-US). Warning: archived, deprecated. <em>(not on PyPI, no dedicated section, see repo)</em></td>
 <td>Apache-2.0</td>
-<td>Beta</td>
+<td>Deprecated</td>
 </tr>
 <tr>
 <td><a href="../tts-plugins-reference/#ovos-tts-plugin-phoonnx">ovos-tts-plugin-phoonnx</a></td>
@@ -1990,11 +1993,11 @@ models are OpenRAIL-M).</p>
 toolkit (VITS, XTTS, YourTTS, Bark, and more) with top naturalness and voice cloning,
 but transformer/diffusion-class weights that prefer a GPU for real-time use. MPL-2.0
 code, per-model licenses vary.</p>
-<p><strong>Zero-shot cloning engines</strong> (lux/ZipVoice, omnivoice). Clone any voice from a few
-seconds of reference audio. OmniVoice
+<p><strong>Zero-shot cloning engines</strong> (omnivoice). Clone any voice from a few seconds of
+reference audio. OmniVoice
 (<a href="https://github.com/k2-fsa/OmniVoice">k2-fsa/OmniVoice</a>, Apache-2.0) claims 600+
-languages and ~40x real-time. LuxTTS is ZipVoice-based, English-only, GPU-oriented. Both
-are early-stage: promising, not proven for production.</p>
+languages and ~40x real-time. It is early-stage: promising, not proven for production.
+The ZipVoice-based LuxTTS plugin (English only, GPU-oriented) is archived.</p>
 <p><strong>Pre-neural engines</strong> (mimic, espeak-ng, pico, marytts). <a href="https://github.com/MycroftAI/mimic1">Mimic
 1</a> (Festival/Flite concatenative) and
 <a href="https://github.com/espeak-ng/espeak-ng">espeak-ng</a> (formant synthesis, 100+ languages,

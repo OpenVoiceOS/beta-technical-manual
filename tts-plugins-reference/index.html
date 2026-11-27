@@ -1547,6 +1547,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#runtime-and-ssml-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runtime and SSML options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#bounding-the-voice-cache" class="md-nav__link">
     <span class="md-ellipsis">
       Bounding the voice cache
@@ -2265,6 +2274,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#runtime-and-ssml-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runtime and SSML options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#bounding-the-voice-cache" class="md-nav__link">
     <span class="md-ellipsis">
       Bounding the voice cache
@@ -2618,17 +2636,50 @@ the table doesn't cover.</p>
 </span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>  }
 </span></code></pre></div>
 <blockquote>
-<p>If <code>"voice"</code> is omitted, the plugin picks the first bundled model that supports the configured language.</p>
+<p>If <code>"voice"</code> is omitted, the plugin uses the <code>lang2voice</code> entry for the language, then the <code>PHOONNX_DEFAULT_VOICE_&lt;LANG&gt;</code> environment variable, then the first voice-index entry for the language. It downloads that voice on the first synthesis. If no voice matches the language, it raises <code>ValueError</code>.</p>
 </blockquote>
 <h3 id="per-language-default-voices">Per-language default voices<a class="headerlink" href="#per-language-default-voices" title="Permanent link">&para;</a></h3>
 <p>A configured <code>voice</code> pins one voice regardless of request language. For multilingual serving,
 the <code>lang2voice</code> config map, e.g. <code>{"pt-br": "...", "gl": "..."}</code>, and
 <code>PHOONNX_DEFAULT_VOICE_&lt;LANG&gt;</code> env vars resolve the default voice per request language. Keys
-are BCP-47 tags, full tag tried before primary subtag, and resolution is table-major: the
+are BCP-47 tags. The lookup tries three tags in this order: the standard tag, the tag with
+its default region added (a bare <code>en</code> also matches an <code>en-GB</code> key), and the primary subtag.
+Resolution is table-major: the
 whole <code>lang2voice</code> table wins outright for any language it names before env vars are consulted
 at all. Spellings are normalized on both sides (<code>gl-ES</code>/<code>gl</code>, <code>pt-br</code>/<code>pt_BR</code> agree). An entry
 naming a nonexistent voice logs the mistake and falls back to the voice index's own default
 rather than refusing to serve the language.</p>
+<h3 id="runtime-and-ssml-options">Runtime and SSML options<a class="headerlink" href="#runtime-and-ssml-options" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Effect</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>onnx_providers</code> (alias <code>providers</code>)</td>
+<td>Ordered list of ONNX Runtime execution providers, for example <code>["ROCMExecutionProvider", "CPUExecutionProvider"]</code>. A string sets one provider.</td>
+<td>unset: <code>PHOONNX_ONNX_PROVIDERS</code>, else auto-detection</td>
+</tr>
+<tr>
+<td><code>onnx_threads</code></td>
+<td>Threads per graph operator in each ONNX session. <code>0</code> gives the ONNX Runtime default.</td>
+<td>unset: <code>PHOONNX_ORT_THREADS</code>, else the ONNX Runtime default</td>
+</tr>
+<tr>
+<td><code>stretch_pace</code></td>
+<td>For an engine that cannot change its pace, apply <code>length_scale</code> and the SSML rate with a time stretch.</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<p>The plugin accepts these SSML tags: <code>speak</code>, <code>break</code>, <code>prosody</code>, <code>emphasis</code>, <code>say-as</code>,
+<code>phoneme</code>, <code>lang</code>, <code>voice</code>, <code>p</code>, <code>s</code>, <code>sub</code>, <code>w</code>, <code>token</code>, <code>lookup</code>, <code>mark</code>, <code>audio</code>, <code>seq</code>,
+<code>par</code>, <code>media</code>, <code>desc</code>, <code>metadata</code>, <code>meta</code>, <code>lexicon</code>, <code>amazon:effect</code>, <code>amazon:auto-breaths</code>,
+<code>amazon:breath</code>, <code>amazon:domain</code>, <code>amazon:emotion</code> and <code>alexa:name</code>. See <a href="../ssml/">SSML</a>.</p>
 <h3 id="bounding-the-voice-cache">Bounding the voice cache<a class="headerlink" href="#bounding-the-voice-cache" title="Permanent link">&para;</a></h3>
 <p>Loaded voice models stay resident in an in-process cache. Two settings bound it, and they are
 not equivalent:</p>

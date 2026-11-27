@@ -2031,16 +2031,16 @@
 <p><code>secrets: inherit</code> passes your repo's secrets (e.g. <code>GITHUB_TOKEN</code>, and <code>PYPI_TOKEN</code>/<code>MATRIX_TOKEN</code> for the publish workflows) through to the called workflow. See <a href="../gh-automations-workflows/">Workflow Reference</a> for every input.</p>
 <div class="admonition info">
 <p class="admonition-title"><code>install_extras</code> accepts any spelling</p>
-<p>Every reusable workflow that takes <code>install_extras</code> accepts a bare extras name (<code>'test'</code>), a bracketed list (<code>'[dev,test]'</code>), a full install target (<code>'.[dev]'</code>), or raw pip arguments (<code>'-r requirements/test.txt'</code>), normalizing internally (<a href="https://github.com/OpenVoiceOS/gh-automations/pull/88">OpenVoiceOS/gh-automations#88</a>). Use whichever spelling reads clearest; the per-workflow input tables below and on the linked reference pages may still show one particular spelling in their example, but any of the four forms works.</p>
+<p>Every reusable workflow that takes <code>install_extras</code> accepts a bare extras name (<code>'test'</code>), a bracketed list (<code>'[dev,test]'</code>), a full install target (<code>'.[dev]'</code>), or raw pip arguments (<code>'-r requirements/test.txt'</code>), and normalizes it (<a href="https://github.com/OpenVoiceOS/gh-automations/pull/88">OpenVoiceOS/gh-automations#88</a>). An example on the <a href="../gh-automations-workflows/">Workflow Reference</a> pages can show one spelling, but all four forms work.</p>
 </div>
 <h3 id="scripts-checkout">Scripts checkout<a class="headerlink" href="#scripts-checkout" title="Permanent link">&para;</a></h3>
-<p>Several reusable workflows check this repo out again at runtime to reach <code>scripts/</code> (the PR-comment helper, version utilities, etc.), pinned to <code>ref: dev</code>. You do not write this yourself: it lives inside the reusable workflow.</p>
+<p>Several reusable workflows check this repo out again at runtime to reach <code>scripts/</code> (the PR-comment helper, version utilities, etc.). The ref comes from the <code>gh_automations_ref</code> input, which defaults to <code>dev</code>. Only <code>downstream-check.yml</code>, <code>publish-alpha.yml</code> and <code>publish-stable.yml</code> hard-code <code>ref: dev</code>. You do not write this step: it is inside the reusable workflow.</p>
 <details class="example">
 <summary>What the reusable workflow does internally</summary>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v7</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">with</span><span class="p">:</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenVoiceOS/gh-automations</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">ref</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">ref</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ inputs.gh_automations_ref }}</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">_gh_automations/</span>
 </span></code></pre></div>
 </details>
@@ -2141,7 +2141,11 @@ full diagram of this same pipeline.</p>
 <tbody>
 <tr>
 <td><code>build-tests.yml</code></td>
-<td>Build/install/test matrix across Python versions. Posts <code>Build Tests</code>.</td>
+<td>Build/install/test matrix across Python versions. Posts <code>Build Tests</code>. The <code>gh_token</code> secret authenticates git clones of private dependencies. Set <code>test_path_strict: true</code> to fail, not warn, when <code>test_path</code> does not cover the tests.</td>
+</tr>
+<tr>
+<td><code>test.yml</code></td>
+<td>The CI of this repo: runs its own tests on pushes to <code>dev</code> and on pull requests. It is not a reusable workflow.</td>
 </tr>
 <tr>
 <td><code>channel-compat.yml</code></td>
@@ -2149,7 +2153,11 @@ full diagram of this same pipeline.</p>
 </tr>
 <tr>
 <td><code>coverage.yml</code></td>
-<td>Run pytest with coverage. Post <code>Coverage</code>. Optionally deploy the HTML report to Pages (<code>deploy_pages: true</code>).</td>
+<td>Run pytest with coverage. Post <code>Coverage</code>. Optionally deploy the HTML report to Pages (<code>deploy_pages: true</code>). The <code>timeout_minutes</code> input sets the job limit (default 45).</td>
+</tr>
+<tr>
+<td><code>golden-utterances.yml</code></td>
+<td>Run a skill's golden-utterance corpus (<code>test/end2end/golden_utterances*.jsonl</code>) with <code>ovoscope golden</code>, one MiniCroft per locale.</td>
 </tr>
 <tr>
 <td><code>ovoscope.yml</code></td>
@@ -2188,7 +2196,15 @@ full diagram of this same pipeline.</p>
 </tr>
 <tr>
 <td><code>lint.yml</code></td>
-<td>Run ruff and/or pre-commit. Post lint results.</td>
+<td>Run ruff and actionlint by default, and pre-commit when <code>pre_commit: true</code>. An actionlint finding fails the job (<code>actionlint_fail</code>, default <code>true</code>). Post <code>Lint</code>, or <code>Lint (&lt;section_key&gt;)</code> when <code>section_key</code> is set.</td>
+</tr>
+<tr>
+<td><code>markdown-check.yml</code></td>
+<td>For a repo of Markdown content: run markdownlint-cli2 on every Markdown file and lychee on every link. Both jobs block.</td>
+</tr>
+<tr>
+<td><code>redistribution-guard.yml</code></td>
+<td>Fail when a built artifact contains a library whose licence exception holds only if we do not redistribute it.</td>
 </tr>
 <tr>
 <td><code>type-check.yml</code></td>
@@ -2220,6 +2236,10 @@ full diagram of this same pipeline.</p>
 <tr>
 <td><code>locale-check.yml</code></td>
 <td>Verify locale folders are correctly included in the package build.</td>
+</tr>
+<tr>
+<td><code>locale-lint.yml</code></td>
+<td>Two jobs: <code>spec</code> runs <code>ovos-spec-lint</code> on the locale folders, and <code>policy</code> runs <code>scripts/locale_gate.py</code> against the base branch on pull requests.</td>
 </tr>
 <tr>
 <td><code>spec-lint.yml</code></td>
@@ -2265,6 +2285,7 @@ full diagram of this same pipeline.</p>
 </tr>
 </tbody>
 </table>
+<p>The <code>self-check-*.yml</code> files are internal checks of this repo. Other repos do not call them.</p>
 <p>Full input/output/job reference: <a href="../gh-automations-workflows/">Workflow Reference</a></p>
 <hr />
 <h2 id="python-scripts">Python Scripts<a class="headerlink" href="#python-scripts" title="Permanent link">&para;</a></h2>
@@ -2376,8 +2397,8 @@ full diagram of this same pipeline.</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="https://github.com/OpenVoiceOS/ovos-releases">ovos-releases</a></td>
-<td>Holds <code>constraints-alpha/testing/stable.txt</code>, updated after stable releases. The channel-compatibility check and <code>downstream-check.yml</code> read these files.</td>
+<td><a href="https://github.com/OpenVoiceOS/OpenVoiceOS">OpenVoiceOS/OpenVoiceOS</a></td>
+<td>Holds <code>constraints-alpha/testing/stable.txt</code>, updated after stable releases. <code>downstream-check.yml</code> and <code>release-preview.yml</code> read these files. <code>channel-compat.yml</code> reads the <code>channel_url</code> input, which the caller must pass.</td>
 </tr>
 <tr>
 <td><a href="https://github.com/OpenVoiceOS/raspOVOS">raspOVOS</a></td>

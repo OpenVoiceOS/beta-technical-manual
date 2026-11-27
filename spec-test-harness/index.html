@@ -1672,18 +1672,23 @@ sibling out of the exact combination you are trying to validate.</p>
 <h2 id="the-model">The model<a class="headerlink" href="#the-model" title="Permanent link">&para;</a></h2>
 <p>The harness is <strong>not a package</strong>. There is no <code>pip install .</code>.
 Its <a href="https://github.com/OpenVoiceOS/ovos-test-harness"><code>requirements.txt</code></a> is the
-<strong>stack under test</strong>: every line pins one repo to an exact git ref or version, so
-CI never re-resolves and never downgrades a component. Each test then:</p>
+<strong>stack under test</strong>. Most lines install a repo from its <code>dev</code> branch (<code>@dev</code>). A
+few lines are floor pins (<code>&gt;=</code>) on a published alpha. CI installs this list
+as one set, so the resolver cannot downgrade a component out of the
+combination. The <code>test/backcompat/</code> matrix installs the stack at two vintages
+at once, for example an old skill with a new core. Its cells and pruning rules
+are in <a href="https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/matrix-design.md"><code>docs/matrix-design.md</code></a>.
+Each test then:</p>
 <ul>
 <li>imports the spec vocabulary from <a href="../spec-tools-lib/"><code>ovos-spec-tools</code></a>, so a topic name is <em>provably spec-defined</em> rather than a magic string.</li>
 <li>drives and captures the live bus through <a href="https://github.com/OpenVoiceOS/ovoscope"><code>ovoscope</code></a> (see <a href="../ovoscope-overview/">Testing Skills</a>).</li>
 <li>asserts the spec-mandated behavior and records pass / <code>xfail</code> / fail.</li>
 </ul>
 <h2 id="coverage">Coverage<a class="headerlink" href="#coverage" title="Permanent link">&para;</a></h2>
-<p>Every spec document on the architecture <code>dev</code> branch has a conformance suite —
-the harness's own matrix counts 20 spec IDs with 20 suites (SESSION-1 and SESSION-2 share
-one suite; INTENT-4 has both an orchestrator suite and a per-plugin registration-compliance
-suite). The authoritative spec→suite traceability matrix lives in the repo's
+<p>The harness tests a pinned revision of the architecture specs. The file
+<code>test/meta/architecture.sha</code> holds that revision. The architecture <code>dev</code> branch
+can hold draft specs that are not in the pinned revision. The spec-to-suite
+traceability matrix, with the specs that have no suite, is in the repo's
 <a href="https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/coverage.md"><code>docs/coverage.md</code></a>.
 Documented conformance gaps are recorded as <code>xfail</code> entries and catalogued in
 <a href="https://github.com/OpenVoiceOS/ovos-test-harness/blob/dev/docs/known-gaps.md"><code>docs/known-gaps.md</code></a>.</p>

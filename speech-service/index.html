@@ -2055,7 +2055,7 @@ over the bus with <code>recognizer_loop:state.set</code> and a <code>mode</code>
   follows a wake word. Same CPU cost as continuous, fewer false activations.</li>
 <li><strong>Recording mode</strong> is a niche listening <em>state</em>, not a mode: raw dictation capture to a
   file under the recordings directory, started over the bus with a <code>recording_name</code>,
-  stopped by the stop hotword or after <code>listener.recording_mode_max_silence_seconds</code> of
+  stopped by the stop hotword (<code>listener.stop_word</code>, default <code>"stop_recording"</code>) or after <code>listener.recording_mode_max_silence_seconds</code> of
   silence (default <code>30</code>). Alpha quality; used by recording skills rather than end users.</li>
 </ul>
 <h2 id="bus-events">Bus Events<a class="headerlink" href="#bus-events" title="Permanent link">&para;</a></h2>
@@ -2169,7 +2169,7 @@ either topic name. See <a href="../bus-namespace-migration/#namespace-migration"
 for how to turn that aliasing off once every consumer speaks the spec namespace.</p>
 </div>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
-<p>The speech service is configured in the <code>listener</code>, <code>hotwords</code>, and <code>stt</code> sections of <code>mycroft.conf</code>.</p>
+<p>The speech service is configured in the <code>listener</code>, <code>hotwords</code>, and <code>stt</code> sections of <code>mycroft.conf</code>. The audio-transformer chain reads its plugins from the <code>audio_transformers</code> section. The default configuration does not contain this section.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;listener&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">&quot;microphone&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -2189,8 +2189,46 @@ for how to turn that aliasing off once every consumer speaks the spec namespace.
 <p>Set <code>listener.record_wake_words: true</code> and the listener writes each detected
 wake word clip to disk (under its <code>wake_words</code> save directory) and adds the
 <code>filename</code> to the wake word message. This is handy for gathering training data or
-debugging false triggers. The clips stay on the device. The listener itself does
-not upload anything.</p>
+debugging false triggers. These clips stay on the device.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Uploading samples to an open data server</p>
+<p>The listener uploads audio samples only when the <code>open_data</code> section sets target
+URLs. With no URL set, it uploads nothing. The default configuration sets no URL.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Key</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>open_data.ww_urls</code></td>
+<td style="text-align: left;">string or list</td>
+<td style="text-align: left;">Each detected wake word clip goes to each URL, with the wake word name, language and plugin.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>open_data.stt_urls</code></td>
+<td style="text-align: left;">string or list</td>
+<td style="text-align: left;">Each STT audio clip goes to each URL, with the transcript, language and plugin.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>open_data.api_key</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Sent in the <code>X-API-Key</code> header.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>open_data.user_agent</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">The <code>User-Agent</code> header. Default <code>"ovos-metrics"</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>The listener sends each sample as a multipart POST in a background thread, with a
+5 s timeout. The receiving server is
+<a href="https://github.com/OpenVoiceOS/ovos-opendata-server">ovos-opendata-server</a>.</p>
 </div>
 <hr />
 <p><strong>Read next:</strong> <a href="../audio-service/">Audio Service</a> · <a href="../concepts-overview/">Concepts Overview</a>
