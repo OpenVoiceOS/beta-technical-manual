@@ -1697,7 +1697,7 @@
 <div class="admonition note">
 <p class="admonition-title">Spec model and topic names</p>
 <p>STOP-1 distinguishes two outcomes, both via reserved <code>intent_name</code>s. A generic <strong>stop</strong> cascades to the handler with the strongest claim on the session: the plugin builds its candidate list from <code>session.response_mode</code> and <code>session.active_handlers</code> (the recency record, PIPELINE-1 §7.1), pings them with <code>ovos.stop.ping</code>, collects <code>ovos.stop.pong</code> (<code>can_handle</code>) within a recommended 0.5s ceiling, and returns a <code>Match</code> on the reserved <code>stop</code> name targeting the first positive responder in candidate order, dispatched on <code>&lt;skill_id&gt;:stop</code>. A handler that does not answer within the timeout counts as <code>can_handle: false</code>.</p>
-<p><code>global_stop</code> covers the three cases where there is nothing to target (STOP-1 §5.1): explicit "stop everything" vocabulary, a generic stop with <code>active_handlers</code> empty (or containing only the stop plugin itself), and a ping round that produced <strong>no positive responder</strong> (§4.1 step 5). Its <code>Match</code> clears <code>active_handlers</code>, <code>converse_handlers</code> and <code>response_mode</code> atomically, and its handler broadcasts <code>ovos.stop</code>, which every active component subscribes to.</p>
+<p><code>global_stop</code> covers two cases (STOP-1 §5.1): explicit "stop everything" vocabulary, and a generic stop with <code>active_handlers</code> empty (or containing only the stop plugin itself). When a ping round produces <strong>no positive responder</strong> and <code>active_handlers</code> is not empty, STOP-1 §4.1 step 5 says that the plugin MUST fall back to recency and select the most recent <code>active_handlers</code> entry, and MUST NOT escalate to <code>global_stop</code>. Its <code>Match</code> clears <code>active_handlers</code>, <code>converse_handlers</code> and <code>response_mode</code> atomically, and its handler broadcasts <code>ovos.stop</code>, which every active component subscribes to.</p>
 <table>
 <thead>
 <tr>
@@ -1792,9 +1792,13 @@ recording is in progress. Neither cancels speech on its own.</p>
 <p>Dispatches <code>&lt;skill_id&gt;:stop</code> (legacy: <code>{skill_id}.stop</code>) to the first positive responder in candidate order. Pongs are re-sorted into that order before the winner is picked, so the answer that arrived first does not decide the round.</p>
 </li>
 <li>
-<p>If no skill is active, no responder answered positively, or the utterance matched <code>global_stop</code>, emits a <strong>global stop</strong>: <code>ovos.stop</code> (legacy: <code>mycroft.stop</code>).</p>
+<p>If no skill is active, or the utterance matched <code>global_stop</code>, emits a <strong>global stop</strong>: <code>ovos.stop</code> (legacy: <code>mycroft.stop</code>). If skills are active but no responder answered positively, the high-confidence matcher returns no match, and the later stop tiers get the utterance.</p>
 </li>
 </ol>
+<div class="admonition warning">
+<p class="admonition-title">Divergence from STOP-1: no positive responder</p>
+<p>STOP-1 §4.1 step 5 and §5.1 say: when no pong is positive and <code>active_handlers</code> is not empty, the plugin MUST fall back to the most recent <code>active_handlers</code> entry, and MUST NOT escalate to <code>global_stop</code>. <code>ovos-core</code> does not fall back to recency. In <code>stop_service.py</code>, <code>match_high</code> returns no match in this case, and <code>match_low</code> (which <code>match_medium</code> also calls) escalates to a global stop. <a href="https://github.com/OpenVoiceOS/ovos-core/issues/1043">ovos-core#1043</a> tracks this defect.</p>
+</div>
 <h3 id="medium-confidence-stop_medium">Medium-confidence (<code>stop_medium</code>)<a class="headerlink" href="#medium-confidence-stop_medium" title="Permanent link">&para;</a></h3>
 <p>A fuzzy (<code>exact=False</code>) match of the same <code>stop</code> / <code>global_stop</code> vocab, for phrases that contain a stop command but are not exact. When it matches, it delegates to <code>match_low</code> to compute a confidence score.</p>
 <h3 id="low-confidence-stop_low">Low-confidence (<code>stop_low</code>)<a class="headerlink" href="#low-confidence-stop_low" title="Permanent link">&para;</a></h3>
@@ -1806,8 +1810,9 @@ recording is in progress. Neither cancels speech on its own.</p>
     V --&gt;|yes, skills active| P[Ping active skills\n{skill_id}.stop.ping]
     P --&gt; W{Any skill replies\ncan_handle?}
     W --&gt;|yes| D[Dispatch stop to\nfirst candidate responder]
-    W --&gt;|no, timeout| G</code></pre>
-<p><em>Diagram: an utterance that matches the stop vocabulary either targets the highest-ranked candidate skill that confirms it can stop, or falls back to a global stop broadcast when there is nothing to target or no skill responds in time.</em></p>
+    W --&gt;|no, high tier| N
+    W --&gt;|no, medium or low tier| G</code></pre>
+<p><em>Diagram: an utterance that matches the stop vocabulary either targets the highest-ranked candidate skill that confirms it can stop, or falls back to a global stop broadcast when there is nothing to target. When no skill confirms, the high tier returns no match and the medium and low tiers emit a global stop, which differs from STOP-1 §4.1 step 5.</em></p>
 <hr />
 <h2 id="localization">Localization<a class="headerlink" href="#localization" title="Permanent link">&para;</a></h2>
 <p>The plugin supports stop commands in multiple languages using <code>.voc</code> files bundled in <code>ovos-core</code> under <code>ovos_core/intent_services/locale/&lt;lang&gt;/</code>:</p>
@@ -1888,6 +1893,7 @@ recording is in progress. Neither cancels speech on its own.</p>
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="p">}</span>
 </span></code></pre></div>
+<p>The orchestrator bounds each match call of the plugin with <code>intents.ovos-stop-pipeline-plugin.match_timeout</code> (else <code>intents.match_timeout</code>, default 10 s; see <a href="../core/">Core</a>). PIPELINE-1 §4.4 says that a deployment MUST set a plugin's match bound at or above any collection wait that the plugin runs internally. For this plugin, that wait is the 0.5 s pong window of STOP-1 §4.1 step 2, so a bound below 0.5 s stops each stop round before the pongs arrive.</p>
 <h2 id="design-philosophy">Design Philosophy<a class="headerlink" href="#design-philosophy" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
@@ -1900,7 +1906,7 @@ recording is in progress. Neither cancels speech on its own.</p>
 <p><strong>Localized</strong>: matching is language-aware via per-language vocab</p>
 </li>
 <li>
-<p><strong>Resilient</strong>: falls back to a global <code>ovos.stop</code> broadcast if no handler responds positively</p>
+<p><strong>Resilient</strong>: falls back to a global <code>ovos.stop</code> broadcast when there is nothing to target. When no handler responds positively, the medium and low tiers also broadcast <code>ovos.stop</code>, which differs from STOP-1 §4.1 step 5</p>
 </li>
 </ul>
 <hr />

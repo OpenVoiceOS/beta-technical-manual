@@ -1852,7 +1852,8 @@ OpenVoiceOS, from the moment sound hits the microphone to the final spoken respo
 </li>
 </ol>
 <p>(Other matchers such as <a href="../m2v-pipeline/">Model2Vec</a> and, if installed, <a href="../cq-pipeline/">Common Query</a> for general-knowledge questions, slot into this order too — see <a href="../pipelines-overview/">Pipelines</a> for the full default and how to customize it.)</p>
-<p>Each <code>match</code> call is invoked directly inside a <code>try/except</code>. If a matcher <strong>raises</strong>, the orchestrator logs it and moves on to the next matcher as a no-match. A matcher that merely <em>hangs</em> (never returns, never raises) is a different story: keep matchers fast.</p>
+<p>Each <code>match</code> call runs on a worker thread, and the orchestrator waits for it for a limited time (PIPELINE-1 §4.4). If a matcher <strong>raises</strong>, the orchestrator logs the error and continues to the next matcher as a no-match. If a matcher does not return within its bound, the orchestrator also counts the call as a no-match and the next stage runs. The orchestrator cannot stop a call that is running: the call keeps its worker until it returns.</p>
+<p>The bound is <code>intents.&lt;pipe_id&gt;.match_timeout</code>, and <code>intents.match_timeout</code> (default 10 s, the value that PIPELINE-1 §4.4 recommends) applies to each plugin that has no own setting. The <code>pipe_id</code> is the plugin id without its <code>-high</code>, <code>-medium</code> or <code>-low</code> suffix, so all tiers of one plugin share one setting. Each plugin has its own pool of worker threads, so a plugin that hangs fills only its own pool. When all workers of a plugin are held by calls past their bound, that plugin declines new calls at once. When a call from an earlier utterance is still running for the same session and the same pipeline entry, the orchestrator skips that entry for this utterance and does not cancel the earlier call. See <a href="../core/">Core</a> for the configuration table.</p>
 <div class="admonition warning">
 <p class="admonition-title">Operational limits</p>
 <table>
@@ -1869,7 +1870,11 @@ OpenVoiceOS, from the moment sound hits the microphone to the final spoken respo
 </tr>
 <tr>
 <td>Per-match timeout</td>
-<td><strong>None.</strong> A hung matcher blocks the pipeline until it returns</td>
+<td><code>intents.&lt;pipe_id&gt;.match_timeout</code>, else <code>intents.match_timeout</code> (default 10 s). A call past the bound counts as a no-match</td>
+</tr>
+<tr>
+<td>Match workers</td>
+<td><code>intents.&lt;pipe_id&gt;.match_workers</code>, else <code>intents.match_workers</code> (default 4) per plugin. When all are held, the plugin declines new calls</td>
 </tr>
 <tr>
 <td>Handler timeout</td>
@@ -1877,11 +1882,11 @@ OpenVoiceOS, from the moment sound hits the microphone to the final spoken respo
 </tr>
 <tr>
 <td><code>websocket.shared_connection: true</code> (default)</td>
-<td><code>ovos-core</code> runs on a single shared bus connection, and that same thread services the bus. A hung matcher stalls the whole service</td>
+<td><code>ovos-core</code> runs on a single shared bus connection. A slow matcher delays the utterance by up to its bound, and the bus thread waits during that time</td>
 </tr>
 <tr>
 <td>Self-blocking <code>match()</code> calls</td>
-<td>A matcher that does its own bus round-trip inside <code>match()</code> (e.g. a stop plugin gathering <code>stop.pong</code> replies) waits on the same thread that would deliver the replies. Such reply-collection waits (e.g. the stop pipeline's ~0.5 s pong wait) usually expire without receiving any replies, because the thread that would deliver them is the one doing the waiting. Only <code>websocket.shared_connection: false</code> gives skills their own connections and threads, and even then the orchestrator and pipeline plugins stay on the one shared bus</td>
+<td><code>match()</code> runs on a worker thread, but the thread that handles the utterance waits for its result. A matcher that does its own bus round-trip inside <code>match()</code> (e.g. a stop plugin gathering <code>stop.pong</code> replies) can need that waiting thread to deliver the replies. Such reply-collection waits (e.g. the stop pipeline's ~0.5 s pong wait) then usually expire without any replies. Only <code>websocket.shared_connection: false</code> gives skills their own connections and threads, and even then the orchestrator and pipeline plugins stay on the one shared bus</td>
 </tr>
 </tbody>
 </table>

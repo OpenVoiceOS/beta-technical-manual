@@ -1566,15 +1566,21 @@ else here is reference material you can meet when a page links to it.</p>
 </dl>
 <h2 id="b">B<a class="headerlink" href="#b" title="Permanent link">&para;</a></h2>
 <dl>
+<dt><strong><a href="../bus-bridge/">Bus bridge</a></strong></dt>
+<dd>A participant on the internal messagebus that terminates an external channel and relays messages between the bus and remote participants. Specified by <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/bridge-1.md">OVOS-BRIDGE-1</a>.</dd>
 <dt><strong>Bus / <a href="../bus-service/">messagebus</a></strong></dt>
 <dd>The WebSocket-based communication backbone of OVOS. Every service talks by sending JSON <a href="../bus-service/">messages</a> over it.</dd>
 </dl>
 <h2 id="c">C<a class="headerlink" href="#c" title="Permanent link">&para;</a></h2>
 <dl>
-<dt><strong><a href="../ocp-pipeline/">Common Play</a> (<a href="../ocp-pipeline/">OCP</a>)</strong></dt>
-<dd>OpenVoiceOS Common Play: a framework and intent handler specialized in finding and playing media (music, video, podcasts). The per-session <em>virtual media player</em> it arbitrates is specified by <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md">OVOS-OCP-1</a>.</dd>
+<dt><strong><a href="../ocp-pipeline/">Common Playback</a> (<a href="../ocp-pipeline/">OCP</a>)</strong></dt>
+<dd>OpenVoiceOS Common Playback: a framework and intent handler specialized in finding and playing media (music, video, podcasts). The per-session <em>virtual media player</em> it arbitrates is specified by <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/ocp-1.md">OVOS-OCP-1</a>.</dd>
+<dt><strong><a href="../common-query/">Common Query</a></strong></dt>
+<dd>A pipeline plugin that sends a general-knowledge question to all skills that can answer it, then selects the best answer. Specified by <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/common-query.md">OVOS-COMMON-QUERY-1</a>.</dd>
 <dt><strong>Constraints file</strong></dt>
 <dd>A version "filter" (a pip <a href="../release-channels/">constraints file</a>) that pins which package versions a <a href="../release-channels/">release channel</a> allows.</dd>
+<dt><strong><a href="../context/">Context</a></strong></dt>
+<dd>Short-term conversational memory that a skill sets, so that a follow-up utterance can match an intent that requires it. Specified by <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-context.md">OVOS-CONTEXT-1</a>.</dd>
 <dt><strong><a href="../converse-pipeline/">Converse</a></strong></dt>
 <dd>A mechanism that allows skills to intercept utterances during an active session (continuous conversation). Specified by <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/converse.md">OVOS-CONVERSE-1</a>.</dd>
 </dl>
@@ -1614,7 +1620,7 @@ else here is reference material you can meet when a page links to it.</p>
 <dt><strong>G2P (Grapheme-to-Phoneme)</strong></dt>
 <dd>The process of converting written text into phonetic representations for pronunciation. See <a href="../g2p-plugins/">G2P plugins</a>.</dd>
 <dt><strong>GUI Service</strong></dt>
-<dd>The component (<code>ovos-gui</code>) that manages visual displays and <a href="../qt5-gui/">QML</a>/HTML interfaces. Warning: the current ("legacy") GUI is <a href="../gui-service/">deprecated</a>. There is no usable OVOS GUI. A replacement is in progress.</dd>
+<dd>The component (<code>ovos-gui</code>) that manages visual displays and <a href="../qt5-gui/">QML</a>/HTML interfaces. Warning: the current ("legacy") GUI is <a href="../gui-service/">deprecated</a>. There is no usable OVOS GUI. <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/gui-1.md">OVOS-GUI-1</a> specifies the target display subsystem. <a href="https://github.com/OpenVoiceOS/ovos-legacy-mycroft-gui-plugin">ovos-legacy-mycroft-gui-plugin</a> is the reference <code>opm.gui_adapter</code> implementation. The <code>ovos-gui</code> adapter changes that are not merged are in <a href="../upcoming-changes/">Upcoming Changes</a>.</dd>
 </dl>
 <h2 id="h">H<a class="headerlink" href="#h" title="Permanent link">&para;</a></h2>
 <dl>
@@ -1631,6 +1637,8 @@ else here is reference material you can meet when a page links to it.</p>
 <dl>
 <dt><strong>Intent</strong></dt>
 <dd>The identified goal or request of a user's utterance (e.g., "WeatherIntent").</dd>
+<dt><strong>Intent engine</strong></dt>
+<dd>A classifier and slot extractor. It reads intent definitions and identifies the intent that an utterance triggers. A <strong>pipeline plugin</strong> can contain an intent engine. Intent definitions are specified by <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-3.md">OVOS-INTENT-3</a>, and their registration on the bus by <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/intent-4.md">OVOS-INTENT-4</a>.</dd>
 <dt><strong>Intent file (<code>.intent</code>)</strong></dt>
 <dd>A list of example sentences <strong>a user might say</strong> to trigger a <a href="../skill-design-guidelines/">skill</a>: a <em>template (example-based)</em> intent matched by <a href="../padatious-pipeline/">Padatious</a>.</dd>
 <dt><strong><a href="../pipelines-overview/">Intent Pipeline</a></strong></dt>
@@ -1683,7 +1691,7 @@ else here is reference material you can meet when a page links to it.</p>
 <dt><strong><a href="../padatious-pipeline/">Padatious</a></strong></dt>
 <dd>An example-based intent parser that uses a small neural network to match utterances against sample sentences.</dd>
 <dt><strong><a href="../personas/">Persona</a></strong></dt>
-<dd>A configurable AI personality (backed by an <a href="../agent-plugins/">agent engine</a> / LLM) that answers open-ended questions.</dd>
+<dd>A configurable AI personality (backed by an <a href="../agent-plugins/">agent engine</a> / LLM) that answers open-ended questions. Its pipeline plugin is specified by <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/persona.md">OVOS-PERSONA-1</a>.</dd>
 <dt><strong><a href="../phal/">PHAL</a></strong></dt>
 <dd>Platform &amp; Hardware Abstraction Layer. A service that handles low-level hardware interactions (volume, buttons, etc.).</dd>
 <dt><strong>pip</strong></dt>
@@ -1711,6 +1719,8 @@ else here is reference material you can meet when a page links to it.</p>
 </dl>
 <h2 id="s">S<a class="headerlink" href="#s" title="Permanent link">&para;</a></h2>
 <dl>
+<dt><strong><a href="../scheduler-service/">Scheduled event</a></strong></dt>
+<dd>An event that a skill asks the scheduler to emit at a later time, once or on a repeat. Specified by <a href="https://github.com/OpenVoiceOS/architecture/blob/dev/scheduler-1.md">OVOS-SCHEDULER-1</a>.</dd>
 <dt><strong>Satellite</strong></dt>
 <dd>In <a href="../hivemind-agents/">HiveMind</a>, a lightweight device (e.g. a small Pi) that captures voice and forwards it to <code>hivemind-core</code>.</dd>
 <dt><strong><a href="../session/">Session</a></strong></dt>
@@ -1790,12 +1800,12 @@ current name in new writing:</p>
 <td><a href="../agent-plugins/">Agent Engine</a></td>
 </tr>
 <tr>
-<td>Intent engine / intent parser</td>
-<td><a href="../pipelines-overview/">Pipeline plugin</a></td>
+<td>Intent parser</td>
+<td><a href="../pipelines-overview/">Pipeline plugin</a> or <strong>Intent engine</strong> (see the I section), as the context shows</td>
 </tr>
 <tr>
 <td>Hotword / wake word (as a standalone term)</td>
-<td><a href="../wake-word-plugins/">Wake word</a>. Note: this stays as written inside real identifiers, such as the <code>wakeword</code> config keys and the <code>recognizer_loop:wakeword</code> bus message.</td>
+<td><a href="../wake-word-plugins/">Wake word</a>. Note: this stays as written inside real identifiers, such as the <code>hotwords</code> config key and the <code>recognizer_loop:wakeword</code> bus message.</td>
 </tr>
 </tbody>
 </table>
