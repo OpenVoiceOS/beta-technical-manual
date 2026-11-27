@@ -14,7 +14,7 @@ pronounce_number(123, "en")            # "one hundred and twenty three"
 extract_number("I have twenty apples", "en")   # 20
 ```
 
-Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br"`). There is no global default language. When a language lacks a hand-written implementation for `pronounce_number`/`pronounce_ordinal`, the library falls back to [unicode-rbnf](https://github.com/rhasspy/unicode-rbnf). For functions without a fallback (`extract_number`, `is_fractional`), an unsupported language raises `NotImplementedError`. `numbers_to_digits` never raises. An unsupported language is left unchanged.
+Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br"`). There is no global default language. The readers `numbers_to_digits`, `extract_number`, `extract_number_spans`, `is_fractional` and `is_ordinal` go through the `numtag` library for the languages in the set `NUMTAG_LANGS`. For another language, `extract_number`, `extract_number_spans` and `is_fractional` raise `NotImplementedError`, and `numbers_to_digits` returns the text unchanged. When a language lacks a hand-written implementation for `pronounce_number`/`pronounce_ordinal`, the library falls back to [unicode-rbnf](https://github.com/rhasspy/unicode-rbnf).
 
 ## Features
 
@@ -27,7 +27,7 @@ Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br
 - **Pronounce Fractions:** Speaks a fraction string such as `"3/2"` (`pronounce_fraction`). Hand-written for `pt`, `ast`, `ca`, `oc`, `an`, `mwl`, `gl`, and `ro`. Every other language uses a generic fallback.
 
 
-- **Extract Numbers:** Extracts a number from text (`extract_number`).
+- **Extract Numbers:** Extracts a number from text (`extract_number`), or every number with its character offsets (`extract_number_spans`).
 
 
 - **Words to Digits:** Rewrites spelled-out numbers in a sentence as digits (`numbers_to_digits`).
@@ -50,45 +50,51 @@ Every function takes an explicit `lang` (a BCP-47 code such as `"en"` or `"pt-br
 
 | Language Code           | Pronounce Number | Pronounce Ordinal | Extract Number | numbers_to_digits |
 |-------------------------|------------------|-------------------|----------------|-------------------|
-| `en` (English)          | yes               | WIP                | yes             | yes                |
-| `kab` (Kabyle)          | yes               | yes                | yes             | yes                |
-| `az` (Azerbaijani)      | yes               | WIP                | yes             | WIP                |
-| `ca` (Catalan)          | yes                | yes                 | yes              | WIP                 |
-| `gl` (Galician)         | yes                | yes                | yes              |  yes                  |
-| `cs` (Czech)            | yes                | yes                 | yes              | WIP                 |
-| `da` (Danish)           | yes                | yes                 | yes              | WIP                 |
-| `de` (German)           | yes                | yes                 | yes              | yes                 |
-| `es` (Spanish)          | yes                | WIP                 | yes              | WIP                 |
-| `eu` (Euskara / Basque) | yes                | yes                 | yes              | WIP                 |
-| `fa` (Farsi / Persian)  | yes                | yes                 | yes              | WIP                 |
-| `fr` (French)           | yes                | WIP                 | yes              | WIP                 |
-| `hu` (Hungarian)        | yes                | yes                 | yes              | WIP                 |
-| `it` (Italian)          | yes                | WIP                | yes              | WIP                 |
-| `mwl` (Mirandese)       | yes                | yes                 | yes              | yes                 |
-| `nl` (Dutch)            | yes                | yes                 | yes              | WIP                 |
-| `pl` (Polish)           | yes                | yes                 | yes              | WIP                 |
 | `pt` (Portuguese)       | yes                | yes                 | yes              | yes                 |
-| `ru` (Russian)          | yes                | WIP                 | yes              | yes                 |
-| `sv` (Swedish)          | yes                | yes                 | yes              | WIP                 |
-| `sl` (Slovenian)        | yes                | yes                 | yes              | WIP                 |
+| `es` (Spanish)          | yes                | yes                 | yes              | yes                 |
+| `fr` (French)           | yes                | yes                 | yes              | yes                 |
+| `it` (Italian)          | yes                | yes                 | yes              | yes                 |
+| `de` (German)           | yes                | yes                 | yes              | yes                 |
+| `nl` (Dutch)            | yes                | yes                 | yes              | yes                 |
+| `da` (Danish)           | yes                | yes                 | yes              | yes                 |
+| `kab` (Kabyle)          | yes               | yes                | yes             | yes                 |
+| `az` (Azerbaijani)      | yes               | yes                 | yes             | yes                 |
+| `ca` (Catalan)          | yes                | yes                 | yes              | yes                 |
+| `cs` (Czech)            | yes                | yes                 | yes              | yes                 |
+| `en` (English)          | yes               | WIP                | yes             | yes                 |
+| `eu` (Euskara / Basque) | yes                | yes                 | yes              | yes                 |
+| `fa` (Farsi / Persian)  | yes                | yes                 | yes              | yes                 |
+| `gl` (Galician)         | yes                | yes                | yes              | yes                 |
+| `hu` (Hungarian)        | yes                | yes                 | yes              | yes                 |
+| `mwl` (Mirandese)       | yes                | yes                 | yes              | yes                 |
+| `pl` (Polish)           | yes                | yes                 | yes              | yes                 |
+| `ru` (Russian)          | yes                | yes                 | yes              | yes                 |
+| `sl` (Slovenian)        | yes                | yes                 | yes              | yes                 |
+| `sv` (Swedish)          | yes                | yes                 | yes              | yes                 |
 | `uk` (Ukrainian)        | yes                | yes                 | yes              | yes                 |
 
 
-> If a language is not implemented for `pronounce_number` or `pronounce_ordinal` then [unicode-rbnf](https://github.com/rhasspy/unicode-rbnf) will be used as a fallback.
+> If a language is not implemented for `pronounce_number` or `pronounce_ordinal`, then [unicode-rbnf](https://github.com/rhasspy/unicode-rbnf) is the fallback. The "Extract Number" and "numbers_to_digits" columns are "yes" for every language in `NUMTAG_LANGS`.
 
-> This table is a curated subset. `pronounce_number` and `extract_number` dispatch cover ~41 languages in total (including `an`, `ar`, `ast`, `bg`, `el`, `et`, `fi`, `fy`, `he`, `hr`, `id`, `ms`, `nb`, `nn`, `no`, `oc`, `ro`, `sk`, and `tr`). See [`docs/languages.md`](https://github.com/OpenVoiceOS/ovos-number-parser/blob/dev/docs/languages.md) in the repo for the full per-language matrix.
+> This table is a subset. This command prints the languages that the readers support:
+>
+> ```bash
+> python -c "from ovos_number_parser.numtag_readers import NUMTAG_LANGS; print(' '.join(sorted(NUMTAG_LANGS)))"
+> ```
+>
+> `pronounce_number` also speaks the Arabic varieties `arq`, `aeb`, `ary` and `apc` in their colloquial forms. For example, `pronounce_number(21, "ary")` gives `"واحد وعشرين"`, and `pronounce_number(21, "ar")` gives `"واحد وعشرون"`. See [`docs/languages.md`](https://github.com/OpenVoiceOS/ovos-number-parser/blob/dev/docs/languages.md) in the repo for the full per-language matrix.
 
 ### If your language is not listed
 
 `pronounce_number` and `pronounce_ordinal` fall back to [unicode-rbnf](https://github.com/rhasspy/unicode-rbnf)
 for a language with no hand-written module, so those two functions usually still work.
-`extract_number` and `is_fractional` have no fallback: an unsupported language raises
-`NotImplementedError`. `numbers_to_digits` never raises; an unsupported language is left
+`extract_number`, `extract_number_spans` and `is_fractional` have no fallback: a language outside `NUMTAG_LANGS` raises
+`NotImplementedError`. `numbers_to_digits` never raises; it returns a language outside `NUMTAG_LANGS`
 unchanged. See the [Supported languages](https://github.com/OpenVoiceOS/ovos-number-parser#supported-languages)
 section of the repo README for the current full list.
 
 !!! note
-    Several Romance languages (`ast`, `an`, `oc`, `fr`, `it`, `ca`, `es`, `gl`, `pt`, `mwl`, `ro`) share a common `RomanceNumberExtractor`/`NumberVocabulary` engine internally, so their extraction logic stays consistent across languages that inflect numbers similarly.
+    Several Romance languages (`ast`, `an`, `oc`, `fr`, `it`, `ca`, `es`, `gl`, `pt`, `mwl`, `ro`) share a common `NumberVocabulary` engine for pronunciation. Their extraction goes through `numtag`, as for every language in `NUMTAG_LANGS`.
 
 ## Installation
 
@@ -113,7 +119,7 @@ def pronounce_number(number: Union[int, float], lang: str, places: int = 3, shor
                      scale: Optional[Scale] = None,
                      case: Optional[str] = None) -> str:
     """
-    Convert a number to its spoken equivalent.
+    Convert a number to its spoken equivalent. `case` applies to Arabic only.
 
     Args:
         number: The number to pronounce.
@@ -158,9 +164,10 @@ Convert a number to its ordinal spoken equivalent.
 ```python
 def pronounce_ordinal(number: Union[int, float], lang: str, short_scale: Optional[bool] = None,
                       gender: GrammaticalGender = GrammaticalGender.MASCULINE,
-                      scale: Optional[Scale] = None) -> str:
+                      scale: Optional[Scale] = None,
+                      case: Optional[str] = None) -> str:
     """
-    Convert an ordinal number to its spoken equivalent.
+    Convert an ordinal number to its spoken equivalent. `case` applies to Arabic only.
 
     Args:
         number: The number to pronounce.
@@ -177,7 +184,7 @@ def pronounce_ordinal(number: Union[int, float], lang: str, short_scale: Optiona
 
 ```
 
-Hand-written ordinal pronunciation exists for most languages in the support table above. A handful (`en`, `az`, `es`, `fr`, `it`, among others) route through the unicode-rbnf fallback instead.
+Hand-written ordinal pronunciation exists for most languages in the support table above. `az`, `es`, `fr` and `it` speak the ordinal through their own `pronounce_number`. Of the languages in the table, only `en` uses the unicode-rbnf fallback.
 
 **Example Usage:**
 
@@ -221,6 +228,16 @@ from ovos_number_parser import extract_number
 result = extract_number("I have twenty apples", "en")
 print(result)  # 20
 
+```
+
+`extract_number_spans` returns every number in the text as a `NumberSpan` with `start`, `end`, `surface` and `value`:
+
+```python
+from ovos_number_parser import extract_number_spans
+
+extract_number_spans("two hundred and five apples and 3.5 pears", "en")
+# [NumberSpan(start=0, end=20, surface='two hundred and five', value=205),
+#  NumberSpan(start=32, end=35, surface='3.5', value=3.5)]
 ```
 
 ### Check for Fractional Numbers
@@ -285,7 +302,7 @@ print(result)  # 3
 
 ```
 
-> `is_ordinal` has hand-written detection for most languages in the support table above and a generic fallback for the rest, so it rarely raises `NotImplementedError` in practice.
+> `is_ordinal` reads through `numtag` for the languages in `NUMTAG_LANGS`. For another language, it looks up the word in the unicode-rbnf ordinals and returns `False` when the word is not there.
 
 ### Words to Digits
 
@@ -302,7 +319,7 @@ numbers_to_digits("set a timer for twenty five minutes", "en")
 def numbers_to_digits(utterance: str, lang: str, scale: Optional[Scale] = None) -> str: ...
 ```
 
-`scale` (`Scale.LONG` / `Scale.SHORT`, from `ovos_number_parser.util`) only matters for languages that distinguish short/long scale (e.g. `pt`/`mwl`). Hand-written rewriting is dispatched for `en`, `ar`, `kab`, `ast`, `oc`, `an`, `fy`, `gl`, `de`, `pt`, `mwl`, `ro`, `bg`, `hr`, `ru`, `sk`, `id`, `ms`, `tr`, and `uk`. Every other language gets a generic word-span replacement instead. It works but is less precise about compound numerals than a hand-written implementation. No language ever raises here. One that has no parser at all is simply left unchanged.
+`scale` (`Scale.LONG` / `Scale.SHORT`, from `ovos_number_parser.util`) only matters for languages that distinguish short/long scale (e.g. `pt`/`mwl`). `numbers_to_digits` reads through `numtag` for every language in `NUMTAG_LANGS`. It returns any other language unchanged, and it never raises.
 
 !!! note
     Kabyle (`kab`) has two coexisting numeral systems: everyday loan-word counting (Arabic-derived above ten, e.g. `waḥed u ɛecrin` = 21) used for pronunciation, and a formalized pan-Amazigh proposal (invariable tens, descending magnitudes, no connectors) that extraction also recognizes. `kab` counts only up to 9999 and has no scale or fraction vocabulary.

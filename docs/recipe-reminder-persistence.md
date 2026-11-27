@@ -2,23 +2,29 @@
 
 !!! abstract "In a nutshell"
     You build a reminder skill on `OVOSSkill` where each reminder is a single
-    scheduled event. The scheduler persists it on disk and replays it after a
-    device restart on its own, so the skill only needs to schedule the event
-    once and clean up its own bookkeeping when it fires or gets canceled.
+    scheduled event. A SCHEDULER-1 scheduler persists it on disk and replays it
+    after a device restart on its own, so the skill only needs to schedule the
+    event once and clean up its own bookkeeping when it fires or gets canceled.
 
 **When you'd want this:** the user says "remind me in 10 minutes to check the
 oven", and the reminder must still fire even if the device rebooted in the
 meantime.
 
-`self.schedule_event` writes the schedule to disk before returning, and the
-[scheduler](scheduler-service.md) reloads every pending schedule on startup,
-recomputing what is still due and firing anything it missed while it was
-down. A skill does not re-arm its own timers after a restart. It only needs
+`self.schedule_event` puts the request on a queue. A background thread sends
+it to the scheduler, and the call returns at once. The
+[scheduler](scheduler-service.md) writes the schedule to disk when it accepts
+the request. On startup, it reloads every pending schedule, recomputes what is
+still due, and fires anything it missed while it was down. This persistence
+across restarts needs a SCHEDULER-1 scheduler. The skill uses SCHEDULER-1 when
+the scheduler client is installed and a SCHEDULER-1 scheduler answers on the
+bus. Otherwise it uses the older `mycroft.scheduler.*` topics. With a
+SCHEDULER-1 scheduler, a skill does not re-arm its own timers after a restart. It only needs
 to track its own reminders well enough to answer "what's still pending" and
 "cancel this one" when the user asks.
 
 ```python
 import datetime
+from ovos_utils.time import now_local
 from ovos_workshop.skills import OVOSSkill
 from ovos_workshop.decorators import intent_handler
 
@@ -28,7 +34,7 @@ class ReminderSkill(OVOSSkill):
     def handle_set_reminder(self, message):
         minutes = message.data.get("minutes", 5)
         text = message.data.get("utterance", "your reminder")
-        when = datetime.datetime.now() + datetime.timedelta(minutes=float(minutes))
+        when = now_local() + datetime.timedelta(minutes=float(minutes))
         name = f"reminder_{when.timestamp():.0f}"
 
         self.schedule_event(self.handle_reminder_due, when,
@@ -85,18 +91,21 @@ read from if this skill grew one. It is bookkeeping for the skill's own
 conversation with the user, not a workaround for a scheduler that would
 otherwise forget the timer.
 
-Because the scheduler already restores the schedule itself, the skill does
+Because a SCHEDULER-1 scheduler restores the schedule itself, the skill does
 not need an `initialize()` step that re-arms anything: the event fires
 under its original `name` whether the process that set it is still running
 or was restarted in between. If the device was off past the due time, the
-scheduler's [misfire policy](scheduler-service.md#misfire-policy) fires the
+SCHEDULER-1 scheduler's [misfire policy](scheduler-service.md#misfire-policy) fires the
 most recent missed occurrence once by default, so `handle_reminder_due`
 still runs and the reminder still clears itself out of `pending_reminders`.
 
 ### Moving parts
 
 - `self.schedule_event(handler, when, data=None, name=None)`: `when` accepts a
-  `datetime.datetime` (absolute) or an `int`/`float` (seconds from now). `name` is
+  `datetime.datetime` (absolute) or an `int`/`float` (seconds from now). Use an
+  aware datetime, such as one from `ovos_utils.time.now_local()`, or seconds.
+  The skill reads a naive datetime in the configured timezone, not in the
+  system timezone. `name` is
   the handle you cancel or update by later. Full signature and semantics: [Scheduling Events](ovos-skill.md#scheduling-events).
 - `self.cancel_scheduled_event(name)` / `self.update_scheduled_event(name, data)`: manage an existing timer by name.
 - For a recurring alarm (not a one-shot reminder), use `self.schedule_repeating_event(handler, when, frequency, name=...)` instead. Same page.

@@ -64,6 +64,29 @@ For more detail on each subsystem:
 - **Transformer Plugins**: modify utterances, metadata, or intent matches as they move through the pipeline.
 - **[Skill Installer](skill-installer.md)**: installs and manages skills and Python packages dynamically at runtime.
 
+### Intent pipeline limits
+
+The intent service bounds each match call of a pipeline plugin:
+
+| Setting | Default | Function |
+|---|---|---|
+| `intents.<pipe_id>.match_timeout` | `intents.match_timeout` | Seconds that one match call of this plugin can take |
+| `intents.match_timeout` | `10` | Value for each plugin that has no own setting |
+| `intents.<pipe_id>.match_workers` | `intents.match_workers` | Threads in the worker pool of this plugin |
+| `intents.match_workers` | `4` | Value for each plugin that has no own setting |
+
+`<pipe_id>` is the plugin id without the `-high`, `-medium` or `-low` suffix. A match call that does not return before its timeout is a decline, and the pipeline continues to the next plugin. Each plugin has its own worker pool, so a plugin that stops responding fills only its own pool. When all workers of a pool are held by calls past their timeout, the plugin declines each new call immediately.
+
+### Skill loading events
+
+The skill manager loads plugin skills when these events occur:
+
+- `ovos.skills.install.complete` or `ovos.pip.install.complete`: it reloads each loaded skill that the installer upgraded, then loads each skill that the installer made available.
+- `ovos.skills.uninstall.complete` or `ovos.pip.uninstall.complete`: it unloads each skill whose package is no longer installed.
+- `skillmanager.rescan`: it scans for skills that are not loaded and loads them. It replies `skillmanager.rescan.response` with the data `{"loaded": [...]}`, the list of skill ids that the scan loaded.
+
+A periodic scan every 30 seconds loads each skill that these events did not load.
+
 ---
 
 ## Entry Points

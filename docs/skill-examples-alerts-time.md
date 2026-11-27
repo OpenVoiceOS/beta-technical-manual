@@ -15,15 +15,15 @@ external calendar.
 
 **Usage examples:**
 
-- What are my reminders?
+- What are my upcoming reminders?
 - Cancel all reminders.
 - When is my next alarm?
-- Schedule a tennis event for 2 PM on friday spanning 2 hours.
-- What did I miss?
+- Schedule an appointment for tennis on friday at 2 PM.
+- What did I miss today?
 
-- remind me to take out the trash weekday mornings at 7.
-- Start a bread timer for 30 minutes.
-- Did I miss any alerts?
+- remind me to take out the trash every Thursday and Sunday at 7 PM.
+- Start a timer for 30 minutes.
+- Did I miss anything?
 - Set an alarm for 8 AM.
 - Set a daily alarm for 8 AM.
 
@@ -56,7 +56,7 @@ Get the current time, date, or information about specific calendar days.
 
 ## Naptime (Snooze the Assistant)
 
-**Installer default**
+**Installer default** (not on the `server` profile)
 
 Put the assistant to sleep when you don't want to be disturbed. While asleep, the wake word stops
 triggering listening. Say "Wake up" (or the configured stand-up word) to bring it back.

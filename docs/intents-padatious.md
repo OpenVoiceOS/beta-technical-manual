@@ -77,7 +77,7 @@ what are your thoughts on {type} tomatoes
 Note the `{type}` in the above examples. These are wild cards where matching content is
 forwarded to the skill's intent handler.
 
-> **WARNING**: digits are not allowed in the entity name inside the `{}`. **Do NOT** use `{room1}`, use `{room_one}`.
+> **WARNING**: a slot name uses lowercase ASCII letters, digits and underscores. It does not begin with a digit, so `{room1}` is a valid name. Padatious supports a digit in a slot name only in part. The neural matcher binds `{room1}`. The exact-match tier and the context slot fill do not recognize a digit in a slot name. Use `{room_one}` to get all three.
 
 ### Specific Entities
 
@@ -231,12 +231,31 @@ matching; a handler never has to reach into that map directly.
 
 A typed slot does not make the slot required. An utterance that matches
 the template without producing a `{date:when}` still fires the handler,
-with `typed_slot` returning `None` for `when`. Forcing a match to fail
-unless a given slot bound something is a separate, orchestrator-level
-`required_slots` check tied to an intent's registration; no
-skill-facing API declares it directly, so a handler that truly
-cannot proceed without a value still validates for `None` itself, as in
-the example above.
+with `typed_slot` returning `None` for `when`. To reject a match that
+does not bind a slot, declare the slot as required.
+
+### Required slots
+
+`@intent_handler`, `register_intent` and `register_intent_file` take a
+`required_slots` keyword. It lists bare slot names, with no braces and
+no type prefix. `required_slots` applies only to a `.intent` template.
+
+```python
+@intent_handler("set.reminder.intent", required_slots=["when", "task"])
+def handle_reminder_intent(self, message):
+    when = self.typed_slot(message, "when")
+    task = message.data["task"]
+    ...
+```
+
+A slot name must match `[a-z_][a-z0-9_]*`. A name that does not match,
+or a value that is not a list of strings, raises `ValueError` when the
+skill registers the intent.
+
+`ovos-core` checks each match against the required slots of its intent.
+A match that does not have a value for each required slot is a decline:
+the pipeline continues to the next plugin, and no bus event is emitted.
+A slot that the session's intent context can fill counts as present.
 
 ### Entities with unknown tokens
 
@@ -333,13 +352,57 @@ syntax can be much clearer to read. However, break more complex structures down 
 lines to aid readability and reduce false utterances in the model. Overuse can even cause the
 model training to time out, making the skill unusable.
 
+### Required keywords: the `.required` file
+
+A `<intent>.required` file in the same locale folder as `<intent>.intent`
+lists keywords, one for each line. The intent matches only when the
+utterance contains one or more of these keywords. When the utterance
+contains none of them, Padatious suppresses the intent.
+
+This is a hard
+reject: the confidence of the match is not important, and an exact
+template match is also suppressed.
+
+For `locale/en-us/weather.intent`, the file `locale/en-us/weather.required` can contain:
+
+```text
+weather
+forecast
+(rain|snow)
+```
+
+### Blocked phrases: the `.blacklist` file
+
+A `<intent>.blacklist` file lists phrases, one for each line. When the
+utterance contains one of these phrases, Padatious suppresses the intent.
+This is also a hard reject.
+
+Both files use the same rules:
+
+- The skill loads each file when it registers the intent with `register_intent_file` or `@intent_handler`.
+- A line can use alternation `(a|b)`, optional words `[the]` and `<name>` references to a `.voc` file. Each line expands to all of its phrases.
+- A keyword or phrase matches at word boundaries, without case. `install` occurs in "install firefox", but not in "installment".
+
+A `<slot>.blacklist` file has a different function. It lists values that
+must not bind to the slot `{slot}`. When the full slot value is in the
+list, Padatious does not fill the slot.
+
+For example, a `person.blacklist` file that contains `he` and `she` keeps
+pronouns out of `{person}`.
+
 ## Using it in a Skill
 
 The `intent_handler()` decorator can create an examples-based intent handler by passing in the
 filename of the `.intent` file as a string.
 
-You may also see the `@intent_file_handler` decorator used in skills. This is deprecated. You
-can replace any instance of this with the simpler `@intent_handler` decorator.
+Older skills use the `@intent_file_handler` decorator. `ovos-workshop` does not have this
+decorator, so an import of it fails. Replace each instance with `@intent_handler`:
+
+```python
+# before: from ovos_workshop.decorators import intent_file_handler
+# before: @intent_file_handler("what.is.a.tomato.intent")
+@intent_handler("what.is.a.tomato.intent")
+```
 
 From our first example above, we created a file `locale/en-us/what.is.a.tomato.intent`. To
 register an intent using this file we can use the following decorator, shown on its own.

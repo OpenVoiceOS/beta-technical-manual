@@ -117,18 +117,18 @@ movie with your voice.
 - Who plays in the movie _______?
 - How long is the movie _______?
 
-- Look for information on the movie _______.
-- Do you have info on the film _______?
+- Give me a synopsis of the movie _______.
+- Describe the film _______
 - What is the movie _______ about?
 - What are the highest rated movies out?
 - When was the movie _______ made?
+- What films do you recommend like _______?
 
 ??? note "Install"
     [:material-github: OpenVoiceOS/ovos-skill-moviemaster](https://github.com/OpenVoiceOS/ovos-skill-moviemaster) · `pip install ovos-skill-moviemaster` · Maturity: Stable
 
     The skill needs your own free [TMDb API key](https://www.themoviedb.org/settings/api) in
-    its skill settings. Without one it speaks an error instead of answering. Recent alphas no
-    longer bundle a shared key.
+    its skill settings. Without one it speaks an error instead of answering. The skill has no built-in key.
 
 ### ISS Location
 
@@ -151,13 +151,13 @@ Track the location of the International Space Station.
 
 **Installer default**
 
-Use DuckDuckGo to answer questions.
+Answer factual questions with DuckDuckGo Instant Answers.
 
 **Usage examples:**
 
-- ask the duck about the big bang
-- when was stephen hawking born
-- who is elon musk
+- search duck duck go for Marie Curie
+- ask duck duck go when was Albert Einstein born
+- look up the Eiffel Tower on duck duck go
 
 ??? note "Install"
     [:material-github: OpenVoiceOS/ovos-skill-ddg](https://github.com/OpenVoiceOS/ovos-skill-ddg) · `pip install ovos-skill-ddg` · Maturity: Stable
@@ -213,7 +213,7 @@ Use Wolfram Alpha for general knowledge questions.
 
 ### Wordnet
 
-**Manual install only**
+**Manual install only** with the virtualenv installer. The Docker images include it.
 
 Use Wordnet to answer dictionary-like questions.
 

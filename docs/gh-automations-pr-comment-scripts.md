@@ -15,22 +15,28 @@ The following workflows post their results as named sections in a **single share
 |----------|---------------|-----------|
 | `repo-health.yml` | `Repo Health` (+ `Welcome` for first-time contributors) | clipboard (+ waving hand) |
 | `release-preview.yml` | `Release Preview` | label |
-| `pip-audit.yml` | `Security (pip-audit)` | lock |
+| `pip-audit.yml` | `Security (pip-audit)`, or `Security (pip-audit: <category>)` when `sarif_category` is not `pip-audit` | lock |
 | `license-check.yml` | `License Check` | balance scale |
 | `build-tests.yml` | `Build Tests` | hammer |
 | `opm-check.yml` | `Plugin Detection` | plug |
+| `channel-compat.yml` | `Channel Compat — <channel>` | satellite antenna |
+| `downstream-check.yml` | `Downstream Dependents` | link |
+| `locale-check.yml` | `Locale Build` | globe |
+| `spec-lint.yml` | `Spec Lint` | test tube |
 
 | Workflow | Section title | Tag emoji |
 |----------|---------------|-----------|
 | `ovoscope.yml` | `Skill Tests (ovoscope)` (+ `Bus Coverage`) | plug (+ bus) |
-| `intent-case-tests.yml` | `Intent-Case Accuracy` | target |
+| `intent-case-tests.yml` | `Intent-Case Accuracy`, with ` (<lang>)` for a language shard | target |
 | `tts-intelligibility.yml` | `TTS Intelligibility` | speaking head |
 | `coverage.yml` | `Coverage` | bar chart |
 | `skill-check.yml` | `Skill` | microphone |
 | `type-check.yml` | `Type Check` | magnifying glass |
 | `docs-check.yml` | `Docs` | books |
-| `lint.yml` | lint results | none |
+| `lint.yml` | `Lint`, or `Lint (<section_key>)` when `section_key` is set | magnifying glass |
 | `python-support.yml` *(deprecated)* | `Python Support` | snake |
+
+The section IDs are `health`, `welcome`, `release`, `security` (or `security-<category>`), `license`, `build`, `opm`, `channel-<channel>`, `downstream`, `locale`, `spec-lint`, `ovoscope`, `bus-coverage`, `intent-accuracy` (or `intent-accuracy-<lang>`), `tts-intelligibility`, `coverage`, `skill`, `type_check`, `docs_check`, `lint` (or `lint-<section_key>`) and `python_support`.
 
 The HTML marker `<!-- ovos-pr-checks -->` identifies the comment in its body. Each workflow manages its own section:
 
@@ -207,7 +213,7 @@ Output example: `1.2.3a4` or `1.2.3`
 
 ### `scripts/check_downstream.py`
 
-Reports which installed packages depend on a given package, using `pipdeptree`. Output is sorted deterministically and uploaded as a workflow artifact. The older commit-to-repo behavior is gone. The `commit_branch` input is deprecated and ignored.
+Reports which installed packages depend on a given package, using `pipdeptree`. Output is sorted deterministically. `downstream-check.yml` uploads it as a workflow artifact. The `commit_branch` input of that workflow is deprecated and ignored.
 
 **Key function:** `get_downstream(package_name: str) -> str`
 
@@ -333,6 +339,21 @@ usage: update_pr_comment.py \
 environment: GITHUB_TOKEN   (required)
 
 ```
+
+### Other scripts
+
+- `scripts/aggregate_python_results.py`: combines the per-version results of the Python matrix jobs into one Markdown table for the PR comment.
+- `scripts/build_espeak_ng.sh`: builds espeak-ng from source at a pinned tag into a prefix, and prints the prefix. Usage: `build_espeak_ng.sh <version> <prefix>`.
+- `scripts/check_locale_build.py`: checks that the locale folders exist in the source tree, are in the package data, and are in the built package.
+- `scripts/check_release_channels.py`: compares a predicted version with the constraints files of the `ovos-releases` channels.
+- `scripts/check_repo_health.py`: checks required files, contributor status and breaking changes, and writes the JSON report that `repo-health.yml` posts.
+- `scripts/check_test_path_coverage.py`: reports the test files that an explicit `test_path` allowlist of `build-tests.yml` leaves out.
+- `scripts/format_ovoscope_results.py`: formats an ovoscope pytest JSON report into the PR Checks section.
+- `scripts/format_tts_intel.py`: reads the TTS-intelligibility markers from a pytest JSON report and writes a per-voice WER/CER table.
+- `scripts/locale_gate.py`: runs the review-stage checks on a locale PR in one `ovos-skill-*` checkout, and exits non-zero when a check fails.
+- `scripts/pip_audit_report.py`: turns a pip-audit JSON report into annotations, a job summary and the PR comment section.
+- `scripts/pip_audit_sarif.py`: converts a pip-audit JSON report into a SARIF 2.1.0 report.
+- `scripts/ste_lint.py`: the STE and slop linter of the `ste-writing` skill.
 
 ---
 
